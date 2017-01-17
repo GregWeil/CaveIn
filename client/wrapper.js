@@ -37,7 +37,9 @@ function overlay(name, action) {
 }
 
 window.pause = function pause(evt) {
-  var evtCanPause = !evt || !evt.key || evt.key === 'Escape';
+  var evtCanPause = !evt ||
+    (evt.type.indexOf('key') >= 0 && evt.key === 'Escape') ||
+    (evt.type.indexOf('touch') >= 0 && evt.target === document.documentElement);
   var evtCanResume = !evt || evt.key === 'Escape';
   if (evtCanPause && !overlayCurrent) {
     overlay('game-pause');
