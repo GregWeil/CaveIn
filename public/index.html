@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cave In</title>
+    <meta name="description" content="Ludum Dare 37">
+    <link rel="icon" href="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy.ico" type="image/x-icon">
+    <link rel="icon" sizes="52x512" href="https://cdn.gomix.com/89ad7cb1-b44e-4e54-a61b-74eff6677de5%2Fapp_icon.png">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <link rel="manifest" href="manifest.json">
+    
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="title-page" class="page centered">
+      <a id="boxart" href="#game">
+        <img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fboxart.png"/>
+      </a>
+      <p>
+        <span class="show-if-music-loading">loading music</span>
+        <a href="javascript:music(true)" class="hide-if-music-enabled">enable music</a>
+        <a href="javascript:music(false)" class="hide-if-music-disabled">disable music</a>
+        -
+        <a href="javascript:fullscreenEnter()" class="hide-if-fullscreen-enabled">fullscreen</a>
+        <a href="javascript:fullscreenExit()" class="hide-if-fullscreen-disabled">exit fullscreen</a>
+      </p>
+      <p><a href="#tutorial">Instructions</a></p>
+      <p>made for Ludum Dare 37 "One Room"</p>
+      <p>coding by Greg Weil<br/><br/>art and sound by Devin Hilpert</p>
+    </div>
+    
+    <div id="game-page" class="page">
+      <div class="centered">
+        <div class="area">
+          <canvas id="canvas" width="480" height="320"></canvas>
+          
+          <div id="game-pause" class="centered overlay">
+            <p><span class="inverse">PAUSED</span></p>
+            <p><span class="inverse"><a href="javascript:pause()">RESUME</a> or <a href="#title">TITLE</a></span></p>
+            <p class="small"><span class="inverse">
+              <span class="show-if-music-loading">loading music</span>
+              <a href="javascript:music(true)" class="hide-if-music-enabled">enable music</a>
+              <a href="javascript:music(false)" class="hide-if-music-disabled">disable music</a>
+              -
+              <a href="javascript:fullscreenEnter()" class="hide-if-fullscreen-enabled">fullscreen</a>
+              <a href="javascript:fullscreenExit()" class="hide-if-fullscreen-disabled">exit fullscreen</a>
+            </span></p>
+          </div>
+          
+          <div id="game-over" class="centered overlay">
+            <p><span class="inverse">GAME OVER</span></p>
+            <p><span class="inverse"><a href="#game">RETRY</a> or <a href="#title">TITLE</a></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="tutorial-page" class="page inverse">
+      <h1>Instructions</h1>
+      
+      <h2>Player</h2>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fplayer.gif"/></p>
+      <h3>Movement</h3>
+      <p>Use WASD or arrow keys to move</p>
+      <h3>Attacking</h3>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2F3.gif"/><br/>- Use SPACE to swing your pickaxe</p>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2F1.gif"/><br/>- with it, you can mine out blocks</p>
+      <p>
+        <img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2F2.gif"/>
+        <img src="https://cdn.gomix.com/89ad7cb1-b44e-4e54-a61b-74eff6677de5%2F4.gif"/>
+        <br/>- or kill enemies<br/>- or just swing in midair</p>
+
+      <h2>Enemies</h2>
+      <h3>Creeps</h3>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy.gif"/></p>
+      <p>Every time you mine a block, a creep will spawn<br/><br/>Upon defeat, they will drop a block</p>
+      <h3>Spooks</h3>
+      <p><img src="https://cdn.gomix.com/89ad7cb1-b44e-4e54-a61b-74eff6677de5%2Fspook.gif"/></p>
+      <p>These are the ghosts of creeps that have died in a cave in</p>
+      <p>Their souls possess the blocks that crushed them</p>
+      <p>You must get rid of them before you can break the blocks they inhabit</p>
+      
+      <h2>Gems</h2>
+      <p>
+        <img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem1.gif"/>
+        <img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem2.gif"/>
+        <img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem3.gif"/>
+      </p>
+      <p>Collect these to increase your score</p>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem1.gif"/> - this gem gives you 1 point and will remove all surrounding blocks and enemies</p>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem2.gif"/> - this gem gives you 3 points and will only remove the immediate blocks in the 4 cardinal directions from it</p>
+      <p><img src="https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem3.gif"/> - this gem just gives you 5 points</p>
+
+      <h2>Gameplay</h2>
+      <p>The goal of the game is to get as many points as possible without running into an enemy</p>
+      <p>The game plays in a turn-based structure where every action you make takes one turn<br/><br/>Enemies will move every other turn after they are spawned</p>
+      <h3>The Catch</h3>
+      <p>You only ever have one room<br/><br/>If you seal off a section of the room, that entire section will be lost</p>
+
+      <h2>Good Luck and Have Fun!</h2>
+
+      <h2><a href="#">back to menu</a></h2>
+    </div>
+    
+    <div id="assets">
+      <img id="spritesheet" src="https://cdn.gomix.com/89ad7cb1-b44e-4e54-a61b-74eff6677de5%2Fspritesheet.png"/>
+    </div>
+    
+    <script src="bundle.js"></script>
+  </body>
+</html>
