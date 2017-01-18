@@ -1859,6 +1859,29 @@ var $ = require('jquery');
 var Vector2 = require('vector2.js');
 var Game = require('game.js');
 
+var game = null;
+var replay = null;
+
+function replayRecordSave() {
+  console.log(replay);
+}
+
+function replayRecordStart() {
+  replay = {
+    commands: []
+  };
+  replayRecordSave();
+  game.on('update', function(evt) {
+    replay.commands.push(evt.data.command);
+    replayRecordSave();
+  }, undefined, -Infinity);
+}
+
+function replayRecordStop() {
+  replayRecordSave();
+  replay = null;
+}
+
 function resize() {
   var pixel = window.devicePixelRatio || 1;
   var canvas = $('#game-page .area');
@@ -1902,7 +1925,7 @@ window.pause = function pause(evt) {
 };
 
 function createPlayable(config) {
-  var game = new Game(document.getElementById('canvas'), config.best);
+  game = new Game(document.getElementById('canvas'), config.best);
   
   game.on('score', function(evt) {
     if (game.score > game.best) {
@@ -1925,6 +1948,8 @@ function createPlayable(config) {
     }, 1000);
   });
   
+  replayRecordStart(game);
+  
   $(window).on('keydown touchstart', pause);
   $(window).on('resize', resize);
   resize();
@@ -1936,6 +1961,7 @@ function createPlayable(config) {
 }
 
 function destroyPlayable(game) {
+  replayRecordStop();
   overlay();
   $(window).off('keydown touchstart', pause);
   $(window).off('resize', resize);
