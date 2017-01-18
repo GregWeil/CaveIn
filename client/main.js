@@ -42,6 +42,10 @@ Pages.add(new Pages.Page({
         Pages.navigate('game');
       }
     });
+    var save = Game.playable.save.get();
+    if (save) {
+      console.log(save);
+    }
   },
   teardown: function() {
     Game.playable.destroy();

@@ -8,11 +8,24 @@ var Game = require('game.js');
 
 var game = null;
 var replay = null;
+var replayStorage = window.sessionStorage;
+var replayStorageKey = 'save';
 
 //Save a replay of the player's game
 
+function replayRecordRetrieve() {
+  if (!replayStorage.hasItem(replayStorageKey)) return null;
+  return JSON.parse(replayStorage.getItem(replayStorageKey));
+}
+
+function replayRecordDelete() {
+  if (replayStorage.hasItem(replayStorageKey)) {
+    replayStorage.removeItem(replayStorageKey);
+  }
+}
+
 function replayRecordSave() {
-  //console.log(replay);
+  replayStorage.setItem(replayStorageKey, JSON.stringify(replay));
 }
 
 function replayRecordStart() {
@@ -137,6 +150,10 @@ function destroyPlayable() {
 module.exports = {
   playable: {
     create: createPlayable,
-    destroy: destroyPlayable
+    destroy: destroyPlayable,
+    save: {
+      get: replayRecordRetrieve,
+      delete: replayRecordDelete
+    }
   }
 };
