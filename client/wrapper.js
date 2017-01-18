@@ -14,14 +14,12 @@ var replayStorageKey = 'save';
 //Save a replay of the player's game
 
 function replayRecordRetrieve() {
-  if (!replayStorage.hasItem(replayStorageKey)) return null;
-  return JSON.parse(replayStorage.getItem(replayStorageKey));
+  var save = replayStorage.getItem(replayStorageKey);
+  return save ? JSON.parse(save) : null;
 }
 
 function replayRecordDelete() {
-  if (replayStorage.hasItem(replayStorageKey)) {
-    replayStorage.removeItem(replayStorageKey);
-  }
+  replayStorage.removeItem(replayStorageKey);
 }
 
 function replayRecordSave() {
@@ -150,10 +148,6 @@ function destroyPlayable() {
 module.exports = {
   playable: {
     create: createPlayable,
-    destroy: destroyPlayable,
-    save: {
-      get: replayRecordRetrieve,
-      delete: replayRecordDelete
-    }
+    destroy: destroyPlayable
   }
 };

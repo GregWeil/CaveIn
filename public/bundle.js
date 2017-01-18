@@ -1667,10 +1667,6 @@ Pages.add(new Pages.Page({
         Pages.navigate('game');
       }
     });
-    var save = Game.playable.save.get();
-    if (save) {
-      console.log(save);
-    }
   },
   teardown: function() {
     Game.playable.destroy();
@@ -1871,14 +1867,12 @@ var replayStorageKey = 'save';
 //Save a replay of the player's game
 
 function replayRecordRetrieve() {
-  if (!replayStorage.hasItem(replayStorageKey)) return null;
-  return JSON.parse(replayStorage.getItem(replayStorageKey));
+  var save = replayStorage.getItem(replayStorageKey);
+  return save ? JSON.parse(save) : null;
 }
 
 function replayRecordDelete() {
-  if (replayStorage.hasItem(replayStorageKey)) {
-    replayStorage.removeItem(replayStorageKey);
-  }
+  replayStorage.removeItem(replayStorageKey);
 }
 
 function replayRecordSave() {
@@ -2007,11 +2001,7 @@ function destroyPlayable() {
 module.exports = {
   playable: {
     create: createPlayable,
-    destroy: destroyPlayable,
-    save: {
-      get: replayRecordRetrieve,
-      delete: replayRecordDelete
-    }
+    destroy: destroyPlayable
   }
 };
 },{"game.js":9,"jquery":19,"vector2.js":6}],18:[function(require,module,exports){
