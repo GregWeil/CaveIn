@@ -12,8 +12,7 @@ var replay = null;
 //Save a replay of the player's game
 
 function replayRecordSave() {
-  replay.validate.score = game.score;
-  console.log(replay);
+  //console.log(replay);
 }
 
 function replayRecordStart() {
@@ -21,14 +20,19 @@ function replayRecordStart() {
     commands: [],
     validate: {
       alive: true,
-      score: 0
+      score: 0,
+      version: 1
     }
   };
   replayRecordSave();
   
   game.on('player-died', function(evt) {
     replay.validate.alive = false;
-  });
+  }, undefined, Infinity);
+  
+  game.on('score', function(evt) {
+    replay.validate.score = game.score;
+  }, undefined, Infinity);
   
   game.on('update', function(evt) {
     replay.commands.push(evt.data.command);
@@ -92,7 +96,7 @@ function createPlayable(config) {
     if (game.score > game.best) {
       config.onScore(game.score);
     }
-  }, undefined, Infinity);
+  }, undefined, 100);
   
   game.on('command-check', function (evt) {
     if (overlayCurrent) {
