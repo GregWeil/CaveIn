@@ -44,7 +44,7 @@ Pages.add(new Pages.Page({
     });
   },
   teardown: function() {
-    Game.playable.destroy(window.game);
+    Game.playable.destroy();
   }
 }));
 

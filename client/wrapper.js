@@ -9,25 +9,39 @@ var Game = require('game.js');
 var game = null;
 var replay = null;
 
+//Save a replay of the player's game
+
 function replayRecordSave() {
+  replay.validate.score = game.score;
   console.log(replay);
 }
 
 function replayRecordStart() {
   replay = {
-    commands: []
+    commands: [],
+    validate: {
+      alive: true,
+      score: 0
+    }
   };
   replayRecordSave();
+  
+  game.on('player-died', function(evt) {
+    replay.validate.alive = false;
+  });
+  
   game.on('update', function(evt) {
     replay.commands.push(evt.data.command);
     replayRecordSave();
-  }, undefined, -Infinity);
+  }, undefined, Infinity);
 }
 
 function replayRecordStop() {
   replayRecordSave();
   replay = null;
 }
+
+//Manipulate the player's game
 
 function resize() {
   var pixel = window.devicePixelRatio || 1;
@@ -95,7 +109,7 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  replayRecordStart(game);
+  replayRecordStart();
   
   $(window).on('keydown touchstart', pause);
   $(window).on('resize', resize);
@@ -107,12 +121,13 @@ function createPlayable(config) {
   return game;
 }
 
-function destroyPlayable(game) {
+function destroyPlayable() {
   replayRecordStop();
   overlay();
   $(window).off('keydown touchstart', pause);
   $(window).off('resize', resize);
   game.destructor();
+  game = null;
 }
 
 module.exports = {
