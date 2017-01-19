@@ -11,13 +11,45 @@ var replay = null;
 var replayStorage = window.sessionStorage;
 var replayStorageKey = 'save';
 
+//Replay validation
+
+function replayValidate(replay) {
+  if (!replay) return false;
+  var game = new Game(null);
+  
+  var alive = true;
+  var aborted = false;
+  game.on('player-died', function(evt) {
+    alive = false;
+  });
+  
+  for (var i = 0; i < replay.commands.length; ++i) {
+    if (!alive) {
+      aborted = true;
+      break;
+    }
+    game.update(commands[i]);
+  }
+  
+  var valid = !aborted &&
+    (alive === replay.validate.alive) &&
+    (game.score === replay.validate.score);
+  
+  game.destructor();
+  
+  return valid;
+}
+
 //Save a replay of the player's game
 
 function replayGetSave() {
   var save = replayStorage.getItem(replayStorageKey);
   if (!save) return null;
+  
   save = JSON.parse(save);
   if (!save.validate.alive) return null;
+  if (!replayValidate(save)) return null;
+  
   return save;
 }
 
