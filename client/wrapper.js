@@ -13,21 +13,21 @@ var replayStorageKey = 'save';
 
 //Save a replay of the player's game
 
-function replayRecordRetrieve() {
+function replayGetSave() {
   var save = replayStorage.getItem(replayStorageKey);
-  return save ? JSON.parse(save) : null;
-}
-
-function replayRecordDelete() {
-  replayStorage.removeItem(replayStorageKey);
+  if (!save) return null;
+  save = JSON.parse(save);
+  if (!save.validate.alive) return null;
+  return save;
 }
 
 function replayRecordSave() {
+  replay.validate.score = game.score;
   replayStorage.setItem(replayStorageKey, JSON.stringify(replay));
 }
 
-function replayRecordStart() {
-  replay = {
+function replayRecordStart(save) {
+  replay = save || {
     commands: [],
     validate: {
       alive: true,
@@ -39,10 +39,6 @@ function replayRecordStart() {
   
   game.on('player-died', function(evt) {
     replay.validate.alive = false;
-  }, undefined, Infinity);
-  
-  game.on('score', function(evt) {
-    replay.validate.score = game.score;
   }, undefined, Infinity);
   
   game.on('update', function(evt) {
@@ -124,7 +120,13 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  replayRecordStart();
+  var save = replayGetSave();
+  if (save) {
+    for (var i = 0; i < save.commands.length; ++i) {
+      game.update(save.commands[i]);
+    }
+  }
+  replayRecordStart(save);
   
   $(window).on('keydown touchstart', pause);
   $(window).on('resize', resize);

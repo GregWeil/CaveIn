@@ -56,7 +56,7 @@ class EnemyGhost extends BaseObject {
   
   hurt(data) {
     if (this.pos.equals(data.pos)) {
-      game.destroy(this, data.delay);
+      this.game.destroy(this, data.delay);
       data.hit = true;
     }
   }
@@ -134,7 +134,7 @@ module.exports = class Enemy extends BaseObject {
     this.posLast = this.pos.copy();
     var newPos = this.pos.plus(this.movement);
     if (this.grid.accessible(newPos)) {
-      var collision = game.collisionCheck(newPos);
+      var collision = this.game.collisionCheck(newPos);
       if (!(collision instanceof Enemy)) {
         this.pos = newPos;
         playAudioStep();
