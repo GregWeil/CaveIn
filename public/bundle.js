@@ -14,7 +14,7 @@ module.exports = class Engine extends EventEmitter {
     this.active = true;
     
     this.canvas = canvas || null;
-    this.ctx = this.canvas ? canvas.getContext('2d') : null;
+    this.ctx = this.canvas.getContext('2d');
     
     this.objects = [];
     
@@ -999,7 +999,7 @@ module.exports = class Game extends Engine {
   //Cleanup
   
   destructor() {
-    this.input.destructor();
+    this.input && this.input.destructor();
     window.clearInterval(this.animInterval);
     super.destructor();
   }
@@ -2007,7 +2007,7 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  var save = replayGetSave();
+  var save = null; //replayGetSave();
   if (save) {
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);

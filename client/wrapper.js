@@ -152,7 +152,7 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  var save = replayGetSave();
+  var save = null; //replayGetSave();
   if (save) {
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);

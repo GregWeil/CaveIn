@@ -13,7 +13,7 @@ module.exports = class Engine extends EventEmitter {
     this.active = true;
     
     this.canvas = canvas || null;
-    this.ctx = this.canvas ? canvas.getContext('2d') : null;
+    this.ctx = this.canvas.getContext('2d');
     
     this.objects = [];
     
