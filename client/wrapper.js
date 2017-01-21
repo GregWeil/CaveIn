@@ -42,6 +42,10 @@ function replayValidate(replay) {
 
 //Save a replay of the player's game
 
+function replayRemoveSave() {
+  replayStorage.removeItem(replayStorageKey);
+}
+
 function replayGetSave() {
   var save = replayStorage.getItem(replayStorageKey);
   if (!save) return null;
@@ -152,7 +156,7 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  var save = null; //replayGetSave();
+  var save = replayGetSave();
   if (save) {
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);
@@ -182,6 +186,7 @@ function destroyPlayable() {
 module.exports = {
   playable: {
     create: createPlayable,
-    destroy: destroyPlayable
+    destroy: destroyPlayable,
+    save: { clear: replayRemoveSave }
   }
 };

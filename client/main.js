@@ -30,7 +30,7 @@ Pages.add(new Pages.Page({
 }));
 
 Pages.redirect('newgame', 'game', function() {
-  console.log('redirect');
+  Game.playable.save.clear();
 });
 
 Pages.add(new Pages.Page({
@@ -43,7 +43,7 @@ Pages.add(new Pages.Page({
         window.localStorage.setItem('best-score', newBest);
       },
       onRetry: function() {
-        Pages.navigate('game');
+        Pages.navigate('newgame');
       }
     });
   },

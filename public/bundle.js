@@ -13,7 +13,7 @@ module.exports = class Engine extends EventEmitter {
     
     this.active = true;
     
-    this.canvas = canvas || null;
+    this.canvas = canvas || document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     
     this.objects = [];
@@ -1657,7 +1657,7 @@ Pages.add(new Pages.Page({
 }));
 
 Pages.redirect('newgame', 'game', function() {
-  console.log('redirect');
+  Game.playable.save.clear();
 });
 
 Pages.add(new Pages.Page({
@@ -1670,7 +1670,7 @@ Pages.add(new Pages.Page({
         window.localStorage.setItem('best-score', newBest);
       },
       onRetry: function() {
-        Pages.navigate('game');
+        Pages.navigate('newgame');
       }
     });
   },
@@ -1912,6 +1912,10 @@ function replayValidate(replay) {
 
 //Save a replay of the player's game
 
+function replayRemoveSave() {
+  replayStorage.removeItem(replayStorageKey);
+}
+
 function replayGetSave() {
   var save = replayStorage.getItem(replayStorageKey);
   if (!save) return null;
@@ -2022,7 +2026,7 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  var save = null; //replayGetSave();
+  var save = replayGetSave();
   if (save) {
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);
@@ -2052,7 +2056,8 @@ function destroyPlayable() {
 module.exports = {
   playable: {
     create: createPlayable,
-    destroy: destroyPlayable
+    destroy: destroyPlayable,
+    save: { clear: replayRemoveSave }
   }
 };
 },{"game.js":9,"jquery":19,"vector2.js":6}],18:[function(require,module,exports){
