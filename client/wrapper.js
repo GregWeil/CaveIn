@@ -31,23 +31,27 @@ function replayValidate(replay) {
     game.update(replay.commands[i]);
   }
   
-  var valid = !aborted &&
-    (alive === replay.validate.alive) &&
-    (game.score === replay.validate.score);
-  
   var invalid = [];
+  
+  if (aborted) {
+    invalid.push('player died before end of inputs');
+  }
   
   if (alive !== replay.validate.alive) {
     invalid.push('player alive state mismatch');
   }
   
   if (game.score !== replay.validate.score) {
-    invalid.push('fi)
+    invalid.push('score mismatch');
   }
   
   game.destructor();
   
-  return valid;
+  if (invalid.length) {
+    console.log(invalid.join('\n'));
+  }
+  
+  return !invalid.length;
 }
 
 //Save a replay of the player's game

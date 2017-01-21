@@ -17,8 +17,8 @@ var Gem = require('gem.js');
 var Score = require('score.js');
 
 module.exports = class Game extends Engine {
-  constructor(canvas, best) {
-    super(canvas);
+  constructor(config) {
+    super(config);
     
     this.randomSeed = 1 || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
@@ -59,11 +59,8 @@ module.exports = class Game extends Engine {
       gridSize: new Vector2(29, 18)
     });
     
-    var pathfind = this.create(Pathfind, { grid: grid });
-    
-    var colors = this.create(Colors, { grid: grid });
-    
-    var score = this.create(Score, { grid: grid });
+    this.create(Colors, { grid: grid });
+    this.create(Score, { grid: grid });
     
     //Create the player and fill in the grid
     
@@ -85,19 +82,23 @@ module.exports = class Game extends Engine {
     
     //Enemy spawning and AI
     
+    var pathfind = this.create(Pathfind, { grid: grid });
+    
+    function enemyAI(pos) {
+      if (player.active) {
+        var choices = pathfind.getNextChoices(pos, player.pos);
+        return this.game.random.pick(choices).minus(pos);
+      } else {
+        return Random.pick([
+          new Vector2(-1, 0), new Vector2(1, 0),
+          new Vector2(0, -1), new Vector2(0, 1)
+        ]);
+      }
+    }
+    
     this.on('grid-change', function(evt) {
       if (evt.data.from && !evt.data.to && evt.data.cause !== 'gem') {
-        Enemy.spawn(this, grid, player.pos, function enemyAI(pos) {
-          if (player.active) {
-            var choices = pathfind.getNextChoices(pos, player.pos);
-            return this.game.random.pick(choices).minus(pos);
-          } else {
-            return Random.pick([
-              new Vector2(-1, 0), new Vector2(1, 0),
-              new Vector2(0, -1), new Vector2(0, 1)
-            ]);
-          }
-        });
+        Enemy.spawn(this, grid, player.pos, enemyAI);
       }
     }, this);
     
@@ -135,7 +136,7 @@ module.exports = class Game extends Engine {
     //Scoring
     
     this.score = 0;
-    this.best = best || 0;
+    this.best = config.best || 0;
     
     this.on('score', function(evt) {
       this.score += evt.data.score;
@@ -152,7 +153,7 @@ module.exports = class Game extends Engine {
         Render.context.textAlign = 'right';
         Render.context.fillText(this.best >= this.score ?
           'BEST: ' + this.best : 'NEW BEST',
-          canvas.width - 7, 12);
+          this.canvas.width - 7, 12);
       }
     }, this, 900);
   }
