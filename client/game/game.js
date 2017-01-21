@@ -20,7 +20,7 @@ module.exports = class Game extends Engine {
   constructor(config) {
     super(config);
     
-    this.randomSeed = 1 || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
+    this.randomSeed = config.seed || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     

@@ -860,7 +860,7 @@ module.exports = class Game extends Engine {
   constructor(config) {
     super(config);
     
-    this.randomSeed = 1 || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
+    this.randomSeed = config.seed || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
@@ -1885,7 +1885,7 @@ var replayStorageKey = 'save';
 
 function replayValidate(replay) {
   if (!replay) return false;
-  var game = new Game(null);
+  var game = new Game({ seed: replay.seed });
   
   var alive = true;
   var aborted = false;
@@ -1948,6 +1948,7 @@ function replayRecordSave() {
 
 function replayRecordStart(save) {
   replay = save || {
+    seed: game.randomSeed,
     commands: [],
     validate: {
       alive: true,
@@ -2017,7 +2018,13 @@ window.pause = function pause(evt) {
 };
 
 function createPlayable(config) {
-  game = new Game(document.getElementById('canvas'), config.best);
+  var save = replayGetSave();
+  
+  game = new Game({
+    seed: save ? save.seed : null,
+    canvas: document.getElementById('canvas'),
+    best: config.best
+  });
   
   game.on('score', function(evt) {
     if (game.score > game.best) {
@@ -2040,7 +2047,6 @@ function createPlayable(config) {
     }, 1000);
   });
   
-  var save = replayGetSave();
   if (save) {
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);
