@@ -1,7 +1,6 @@
 /// gem.js
 //A pickup that gives a point
 
-var Random = require('random-js')();
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -59,8 +58,8 @@ module.exports = class Gem extends BaseObject {
     var iterations = 0;
     while (iterations < 5) {
       var pos = new Vector2(
-        Random.integer(0, grid.gridSize.x-1),
-        Random.integer(0, grid.gridSize.y-1)
+        game.random.integer(0, grid.gridSize.x-1),
+        game.random.integer(0, grid.gridSize.y-1)
       );
       if (collisions[pos.hash()] !== grid) continue;
       var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
@@ -90,7 +89,7 @@ module.exports = class Gem extends BaseObject {
     this.rangeManhattan = base.rangeManhattan;
     this.sprites = base.sprites;
     
-    this.sprite = Random.integer(0, this.sprites.length - 1);
+    this.sprite = this.game.random.integer(0, this.sprites.length - 1);
     
     this.grid.setBlock(this.pos, 'gem');
     
@@ -134,7 +133,7 @@ module.exports = class Gem extends BaseObject {
     
     audioGem.play();
     
-    game.destroy(this, 0);
+    this.game.destroy(this, 0);
   }
   
   anim(evt) {

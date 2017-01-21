@@ -597,8 +597,6 @@ module.exports = class Vector2 {
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
 
-var Random = require('random-js')();
-
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 var BaseObject = require('object.js');
@@ -620,7 +618,7 @@ class GridColors extends BaseObject {
     for (let i = -2 * this.padding; i < this.grid.gridSize.x; ++i) {
       var array = [];
       for (let j = -2 * this.padding; j < this.grid.gridSize.y; ++j) {
-        array.push(Random.pick(colors));
+        array.push(this.game.random.pick(colors));
       }
       this.colors.push(array);
     }
@@ -644,7 +642,7 @@ class ScreenColors extends BaseObject {
   constructor(config) {
     super(config);
     
-    this.color = Random.pick(colors);
+    this.color = this.game.random.pick(colors);
     
     this.handle(this.game, 'render', this.render, 1000);
   }
@@ -662,11 +660,10 @@ module.exports = {
   Grid: GridColors,
   Screen: ScreenColors
 };
-},{"object.js":4,"random-js":20,"render.js":5,"vector2.js":6}],8:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"vector2.js":6}],8:[function(require,module,exports){
 /// enemy.js
 //Move at the player, kill on contact
 
-var Random = require('random-js')();
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -756,7 +753,7 @@ module.exports = class Enemy extends BaseObject {
     }
     return game.create(Enemy, {
       grid: grid,
-      pos: Random.pick(locations),
+      pos: game.random.pick(locations),
       pathfind: ai
     });
   }
@@ -771,7 +768,7 @@ module.exports = class Enemy extends BaseObject {
     this.moveTimer = 1;
     this.ai = config.pathfind;
     
-    this.sprite = Random.integer(0, sprites.length - 1);
+    this.sprite = this.game.random.integer(0, sprites.length - 1);
     
     this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'update', this.pathfind, -100);
@@ -840,11 +837,11 @@ module.exports = class Enemy extends BaseObject {
     Render.sprite(sprites[this.sprite], this.grid.getPos(displayPos));
   }
 };
-},{"howler":18,"object.js":4,"random-js":20,"render.js":5,"vector2.js":6}],9:[function(require,module,exports){
+},{"howler":18,"object.js":4,"render.js":5,"vector2.js":6}],9:[function(require,module,exports){
 /// game.js
 //Wrap the engine and define game specific interactions
 
-var Random = require('random-js')();
+var Random = require('random-js');
 
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
@@ -862,6 +859,8 @@ var Score = require('score.js');
 module.exports = class Game extends Engine {
   constructor(canvas, best) {
     super(canvas);
+    
+    this.random = new Random(Random.engines.mt19937().autoSeed());
     
     this.input = new Input.Combined({
       game: this,
@@ -929,7 +928,7 @@ module.exports = class Game extends Engine {
         Enemy.spawn(this, grid, player.pos, function enemyAI(pos) {
           if (player.active) {
             var choices = pathfind.getNextChoices(pos, player.pos);
-            return Random.pick(choices).minus(pos);
+            return this.random.pick(choices).minus(pos);
           } else {
             return Random.pick([
               new Vector2(-1, 0), new Vector2(1, 0),
@@ -1008,7 +1007,6 @@ module.exports = class Game extends Engine {
 /// gem.js
 //A pickup that gives a point
 
-var Random = require('random-js')();
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -1066,8 +1064,8 @@ module.exports = class Gem extends BaseObject {
     var iterations = 0;
     while (iterations < 5) {
       var pos = new Vector2(
-        Random.integer(0, grid.gridSize.x-1),
-        Random.integer(0, grid.gridSize.y-1)
+        game.random.integer(0, grid.gridSize.x-1),
+        game.random.integer(0, grid.gridSize.y-1)
       );
       if (collisions[pos.hash()] !== grid) continue;
       var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
@@ -1097,7 +1095,7 @@ module.exports = class Gem extends BaseObject {
     this.rangeManhattan = base.rangeManhattan;
     this.sprites = base.sprites;
     
-    this.sprite = Random.integer(0, this.sprites.length - 1);
+    this.sprite = this.game.random.integer(0, this.sprites.length - 1);
     
     this.grid.setBlock(this.pos, 'gem');
     
@@ -1141,7 +1139,7 @@ module.exports = class Gem extends BaseObject {
     
     audioGem.play();
     
-    game.destroy(this, 0);
+    this.game.destroy(this, 0);
   }
   
   anim(evt) {
@@ -1152,7 +1150,7 @@ module.exports = class Gem extends BaseObject {
     Render.sprite(this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };
-},{"howler":18,"object.js":4,"random-js":20,"render.js":5,"vector2.js":6}],11:[function(require,module,exports){
+},{"howler":18,"object.js":4,"render.js":5,"vector2.js":6}],11:[function(require,module,exports){
 /// grid.js
 //Grid utility functions
 
@@ -1411,7 +1409,6 @@ module.exports = class Pathfind extends BaseObject {
 //Time to get some interactivity
 
 var _ = require('underscore');
-var Random = require('random-js')();
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -1485,7 +1482,7 @@ module.exports = class Player extends BaseObject {
       });
       this.attackHit = true;
       var audio = audioHit.play();
-      audioHit.volume(Random.real(0.3, 0.5, true), audio);
+      audioHit.volume(this.game.random.real(0.3, 0.5, true), audio);
     }
   }
   
@@ -1566,7 +1563,7 @@ module.exports = class Player extends BaseObject {
     }
   }
 };
-},{"enemy.js":8,"howler":18,"object.js":4,"random-js":20,"render.js":5,"underscore":21,"vector2.js":6}],14:[function(require,module,exports){
+},{"enemy.js":8,"howler":18,"object.js":4,"render.js":5,"underscore":21,"vector2.js":6}],14:[function(require,module,exports){
 /// score.js
 //Show a popup when the player gets any points
 

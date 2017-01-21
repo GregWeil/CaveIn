@@ -2,7 +2,6 @@
 //Time to get some interactivity
 
 var _ = require('underscore');
-var Random = require('random-js')();
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -76,7 +75,7 @@ module.exports = class Player extends BaseObject {
       });
       this.attackHit = true;
       var audio = audioHit.play();
-      audioHit.volume(Random.real(0.3, 0.5, true), audio);
+      audioHit.volume(this.game.random.real(0.3, 0.5, true), audio);
     }
   }
   

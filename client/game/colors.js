@@ -2,8 +2,6 @@
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
 
-var Random = require('random-js')();
-
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 var BaseObject = require('object.js');
@@ -25,7 +23,7 @@ class GridColors extends BaseObject {
     for (let i = -2 * this.padding; i < this.grid.gridSize.x; ++i) {
       var array = [];
       for (let j = -2 * this.padding; j < this.grid.gridSize.y; ++j) {
-        array.push(Random.pick(colors));
+        array.push(this.game.random.pick(colors));
       }
       this.colors.push(array);
     }
@@ -49,7 +47,7 @@ class ScreenColors extends BaseObject {
   constructor(config) {
     super(config);
     
-    this.color = Random.pick(colors);
+    this.color = this.game.random.pick(colors);
     
     this.handle(this.game, 'render', this.render, 1000);
   }

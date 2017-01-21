@@ -1,7 +1,7 @@
 /// game.js
 //Wrap the engine and define game specific interactions
 
-var Random = require('random-js')();
+var Random = require('random-js');
 
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
@@ -19,6 +19,8 @@ var Score = require('score.js');
 module.exports = class Game extends Engine {
   constructor(canvas, best) {
     super(canvas);
+    
+    this.random = new Random(Random.engines.mt19937().autoSeed());
     
     this.input = new Input.Combined({
       game: this,
@@ -86,7 +88,7 @@ module.exports = class Game extends Engine {
         Enemy.spawn(this, grid, player.pos, function enemyAI(pos) {
           if (player.active) {
             var choices = pathfind.getNextChoices(pos, player.pos);
-            return Random.pick(choices).minus(pos);
+            return this.random.pick(choices).minus(pos);
           } else {
             return Random.pick([
               new Vector2(-1, 0), new Vector2(1, 0),

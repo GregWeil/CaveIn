@@ -1,7 +1,6 @@
 /// enemy.js
 //Move at the player, kill on contact
 
-var Random = require('random-js')();
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -91,7 +90,7 @@ module.exports = class Enemy extends BaseObject {
     }
     return game.create(Enemy, {
       grid: grid,
-      pos: Random.pick(locations),
+      pos: game.random.pick(locations),
       pathfind: ai
     });
   }
@@ -106,7 +105,7 @@ module.exports = class Enemy extends BaseObject {
     this.moveTimer = 1;
     this.ai = config.pathfind;
     
-    this.sprite = Random.integer(0, sprites.length - 1);
+    this.sprite = this.game.random.integer(0, sprites.length - 1);
     
     this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'update', this.pathfind, -100);
