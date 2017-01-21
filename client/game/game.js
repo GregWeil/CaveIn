@@ -20,7 +20,10 @@ module.exports = class Game extends Engine {
   constructor(canvas, best) {
     super(canvas);
     
-    this.random = new Random(Random.engines.mt19937().autoSeed());
+    var randomSeedRange = (2 ^ 53);
+    this.randomSeed = Random().integer(-randomSeedRange, randomSeedRange);
+    this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
+    this.random = new Random(this.randomEngine);
     
     this.input = new Input.Combined({
       game: this,
@@ -88,7 +91,7 @@ module.exports = class Game extends Engine {
         Enemy.spawn(this, grid, player.pos, function enemyAI(pos) {
           if (player.active) {
             var choices = pathfind.getNextChoices(pos, player.pos);
-            return this.random.pick(choices).minus(pos);
+            return this.game.random.pick(choices).minus(pos);
           } else {
             return Random.pick([
               new Vector2(-1, 0), new Vector2(1, 0),
