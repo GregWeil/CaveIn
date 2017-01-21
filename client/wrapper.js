@@ -35,6 +35,16 @@ function replayValidate(replay) {
     (alive === replay.validate.alive) &&
     (game.score === replay.validate.score);
   
+  var invalid = [];
+  
+  if (alive !== replay.validate.alive) {
+    invalid.push('player alive state mismatch');
+  }
+  
+  if (game.score !== replay.validate.score) {
+    invalid.push('fi)
+  }
+  
   game.destructor();
   
   return valid;

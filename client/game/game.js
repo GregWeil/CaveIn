@@ -20,8 +20,7 @@ module.exports = class Game extends Engine {
   constructor(canvas, best) {
     super(canvas);
     
-    var randomSeedRange = (2 ^ 53);
-    this.randomSeed = Random().integer(-randomSeedRange, randomSeedRange);
+    this.randomSeed = 1 || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
