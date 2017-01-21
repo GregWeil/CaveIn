@@ -1640,7 +1640,7 @@ Pages.home(new Pages.Page({
   selector: '#title-page',
   start: function(evt) {
     if (evt.key === ' ') {
-      Pages.navigate('game');
+      Pages.navigate('newgame');
     }
   },
   setup: function() {
@@ -1655,6 +1655,10 @@ Pages.add(new Pages.Page({
   name: 'tutorial',
   selector: '#tutorial-page'
 }));
+
+Pages.redirect('newgame', 'game', function() {
+  console.log('redirect');
+});
 
 Pages.add(new Pages.Page({
   name: 'game',
@@ -1800,6 +1804,16 @@ function registerHome(page) {
   home = page;
 }
 
+function registerRedirect(from, to, func) {
+  registerPage(new Page({
+    name: from,
+    setup: function() {
+      _.defer(navigate, to);
+      func();
+    }
+  }))
+}
+
 function getPage(name) {
   if (pages[name]) {
     return pages[name];
@@ -1849,6 +1863,7 @@ module.exports = {
   Page: Page,
   add: registerPage,
   home: registerHome,
+  redirect: registerRedirect,
   navigate: navigate,
   setup: initialize
 };
@@ -1883,7 +1898,7 @@ function replayValidate(replay) {
       aborted = true;
       break;
     }
-    game.update(commands[i]);
+    game.update(replay.commands[i]);
   }
   
   var valid = !aborted &&
@@ -2015,7 +2030,7 @@ function createPlayable(config) {
   }
   replayRecordStart(save);
   
-  $(window).on('keydown touchstart', pause);
+  $(window).on('keydown touchstart', window.pause);
   $(window).on('resize', resize);
   resize();
   
@@ -2028,7 +2043,7 @@ function createPlayable(config) {
 function destroyPlayable() {
   replayRecordStop();
   overlay();
-  $(window).off('keydown touchstart', pause);
+  $(window).off('keydown touchstart', window.pause);
   $(window).off('resize', resize);
   game.destructor();
   game = null;

@@ -45,6 +45,16 @@ function registerHome(page) {
   home = page;
 }
 
+function registerRedirect(from, to, func) {
+  registerPage(new Page({
+    name: from,
+    setup: function() {
+      _.defer(navigate, to);
+      func();
+    }
+  }))
+}
+
 function getPage(name) {
   if (pages[name]) {
     return pages[name];
@@ -94,6 +104,7 @@ module.exports = {
   Page: Page,
   add: registerPage,
   home: registerHome,
+  redirect: registerRedirect,
   navigate: navigate,
   setup: initialize
 };

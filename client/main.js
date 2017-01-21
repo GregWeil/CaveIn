@@ -13,7 +13,7 @@ Pages.home(new Pages.Page({
   selector: '#title-page',
   start: function(evt) {
     if (evt.key === ' ') {
-      Pages.navigate('game');
+      Pages.navigate('newgame');
     }
   },
   setup: function() {
@@ -28,6 +28,10 @@ Pages.add(new Pages.Page({
   name: 'tutorial',
   selector: '#tutorial-page'
 }));
+
+Pages.redirect('newgame', 'game', function() {
+  console.log('redirect');
+});
 
 Pages.add(new Pages.Page({
   name: 'game',

@@ -28,7 +28,7 @@ function replayValidate(replay) {
       aborted = true;
       break;
     }
-    game.update(commands[i]);
+    game.update(replay.commands[i]);
   }
   
   var valid = !aborted &&
@@ -160,7 +160,7 @@ function createPlayable(config) {
   }
   replayRecordStart(save);
   
-  $(window).on('keydown touchstart', pause);
+  $(window).on('keydown touchstart', window.pause);
   $(window).on('resize', resize);
   resize();
   
@@ -173,7 +173,7 @@ function createPlayable(config) {
 function destroyPlayable() {
   replayRecordStop();
   overlay();
-  $(window).off('keydown touchstart', pause);
+  $(window).off('keydown touchstart', window.pause);
   $(window).off('resize', resize);
   game.destructor();
   game = null;
