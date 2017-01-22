@@ -75,8 +75,10 @@ function replayGetSave() {
 }
 
 function replayRecordSave() {
-  replay.validate.score = game.score;
-  replayStorage.setItem(replayStorageKey, JSON.stringify(replay));
+  if (replay.commands.length > 0) {
+    replay.validate.score = game.score;
+    replayStorage.setItem(replayStorageKey, JSON.stringify(replay));
+  }
 }
 
 function replayRecordStart(save) {
