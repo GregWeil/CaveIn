@@ -87,7 +87,7 @@ module.exports = class Grid extends BaseObject {
   }
   
   collide(evt) {
-    _.extend(evt.data.instances, this.hashBlocks, _.clone(evt.data.instances));
+    _.defaults(evt.data.instances, this.hashBlocks);
   }
   
   update(evt) {
