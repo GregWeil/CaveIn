@@ -94,6 +94,8 @@ module.exports = class Enemy extends BaseObject {
     this.moveTimer = 1;
     this.ai = config.pathfind;
     
+    this.game.collide.add(this.pos, this);
+    
     this.sprite = this.game.random.integer(0, sprites.length - 1);
     
     this.handle(this.game, 'collision-check', this.collide);

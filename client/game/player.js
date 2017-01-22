@@ -53,6 +53,10 @@ module.exports = class Player extends BaseObject {
     this.handle(this.game, 'render', this.render);
   }
   
+  destroy(displayTime) {
+    super.destroy(displayTime);
+  }
+  
   getFacingDirection() {
     switch (this.facing) {
       case 'up':
@@ -130,6 +134,7 @@ module.exports = class Player extends BaseObject {
         this.game.sound(audioStep, { volume: this.game.random.real(0.3, 0.4, true) });
       }
     }
+    this.game.collide.move(this.posLast, this.pos, this);
   }
   
   updateLate(evt) {

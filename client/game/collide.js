@@ -26,8 +26,7 @@ module.exports = class Collide extends BaseObject {
       for (let j = 0; j < grid.gridSize.y; ++j) {
         var data = this.getData(new Vector2(i, j));
         if (data.length) {
-          Render.context.fillText(data[0].priority,
-            this.grid.getX(i), this.grid.getY(j));
+          Render.context.fillText(data[0].priority, grid.getX(i), grid.getY(j));
         }
       }
     }
@@ -55,6 +54,17 @@ module.exports = class Collide extends BaseObject {
     });
     
     this.setData(pos, data);
+  }
+  
+  remove(pos, instance) {
+    var data = this.getData(pos);
+    data = _.reject(data, _.matcher({ instance: instance }));
+    this.setData(pos, data);
+  }
+  
+  move(from, to, instance) {
+    this.remove(from, instance);
+    this.add(to, instance);
   }
   
   get(pos) {
