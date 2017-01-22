@@ -79,7 +79,7 @@ module.exports = class Collide extends BaseObject {
     var item = _.find(data, function(item) {
       if (_.contains(config.ignore, item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
-      if (config.type && !(item.instance instanceof config.type)) return false;
+      if (config.notType && (item.instance instanceof config.notType)) return false;
       return true;
     });
     return item ? item.instance : null;

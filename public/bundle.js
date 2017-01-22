@@ -688,7 +688,7 @@ module.exports = class Collide extends BaseObject {
     var item = _.find(data, function(item) {
       if (_.contains(config.ignore, item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
-      if (config.type && !(item.instance instanceof config.type)) return false;
+      if (config.notType && (item.instance instanceof config.notType)) return false;
       return true;
     });
     return item ? item.instance : null;
@@ -904,8 +904,7 @@ module.exports = class Enemy extends BaseObject {
     this.posLast = this.pos.copy();
     var newPos = this.pos.plus(this.movement);
     if (this.grid.accessible(newPos)) {
-      var collision = this.game.collisionCheck(newPos);
-      if (!(collision instanceof Enemy)) {
+      if (!this.game.collide.get(newPos, { notType: Enemy })) {
         this.pos = newPos;
         audioStepRequests += 1;
         this.game.collide.move(this.posLast, this.pos, this);
