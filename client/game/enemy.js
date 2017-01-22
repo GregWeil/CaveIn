@@ -23,20 +23,6 @@ var ghostSprites = [
 var audioStep = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy_move.wav'] });
 var audioStepRequests = 0;
 
-function playAudioStep() {
-  if (audioStepRequests === 0) {
-    window.setTimeout(function() {
-      this.game.sound(audioStep, {
-        volume: (1 - (1 / (audioStepRequests * 0.3 + 1))
-      })
-      var audio = audioStep.play();
-      audioStep.volume(1 - (1 / (audioStepRequests * 0.3 + 1)), audio);
-      audioStepRequests = 0;
-    }, 0);
-  }
-  audioStepRequests += 1;
-}
-
 class EnemyGhost extends BaseObject {
   constructor(config) {
     super(config);
@@ -113,6 +99,7 @@ module.exports = class Enemy extends BaseObject {
     this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'update', this.pathfind, -100);
     this.handle(this.game, 'update', this.update);
+    this.handle(this.game, 'update', this.audio, 100);
     
     this.handle(this.game, 'anim-idle', this.anim);
     this.handle(this.game, 'render', this.render);
@@ -139,7 +126,7 @@ module.exports = class Enemy extends BaseObject {
       var collision = this.game.collisionCheck(newPos);
       if (!(collision instanceof Enemy)) {
         this.pos = newPos;
-        playAudioStep();
+        audioStepRequests += 1;
       }
     }
   }
@@ -166,6 +153,13 @@ module.exports = class Enemy extends BaseObject {
   
   anim(evt) {
     this.sprite = (this.sprite + 1) % sprites.length;
+  }
+  
+  audio(evt) {
+    this.game.sound(audioStep, {
+      volume: (1 - (1 / (audioStepRequests * 0.5 + 1)))
+    });
+    audioStepRequests = 0;
   }
   
   render(evt) {
