@@ -19,8 +19,8 @@ Made for the Ludum Dare 37 (One room)
 
 ### Short Term
 
-- Better title screen (horizontal layout)
 - Save progress across refreshes
+- Better title screen (horizontal layout)
 
 ### Long Term
 
