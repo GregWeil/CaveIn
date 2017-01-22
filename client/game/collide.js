@@ -54,17 +54,21 @@ module.exports = class Collide extends BaseObject {
     });
     
     this.setData(pos, data);
+    return data[index];
   }
   
   remove(pos, instance) {
     var data = this.getData(pos);
-    data = _.reject(data, _.matcher({ instance: instance }));
-    this.setData(pos, data);
+    var removed = _.findWhere(data, { instance: instance });
+    this.setData(pos, _.without(data, removed));
+    return removed;
   }
   
   move(from, to, instance) {
-    this.remove(from, instance);
+    var removed = this.remove(from, instance);
+    if (removed) {
     this.add(to, instance);
+    }
   }
   
   get(pos) {

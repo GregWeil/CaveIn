@@ -107,6 +107,11 @@ module.exports = class Enemy extends BaseObject {
     this.handle(this.game, 'render', this.render);
   }
   
+  destroy(displayTime) {
+    this.game.collide.remove(this.pos, this);
+    super.destroy(displayTime);
+  }
+  
   pathfind(evt) {
     this.movement = new Vector2();
     if (this.moveTimer < 1) {
@@ -129,6 +134,7 @@ module.exports = class Enemy extends BaseObject {
       if (!(collision instanceof Enemy)) {
         this.pos = newPos;
         audioStepRequests += 1;
+        this.game.collide.move(this.posLast, this.pos, this);
       }
     }
   }

@@ -54,6 +54,7 @@ module.exports = class Player extends BaseObject {
   }
   
   destroy(displayTime) {
+    this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
   
