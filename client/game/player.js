@@ -74,8 +74,7 @@ module.exports = class Player extends BaseObject {
         cause: 'player'
       });
       this.attackHit = true;
-      var audio = audioHit.play();
-      audioHit.volume(this.game.random.real(0.3, 0.5, true), audio);
+      this.game.sound(audioHit, { volume: this.game.random.real(0.3, 0.5, true) });
     }
   }
   
