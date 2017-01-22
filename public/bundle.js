@@ -610,6 +610,8 @@ module.exports = class Vector2 {
 /// collide.js
 //General grid-based collision checking
 
+var _ = require('underscore');
+
 var Vector2 = require('vector2.js');
 
 var BaseObject = require('object.js');
@@ -619,13 +621,41 @@ module.exports = class Collide extends BaseObject {
     super(config);
     
     this.collisions = {};
+    
+    this.handle(this.game, 'render', this.render, Infinity);
+  }
+  
+  render(evt) {
+    _.each(this.collisions, function(key, data) {
+      console.log(key, data);
+    });
+  }
+  
+  getData(pos) {
+    return this.collisions[pos.hash()] || [];
+  }
+  
+  setData(pos, data) {
+    this.collisions[pos.hash()] = data;
   }
   
   add(pos, inst, priority) {
+    var data = this.getData(pos);
     
+    var index;
+    for (index = 0; index < data.length; ++index) {
+      if (data.priority > priority) break;
+    }
+    
+    data.splice(index, 0, {
+      instance: inst,
+      priority: priority || 0
+    });
+    
+    this.setData(pos, data);
   }
 };
-},{"object.js":4,"vector2.js":6}],8:[function(require,module,exports){
+},{"object.js":4,"underscore":22,"vector2.js":6}],8:[function(require,module,exports){
 /// colors.js
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
@@ -1481,6 +1511,8 @@ module.exports = class Player extends BaseObject {
     this.pos = config.pos;
     this.posLast = this.pos.copy();
     this.facing = 'down';
+    
+    this.game.collide.add(this.pos, this);
     
     this.attacking = false;
     this.attackHit = false;

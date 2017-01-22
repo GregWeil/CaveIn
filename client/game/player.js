@@ -37,6 +37,8 @@ module.exports = class Player extends BaseObject {
     this.posLast = this.pos.copy();
     this.facing = 'down';
     
+    this.game.collide.add(this.pos, this);
+    
     this.attacking = false;
     this.attackHit = false;
     
