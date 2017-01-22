@@ -4,6 +4,7 @@
 var _ = require('underscore');
 
 var Vector2 = require('vector2.js');
+var Render = require('render.js');
 
 var BaseObject = require('object.js');
 
@@ -17,9 +18,19 @@ module.exports = class Collide extends BaseObject {
   }
   
   render(evt) {
-    _.each(this.collisions, function(key, data) {
-      console.log(key, data);
-    });
+    Render.context.fillStyle = 'red';
+    Render.context.textAlign = 'center';
+    Render.context.textBaseline = 'middle';
+    var grid = this.game.grid;
+    for (let i = 0; i < grid.gridSize.x; ++i) {
+      for (let j = 0; j < grid.gridSize.y; ++j) {
+        var data = this.getData(new Vector2(i, j));
+        if (data.length) {
+          Render.context.fillText(data[0].priority,
+            this.grid.getX(i), this.grid.getY(j));
+        }
+      }
+    }
   }
   
   getData(pos) {
@@ -30,7 +41,7 @@ module.exports = class Collide extends BaseObject {
     this.collisions[pos.hash()] = data;
   }
   
-  add(pos, inst, priority) {
+  add(pos, instance, priority) {
     var data = this.getData(pos);
     
     var index;
@@ -39,10 +50,15 @@ module.exports = class Collide extends BaseObject {
     }
     
     data.splice(index, 0, {
-      instance: inst,
+      instance: instance,
       priority: priority || 0
     });
     
     this.setData(pos, data);
+  }
+  
+  get(pos) {
+    var data = this.getData(pos);
+    return data.length ? data[0].instance : null;
   }
 };

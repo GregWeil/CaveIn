@@ -57,7 +57,7 @@ module.exports = class Game extends Engine {
     
     this.collide = this.create(Collide);
     
-    var grid = this.create(Grid, {
+    var grid = this.grid = this.create(Grid, {
       cellSize: new Vector2(16),
       gridSize: new Vector2(29, 18)
     });
