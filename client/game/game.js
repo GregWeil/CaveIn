@@ -9,6 +9,7 @@ var Engine = require('engine.js');
 var Input = require('input.js');
 
 var Grid = require('grid.js');
+var Collide = require('collide.js');
 var Colors = require('colors.js').Screen;
 var Pathfind = require('pathfind.js');
 var Player = require('player.js');
@@ -53,6 +54,8 @@ module.exports = class Game extends Engine {
     }.bind(this), 1000);
     
     //Objects which exist for the life of the game
+    
+    this.collide = this.create(Collide);
     
     var grid = this.create(Grid, {
       cellSize: new Vector2(16),

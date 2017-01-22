@@ -106,7 +106,7 @@ module.exports = class Engine extends EventEmitter {
     return this.getCollisions(data)[pos.hash()];
   }
 };
-},{"events.js":2,"render.js":5,"underscore":21}],2:[function(require,module,exports){
+},{"events.js":2,"render.js":5,"underscore":22}],2:[function(require,module,exports){
 /// events.js
 //A pretty standard event system
 
@@ -183,7 +183,7 @@ module.exports = class EventEmitter {
     return handler;
   }
 };
-},{"underscore":21}],3:[function(require,module,exports){
+},{"underscore":22}],3:[function(require,module,exports){
 /// input.js
 //Take player input and send it to the game
 
@@ -428,7 +428,7 @@ module.exports = {
   Swipe: InputSwipe,
   Combined: InputCombined
 };
-},{"underscore":21,"vector2.js":6}],4:[function(require,module,exports){
+},{"underscore":22,"vector2.js":6}],4:[function(require,module,exports){
 /// object.js
 //Base game object that things inherit from
 
@@ -477,7 +477,7 @@ module.exports = class BaseObject {
     handler.active = false;
   }
 };
-},{"underscore":21}],5:[function(require,module,exports){
+},{"underscore":22}],5:[function(require,module,exports){
 /// render.js
 //A bunch of utility functions for drawing things
 
@@ -607,6 +607,19 @@ module.exports = class Vector2 {
   }
 };
 },{}],7:[function(require,module,exports){
+/// collide.js
+//General grid-based collision checking
+
+var BaseObject = require('object.js');
+
+module.exports = class Collide extends BaseObject {
+  constructor(config) {
+    super(config);
+    
+    var collisions = {};
+  }
+};
+},{"object.js":4}],8:[function(require,module,exports){
 /// colors.js
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
@@ -674,7 +687,7 @@ module.exports = {
   Grid: GridColors,
   Screen: ScreenColors
 };
-},{"object.js":4,"render.js":5,"vector2.js":6}],8:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"vector2.js":6}],9:[function(require,module,exports){
 /// enemy.js
 //Move at the player, kill on contact
 
@@ -850,7 +863,7 @@ module.exports = class Enemy extends BaseObject {
     Render.sprite(sprites[this.sprite], this.grid.getPos(displayPos));
   }
 };
-},{"howler":18,"object.js":4,"render.js":5,"vector2.js":6}],9:[function(require,module,exports){
+},{"howler":19,"object.js":4,"render.js":5,"vector2.js":6}],10:[function(require,module,exports){
 /// game.js
 //Wrap the engine and define game specific interactions
 
@@ -862,6 +875,7 @@ var Engine = require('engine.js');
 var Input = require('input.js');
 
 var Grid = require('grid.js');
+var Collide = require('collide.js');
 var Colors = require('colors.js').Screen;
 var Pathfind = require('pathfind.js');
 var Player = require('player.js');
@@ -906,6 +920,8 @@ module.exports = class Game extends Engine {
     }.bind(this), 1000);
     
     //Objects which exist for the life of the game
+    
+    this.collide = this.create(Collide);
     
     var grid = this.create(Grid, {
       cellSize: new Vector2(16),
@@ -1019,7 +1035,7 @@ module.exports = class Game extends Engine {
     super.destructor();
   }
 };
-},{"colors.js":7,"enemy.js":8,"engine.js":1,"gem.js":10,"grid.js":11,"input.js":3,"pathfind.js":12,"player.js":13,"random-js":20,"render.js":5,"score.js":14,"vector2.js":6}],10:[function(require,module,exports){
+},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":21,"render.js":5,"score.js":15,"vector2.js":6}],11:[function(require,module,exports){
 /// gem.js
 //A pickup that gives a point
 
@@ -1166,7 +1182,7 @@ module.exports = class Gem extends BaseObject {
     Render.sprite(this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };
-},{"howler":18,"object.js":4,"render.js":5,"vector2.js":6}],11:[function(require,module,exports){
+},{"howler":19,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
 /// grid.js
 //Grid utility functions
 
@@ -1305,7 +1321,7 @@ module.exports = class Grid extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5,"underscore":21,"vector2.js":6}],12:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":22,"vector2.js":6}],13:[function(require,module,exports){
 /// pathfind.js
 //Construct a grid where each cell has its distance to the player
 
@@ -1420,7 +1436,7 @@ module.exports = class Pathfind extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5,"vector2.js":6}],13:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"vector2.js":6}],14:[function(require,module,exports){
 /// player.js
 //Time to get some interactivity
 
@@ -1578,7 +1594,7 @@ module.exports = class Player extends BaseObject {
     }
   }
 };
-},{"enemy.js":8,"howler":18,"object.js":4,"render.js":5,"underscore":21,"vector2.js":6}],14:[function(require,module,exports){
+},{"enemy.js":9,"howler":19,"object.js":4,"render.js":5,"underscore":22,"vector2.js":6}],15:[function(require,module,exports){
 /// score.js
 //Show a popup when the player gets any points
 
@@ -1638,7 +1654,7 @@ module.exports = class Score extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5}],15:[function(require,module,exports){
+},{"object.js":4,"render.js":5}],16:[function(require,module,exports){
 /// main.js
 //Define the different pages and how they interact
 
@@ -1772,7 +1788,7 @@ window.fullscreenExit = function() {
     }
   }
 };
-},{"howler":18,"jquery":19,"pages.js":16,"underscore":21,"wrapper.js":17}],16:[function(require,module,exports){
+},{"howler":19,"jquery":20,"pages.js":17,"underscore":22,"wrapper.js":18}],17:[function(require,module,exports){
 /// pages.js
 //A really basic single page app system
 
@@ -1883,7 +1899,7 @@ module.exports = {
   navigate: navigate,
   setup: initialize
 };
-},{"jquery":19,"underscore":21}],17:[function(require,module,exports){
+},{"jquery":20,"underscore":22}],18:[function(require,module,exports){
 /// wrapper.js
 //Provide simple functions for game management
 
@@ -2120,7 +2136,7 @@ module.exports = {
     }
   }
 };
-},{"game.js":9,"jquery":19,"vector2.js":6}],18:[function(require,module,exports){
+},{"game.js":10,"jquery":20,"vector2.js":6}],19:[function(require,module,exports){
 (function (global){
 /*!
  *  howler.js v2.0.2
@@ -4894,7 +4910,7 @@ module.exports = {
 })();
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.1.1
  * https://jquery.com/
@@ -15116,7 +15132,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /*jshint eqnull:true*/
 (function (root) {
   "use strict";
@@ -15833,7 +15849,7 @@ return jQuery;
     root[GLOBAL_KEY] = Random;
   }
 }(this));
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -17383,4 +17399,4 @@ return jQuery;
   }
 }.call(this));
 
-},{}]},{},[15]);
+},{}]},{},[16]);
