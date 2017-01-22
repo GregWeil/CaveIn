@@ -131,7 +131,7 @@ module.exports = class Gem extends BaseObject {
       pos: this.pos
     });
     
-    audioGem.play();
+    this.game.sound(audioGem);
     
     this.game.destroy(this, 0);
   }

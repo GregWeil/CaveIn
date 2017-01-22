@@ -15,7 +15,10 @@ var replayStorageKey = 'save';
 
 function replayValidate(replay) {
   if (!replay) return false;
-  var game = new Game({ seed: replay.seed });
+  var game = new Game({
+    headless: true,
+    seed: replay.seed
+  });
   
   var alive = true;
   var aborted = false;
@@ -178,9 +181,11 @@ function createPlayable(config) {
   });
   
   if (save) {
+    game.headless = true;
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);
     }
+    game.headless = false;
   }
   replayRecordStart(save);
   

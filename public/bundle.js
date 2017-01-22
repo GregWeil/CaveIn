@@ -12,14 +12,14 @@ module.exports = class Engine extends EventEmitter {
     super();
     
     this.active = true;
-    this.headless = _.has(config, 'headless') ? config.headless : !!config.canvas;
+    this.headless = !_.isUndefined(config.headless) ? config.headless : !config.canvas;
     
     this.canvas = config.canvas || document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     
     this.objects = [];
     
-    if (config.canvas) {
+    if (!this.headless) {
       this.render();
     }
   }
@@ -69,6 +69,9 @@ module.exports = class Engine extends EventEmitter {
   }
   
   sound(asset, config) {
+    if (this.headless) {
+      return null;
+    }
     var audio = asset.play();
     if (config) {
       if (_.has(config, 'volume')) {
@@ -830,10 +833,12 @@ module.exports = class Enemy extends BaseObject {
   }
   
   audio(evt) {
-    this.game.sound(audioStep, {
-      volume: (1 - (1 / (audioStepRequests * 0.5 + 1)))
-    });
-    audioStepRequests = 0;
+    if (audioStepRequests > 0) {
+      this.game.sound(audioStep, {
+        volume: (1 - (1 / (audioStepRequests * 0.5 + 1)))
+      });
+      audioStepRequests = 0;
+    }
   }
   
   render(evt) {
@@ -1148,7 +1153,7 @@ module.exports = class Gem extends BaseObject {
       pos: this.pos
     });
     
-    audioGem.play();
+    this.game.sound(audioGem);
     
     this.game.destroy(this, 0);
   }
@@ -1892,7 +1897,10 @@ var replayStorageKey = 'save';
 
 function replayValidate(replay) {
   if (!replay) return false;
-  var game = new Game({ seed: replay.seed });
+  var game = new Game({
+    headless: true,
+    seed: replay.seed
+  });
   
   var alive = true;
   var aborted = false;
@@ -2055,9 +2063,11 @@ function createPlayable(config) {
   });
   
   if (save) {
+    game.headless = true;
     for (var i = 0; i < save.commands.length; ++i) {
       game.update(save.commands[i]);
     }
+    game.headless = false;
   }
   replayRecordStart(save);
   

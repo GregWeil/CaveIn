@@ -156,10 +156,12 @@ module.exports = class Enemy extends BaseObject {
   }
   
   audio(evt) {
-    this.game.sound(audioStep, {
-      volume: (1 - (1 / (audioStepRequests * 0.5 + 1)))
-    });
-    audioStepRequests = 0;
+    if (audioStepRequests > 0) {
+      this.game.sound(audioStep, {
+        volume: (1 - (1 / (audioStepRequests * 0.5 + 1)))
+      });
+      audioStepRequests = 0;
+    }
   }
   
   render(evt) {

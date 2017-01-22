@@ -11,14 +11,14 @@ module.exports = class Engine extends EventEmitter {
     super();
     
     this.active = true;
-    this.headless = _.has(config, 'headless') ? config.headless : !!config.canvas;
+    this.headless = !_.isUndefined(config.headless) ? config.headless : !config.canvas;
     
     this.canvas = config.canvas || document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     
     this.objects = [];
     
-    if (config.canvas) {
+    if (!this.headless) {
       this.render();
     }
   }
@@ -68,6 +68,9 @@ module.exports = class Engine extends EventEmitter {
   }
   
   sound(asset, config) {
+    if (this.headless) {
+      return null;
+    }
     var audio = asset.play();
     if (config) {
       if (_.has(config, 'volume')) {
