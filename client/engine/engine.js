@@ -91,17 +91,4 @@ module.exports = class Engine extends EventEmitter {
     inst.destroy(displayTime);
     this.objects.splice(this.objects.indexOf(inst), 1);
   }
-  
-  getCollisions(data) {
-    var event = {
-      instances: {},
-      data: data || {}
-    };
-    this.emit('collision-check', event);
-    return event.instances;
-  }
-  
-  collisionCheck(pos, data) {
-    return this.getCollisions(data)[pos.hash()];
-  }
 };

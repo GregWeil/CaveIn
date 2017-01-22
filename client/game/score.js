@@ -52,7 +52,7 @@ module.exports = class Score extends BaseObject {
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
       if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
-      if (this.game.collisionCheck(popup.pos)) continue;
+      if (this.game.collide.get(popup.pos)) continue;
       Render.text('+' + popup.score, this.grid.getPos(popup.pos));
     }
   }

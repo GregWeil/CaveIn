@@ -108,13 +108,12 @@ module.exports = class Game extends Engine {
     //Check if something should collapse
     
     this.on('update', function(evt) {
-      var collisions = this.getCollisions();
       var distances = pathfind.generateDistanceField(player.pos);
       for (let i = 0; i < grid.gridSize.x; ++i) {
         for (let j = 0; j < grid.gridSize.y; ++j) {
           var pos = new Vector2(i, j);
           if (!grid.getBlock(pos) && !Number.isFinite(distances[i][j])) {
-            var hit = collisions[pos.hash()];
+            var hit = this.collide.get(pos);
             if (hit && hit.hurt) {
               hit.hurt({
                 pos: pos,

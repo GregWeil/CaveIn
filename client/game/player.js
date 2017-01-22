@@ -48,8 +48,6 @@ module.exports = class Player extends BaseObject {
     this.handle(this.game, 'update', this.update);
     this.handle(this.game, 'update', this.updateLate, 10);
     
-    this.handle(this.game, 'collision-check', this.collide);
-    
     this.handle(this.game, 'render', this.render);
   }
   
@@ -91,11 +89,6 @@ module.exports = class Player extends BaseObject {
       this.game.emit('player-died');
       this.game.destroy(this);
     }
-  }
-  
-  collide(evt) {
-    if (evt.data.data.source === this) return;
-    evt.data.instances[this.pos.hash()] = this;
   }
   
   acceptCommand(evt) {

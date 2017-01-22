@@ -34,7 +34,6 @@ class EnemyGhost extends BaseObject {
     this.grid.setBlock(this.pos, 'ghost');
     this.game.collide.add(this.pos, this);
     
-    this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'anim-idle', this.anim);
     this.handle(this.game, 'render', this.render);
   }
@@ -42,10 +41,6 @@ class EnemyGhost extends BaseObject {
   destroy(displayTime) {
     this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
-  }
-  
-  collide(evt) {
-    evt.data.instances[this.pos.hash()] = this;
   }
   
   hurt(data) {
@@ -103,7 +98,6 @@ module.exports = class Enemy extends BaseObject {
     
     this.sprite = this.game.random.integer(0, sprites.length - 1);
     
-    this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'update', this.pathfind, -100);
     this.handle(this.game, 'update', this.update);
     this.handle(this.game, 'update', this.audio, 100);
@@ -135,16 +129,12 @@ module.exports = class Enemy extends BaseObject {
     this.posLast = this.pos.copy();
     var newPos = this.pos.plus(this.movement);
     if (this.grid.accessible(newPos)) {
-      if (!this.game.collide.get(newPos, { notType: Enemy })) {
+      if (!this.game.collide.get(newPos, { type: Enemy })) {
         this.pos = newPos;
         audioStepRequests += 1;
         this.game.collide.move(this.posLast, this.pos, this);
       }
     }
-  }
-  
-  collide(evt) {
-    evt.data.instances[this.pos.hash()] = this;
   }
   
   hurt(data) {

@@ -22,11 +22,9 @@ module.exports = class Grid extends BaseObject {
     for (let i = 0; i < this.gridSize.x; ++i) {
       this.blocks[i] = Array(this.gridSize.y).fill(false);
     }
-    this.hashBlocks = {};
     
     this.delayBlocks = {};
     
-    this.handle(this.game, 'collision-check', this.collide, -10);
     this.handle(this.game, 'update', this.update, -Infinity);
     this.handle(this.game, 'render', this.render, -100);
   }
@@ -83,12 +81,6 @@ module.exports = class Grid extends BaseObject {
         this.game.collide.remove(pos, this);
       }
       
-      if (newVal) {
-        this.hashBlocks[pos.hash()] = this;
-      } else {
-        delete this.hashBlocks[pos.hash()];
-      }
-      
       this.delayBlocks[pos.hash()] = delay;
       this.game.emit('grid-change', {
         source: this,
@@ -104,10 +96,6 @@ module.exports = class Grid extends BaseObject {
     if (this.inBounds(data.pos)) {
       this.setBlock(data.pos, false, 0, 'hurt');
     }
-  }
-  
-  collide(evt) {
-    _.defaults(evt.data.instances, this.hashBlocks);
   }
   
   update(evt) {

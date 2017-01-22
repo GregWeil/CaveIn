@@ -92,19 +92,6 @@ module.exports = class Engine extends EventEmitter {
     inst.destroy(displayTime);
     this.objects.splice(this.objects.indexOf(inst), 1);
   }
-  
-  getCollisions(data) {
-    var event = {
-      instances: {},
-      data: data || {}
-    };
-    this.emit('collision-check', event);
-    return event.instances;
-  }
-  
-  collisionCheck(pos, data) {
-    return this.getCollisions(data)[pos.hash()];
-  }
 };
 },{"events.js":2,"render.js":5,"underscore":22}],2:[function(require,module,exports){
 /// events.js
@@ -688,7 +675,6 @@ module.exports = class Collide extends BaseObject {
     var item = _.find(data, function(item) {
       if (_.contains(config.ignore, item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
-      if (config.notType && (item.instance instanceof config.notType)) return false;
       return true;
     });
     return item ? item.instance : null;
@@ -803,7 +789,6 @@ class EnemyGhost extends BaseObject {
     this.grid.setBlock(this.pos, 'ghost');
     this.game.collide.add(this.pos, this);
     
-    this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'anim-idle', this.anim);
     this.handle(this.game, 'render', this.render);
   }
@@ -811,10 +796,6 @@ class EnemyGhost extends BaseObject {
   destroy(displayTime) {
     this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
-  }
-  
-  collide(evt) {
-    evt.data.instances[this.pos.hash()] = this;
   }
   
   hurt(data) {
@@ -872,7 +853,6 @@ module.exports = class Enemy extends BaseObject {
     
     this.sprite = this.game.random.integer(0, sprites.length - 1);
     
-    this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'update', this.pathfind, -100);
     this.handle(this.game, 'update', this.update);
     this.handle(this.game, 'update', this.audio, 100);
@@ -904,16 +884,12 @@ module.exports = class Enemy extends BaseObject {
     this.posLast = this.pos.copy();
     var newPos = this.pos.plus(this.movement);
     if (this.grid.accessible(newPos)) {
-      if (!this.game.collide.get(newPos, { notType: Enemy })) {
+      if (!this.game.collide.get(newPos, { type: Enemy })) {
         this.pos = newPos;
         audioStepRequests += 1;
         this.game.collide.move(this.posLast, this.pos, this);
       }
     }
-  }
-  
-  collide(evt) {
-    evt.data.instances[this.pos.hash()] = this;
   }
   
   hurt(data) {
@@ -1065,13 +1041,12 @@ module.exports = class Game extends Engine {
     //Check if something should collapse
     
     this.on('update', function(evt) {
-      var collisions = this.getCollisions();
       var distances = pathfind.generateDistanceField(player.pos);
       for (let i = 0; i < grid.gridSize.x; ++i) {
         for (let j = 0; j < grid.gridSize.y; ++j) {
           var pos = new Vector2(i, j);
           if (!grid.getBlock(pos) && !Number.isFinite(distances[i][j])) {
-            var hit = collisions[pos.hash()];
+            var hit = this.collide.get(pos);
             if (hit && hit.hurt) {
               hit.hurt({
                 pos: pos,
@@ -1304,11 +1279,9 @@ module.exports = class Grid extends BaseObject {
     for (let i = 0; i < this.gridSize.x; ++i) {
       this.blocks[i] = Array(this.gridSize.y).fill(false);
     }
-    this.hashBlocks = {};
     
     this.delayBlocks = {};
     
-    this.handle(this.game, 'collision-check', this.collide, -10);
     this.handle(this.game, 'update', this.update, -Infinity);
     this.handle(this.game, 'render', this.render, -100);
   }
@@ -1365,12 +1338,6 @@ module.exports = class Grid extends BaseObject {
         this.game.collide.remove(pos, this);
       }
       
-      if (newVal) {
-        this.hashBlocks[pos.hash()] = this;
-      } else {
-        delete this.hashBlocks[pos.hash()];
-      }
-      
       this.delayBlocks[pos.hash()] = delay;
       this.game.emit('grid-change', {
         source: this,
@@ -1386,10 +1353,6 @@ module.exports = class Grid extends BaseObject {
     if (this.inBounds(data.pos)) {
       this.setBlock(data.pos, false, 0, 'hurt');
     }
-  }
-  
-  collide(evt) {
-    _.defaults(evt.data.instances, this.hashBlocks);
   }
   
   update(evt) {
@@ -1604,8 +1567,6 @@ module.exports = class Player extends BaseObject {
     this.handle(this.game, 'update', this.update);
     this.handle(this.game, 'update', this.updateLate, 10);
     
-    this.handle(this.game, 'collision-check', this.collide);
-    
     this.handle(this.game, 'render', this.render);
   }
   
@@ -1647,11 +1608,6 @@ module.exports = class Player extends BaseObject {
       this.game.emit('player-died');
       this.game.destroy(this);
     }
-  }
-  
-  collide(evt) {
-    if (evt.data.data.source === this) return;
-    evt.data.instances[this.pos.hash()] = this;
   }
   
   acceptCommand(evt) {
@@ -1774,7 +1730,7 @@ module.exports = class Score extends BaseObject {
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
       if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
-      if (this.game.collisionCheck(popup.pos)) continue;
+      if (this.game.collide.get(popup.pos)) continue;
       Render.text('+' + popup.score, this.grid.getPos(popup.pos));
     }
   }
