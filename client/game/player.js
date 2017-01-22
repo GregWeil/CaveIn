@@ -74,7 +74,7 @@ module.exports = class Player extends BaseObject {
   
   attack() {
     var hitPos = this.pos.plus(this.getFacingDirection());
-    var hit = this.game.collisionCheck(hitPos);
+    var hit = this.game.collide.get(hitPos);
     if (hit) {
       hit.hurt({
         pos: hitPos,
@@ -140,7 +140,7 @@ module.exports = class Player extends BaseObject {
   
   updateLate(evt) {
     //If something else is on this space, get hurt
-    if (this.game.collisionCheck(this.pos, { source: this })) {
+    if (this.game.collide.get(this.pos, { ignore: [this] })) {
       this.hurt({ cause: 'collision' });
     } else if (evt.data.command === 'action' && !this.attackHit) {
       this.attack();

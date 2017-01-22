@@ -83,7 +83,7 @@ module.exports = class Gem extends BaseObject {
     this.grid = config.grid;
     this.pos = config.pos;
     
-    this.game.collide.add(this.pos, this);
+    //this.game.collide.add(this.pos, this);
     
     var base = gemTiers[config.tier];
     this.score = base.score;
@@ -102,7 +102,7 @@ module.exports = class Gem extends BaseObject {
   }
   
   destroy(displayTime) {
-    this.game.collide.remove(this.pos, this);
+    //this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
   

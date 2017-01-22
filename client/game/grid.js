@@ -35,7 +35,7 @@ module.exports = class Grid extends BaseObject {
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
         if (this.blocks[i][j]) {
-          this.game.collide.remove(new Vector2(i))
+          this.game.collide.remove(new Vector2(i, j), this);
         }
       }
     }

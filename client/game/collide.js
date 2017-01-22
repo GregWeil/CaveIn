@@ -14,7 +14,7 @@ module.exports = class Collide extends BaseObject {
     
     this.collisions = {};
     
-    this.handle(this.game, 'render', this.render, Infinity);
+    //this.handle(this.game, 'render', this.render, Infinity);
   }
   
   render(evt) {
@@ -73,8 +73,13 @@ module.exports = class Collide extends BaseObject {
     return null;
   }
   
-  get(pos) {
+  get(pos, config) {
+    config = _.extend({ ignore: [] }, config);
     var data = this.getData(pos);
-    return data.length ? data[0].instance : null;
+    var item = _.find(data, function(item) {
+      if (_.contains(config.ignore, item.instance)) return false;
+      return true;
+    });
+    return item ? item.instance : null;
   }
 };
