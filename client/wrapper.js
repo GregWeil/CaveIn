@@ -8,7 +8,7 @@ var Game = require('game.js');
 
 var game = null;
 var replay = null;
-var replayStorage = window.sessionStorage;
+var replayStorage = window.localStorage;
 var replayStorageKey = 'save';
 
 //Replay validation

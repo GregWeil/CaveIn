@@ -28,7 +28,9 @@ module.exports = class Score extends BaseObject {
           kept.push(popup);
         }
       }
-      this.popups = kept;
+      if (!this.headless) {
+        this.popups = kept;
+      }
     }
   }
   

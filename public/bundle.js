@@ -1609,7 +1609,9 @@ module.exports = class Score extends BaseObject {
           kept.push(popup);
         }
       }
-      this.popups = kept;
+      if (!this.headless) {
+        this.popups = kept;
+      }
     }
   }
   
@@ -1890,7 +1892,7 @@ var Game = require('game.js');
 
 var game = null;
 var replay = null;
-var replayStorage = window.sessionStorage;
+var replayStorage = window.localStorage;
 var replayStorageKey = 'save';
 
 //Replay validation
