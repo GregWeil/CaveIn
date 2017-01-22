@@ -32,10 +32,16 @@ class EnemyGhost extends BaseObject {
     this.sprite = config.sprite;
     
     this.grid.setBlock(this.pos, 'ghost');
+    this.game.collide.add(this.pos, this);
     
     this.handle(this.game, 'collision-check', this.collide);
     this.handle(this.game, 'anim-idle', this.anim);
     this.handle(this.game, 'render', this.render);
+  }
+  
+  destroy(displayTime) {
+    this.game.collide.remove(this.pos, this);
+    super.destroy(displayTime);
   }
   
   collide(evt) {

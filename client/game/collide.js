@@ -67,8 +67,9 @@ module.exports = class Collide extends BaseObject {
   move(from, to, instance) {
     var removed = this.remove(from, instance);
     if (removed) {
-    this.add(to, instance);
+      return this.add(to, instance);
     }
+    return null;
   }
   
   get(pos) {
