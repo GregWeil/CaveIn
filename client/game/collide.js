@@ -41,16 +41,17 @@ module.exports = class Collide extends BaseObject {
   }
   
   add(pos, instance, priority) {
+    priority = priority || 0;
     var data = this.getData(pos);
     
     var index;
     for (index = 0; index < data.length; ++index) {
-      if (data.priority > priority) break;
+      if (data[index].priority > priority) break;
     }
     
     data.splice(index, 0, {
       instance: instance,
-      priority: priority || 0
+      priority: priority
     });
     
     this.setData(pos, data);

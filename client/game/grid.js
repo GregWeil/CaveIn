@@ -31,6 +31,17 @@ module.exports = class Grid extends BaseObject {
     this.handle(this.game, 'render', this.render, -100);
   }
   
+  destroy(displayTime) {
+    for (let i = 0; i < this.gridSize.x; ++i) {
+      for (let j = 0; j < this.gridSize.y; ++j) {
+        if (this.blocks[i][j]) {
+          this.game.collide.remove(new Vector2(i))
+        }
+      }
+    }
+    super.destroy(displayTime);
+  }
+  
   inBounds(pos) {
     if (pos.x < 0 || pos.x >= this.gridSize.x || pos.y < 0 || pos.y >= this.gridSize.y) {
       return false;
@@ -62,20 +73,29 @@ module.exports = class Grid extends BaseObject {
   }
   setBlock(pos, val, delay, cause) {
     if (this.inBounds(pos)) {
+      var newVal = (val || false);
       var oldVal = this.blocks[pos.x][pos.y];
-      this.blocks[pos.x][pos.y] = (val || false);
-      if (this.blocks[pos.x][pos.y]) {
+      this.blocks[pos.x][pos.y] = newVal;
+      
+      if (newVal && !oldVal) {
+        this.game.collide.add(pos, this, 1);
+      } else if (oldVal && !newVal) {
+        this.game.collide.remove(pos, this);
+      }
+      
+      if (newVal) {
         this.hashBlocks[pos.hash()] = this;
       } else {
         delete this.hashBlocks[pos.hash()];
       }
+      
       this.delayBlocks[pos.hash()] = delay;
       this.game.emit('grid-change', {
         source: this,
         cause: cause,
         pos: pos.copy(),
         from: oldVal,
-        to: this.blocks[pos.x][pos.y]
+        to: newVal
       });
     }
   }
