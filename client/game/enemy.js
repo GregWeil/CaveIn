@@ -66,14 +66,13 @@ class EnemyGhost extends BaseObject {
 
 module.exports = class Enemy extends BaseObject {
   static spawn(game, grid, avoid, ai) {
-    var instances = game.getCollisions();
     //Take the farthest accessible point
     var locations = [];
     var distance = -Infinity;
     for (var i = 0; i < grid.gridSize.x; ++i) {
       for (var j = 0; j < grid.gridSize.y; ++j) {
         var pos = new Vector2(i, j);
-        if (!!instances[pos.hash()]) continue;
+        if (!!game.collide.get(pos)) continue;
         var dist = pos.minus(avoid).manhattan();
         if (dist > distance) {
           locations = [pos];
