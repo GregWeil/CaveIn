@@ -48,6 +48,8 @@ html:not(:-webkit-full-screen) .hide-if-fullscreen-disabled { display: none; }
 html:not(:-moz-full-screen) .hide-if-fullscreen-disabled { display: none; }
 html:not(:-ms-fullscreen) .hide-if-fullscreen-disabled { display: none; }
 
+body:not(.save-exists) .show-if-save-exists { display: none; }
+
 body.music-loaded .show-if-music-loading { display: none; }
 body:not(.music-loaded) .hide-if-music-enabled,
   body.music-enabled .hide-if-music-enabled { display: none; }

@@ -1654,11 +1654,12 @@ Pages.home(new Pages.Page({
   selector: '#title-page',
   start: function(evt) {
     if (evt.key === ' ') {
-      Pages.navigate('newgame');
+      Pages.navigate('game');
     }
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
+    $('body').toggleClass('save-exists', !!Game.playable.save.get());
   },
   teardown: function() {
     $(window).off('keydown', this.config.start);
@@ -2096,7 +2097,10 @@ module.exports = {
   playable: {
     create: createPlayable,
     destroy: destroyPlayable,
-    save: { clear: replayRemoveSave }
+    save: {
+      get: replayGetSave,
+      clear: replayRemoveSave
+    }
   }
 };
 },{"game.js":9,"jquery":19,"vector2.js":6}],18:[function(require,module,exports){

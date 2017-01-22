@@ -13,11 +13,12 @@ Pages.home(new Pages.Page({
   selector: '#title-page',
   start: function(evt) {
     if (evt.key === ' ') {
-      Pages.navigate('newgame');
+      Pages.navigate('game');
     }
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
+    $('body').toggleClass('save-exists', !!Game.playable.save.get());
   },
   teardown: function() {
     $(window).off('keydown', this.config.start);

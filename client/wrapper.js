@@ -212,6 +212,9 @@ module.exports = {
   playable: {
     create: createPlayable,
     destroy: destroyPlayable,
-    save: { clear: replayRemoveSave }
+    save: {
+      get: replayGetSave,
+      clear: replayRemoveSave
+    }
   }
 };
