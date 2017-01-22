@@ -6,6 +6,7 @@ var Howl = require('howler').Howl;
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 var BaseObject = require('object.js');
+var Grid = require('grid.js');
 
 var dimensions = new Vector2(16);
 var spritesheet = document.getElementById('spritesheet');
@@ -61,7 +62,7 @@ module.exports = class Gem extends BaseObject {
         game.random.integer(0, grid.gridSize.x-1),
         game.random.integer(0, grid.gridSize.y-1)
       );
-      if (collisions[pos.hash()] !== grid) continue;
+      if (!game.collide.get(pos, { type: Grid })) continue;
       var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
       if (dist < distance) {
         position = pos;

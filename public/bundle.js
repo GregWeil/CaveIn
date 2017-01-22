@@ -683,13 +683,18 @@ module.exports = class Collide extends BaseObject {
   }
   
   get(pos, config) {
-    config = _.extend({ ignore: [] }, config);
+    config = _.extend({ ignore: [], type: null }, config);
     var data = this.getData(pos);
     var item = _.find(data, function(item) {
       if (_.contains(config.ignore, item.instance)) return false;
+      if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
     });
     return item ? item.instance : null;
+  }
+  
+  count() {
+    return _.filter(_.values(this.collisions), 'length').length;
   }
 };
 },{"object.js":4,"render.js":5,"underscore":22,"vector2.js":6}],8:[function(require,module,exports){
@@ -1131,6 +1136,7 @@ var Howl = require('howler').Howl;
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 var BaseObject = require('object.js');
+var Grid = require('grid.js');
 
 var dimensions = new Vector2(16);
 var spritesheet = document.getElementById('spritesheet');
@@ -1186,7 +1192,7 @@ module.exports = class Gem extends BaseObject {
         game.random.integer(0, grid.gridSize.x-1),
         game.random.integer(0, grid.gridSize.y-1)
       );
-      if (collisions[pos.hash()] !== grid) continue;
+      if (!game.collide.get(pos, { type: Grid })) continue;
       var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
       if (dist < distance) {
         position = pos;
@@ -1276,7 +1282,7 @@ module.exports = class Gem extends BaseObject {
     Render.sprite(this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };
-},{"howler":19,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
+},{"grid.js":12,"howler":19,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
 /// grid.js
 //Grid utility functions
 
