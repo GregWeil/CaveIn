@@ -1892,10 +1892,13 @@ var $ = require('jquery');
 var Vector2 = require('vector2.js');
 var Game = require('game.js');
 
-var game = null;
-var replay = null;
 var replayStorage = window.localStorage;
 var replayStorageKey = 'save';
+
+var state = {
+  game: null,
+  replay: null
+};
 
 //Replay validation
 
@@ -1950,7 +1953,7 @@ function replayRemoveSave() {
 }
 
 function replayGetSave() {
-  if (replay) { return replay; }
+  if (state.replay) { return state.replay; }
   
   var save = replayStorage.getItem(replayStorageKey);
   if (!save) { return null; }
@@ -1963,14 +1966,16 @@ function replayGetSave() {
 }
 
 function replayRecordSave() {
+  var replay = state.replay;
   if (replay.commands.length > 0) {
-    replay.validate.score = game.score;
+    replay.validate.score = state.game.score;
     replayStorage.setItem(replayStorageKey, JSON.stringify(replay));
   }
 }
 
 function replayRecordStart(save) {
-  replay = save || {
+  var game = state.game;
+  var replay = save || {
     seed: game.randomSeed,
     commands: [],
     validate: {
@@ -1979,10 +1984,11 @@ function replayRecordStart(save) {
       version: 1
     }
   };
+  state.replay = replay;
   replayRecordSave();
   
   game.on('player-died', function(evt) {
-    replay.validate.alive = false;
+    state.replay.validate.alive = false;
   }, undefined, Infinity);
   
   game.on('update', function(evt) {
@@ -1996,7 +2002,7 @@ function replayRecordStart(save) {
 
 function replayRecordStop() {
   replayRecordSave();
-  replay = null;
+  state.replay = null;
 }
 
 //Manipulate the player's game
@@ -2046,11 +2052,13 @@ window.pause = function pause(evt) {
 function createPlayable(config) {
   var save = replayGetSave();
   
-  game = new Game({
+  var game = new Game({
     seed: save ? save.seed : null,
     canvas: document.getElementById('canvas'),
-    best: config.best
+    best: config.best,
+    headless: false
   });
+  state.game = game;
   
   game.on('score', function(evt) {
     if (game.score > game.best) {
@@ -2098,8 +2106,8 @@ function destroyPlayable() {
   overlay();
   $(window).off('keydown touchstart', window.pause);
   $(window).off('resize', resize);
-  game.destructor();
-  game = null;
+  state.game.destructor();
+  state.game = null;
 }
 
 module.exports = {
