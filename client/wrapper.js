@@ -64,8 +64,10 @@ function replayRemoveSave() {
 }
 
 function replayGetSave() {
+  if (replay) { return replay; }
+  
   var save = replayStorage.getItem(replayStorageKey);
-  if (!save) return null;
+  if (!save) { return null; }
   
   save = JSON.parse(save);
   if (!save.validate.alive) return null;
