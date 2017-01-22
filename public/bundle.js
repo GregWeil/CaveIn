@@ -610,16 +610,22 @@ module.exports = class Vector2 {
 /// collide.js
 //General grid-based collision checking
 
+var Vector2 = require('vector2.js');
+
 var BaseObject = require('object.js');
 
 module.exports = class Collide extends BaseObject {
   constructor(config) {
     super(config);
     
-    var collisions = {};
+    this.collisions = {};
+  }
+  
+  add(pos, inst, priority) {
+    
   }
 };
-},{"object.js":4}],8:[function(require,module,exports){
+},{"object.js":4,"vector2.js":6}],8:[function(require,module,exports){
 /// colors.js
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
