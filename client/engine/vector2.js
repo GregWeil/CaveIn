@@ -69,6 +69,6 @@ module.exports = class Vector2 {
   }
   
   hash() {
-    return (this.x + ',' + this.y);
+    return (this.x + ',' + this.y)
   }
 };
