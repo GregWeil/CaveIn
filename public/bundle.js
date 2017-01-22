@@ -1175,8 +1175,7 @@ var gemTiers = [
 
 module.exports = class Gem extends BaseObject {
   static spawn(game, grid, avoid) {
-    var collisions = game.getCollisions();
-    var count = Object.keys(collisions).length;
+    var count = game.collide.count();
     var tier = 0;
     if (count <= 264 ) {
       tier = 2;
@@ -1244,7 +1243,6 @@ module.exports = class Gem extends BaseObject {
   }
   
   collect() {
-    var collisions = this.game.getCollisions();
     var ra = this.rangeAxis;
     var rm = this.rangeManhattan;
     for (let i = -ra; i <= ra; ++i) {
@@ -1254,7 +1252,7 @@ module.exports = class Gem extends BaseObject {
         if (Vector2.new(i, j).manhattan() > rm) {
           continue;
         }
-        var col = collisions[pos.hash()];
+        var col = this.game.collide.get(pos);
         if (col && col === this.grid) {
           this.grid.setBlock(pos, false, 0.1, 'gem');
         } else if (col && col.hurt) {
