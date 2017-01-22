@@ -99,6 +99,9 @@ function replayRecordStart(save) {
   
   game.on('update', function(evt) {
     replay.commands.push(evt.data.command);
+  }, undefined, -Infinity);
+  
+  game.on('update', function(evt) {
     replayRecordSave();
   }, undefined, Infinity);
 }
@@ -163,6 +166,7 @@ function createPlayable(config) {
   
   game.on('score', function(evt) {
     if (game.score > game.best) {
+      replayRecordSave();
       config.onScore(game.score);
     }
   }, undefined, 100);

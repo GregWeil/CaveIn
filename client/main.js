@@ -42,6 +42,10 @@ Pages.add(new Pages.Page({
       best: window.localStorage.getItem('best-score'),
       onScore: function(newBest) {
         window.localStorage.setItem('best-score', newBest);
+        var replay = Game.playable.save.get();
+        if (replay) {
+          window.localStorage.setItem('best-replay', );
+        }
       },
       onRetry: function() {
         Pages.navigate('newgame');
