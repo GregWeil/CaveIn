@@ -24,7 +24,7 @@ Render.addSprite('pickaxe-swing', spritesheet, dimensions, new Vector2(0, 0));
 Render.addSprite('pickaxe-dark-hit', spritesheet, dimensions, new Vector2(1, 7));
 Render.addSprite('pickaxe-dark-swing', spritesheet, dimensions, new Vector2(0, 7));
 
-var audioStep = new Howl({ volume: 0.3, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav'] });
+var audioStep = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav'] });
 var audioHit = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fattack.wav'] });
 var audioDie = new Howl({ volume: 0.5, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fdie.wav'] });
 
@@ -80,7 +80,7 @@ module.exports = class Player extends BaseObject {
   
   hurt(evt) {
     if (evt.cause !== 'gem') {
-      audioDie.play();
+      this.game.sound(audioDie);
       this.game.emit('player-died');
       this.game.destroy(this);
     }
@@ -125,7 +125,7 @@ module.exports = class Player extends BaseObject {
       if (!this.grid.accessible(this.pos)) {
         this.pos = this.posLast;
       } else {
-        audioStep.play();
+        this.game.sound(audioStep, { volume: this.game.random.real(0.3, 0.4, true) });
       }
     }
   }

@@ -26,6 +26,9 @@ var audioStepRequests = 0;
 function playAudioStep() {
   if (audioStepRequests === 0) {
     window.setTimeout(function() {
+      this.game.sound(audioStep, {
+        volume: (1 - (1 / (audioStepRequests * 0.3 + 1))
+      })
       var audio = audioStep.play();
       audioStep.volume(1 - (1 / (audioStepRequests * 0.3 + 1)), audio);
       audioStepRequests = 0;
