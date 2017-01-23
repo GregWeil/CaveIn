@@ -87,7 +87,6 @@ window.music = function(enable) {
   }
   if (enable && _.isUndefined(audioMusicId)) {
     audioMusicId = audioMusic.play();
-    audioMusic.seek(audioMusic.duration()-5, audioMusicId);
   } else if (enable) {
     audioMusic.play(audioMusicId);
   } else {

@@ -1825,7 +1825,6 @@ window.music = function(enable) {
   }
   if (enable && _.isUndefined(audioMusicId)) {
     audioMusicId = audioMusic.play();
-    audioMusic.seek(audioMusic.duration()-5, audioMusicId);
   } else if (enable) {
     audioMusic.play(audioMusicId);
   } else {
@@ -1987,12 +1986,12 @@ module.exports = {
 //Provide simple functions for game management
 
 var $ = require('jquery');
+var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
 var Game = require('game.js');
 
-var replayStorage = window.localStorage;
-var replayStorageKey = 'save';
+var replayKey = 'save';
 
 var state = {
   game: null,
@@ -2002,7 +2001,8 @@ var state = {
 //Replay validation
 
 function replayValidate(replay) {
-  if (!replay) return false;//$.Deferred().reject().promise();
+  if (!replay) return false;
+  if (!replay.validate) return null;
   var game = new Game({
     headless: true,
     seed: replay.seed
@@ -2048,18 +2048,17 @@ function replayValidate(replay) {
 //Save a replay of the player's game
 
 function replayRemoveSave() {
-  replayStorage.removeItem(replayStorageKey);
+  storage.remove(replayKey);
 }
 
 function replayGetSave() {
   if (state.replay) { return state.replay; }
   
-  var save = replayStorage.getItem(replayStorageKey);
+  var save = storage.get(replayKey);
   if (!save) { return null; }
   
-  save = JSON.parse(save);
-  if (!save.validate.alive) return null;
   if (!replayValidate(save)) return null;
+  if (!save.validate.alive) return null;
   
   return save;
 }
@@ -2068,7 +2067,7 @@ function replayRecordSave() {
   var replay = state.replay;
   if (replay.commands.length > 0) {
     replay.validate.score = state.game.score;
-    replayStorage.setItem(replayStorageKey, JSON.stringify(replay));
+    storage.set(replayKey, replay);
   }
 }
 
@@ -2219,7 +2218,7 @@ module.exports = {
     }
   }
 };
-},{"game.js":10,"jquery":20,"vector2.js":6}],19:[function(require,module,exports){
+},{"game.js":10,"jquery":20,"local-storage":21,"vector2.js":6}],19:[function(require,module,exports){
 (function (global){
 /*!
  *  howler.js v2.0.2
