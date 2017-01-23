@@ -93,7 +93,7 @@ module.exports = class Engine extends EventEmitter {
     this.objects.splice(this.objects.indexOf(inst), 1);
   }
 };
-},{"events.js":2,"render.js":5,"underscore":22}],2:[function(require,module,exports){
+},{"events.js":2,"render.js":5,"underscore":25}],2:[function(require,module,exports){
 /// events.js
 //A pretty standard event system
 
@@ -170,7 +170,7 @@ module.exports = class EventEmitter {
     return handler;
   }
 };
-},{"underscore":22}],3:[function(require,module,exports){
+},{"underscore":25}],3:[function(require,module,exports){
 /// input.js
 //Take player input and send it to the game
 
@@ -415,7 +415,7 @@ module.exports = {
   Swipe: InputSwipe,
   Combined: InputCombined
 };
-},{"underscore":22,"vector2.js":6}],4:[function(require,module,exports){
+},{"underscore":25,"vector2.js":6}],4:[function(require,module,exports){
 /// object.js
 //Base game object that things inherit from
 
@@ -464,7 +464,7 @@ module.exports = class BaseObject {
     handler.active = false;
   }
 };
-},{"underscore":22}],5:[function(require,module,exports){
+},{"underscore":25}],5:[function(require,module,exports){
 /// render.js
 //A bunch of utility functions for drawing things
 
@@ -684,7 +684,7 @@ module.exports = class Collide extends BaseObject {
     return _.filter(_.values(this.collisions), 'length').length;
   }
 };
-},{"object.js":4,"render.js":5,"underscore":22,"vector2.js":6}],8:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":25,"vector2.js":6}],8:[function(require,module,exports){
 /// colors.js
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
@@ -1101,7 +1101,7 @@ module.exports = class Game extends Engine {
     super.destructor();
   }
 };
-},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":21,"render.js":5,"score.js":15,"vector2.js":6}],11:[function(require,module,exports){
+},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":24,"render.js":5,"score.js":15,"vector2.js":6}],11:[function(require,module,exports){
 /// gem.js
 //A pickup that gives a point
 
@@ -1401,7 +1401,7 @@ module.exports = class Grid extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5,"underscore":22,"vector2.js":6}],13:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":25,"vector2.js":6}],13:[function(require,module,exports){
 /// pathfind.js
 //Construct a grid where each cell has its distance to the player
 
@@ -1675,7 +1675,7 @@ module.exports = class Player extends BaseObject {
     }
   }
 };
-},{"enemy.js":9,"howler":19,"object.js":4,"render.js":5,"underscore":22,"vector2.js":6}],15:[function(require,module,exports){
+},{"enemy.js":9,"howler":19,"object.js":4,"render.js":5,"underscore":25,"vector2.js":6}],15:[function(require,module,exports){
 /// score.js
 //Show a popup when the player gets any points
 
@@ -1742,6 +1742,7 @@ module.exports = class Score extends BaseObject {
 var _ = require('underscore');
 var $ = require('jquery');
 var Howl = require('howler').Howl;
+var storage = require('local-storage');
 
 var Pages = require('pages.js');
 var Game = require('wrapper.js');
@@ -1797,7 +1798,7 @@ $(document).ready(function() {
 });
 
 var audioMusic = new Howl({ preload: false, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fcavein.wav'] });
-var audioMusicId = null;
+var audioMusicId = undefined;
 
 audioMusic.on('end', function() {
   audioMusicId = audioMusic.play();
@@ -1813,16 +1814,16 @@ $(window).on('visibilitychange', function() {
 
 window.music = function(enable) {
   if (enable === undefined) {
-    enable = !window.localStorage.getItem('no-music');
+    enable = !storage.get('no-music');
   } else if (enable) {
-    //window.localStorage.removeItem('no-music');
+    storage.remove('no-music');
   } else {
-    //window.localStorage.setItem('no-music', 'yes');
+    storage.set('no-music', true);
   }
   if (document.hidden) {
     enable = false;
   }
-  if (enable && !audioMusicId) {
+  if (enable && _.isUndefined(audioMusicId)) {
     audioMusicId = audioMusic.play();
     audioMusic.seek(audioMusic.duration()-5, audioMusicId);
   } else if (enable) {
@@ -1843,7 +1844,8 @@ window.fullscreenEnter = function() {
     'requestFullscreen',
     'webkitRequestFullscreen',
     'mozRequestFullScreen',
-    'msRequestFullscreen'
+    'msRequestFullscreen',
+    'webkitEnterFullscreen'
   ];
   for (var i = 0; i < names.length; ++i) {
     if (element[names[i]]) {
@@ -1869,7 +1871,7 @@ window.fullscreenExit = function() {
     }
   }
 };
-},{"howler":19,"jquery":20,"pages.js":17,"underscore":22,"wrapper.js":18}],17:[function(require,module,exports){
+},{"howler":19,"jquery":20,"local-storage":21,"pages.js":17,"underscore":25,"wrapper.js":18}],17:[function(require,module,exports){
 /// pages.js
 //A really basic single page app system
 
@@ -1980,7 +1982,7 @@ module.exports = {
   navigate: navigate,
   setup: initialize
 };
-},{"jquery":20,"underscore":22}],18:[function(require,module,exports){
+},{"jquery":20,"underscore":25}],18:[function(require,module,exports){
 /// wrapper.js
 //Provide simple functions for game management
 
@@ -15214,6 +15216,143 @@ return jQuery;
 } );
 
 },{}],21:[function(require,module,exports){
+(function (global){
+'use strict';
+
+var stub = require('./stub');
+var tracking = require('./tracking');
+var ls = 'localStorage' in global && global.localStorage ? global.localStorage : stub;
+
+function accessor (key, value) {
+  if (arguments.length === 1) {
+    return get(key);
+  }
+  return set(key, value);
+}
+
+function get (key) {
+  return JSON.parse(ls.getItem(key));
+}
+
+function set (key, value) {
+  try {
+    ls.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function remove (key) {
+  return ls.removeItem(key);
+}
+
+function clear () {
+  return ls.clear();
+}
+
+accessor.set = set;
+accessor.get = get;
+accessor.remove = remove;
+accessor.clear = clear;
+accessor.on = tracking.on;
+accessor.off = tracking.off;
+
+module.exports = accessor;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./stub":22,"./tracking":23}],22:[function(require,module,exports){
+'use strict';
+
+var ms = {};
+
+function getItem (key) {
+  return key in ms ? ms[key] : null;
+}
+
+function setItem (key, value) {
+  ms[key] = value;
+  return true;
+}
+
+function removeItem (key) {
+  var found = key in ms;
+  if (found) {
+    return delete ms[key];
+  }
+  return false;
+}
+
+function clear () {
+  ms = {};
+  return true;
+}
+
+module.exports = {
+  getItem: getItem,
+  setItem: setItem,
+  removeItem: removeItem,
+  clear: clear
+};
+
+},{}],23:[function(require,module,exports){
+(function (global){
+'use strict';
+
+var listeners = {};
+var listening = false;
+
+function listen () {
+  if (global.addEventListener) {
+    global.addEventListener('storage', change, false);
+  } else if (global.attachEvent) {
+    global.attachEvent('onstorage', change);
+  } else {
+    global.onstorage = change;
+  }
+}
+
+function change (e) {
+  if (!e) {
+    e = global.event;
+  }
+  var all = listeners[e.key];
+  if (all) {
+    all.forEach(fire);
+  }
+
+  function fire (listener) {
+    listener(JSON.parse(e.newValue), JSON.parse(e.oldValue), e.url || e.uri);
+  }
+}
+
+function on (key, fn) {
+  if (listeners[key]) {
+    listeners[key].push(fn);
+  } else {
+    listeners[key] = [fn];
+  }
+  if (listening === false) {
+    listen();
+  }
+}
+
+function off (key, fn) {
+  var ns = listeners[key];
+  if (ns.length > 1) {
+    ns.splice(ns.indexOf(fn), 1);
+  } else {
+    listeners[key] = [];
+  }
+}
+
+module.exports = {
+  on: on,
+  off: off
+};
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],24:[function(require,module,exports){
 /*jshint eqnull:true*/
 (function (root) {
   "use strict";
@@ -15930,7 +16069,7 @@ return jQuery;
     root[GLOBAL_KEY] = Random;
   }
 }(this));
-},{}],22:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

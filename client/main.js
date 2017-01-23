@@ -4,6 +4,7 @@
 var _ = require('underscore');
 var $ = require('jquery');
 var Howl = require('howler').Howl;
+var storage = require('local-storage');
 
 var Pages = require('pages.js');
 var Game = require('wrapper.js');
@@ -59,7 +60,7 @@ $(document).ready(function() {
 });
 
 var audioMusic = new Howl({ preload: false, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fcavein.wav'] });
-var audioMusicId = null;
+var audioMusicId = undefined;
 
 audioMusic.on('end', function() {
   audioMusicId = audioMusic.play();
@@ -75,16 +76,16 @@ $(window).on('visibilitychange', function() {
 
 window.music = function(enable) {
   if (enable === undefined) {
-    enable = !window.localStorage.getItem('no-music');
+    enable = !storage.get('no-music');
   } else if (enable) {
-    //window.localStorage.removeItem('no-music');
+    storage.remove('no-music');
   } else {
-    //window.localStorage.setItem('no-music', 'yes');
+    storage.set('no-music', true);
   }
   if (document.hidden) {
     enable = false;
   }
-  if (enable && !audioMusicId) {
+  if (enable && _.isUndefined(audioMusicId)) {
     audioMusicId = audioMusic.play();
     audioMusic.seek(audioMusic.duration()-5, audioMusicId);
   } else if (enable) {
@@ -105,7 +106,8 @@ window.fullscreenEnter = function() {
     'requestFullscreen',
     'webkitRequestFullscreen',
     'mozRequestFullScreen',
-    'msRequestFullscreen'
+    'msRequestFullscreen',
+    'webkitEnterFullscreen'
   ];
   for (var i = 0; i < names.length; ++i) {
     if (element[names[i]]) {
