@@ -1815,9 +1815,9 @@ window.music = function(enable) {
   if (enable === undefined) {
     enable = !window.localStorage.getItem('no-music');
   } else if (enable) {
-    window.localStorage.removeItem('no-music');
+    //window.localStorage.removeItem('no-music');
   } else {
-    window.localStorage.setItem('no-music', 'yes');
+    //window.localStorage.setItem('no-music', 'yes');
   }
   if (document.hidden) {
     enable = false;
