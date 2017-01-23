@@ -2000,7 +2000,7 @@ var state = {
 //Replay validation
 
 function replayValidate(replay) {
-  if (!replay) return false;
+  if (!replay) return false;//$.Deferred().reject().promise();
   var game = new Game({
     headless: true,
     seed: replay.seed
