@@ -19,8 +19,12 @@ class Input {
     this.emitCommand(cmd);
   }
   
+  check(cmd) {
+    return this.checkCommand(cmd);
+  }
+  
   tryCommand(cmd) {
-    if (this.checkCommand(cmd)) {
+    if (this.check(cmd)) {
       this.command(cmd);
       return true;
     }
@@ -41,9 +45,9 @@ class InputUser extends Input {
     this.timeNext = performance.now() + this.timeInterval;
   }
   
-  tryCommand(cmd) {
+  check(cmd) {
     if (performance.now() > this.timeNext) {
-      return super.tryCommand(cmd);
+      return super.check(cmd);
     }
     return false;
   }
@@ -222,9 +226,14 @@ class InputCombined extends InputUser {
   constructor(config) {
     super(config);
     
+    var sourceConfig = _.defaults({
+      emit: this.tryCommand.bind(this),
+      check: this.check.bind(this)
+    }, config)
+    
     this.sources = [
-      new InputKeyboard(config),
-      new InputSwipe(config)
+      new InputKeyboard(sourceConfig),
+      new InputSwipe(sourceConfig)
     ];
   }
   
