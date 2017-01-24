@@ -185,7 +185,7 @@ class Input {
   }
   
   destructor() {
-    //In case I need this later
+    //Inheriting input types override this
   }
   
   command(cmd) {
@@ -205,12 +205,12 @@ class Input {
   }
 }
 
-class InputUser extends Input {
+class InputThrottled extends Input {
   constructor(config) {
     super(config);
     
     this.timeNext = -Infinity;
-    this.timeInterval = 0;
+    this.timeInterval = 150;
   }
   
   command(cmd) {
@@ -226,11 +226,9 @@ class InputUser extends Input {
   }
 }
 
-class InputKeyboard extends InputUser {
+class InputKeyboard extends InputThrottled {
   constructor(config) {
     super(config);
-    
-    this.timeInterval = 150;
     
     this.keyCommands = config.keys;
     
@@ -276,11 +274,10 @@ class InputKeyboard extends InputUser {
   }
 }
 
-class InputSwipe extends InputUser {
+class InputSwipe extends InputThrottled {
   constructor(config) {
     super(config);
     
-    this.timeInterval = 150;
     this.moveThreshold = 7.5;
     
     this.game = config.game;
@@ -395,7 +392,7 @@ class InputSwipe extends InputUser {
   }
 }
 
-class InputCombined extends InputUser {
+class InputCombined extends InputThrottled {
   constructor(config) {
     super(config);
     
