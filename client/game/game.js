@@ -25,7 +25,7 @@ module.exports = class Game extends Engine {
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
-    this.input = new Input.Combined({
+    this.input = new Input.Throttled({
       game: this,
       emit: this.update.bind(this),
       check: this.commandCheck.bind(this),
@@ -47,7 +47,7 @@ module.exports = class Game extends Engine {
         'left', null, 'up', null
       ],
       tap: 'action'
-    });
+    }, [Input.Keyboard]);
     
     this.animInterval = window.setInterval(function() {
       this.emit('anim-idle');

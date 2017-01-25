@@ -198,7 +198,8 @@ class InputWrapper extends Input {
     super(config);
     
     this.inputs = _.map(inputs, function(Input) {
-      return new Input(_.defaults({ emit: this.handler
+      return new Input(_.defaults({
+        emit: _.bind(this.handler, this)
       }, config));
     }, this);
   }
@@ -213,9 +214,22 @@ class InputWrapper extends Input {
   }
 }
 
-class InputThrottler extends Input {
+class InputThrottler extends InputWrapper {
   constructor(config, inputs) {
     super(config, inputs);
+    
+    this.time = -Infinity;
+  }
+  
+  command(cmd) {
+    super.command(cmd);
+    this.time = performance.now() + 150;
+  }
+  
+  handler(cmd) {
+    if (performance.now() > this.time) {
+      this.command(cmd);
+    }
   }
 }
 
@@ -267,7 +281,7 @@ class InputThrottled extends OldInput {
   }
 }
 
-class InputKeyboard extends InputThrottled {
+class InputKeyboard extends Input {
   constructor(config) {
     super(config);
     
@@ -291,7 +305,7 @@ class InputKeyboard extends InputThrottled {
   tryCommandForKey(code) {
     var cmd = this.keyCommands[code];
     if (cmd) {
-      return this.tryCommand(cmd);
+      return this.command(cmd);
     }
     return false;
   }
@@ -315,14 +329,12 @@ class InputKeyboard extends InputThrottled {
   }
 }
 
-class InputSwipe extends InputThrottled {
+class InputSwipe extends Input {
   constructor(config) {
     super(config);
     
-    this.moveThreshold = 7.5;
-    
-    this.game = config.game;
     this.target = this.game.canvas;
+    this.moveThreshold = 7.5;
     
     this.tapCommand = config.tap;
     this.swipeCommands = config.swipes;
@@ -458,6 +470,8 @@ class InputCombined extends InputThrottled {
 }
 
 module.exports = {
+  Throttled: InputThrottler,
+  
   Keyboard: InputKeyboard,
   Swipe: InputSwipe,
   Combined: InputCombined
@@ -1005,7 +1019,7 @@ module.exports = class Game extends Engine {
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
-    this.input = new Input.Combined({
+    this.input = new Input.Throttled({
       game: this,
       emit: this.update.bind(this),
       check: this.commandCheck.bind(this),
@@ -1027,7 +1041,7 @@ module.exports = class Game extends Engine {
         'left', null, 'up', null
       ],
       tap: 'action'
-    });
+    }, [Input.Keyboard]);
     
     this.animInterval = window.setInterval(function() {
       this.emit('anim-idle');
