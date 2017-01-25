@@ -14,6 +14,22 @@ class Input {
   destructor() {
     //Other inputs can override this
   }
+  
+  command(cmd) {
+    this.emit(cmd);
+  }
+}
+
+class InputWrapper extends Input {
+  constructor(config) {
+    super(config)
+  }
+}
+
+class InputThrottler extends Input {
+  constructor(config) {
+    super(config);
+  }
 }
 
 class OldInput {
