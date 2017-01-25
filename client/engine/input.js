@@ -78,12 +78,18 @@ class InputQueued extends InputWrapper {
   
   command(cmd) {
     super.command(cmd);
+    
+    this.queued = null;
+    if (this.callback) {
+      window.clearTimeout(this.callback);
+    }
+    
     this.callback = window.setTimeout(_.bind(function() {
       this.callback = null;
       if (this.queued) {
         this.command(this.queued);
       }
-    }, this), 1000);
+    }, this), 150);
   }
   
   handler(cmd) {
@@ -148,7 +154,7 @@ class InputSwipe extends Input {
     super(config);
     
     this.target = this.game.canvas;
-    this.moveThreshold = 7.5;
+    this.moveThreshold = 10;
     
     this.tapCommand = config.tap;
     this.swipeCommands = config.swipes;
@@ -261,6 +267,7 @@ class InputSwipe extends Input {
 
 module.exports = {
   Throttled: InputThrottled,
+  Queued: InputQueued,
   
   Keyboard: InputKeyboard,
   Swipe: InputSwipe

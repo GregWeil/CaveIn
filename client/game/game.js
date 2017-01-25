@@ -25,7 +25,7 @@ module.exports = class Game extends Engine {
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
-    this.input = new Input.Throttled({
+    this.input = new Input.Queued({
       game: this,
       emit: (function(command) {
         if (this.commandCheck(command)) {
