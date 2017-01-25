@@ -27,8 +27,11 @@ module.exports = class Game extends Engine {
     
     this.input = new Input.Throttled({
       game: this,
-      emit: this.update.bind(this),
-      check: this.commandCheck.bind(this),
+      emit: (function(command) {
+        if (this.commandCheck(command)) {
+          this.update(command);
+        }
+      }).bind(this),
       keys: {
         'KeyW': 'up',
         'KeyA': 'left',
@@ -47,7 +50,7 @@ module.exports = class Game extends Engine {
         'left', null, 'up', null
       ],
       tap: 'action'
-    }, [Input.Keyboard]);
+    }, [Input.Keyboard, Input.Swipe]);
     
     this.animInterval = window.setInterval(function() {
       this.emit('anim-idle');

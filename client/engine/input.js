@@ -41,7 +41,7 @@ class InputWrapper extends Input {
   }
 }
 
-class InputThrottler extends InputWrapper {
+class InputThrottled extends InputWrapper {
   constructor(config, inputs) {
     super(config, inputs);
     
@@ -57,54 +57,6 @@ class InputThrottler extends InputWrapper {
     if (performance.now() > this.time) {
       this.command(cmd);
     }
-  }
-}
-
-class OldInput {
-  constructor(config) {
-    this.emitCommand = config.emit || _.noop;
-    this.checkCommand = config.check || _.constant(true);
-  }
-  
-  destructor() {
-    //Inheriting input types override this
-  }
-  
-  command(cmd) {
-    this.emitCommand(cmd);
-  }
-  
-  check(cmd) {
-    return this.checkCommand(cmd);
-  }
-  
-  tryCommand(cmd) {
-    if (this.check(cmd)) {
-      this.command(cmd);
-      return true;
-    }
-    return false;
-  }
-}
-
-class InputThrottled extends OldInput {
-  constructor(config) {
-    super(config);
-    
-    this.timeNext = -Infinity;
-    this.timeInterval = 150;
-  }
-  
-  command(cmd) {
-    super.command(cmd);
-    this.timeNext = performance.now() + this.timeInterval;
-  }
-  
-  check(cmd) {
-    if (performance.now() > this.timeNext) {
-      return super.check(cmd);
-    }
-    return false;
   }
 }
 
@@ -217,7 +169,7 @@ class InputSwipe extends Input {
     if (touch) {
       var command = this.touchCommand(touch.id);
       if (command) {
-        this.tryCommand(command);
+        this.command(command);
       }
       
       delete this.touches[touch.id];
@@ -272,34 +224,9 @@ class InputSwipe extends Input {
   }
 }
 
-class InputCombined extends InputThrottled {
-  constructor(config) {
-    super(config);
-    
-    var sourceConfig = _.defaults({
-      emit: this.tryCommand.bind(this),
-      check: this.check.bind(this)
-    }, config)
-    
-    this.sources = [
-      new InputKeyboard(sourceConfig),
-      new InputSwipe(sourceConfig)
-    ];
-  }
-  
-  destructor() {
-    for (var i = 0; i < this.sources.length; ++i) {
-      this.sources[i].destructor();
-    }
-    
-    super.destructor();
-  }
-}
-
 module.exports = {
-  Throttled: InputThrottler,
+  Throttled: InputThrottled,
   
   Keyboard: InputKeyboard,
-  Swipe: InputSwipe,
-  Combined: InputCombined
+  Swipe: InputSwipe
 };
