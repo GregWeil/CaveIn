@@ -7,6 +7,17 @@ var Vector2 = require('vector2.js');
 
 class Input {
   constructor(config) {
+    this.game = config.game;
+    this.emit = config.emit;
+  }
+  
+  destructor() {
+    //Other inputs can override this
+  }
+}
+
+class OldInput {
+  constructor(config) {
     this.emitCommand = config.emit || _.noop;
     this.checkCommand = config.check || _.constant(true);
   }
@@ -32,7 +43,7 @@ class Input {
   }
 }
 
-class InputThrottled extends Input {
+class InputThrottled extends OldInput {
   constructor(config) {
     super(config);
     
