@@ -25,10 +25,18 @@ class InputWrapper extends Input {
     super(config);
     
     this.inputs = _.map(inputs, function(Input) {
-      return new Input(_.defaults({
-        emit: _.bind(this.)
-      }, config);
+      return new Input(_.defaults({ emit: this.handler
+      }, config));
     }, this);
+  }
+  
+  destructor() {
+    _.invoke(this.inputs, 'destructor');
+    super.destructor();
+  }
+  
+  handler(cmd) {
+    this.command(cmd);
   }
 }
 
