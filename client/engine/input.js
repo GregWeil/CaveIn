@@ -21,14 +21,20 @@ class Input {
 }
 
 class InputWrapper extends Input {
-  constructor(config) {
-    super(config)
+  constructor(config, inputs) {
+    super(config);
+    
+    this.inputs = _.map(inputs, function(Input) {
+      return new Input(_.defaults({
+        emit: _.bind(this.)
+      }, config);
+    }, this);
   }
 }
 
 class InputThrottler extends Input {
-  constructor(config) {
-    super(config);
+  constructor(config, inputs) {
+    super(config, inputs);
   }
 }
 
