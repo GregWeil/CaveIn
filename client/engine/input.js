@@ -60,6 +60,41 @@ class InputThrottled extends InputWrapper {
   }
 }
 
+class InputQueued extends InputWrapper {
+  constructor(config, inputs) {
+    super(config, inputs);
+    
+    this.callback = null;
+    this.queued = null;
+  }
+  
+  destructor() {
+    if (this.callback !== null) {
+      window.clearTimeout(this.callback);
+      this.callback = null;
+    }
+    super.destructor();
+  }
+  
+  command(cmd) {
+    super.command(cmd);
+    this.callback = window.setTimeout(_.bind(function() {
+      this.callback = null;
+      if (this.queued) {
+        this.command(this.queued);
+      }
+    }, this), 1000);
+  }
+  
+  handler(cmd) {
+    if (this.callback === null) {
+      this.command(cmd);
+    } else {
+      this.queued = cmd;
+    }
+  }
+}
+
 class InputKeyboard extends Input {
   constructor(config) {
     super(config);
