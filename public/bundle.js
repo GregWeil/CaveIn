@@ -1199,6 +1199,7 @@ module.exports = class Gem extends BaseObject {
         game.random.integer(0, grid.gridSize.y-1)
       );
       if (!game.collide.get(pos, { type: Grid })) continue;
+      if (game.collide.get(pos, { ignore: [grid] })) continue;
       var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
       if (dist < distance) {
         position = pos;
@@ -1493,10 +1494,11 @@ module.exports = class Pathfind extends BaseObject {
   }
   
   getDistanceField(goal) {
-    if (!this.paths[goal.hash()]) {
-      this.paths[goal.hash()] = this.generateDistanceField(goal);
+    var hash = goal.hash();
+    if (!this.paths[hash]) {
+      this.paths[hash] = this.generateDistanceField(goal);
     }
-    return this.paths[goal.hash()];
+    return this.paths[hash];
   }
   
   generateDistanceField(goal) {

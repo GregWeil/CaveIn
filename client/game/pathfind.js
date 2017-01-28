@@ -56,10 +56,11 @@ module.exports = class Pathfind extends BaseObject {
   }
   
   getDistanceField(goal) {
-    if (!this.paths[goal.hash()]) {
-      this.paths[goal.hash()] = this.generateDistanceField(goal);
+    var hash = goal.hash();
+    if (!this.paths[hash]) {
+      this.paths[hash] = this.generateDistanceField(goal);
     }
-    return this.paths[goal.hash()];
+    return this.paths[hash];
   }
   
   generateDistanceField(goal) {

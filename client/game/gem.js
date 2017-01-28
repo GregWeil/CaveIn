@@ -62,6 +62,7 @@ module.exports = class Gem extends BaseObject {
         game.random.integer(0, grid.gridSize.y-1)
       );
       if (!game.collide.get(pos, { type: Grid })) continue;
+      if (game.collide.get(pos, { ignore: [grid] })) continue;
       var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
       if (dist < distance) {
         position = pos;
