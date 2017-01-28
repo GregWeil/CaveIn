@@ -658,17 +658,18 @@ module.exports = class Collide extends BaseObject {
     }
   }
   
-  getData(pos) {
-    return this.collisions[pos.hash()] || [];
+  getData(hash) {
+    return this.collisions[hash] || [];
   }
   
-  setData(pos, data) {
-    this.collisions[pos.hash()] = data;
+  setData(hash, data) {
+    this.collisions[hash] = data;
   }
   
   add(pos, instance, priority) {
+    var hash = _.isString(pos) ? pos : pos.hash();
     priority = priority || 0;
-    var data = this.getData(pos);
+    var data = this.getData(hash);
     
     var index;
     for (index = 0; index < data.length; ++index) {
@@ -680,7 +681,7 @@ module.exports = class Collide extends BaseObject {
       priority: priority
     });
     
-    this.setData(pos, data);
+    this.setData(hash, data);
     return data[index];
   }
   
