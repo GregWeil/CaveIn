@@ -1959,7 +1959,7 @@ function registerRedirect(from, to, func) {
   registerPage(new Page({
     name: from,
     setup: function() {
-      _.defer(navigate, to);
+      _.defer(function() { window.location.replace('#' + to); });
       func();
     }
   }))
@@ -1994,7 +1994,7 @@ function navigate(name) {
   if (getCurrentHash() === newHash) {
     setPage(name);
   } else {
-    window.location.hash = newHash;
+    window.location.assign('#' + newHash);
   }
 }
 
