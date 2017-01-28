@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'IdealGarbanzo';
+  src: url('https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fidealgarbanzo.ttf');
+}
+
+body {
+  margin: 0;
+  background-color: white;
+  font: 20px IdealGarbanzo;
+}
+
+.centered {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.inverse {
+  background-color: black;
+  color: white;
+}
+
+#canvas {
+  image-rendering: pixelated;
+}
+
+#title {
+  width: 90%;
+  height: 90%;
+  line-height: 12px;
+}
+
+#gameover {
+  font-size: 5vh;
+  padding: 0px 32px;
+}
+
+#boxart img {
+  max-width: 100%;
+  max-height: calc(100% - 150px);
+  top: 40%;
+}
+
+#assets {
+  display: none;
+}
