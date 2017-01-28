@@ -2,19 +2,11 @@
 //Provide simple functions for game management
 
 var $ = require('jquery');
+var _ = require('underscore');
 var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
 var Game = require('game.js');
-
-var replayKey = 'save';
-
-var state = {
-  game: null,
-  replay: null,
-  save: undefined,
-  best: undefined
-};
 
 //Replay validation
 
@@ -63,20 +55,28 @@ function replayValidate(replay) {
   return !invalid.length;
 }
 
+//Player game handling
+
+var replayKey = 'save';
+
+var state = {
+  game: null,
+  replay: null,
+  save: undefined,
+  best: undefined
+};
+
 //Save a replay of the player's game
 
 function replayRemoveSave() {
-  storage.remove(replayKey);
+  state.save = null;
 }
 
 function replayGetSave() {
-  if (state.replay) { return state.replay; }
+  if (!_.isUndefined(state.save)) { return state.save; }
   
   var save = storage.get(replayKey);
-  if (!save) { return null; }
-  
-  if (!replayValidate(save)) return null;
-  if (!save.validate.alive) return null;
+  state.save = (save && replayValidate(save) && save.validate.alive) ? save : null;
   
   return save;
 }

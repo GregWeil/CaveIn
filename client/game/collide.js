@@ -24,7 +24,7 @@ module.exports = class Collide extends BaseObject {
     var grid = this.game.grid;
     for (let i = 0; i < grid.gridSize.x; ++i) {
       for (let j = 0; j < grid.gridSize.y; ++j) {
-        var data = this.getData(new Vector2(i, j));
+        var data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
           Render.context.fillText(data[0].priority, grid.getX(i), grid.getY(j));
         }
@@ -41,7 +41,7 @@ module.exports = class Collide extends BaseObject {
   }
   
   add(pos, instance, priority) {
-    var hash = _.isString(pos) ? pos : pos.hash();
+    var hash = pos.hash();
     priority = priority || 0;
     var data = this.getData(hash);
     
@@ -60,9 +60,10 @@ module.exports = class Collide extends BaseObject {
   }
   
   remove(pos, instance) {
-    var data = this.getData(pos);
+    var hash = pos.hash();
+    var data = this.getData(hash);
     var removed = _.findWhere(data, { instance: instance });
-    this.setData(pos, _.without(data, removed));
+    this.setData(hash, _.without(data, removed));
     return removed;
   }
   
@@ -76,7 +77,7 @@ module.exports = class Collide extends BaseObject {
   
   get(pos, config) {
     config = _.extend({ ignore: [] }, config);
-    var data = this.getData(pos);
+    var data = this.getData(pos.hash());
     var item = _.find(data, function(item) {
       if (_.contains(config.ignore, item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;

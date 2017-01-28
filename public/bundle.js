@@ -650,7 +650,7 @@ module.exports = class Collide extends BaseObject {
     var grid = this.game.grid;
     for (let i = 0; i < grid.gridSize.x; ++i) {
       for (let j = 0; j < grid.gridSize.y; ++j) {
-        var data = this.getData(new Vector2(i, j));
+        var data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
           Render.context.fillText(data[0].priority, grid.getX(i), grid.getY(j));
         }
@@ -667,7 +667,7 @@ module.exports = class Collide extends BaseObject {
   }
   
   add(pos, instance, priority) {
-    var hash = _.isString(pos) ? pos : pos.hash();
+    var hash = pos.hash();
     priority = priority || 0;
     var data = this.getData(hash);
     
@@ -686,9 +686,10 @@ module.exports = class Collide extends BaseObject {
   }
   
   remove(pos, instance) {
-    var data = this.getData(pos);
+    var hash = pos.hash();
+    var data = this.getData(hash);
     var removed = _.findWhere(data, { instance: instance });
-    this.setData(pos, _.without(data, removed));
+    this.setData(hash, _.without(data, removed));
     return removed;
   }
   
@@ -702,7 +703,7 @@ module.exports = class Collide extends BaseObject {
   
   get(pos, config) {
     config = _.extend({ ignore: [] }, config);
-    var data = this.getData(pos);
+    var data = this.getData(pos.hash());
     var item = _.find(data, function(item) {
       if (_.contains(config.ignore, item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
@@ -2022,19 +2023,11 @@ module.exports = {
 //Provide simple functions for game management
 
 var $ = require('jquery');
+var _ = require('underscore');
 var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
 var Game = require('game.js');
-
-var replayKey = 'save';
-
-var state = {
-  game: null,
-  replay: null,
-  save: undefined,
-  best: undefined
-};
 
 //Replay validation
 
@@ -2083,20 +2076,28 @@ function replayValidate(replay) {
   return !invalid.length;
 }
 
+//Player game handling
+
+var replayKey = 'save';
+
+var state = {
+  game: null,
+  replay: null,
+  save: undefined,
+  best: undefined
+};
+
 //Save a replay of the player's game
 
 function replayRemoveSave() {
-  storage.remove(replayKey);
+  state.save = null;
 }
 
 function replayGetSave() {
-  if (state.replay) { return state.replay; }
+  if (!_.isUndefined(state.save)) { return state.save; }
   
   var save = storage.get(replayKey);
-  if (!save) { return null; }
-  
-  if (!replayValidate(save)) return null;
-  if (!save.validate.alive) return null;
+  state.save = (save && replayValidate(save) && save.validate.alive) ? save : null;
   
   return save;
 }
@@ -2256,7 +2257,7 @@ module.exports = {
     }
   }
 };
-},{"game.js":10,"jquery":20,"local-storage":21,"vector2.js":6}],19:[function(require,module,exports){
+},{"game.js":10,"jquery":20,"local-storage":21,"underscore":25,"vector2.js":6}],19:[function(require,module,exports){
 (function (global){
 /*!
  *  howler.js v2.0.2
