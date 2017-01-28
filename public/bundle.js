@@ -2078,13 +2078,11 @@ function replayValidate(replay) {
 
 //Player game handling
 
-var replayKey = 'save';
-
 var state = {
-  game: null,
-  replay: null,
-  save: undefined,
-  best: undefined
+  game: null, //The active game
+  replay: null, //The active game's replay
+  save: undefined, //The player's save, undefined is unloaded
+  best: undefined //The players's best replay, undefined is unloaded
 };
 
 //Save a replay of the player's game
@@ -2094,19 +2092,19 @@ function replayRemoveSave() {
 }
 
 function replayGetSave() {
-  if (!_.isUndefined(state.save)) { return state.save; }
-  
-  var save = storage.get(replayKey);
-  state.save = (save && replayValidate(save) && save.validate.alive) ? save : null;
-  
-  return save;
+  if (_.isUndefined(state.save)) {
+    var save = storage.get('save');
+    state.save = (save && replayValidate(save) && save.validate.alive) ? save : null;
+  }
+  return state.save;
 }
 
 function replayRecordSave() {
   var replay = state.replay;
   if (replay.commands.length > 0) {
     replay.validate.score = state.game.score;
-    storage.set(replayKey, replay);
+    storage.set('save', replay);
+    state.save = replay;
   }
 }
 
