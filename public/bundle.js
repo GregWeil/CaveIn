@@ -991,7 +991,7 @@ module.exports = class Game extends Engine {
     this.input = new Input.Queued({
       game: this,
       emit: (function(command) {
-        if (this.commandCheck(command)) {
+        if (this.commandCheck(command) && !this.headless) {
           this.update(command);
         }
       }).bind(this),
@@ -2028,7 +2028,9 @@ var replayKey = 'save';
 
 var state = {
   game: null,
-  replay: null
+  replay: null,
+  save: undefined,
+  best: undefined
 };
 
 //Replay validation

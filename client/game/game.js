@@ -28,7 +28,7 @@ module.exports = class Game extends Engine {
     this.input = new Input.Queued({
       game: this,
       emit: (function(command) {
-        if (this.commandCheck(command)) {
+        if (this.commandCheck(command) && !this.headless) {
           this.update(command);
         }
       }).bind(this),

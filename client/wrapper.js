@@ -11,7 +11,9 @@ var replayKey = 'save';
 
 var state = {
   game: null,
-  replay: null
+  replay: null,
+  save: undefined,
+  best: undefined
 };
 
 //Replay validation
