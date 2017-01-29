@@ -20,9 +20,9 @@ Made for the Ludum Dare 37 (One room)
 ### Short Term
 
 - Use deferred/callbacks for replay handling
-- Better title screen (horizontal layout)
+- Better title screen (widescreen layout)
 
 ### Long Term
 
-- Keep a replay of your best score
+- Watch a replay of your best score
 - Online leaderboards

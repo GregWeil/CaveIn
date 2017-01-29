@@ -80,8 +80,8 @@ function replayGetSave() {
 
 function replayRecordSave() {
   var replay = state.replay;
-  if (replay.commands.length > 0) {
-    replay.validate.score = state.game.score;
+  replay.validate.score = state.game.score;
+  if (replay.validate.score > 0) {
     storage.set('save', replay);
     state.save = replay;
   }
