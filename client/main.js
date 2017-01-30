@@ -40,11 +40,6 @@ Pages.add(new Pages.Page({
   selector: '#game-page',
   setup: function() {
     window.game = Game.playable.create({
-      best: window.localStorage.getItem('best-score'),
-      onScore: function(newBest) {
-        window.localStorage.setItem('best-score', newBest);
-        window.localStorage.setItem('best-replay', JSON.stringify(Game.save.get()));
-      },
       onRetry: function() {
         Pages.navigate('newgame');
       }

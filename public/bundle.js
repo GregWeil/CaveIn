@@ -1815,11 +1815,6 @@ Pages.add(new Pages.Page({
   selector: '#game-page',
   setup: function() {
     window.game = Game.playable.create({
-      best: window.localStorage.getItem('best-score'),
-      onScore: function(newBest) {
-        window.localStorage.setItem('best-score', newBest);
-        window.localStorage.setItem('best-replay', JSON.stringify(Game.save.get()));
-      },
       onRetry: function() {
         Pages.navigate('newgame');
       }
@@ -2115,12 +2110,12 @@ function replayGetSave() {
 //Record the player's current game
 
 function replayRecordSave() {
+  state.replay.validate.score = state.game.score;
   var replay = state.replay;
-  replay.validate.score = state.game.score;
   
   if (replay.validate.score > 0) {
     storage.set('save', replay);
-    state.save = replay;
+    state.save = storage.get('save');
   }
   
   var best = replayGetBest();
@@ -2128,7 +2123,7 @@ function replayRecordSave() {
   var isContinuation = (best && (replay.validate.score >= best.validate.score) && (replay.seed === best.seed));
   if (!best || isBetterScore || isContinuation) {
     storage.set('best', replay);
-    state.best = replay;
+    state.best = storage.get('best');
   }
 }
 

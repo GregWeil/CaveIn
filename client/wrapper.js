@@ -94,12 +94,12 @@ function replayGetSave() {
 //Record the player's current game
 
 function replayRecordSave() {
+  state.replay.validate.score = state.game.score;
   var replay = state.replay;
-  replay.validate.score = state.game.score;
   
   if (replay.validate.score > 0) {
     storage.set('save', replay);
-    state.save = replay;
+    state.save = storage.get('save');
   }
   
   var best = replayGetBest();
@@ -107,7 +107,7 @@ function replayRecordSave() {
   var isContinuation = (best && (replay.validate.score >= best.validate.score) && (replay.seed === best.seed));
   if (!best || isBetterScore || isContinuation) {
     storage.set('best', replay);
-    state.best = replay;
+    state.best = storage.get('best');
   }
 }
 
