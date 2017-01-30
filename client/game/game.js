@@ -1,6 +1,7 @@
 /// game.js
 //Wrap the engine and define game specific interactions
 
+var _ = require('underscore');
 var Random = require('random-js');
 
 var Vector2 = require('vector2.js');
@@ -21,7 +22,8 @@ module.exports = class Game extends Engine {
   constructor(config) {
     super(config);
     
-    this.randomSeed = config.seed || Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
+    this.randomSeed = _.isNumber(config.seed) ? config.seed
+      : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
