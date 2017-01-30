@@ -15,9 +15,9 @@ module.exports = class BaseObject {
     var handlers = _.clone(this.handlers);
     for (let i = 0; i < handlers.length; ++i) {
       var data = handlers[i];
+      //Things render for a little after they die
+      //It looks better when you move into an attack
       if (data.type !== 'render') {
-        //Things render for a little after they die
-        //It looks better when you move into an attack
         this.unhandle(data);
       }
     }
@@ -26,7 +26,7 @@ module.exports = class BaseObject {
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
       }
-    }).bind(this), displayTime !== undefined ? displayTime*1000 : 30);
+    }).bind(this), !_.isUndefined(displayTime) ? displayTime*1000 : 30);
   }
   
   storeHandler(handler) {
