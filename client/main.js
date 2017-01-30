@@ -32,7 +32,7 @@ Pages.add(new Pages.Page({
 }));
 
 Pages.redirect('newgame', 'game', function() {
-  Game.playable.save.clear();
+  Game.save.clear();
 });
 
 Pages.add(new Pages.Page({

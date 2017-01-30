@@ -96,9 +96,18 @@ function replayGetSave() {
 function replayRecordSave() {
   var replay = state.replay;
   replay.validate.score = state.game.score;
+  
   if (replay.validate.score > 0) {
     storage.set('save', replay);
     state.save = replay;
+  }
+  
+  var best = replayGetBest();
+  var isBetterScore = (best && (replay.validate.score > best.validate.score));
+  var isContinuation = (best && (replay.validate.score >= best.validate.score) && (replay.seed === best.seed));
+  if (!best || isBetterScore || isContinuation) {
+    storage.set('best', replay);
+    state.best = replay;
   }
 }
 
@@ -183,17 +192,10 @@ function createPlayable(config) {
   var game = new Game({
     seed: save ? save.seed : null,
     canvas: document.getElementById('canvas'),
-    best: config.best,
+    best: replayGetBestScore(),
     headless: false
   });
   state.game = game;
-  
-  game.on('score', function(evt) {
-    if (game.score > game.best) {
-      replayRecordSave();
-      config.onScore(game.score);
-    }
-  }, undefined, 100);
   
   game.on('command-check', function (evt) {
     if (overlayCurrent) {
