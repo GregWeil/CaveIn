@@ -64,7 +64,20 @@ var state = {
   best: undefined //The players's best replay, undefined is unloaded
 };
 
-//Save a replay of the player's game
+//Saves for the current and best game
+
+function replayGetBest() {
+  if (_.isUndefined(state.best)) {
+    var best = storage.get('best');
+    state.best = replayValidate(best) ? best : null;
+  }
+  return state.best;
+}
+
+function replayGetBestScore() {
+  var best = replayGetBest();
+  return best ? best.validate.score : null;
+}
 
 function replayRemoveSave() {
   state.save = null;
@@ -73,10 +86,12 @@ function replayRemoveSave() {
 function replayGetSave() {
   if (_.isUndefined(state.save)) {
     var save = storage.get('save');
-    state.save = (save && replayValidate(save) && save.validate.alive) ? save : null;
+    state.save = (replayValidate(save) && save.validate.alive) ? save : null;
   }
   return state.save;
 }
+
+//Record the player's current game
 
 function replayRecordSave() {
   var replay = state.replay;
@@ -89,7 +104,7 @@ function replayRecordSave() {
 
 function replayRecordStart(save) {
   var game = state.game;
-  var replay = save || {
+  state.replay = save || {
     seed: game.randomSeed,
     commands: [],
     validate: {
@@ -98,7 +113,6 @@ function replayRecordStart(save) {
       version: 1
     }
   };
-  state.replay = replay;
   replayRecordSave();
   
   game.on('player-died', function(evt) {
@@ -106,7 +120,7 @@ function replayRecordStart(save) {
   }, undefined, Infinity);
   
   game.on('update', function(evt) {
-    replay.commands.push(evt.data.command);
+    state.replay.commands.push(evt.data.command);
   }, undefined, -Infinity);
   
   game.on('update', function(evt) {
@@ -227,10 +241,14 @@ function destroyPlayable() {
 module.exports = {
   playable: {
     create: createPlayable,
-    destroy: destroyPlayable,
-    save: {
-      get: replayGetSave,
-      clear: replayRemoveSave
-    }
+    destroy: destroyPlayable
+  },
+  save: {
+    get: replayGetSave,
+    clear: replayRemoveSave
+  },
+  best: {
+    get: replayGetBest,
+    score: replayGetBestScore
   }
 };

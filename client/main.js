@@ -19,7 +19,7 @@ Pages.home(new Pages.Page({
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
-    $('body').toggleClass('save-exists', !!Game.playable.save.get());
+    $('body').toggleClass('save-exists', !!Game.save.get());
   },
   teardown: function() {
     $(window).off('keydown', this.config.start);
@@ -43,7 +43,7 @@ Pages.add(new Pages.Page({
       best: window.localStorage.getItem('best-score'),
       onScore: function(newBest) {
         window.localStorage.setItem('best-score', newBest);
-        window.localStorage.setItem('best-replay', JSON.stringify(Game.playable.save.get()));
+        window.localStorage.setItem('best-replay', JSON.stringify(Game.save.get()));
       },
       onRetry: function() {
         Pages.navigate('newgame');
