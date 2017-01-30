@@ -94,6 +94,8 @@ function replayGetSave() {
 //Record the player's current game
 
 function replayRecordSave() {
+  if (!replay) return;
+  
   state.replay.validate.score = state.game.score;
   var replay = state.replay;
   
@@ -188,12 +190,12 @@ window.pause = function pause(evt) {
 
 function createPlayable(config) {
   var save = replayGetSave();
+  var best = replayGetBestScore();
   
   var game = new Game({
-    seed: save ? save.seed : null,
     canvas: document.getElementById('canvas'),
-    best: replayGetBestScore(),
-    headless: false
+    seed: save ? save.seed : null,
+    best: best
   });
   state.game = game;
   
