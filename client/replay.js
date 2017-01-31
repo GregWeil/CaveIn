@@ -5,7 +5,7 @@ var _ = require('underscore');
 
 var Game = require('game.js');
 
-function replayValidate(replay) {
+function validate(replay) {
   if (!replay) return false;
   if (!replay.validate) return false;
   
@@ -51,6 +51,23 @@ function replayValidate(replay) {
   return !invalid.length;
 }
 
+function getScore(replay) {
+  return replay.validate.score;
+}
+
+function getAlive(replay) {
+  return replay.validate.alive;
+}
+
+function isContinuation(long, short) {
+  if (!long || !short) return false;
+  if (long.seed !== short.seed) return false;
+  if (getScore(long) < getScore(short)) return false;
+  return false;
+}
+
 module.exports = {
-  validate: replayValidate
+  validate: validate,
+  getScore: getScore,
+  isContinuation: isContinuation
 };

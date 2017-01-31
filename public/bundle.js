@@ -2023,7 +2023,7 @@ var _ = require('underscore');
 
 var Game = require('game.js');
 
-function replayValidate(replay) {
+function validate(replay) {
   if (!replay) return false;
   if (!replay.validate) return false;
   
@@ -2069,8 +2069,25 @@ function replayValidate(replay) {
   return !invalid.length;
 }
 
+function getScore(replay) {
+  return replay.validate.score;
+}
+
+function getAlive(replay) {
+  return replay.validate.alive;
+}
+
+function isContinuation(long, short) {
+  if (!long || !short) return false;
+  if (long.seed !== short.seed) return false;
+  if (getScore(long) < getScore(short)) return false;
+  return false;
+}
+
 module.exports = {
-  validate: replayValidate
+  validate: validate,
+  getScore: getScore,
+  isContinuation: isContinuation
 };
 },{"game.js":10,"underscore":26}],19:[function(require,module,exports){
 /// wrapper.js
@@ -2135,7 +2152,7 @@ function replayRecordSave() {
   
   var best = replayGetBest();
   var isBetterScore = (best && (replay.validate.score > best.validate.score));
-  var isContinuation = (best && (replay.validate.score >= best.validate.score) && (replay.seed === best.seed));
+  var isContinuation = Replay.isContinuation(replay, best);
   if (!best || isBetterScore || isContinuation) {
     storage.set('best', replay);
     state.best = storage.get('best');

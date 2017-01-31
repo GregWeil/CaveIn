@@ -60,7 +60,7 @@ function replayRecordSave() {
   
   var best = replayGetBest();
   var isBetterScore = (best && (replay.validate.score > best.validate.score));
-  var isContinuation = (best && (replay.validate.score >= best.validate.score) && (replay.seed === best.seed));
+  var isContinuation = Replay.isContinuation(replay, best);
   if (!best || isBetterScore || isContinuation) {
     storage.set('best', replay);
     state.best = storage.get('best');
