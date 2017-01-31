@@ -7,53 +7,7 @@ var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
 var Game = require('game.js');
-
-//Replay validation
-
-function replayValidate(replay) {
-  if (!replay) return false;
-  if (!replay.validate) return null;
-  var game = new Game({
-    headless: true,
-    seed: replay.seed
-  });
-  
-  var alive = true;
-  var aborted = false;
-  game.on('player-died', function(evt) {
-    alive = false;
-  });
-  
-  for (var i = 0; i < replay.commands.length; ++i) {
-    if (!alive) {
-      aborted = true;
-      break;
-    }
-    game.update(replay.commands[i]);
-  }
-  
-  var invalid = [];
-  
-  if (aborted) {
-    invalid.push('player died before end of inputs');
-  }
-  
-  if (alive !== replay.validate.alive) {
-    invalid.push('player alive state mismatch');
-  }
-  
-  if (game.score !== replay.validate.score) {
-    invalid.push('score mismatch');
-  }
-  
-  game.destructor();
-  
-  if (invalid.length) {
-    console.log(invalid.join('\n'));
-  }
-  
-  return !invalid.length;
-}
+var Replay = require('replay.js');
 
 //Player game handling
 
@@ -69,7 +23,7 @@ var state = {
 function replayGetBest() {
   if (_.isUndefined(state.best)) {
     var best = storage.get('best');
-    state.best = replayValidate(best) ? best : null;
+    state.best = Replay.validate(best) ? best : null;
   }
   return state.best;
 }
@@ -86,7 +40,7 @@ function replayRemoveSave() {
 function replayGetSave() {
   if (_.isUndefined(state.save)) {
     var save = storage.get('save');
-    state.save = (replayValidate(save) && save.validate.alive) ? save : null;
+    state.save = (Replay.validate(save) && save.validate.alive) ? save : null;
   }
   return state.save;
 }

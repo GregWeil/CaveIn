@@ -93,7 +93,7 @@ module.exports = class Engine extends EventEmitter {
     this.objects.splice(this.objects.indexOf(inst), 1);
   }
 };
-},{"events.js":2,"render.js":5,"underscore":25}],2:[function(require,module,exports){
+},{"events.js":2,"render.js":5,"underscore":26}],2:[function(require,module,exports){
 /// events.js
 //A pretty standard event system
 
@@ -170,7 +170,7 @@ module.exports = class EventEmitter {
     return handler;
   }
 };
-},{"underscore":25}],3:[function(require,module,exports){
+},{"underscore":26}],3:[function(require,module,exports){
 /// input.js
 //Take player input and send it to the game
 
@@ -445,7 +445,7 @@ module.exports = {
   Keyboard: InputKeyboard,
   Swipe: InputSwipe
 };
-},{"underscore":25,"vector2.js":6}],4:[function(require,module,exports){
+},{"underscore":26,"vector2.js":6}],4:[function(require,module,exports){
 /// object.js
 //Base game object that things inherit from
 
@@ -494,7 +494,7 @@ module.exports = class BaseObject {
     handler.active = false;
   }
 };
-},{"underscore":25}],5:[function(require,module,exports){
+},{"underscore":26}],5:[function(require,module,exports){
 /// render.js
 //A bunch of utility functions for drawing things
 
@@ -716,7 +716,7 @@ module.exports = class Collide extends BaseObject {
     return _.filter(_.values(this.collisions), 'length').length;
   }
 };
-},{"object.js":4,"render.js":5,"underscore":25,"vector2.js":6}],8:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":26,"vector2.js":6}],8:[function(require,module,exports){
 /// colors.js
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
@@ -962,7 +962,7 @@ module.exports = class Enemy extends BaseObject {
     Render.sprite(sprites[this.sprite], this.grid.getPos(displayPos));
   }
 };
-},{"howler":19,"object.js":4,"render.js":5,"vector2.js":6}],10:[function(require,module,exports){
+},{"howler":20,"object.js":4,"render.js":5,"vector2.js":6}],10:[function(require,module,exports){
 /// game.js
 //Wrap the engine and define game specific interactions
 
@@ -1138,7 +1138,7 @@ module.exports = class Game extends Engine {
     super.destructor();
   }
 };
-},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":24,"render.js":5,"score.js":15,"underscore":25,"vector2.js":6}],11:[function(require,module,exports){
+},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":25,"render.js":5,"score.js":15,"underscore":26,"vector2.js":6}],11:[function(require,module,exports){
 /// gem.js
 //A pickup that gives a point
 
@@ -1292,7 +1292,7 @@ module.exports = class Gem extends BaseObject {
     Render.sprite(this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };
-},{"grid.js":12,"howler":19,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
+},{"grid.js":12,"howler":20,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
 /// grid.js
 //Grid utility functions
 
@@ -1439,7 +1439,7 @@ module.exports = class Grid extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5,"underscore":25,"vector2.js":6}],13:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":26,"vector2.js":6}],13:[function(require,module,exports){
 /// pathfind.js
 //Construct a grid where each cell has its distance to the player
 
@@ -1714,7 +1714,7 @@ module.exports = class Player extends BaseObject {
     }
   }
 };
-},{"enemy.js":9,"howler":19,"object.js":4,"render.js":5,"underscore":25,"vector2.js":6}],15:[function(require,module,exports){
+},{"enemy.js":9,"howler":20,"object.js":4,"render.js":5,"underscore":26,"vector2.js":6}],15:[function(require,module,exports){
 /// score.js
 //Show a popup when the player gets any points
 
@@ -1904,7 +1904,7 @@ window.fullscreenExit = function() {
     }
   }
 };
-},{"howler":19,"jquery":20,"local-storage":21,"pages.js":17,"underscore":25,"wrapper.js":18}],17:[function(require,module,exports){
+},{"howler":20,"jquery":21,"local-storage":22,"pages.js":17,"underscore":26,"wrapper.js":19}],17:[function(require,module,exports){
 /// pages.js
 //A really basic single page app system
 
@@ -2015,22 +2015,18 @@ module.exports = {
   navigate: navigate,
   setup: initialize
 };
-},{"jquery":20,"underscore":25}],18:[function(require,module,exports){
-/// wrapper.js
-//Provide simple functions for game management
+},{"jquery":21,"underscore":26}],18:[function(require,module,exports){
+/// replays.js
+//Replay validation and recording
 
-var $ = require('jquery');
 var _ = require('underscore');
-var storage = require('local-storage');
 
-var Vector2 = require('vector2.js');
 var Game = require('game.js');
-
-//Replay validation
 
 function replayValidate(replay) {
   if (!replay) return false;
-  if (!replay.validate) return null;
+  if (!replay.validate) return false;
+  
   var game = new Game({
     headless: true,
     seed: replay.seed
@@ -2073,6 +2069,21 @@ function replayValidate(replay) {
   return !invalid.length;
 }
 
+module.exports = {
+  validate: replayValidate
+};
+},{"game.js":10,"underscore":26}],19:[function(require,module,exports){
+/// wrapper.js
+//Provide simple functions for game management
+
+var $ = require('jquery');
+var _ = require('underscore');
+var storage = require('local-storage');
+
+var Vector2 = require('vector2.js');
+var Game = require('game.js');
+var Replay = require('replay.js');
+
 //Player game handling
 
 var state = {
@@ -2087,7 +2098,7 @@ var state = {
 function replayGetBest() {
   if (_.isUndefined(state.best)) {
     var best = storage.get('best');
-    state.best = replayValidate(best) ? best : null;
+    state.best = Replay.validate(best) ? best : null;
   }
   return state.best;
 }
@@ -2104,7 +2115,7 @@ function replayRemoveSave() {
 function replayGetSave() {
   if (_.isUndefined(state.save)) {
     var save = storage.get('save');
-    state.save = (replayValidate(save) && save.validate.alive) ? save : null;
+    state.save = (Replay.validate(save) && save.validate.alive) ? save : null;
   }
   return state.save;
 }
@@ -2274,7 +2285,7 @@ module.exports = {
     score: replayGetBestScore
   }
 };
-},{"game.js":10,"jquery":20,"local-storage":21,"underscore":25,"vector2.js":6}],19:[function(require,module,exports){
+},{"game.js":10,"jquery":21,"local-storage":22,"replay.js":18,"underscore":26,"vector2.js":6}],20:[function(require,module,exports){
 (function (global){
 /*!
  *  howler.js v2.0.2
@@ -5048,7 +5059,7 @@ module.exports = {
 })();
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.1.1
  * https://jquery.com/
@@ -15270,7 +15281,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -15316,7 +15327,7 @@ accessor.off = tracking.off;
 module.exports = accessor;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./stub":22,"./tracking":23}],22:[function(require,module,exports){
+},{"./stub":23,"./tracking":24}],23:[function(require,module,exports){
 'use strict';
 
 var ms = {};
@@ -15350,7 +15361,7 @@ module.exports = {
   clear: clear
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -15407,7 +15418,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /*jshint eqnull:true*/
 (function (root) {
   "use strict";
@@ -16124,7 +16135,7 @@ module.exports = {
     root[GLOBAL_KEY] = Random;
   }
 }(this));
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
