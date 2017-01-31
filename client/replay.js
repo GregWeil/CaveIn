@@ -51,6 +51,36 @@ function validate(replay) {
   return !invalid.length;
 }
 
+function record(game, callback, replay) {
+  replay = replay || {
+    seed: game.randomSeed,
+    commands: [],
+    validate: {
+      alive: true,
+      score: 0,
+      version: 1
+    }
+  };
+  
+  callback(replay);
+  
+  game.on('update', function(evt) {
+    replay.commands.push(evt.data.command);
+  }, undefined, -Infinity);
+  
+  game.on('score', function(evt) {
+    replay.validate.score = game.score;
+  }, undefined, Infinity);
+  
+  game.on('player-died', function(evt) {
+    replay.validate.alive = false;
+  }, undefined, Infinity);
+  
+  game.on('update', function(evt) {
+    callback(replay);
+  }, undefined, Infinity);
+}
+
 function getScore(replay) {
   return replay.validate.score;
 }
@@ -69,5 +99,6 @@ function isContinuation(long, short) {
 module.exports = {
   validate: validate,
   getScore: getScore,
+  getAlive: getAlive,
   isContinuation: isContinuation
 };

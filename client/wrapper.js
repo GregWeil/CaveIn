@@ -9,7 +9,7 @@ var Vector2 = require('vector2.js');
 var Game = require('game.js');
 var Replay = require('replay.js');
 
-//Player game handling
+//Player game state
 
 var state = {
   game: null, //The active game
