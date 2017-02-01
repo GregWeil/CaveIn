@@ -62,7 +62,7 @@ function record(game, callback, replay) {
     }
   };
   
-  callback(replay);
+  callback(replay, game);
   
   game.on('update', function(evt) {
     replay.commands.push(evt.data.command);
@@ -77,7 +77,7 @@ function record(game, callback, replay) {
   }, undefined, Infinity);
   
   game.on('update', function(evt) {
-    callback(replay);
+    callback(replay, game);
   }, undefined, Infinity);
 }
 
@@ -93,11 +93,12 @@ function isContinuation(long, short) {
   if (!long || !short) return false;
   if (long.seed !== short.seed) return false;
   if (getScore(long) < getScore(short)) return false;
-  return false;
+  return true;
 }
 
 module.exports = {
   validate: validate,
+  record: record,
   getScore: getScore,
   getAlive: getAlive,
   isContinuation: isContinuation

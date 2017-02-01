@@ -13,7 +13,6 @@ var Replay = require('replay.js');
 
 var state = {
   game: null, //The active game
-  replay: null, //The active game's replay
   save: undefined, //The player's save, undefined is unloaded
   best: undefined //The players's best replay, undefined is unloaded
 };
@@ -47,11 +46,9 @@ function replayGetSave() {
 
 //Record the player's current game
 
-function replayRecordSave() {
+function replayRecordSave(replay, game) {
+  if (game !== state.game) return;
   if (!replay) return;
-  
-  state.replay.validate.score = state.game.score;
-  var replay = state.replay;
   
   if (replay.validate.score > 0) {
     storage.set('save', replay);
@@ -65,37 +62,6 @@ function replayRecordSave() {
     storage.set('best', replay);
     state.best = storage.get('best');
   }
-}
-
-function replayRecordStart(save) {
-  var game = state.game;
-  state.replay = save || {
-    seed: game.randomSeed,
-    commands: [],
-    validate: {
-      alive: true,
-      score: 0,
-      version: 1
-    }
-  };
-  replayRecordSave();
-  
-  game.on('player-died', function(evt) {
-    state.replay.validate.alive = false;
-  }, undefined, Infinity);
-  
-  game.on('update', function(evt) {
-    state.replay.commands.push(evt.data.command);
-  }, undefined, -Infinity);
-  
-  game.on('update', function(evt) {
-    replayRecordSave();
-  }, undefined, Infinity);
-}
-
-function replayRecordStop() {
-  replayRecordSave();
-  state.replay = null;
 }
 
 //Manipulate the player's game
@@ -175,7 +141,7 @@ function createPlayable(config) {
     }
     game.headless = false;
   }
-  replayRecordStart(save);
+  Replay.record(game, replayRecordSave, save);
   
   $(window).on('keydown touchstart', window.pause);
   $(window).on('resize', resize);
@@ -188,7 +154,6 @@ function createPlayable(config) {
 }
 
 function destroyPlayable() {
-  replayRecordStop();
   overlay();
   $(window).off('keydown touchstart', window.pause);
   $(window).off('resize', resize);
