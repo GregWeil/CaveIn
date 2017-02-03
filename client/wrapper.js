@@ -25,15 +25,17 @@ function replayGet(name, validate) {
     return deferred(state[name]);
   }
   var nameDeferred = name + '_deferred';
-  if (!_.isUndefined(state[nameDeferred])) {
-    return state[nameDeferred];
+  if (_.isUndefined(state[nameDeferred])) {
+    var replay = storage.get(name);
+    state[nameDeferred] = (deferred(Replay.validate(replay))
+      .then(function(valid) {
+        return valid && validate(replay);
+      }).done(function(valid) {
+        state[name] = valid ? replay : null;
+        state[nameDeferred] = undefined;
+      })
+    );
   }
-  var def = ;
-  state[nameDeferred] = def.promise;
-  
-  
-  
-  def.done();
   return state[nameDeferred];
 }
 
