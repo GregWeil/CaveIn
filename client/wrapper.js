@@ -25,26 +25,32 @@ function replayGet(name, validate) {
     return deferred(state[name]);
   }
   var nameDeferred = name + '_deferred';
+  var 
   if (_.isUndefined(state[nameDeferred])) {
+    //This is the first request, load and validate
     var replay = storage.get(name);
-    state[nameDeferred] = (deferred(Replay.validate(replay))
-      .then(function(valid) {
+    state[nameDeferred] = (deferred(
+        //Make sure the replay is legitimate
+        Replay.validate(replay)
+      ).then(function(valid) {
+        //Check the caller's requirements
         return valid && validate(replay);
-      }).done(function(valid) {
-        state[name] = valid ? replay : null;
-        state[nameDeferred] = undefined;
+      }).then(function(valid) {
+        //Make sure nothing saved over us
+        if (_.isUndefined(state[name])) {
+          state[name] = valid ? replay : null;
+          state[nameDeferred] = undefined;
+        }
+        return state[name];
       })
-    );
+    )
+    state[nameDeferred].done();
   }
   return state[nameDeferred];
 }
 
 function replayGetBest() {
-  if (_.isUndefined(state.best)) {
-    var best = storage.get('best');
-    state.best = Replay.validate(best) ? best : null;
-  }
-  return state.best;
+  return replayGet('best');
 }
 
 function replayGetBestScore() {
