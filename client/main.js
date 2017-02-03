@@ -20,7 +20,7 @@ Pages.home(new Pages.Page({
   setup: function() {
     $(window).on('keydown', this.config.start);
     $('body').removeClass('save-exists');
-    Game.save.get().then(function(save) {
+    Game.save.get().done(function(save) {
       $('body').toggleClass('save-exists', !!save);
     });
   },

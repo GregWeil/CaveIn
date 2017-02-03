@@ -1797,7 +1797,7 @@ Pages.home(new Pages.Page({
   setup: function() {
     $(window).on('keydown', this.config.start);
     $('body').removeClass('save-exists');
-    Game.save.get().then(function(save) {
+    Game.save.get().done(function(save) {
       $('body').toggleClass('save-exists', !!save);
     });
   },
@@ -2207,13 +2207,14 @@ function replayRecordSave(replay, game) {
     state.save = storage.get('save');
   }
   
-  var best = replayGetBest();
-  var isBetterScore = (best && (replay.validate.score > best.validate.score));
-  var isContinuation = Replay.isContinuation(replay, best);
-  if (!best || isBetterScore || isContinuation) {
-    storage.set('best', replay);
-    state.best = storage.get('best');
-  }
+  replayGetBest().done(function(best) {
+    var isBetterScore = best && (Replay.getScore(replay) > Replay.getScore(best));
+    var isContinuation = Replay.isContinuation(replay, best);
+    if (!best || isBetterScore || isContinuation) {
+      storage.set('best', replay);
+      state.best = storage.get('best');
+    }
+  });
 }
 
 //Manipulate the player's game
