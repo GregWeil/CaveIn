@@ -25,9 +25,9 @@ function replayGet(name, validate) {
     return deferred(state[name]);
   }
   var nameDeferred = name + '_deferred';
-  var 
   if (_.isUndefined(state[nameDeferred])) {
     //This is the first request, load and validate
+    validate = validate || _.constant(true);
     var replay = storage.get(name);
     state[nameDeferred] = (deferred(
         //Make sure the replay is legitimate
@@ -54,8 +54,9 @@ function replayGetBest() {
 }
 
 function replayGetBestScore() {
-  var best = replayGetBest();
-  return best ? best.validate.score : null;
+  return replayGetBest().then(function(replay) {
+    return replay ? Replay.getScore(replay) : null;
+  });
 }
 
 function replayRemoveSave() {
@@ -63,11 +64,9 @@ function replayRemoveSave() {
 }
 
 function replayGetSave() {
-  if (_.isUndefined(state.save)) {
-    var save = storage.get('save');
-    state.save = (Replay.validate(save) && save.validate.alive) ? save : null;
-  }
-  return state.save;
+  return replayGet('save', function(replay) {
+    return Replay.getAlive(replay);
+  });
 }
 
 //Record the player's current game
@@ -135,48 +134,54 @@ window.pause = function pause(evt) {
 };
 
 function createPlayable(config) {
-  var save = replayGetSave();
-  var best = replayGetBestScore();
-  
-  var game = new Game({
-    canvas: document.getElementById('canvas'),
-    seed: save ? save.seed : null,
-    best: best
-  });
-  state.game = game;
-  
-  game.on('command-check', function (evt) {
-    if (overlayCurrent) {
-      evt.data.accept = false;
-      if (overlayAction && evt.data.command === 'action') {
-        overlayAction();
+  var save, best;
+  deferred(
+    replayGetSave()
+  ).then(function(theSave) {
+    save = theSave;
+  }).then(
+    replayGetBestScore()
+  ).then(function(theBest) {
+    best = theBest;
+  }).then(function() {
+    var game = new Game({
+      canvas: document.getElementById('canvas'),
+      seed: save ? save.seed : null,
+      best: best
+    });
+    state.game = game;
+
+    game.on('command-check', function (evt) {
+      if (overlayCurrent) {
+        evt.data.accept = false;
+        if (overlayAction && evt.data.command === 'action') {
+          overlayAction();
+        }
       }
+    }, undefined, Infinity);
+
+    game.on('player-died', function() {
+      window.setTimeout(function() {
+        overlay('game-over', config.onRetry);
+      }, 1000);
+    });
+
+    if (save) {
+      game.headless = true;
+      for (var i = 0; i < save.commands.length; ++i) {
+        game.update(save.commands[i]);
+      }
+      game.headless = false;
     }
-  }, undefined, Infinity);
-  
-  game.on('player-died', function() {
-    window.setTimeout(function() {
-      overlay('game-over', config.onRetry);
-    }, 1000);
-  });
-  
-  if (save) {
-    game.headless = true;
-    for (var i = 0; i < save.commands.length; ++i) {
-      game.update(save.commands[i]);
-    }
-    game.headless = false;
-  }
-  Replay.record(game, replayRecordSave, save);
-  
-  $(window).on('keydown touchstart', window.pause);
-  $(window).on('resize', resize);
-  resize();
-  
-  //Fire it up
-  game.render();
-  
-  return game;
+    Replay.record(game, replayRecordSave, save);
+
+    $(window).on('keydown touchstart', window.pause);
+    $(window).on('resize', resize);
+    resize();
+
+    //Fire it up
+    game.render();
+  }).done();
 }
 
 function destroyPlayable() {

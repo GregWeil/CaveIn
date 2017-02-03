@@ -19,7 +19,10 @@ Pages.home(new Pages.Page({
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
-    $('body').toggleClass('save-exists', !!Game.save.get());
+    $('body').removeClass('save-exists');
+    Game.save.get().then(function(save) {
+      $('body').toggleClass('save-exists', !!save);
+    });
   },
   teardown: function() {
     $(window).off('keydown', this.config.start);
@@ -39,7 +42,7 @@ Pages.add(new Pages.Page({
   name: 'game',
   selector: '#game-page',
   setup: function() {
-    window.game = Game.playable.create({
+    Game.playable.create({
       onRetry: function() {
         Pages.navigate('newgame');
       }
