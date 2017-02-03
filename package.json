@@ -17,7 +17,8 @@
 		"underscore": "^1.8.3",
 		"jquery": "^3.1.1",
 		"howler": "^2.0.2",
-		"local-storage": "^1.4.2"
+		"local-storage": "^1.4.2",
+		"deferred": "^0.7.5"
 	},
 	"engines": {
 		"node": "6.9.1"

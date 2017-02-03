@@ -3,6 +3,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
+var deferred = require('deferred');
 var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
@@ -18,6 +19,23 @@ var state = {
 };
 
 //Saves for the current and best game
+
+function replayGet(name, validate) {
+  if (!_.isUndefined(state[name])) {
+    return deferred(state[name]);
+  }
+  var nameDeferred = name + '_deferred';
+  if (!_.isUndefined(state[nameDeferred])) {
+    return state[nameDeferred];
+  }
+  var def = ;
+  state[nameDeferred] = def.promise;
+  
+  
+  
+  def.done();
+  return state[nameDeferred];
+}
 
 function replayGetBest() {
   if (_.isUndefined(state.best)) {
