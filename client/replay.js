@@ -10,7 +10,7 @@ function execute(game, commands, time) {
   var def = deferred();
   var aborted = false;
   
-  
+  var start = _.now();
   
   return def.promise;
 }
