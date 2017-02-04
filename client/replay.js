@@ -14,21 +14,15 @@ function validate(replay) {
     headless: true,
     seed: replay.seed
   });
+  
+  var alive = true;
+  var aborted = false;
+  game.on('player-died', function(evt) {
+    alive = false;
+  });
 
   return deferred(function() {
-  }).then(function(game) {
-    var alive = true;
-    var aborted = false;
-    game.on('player-died', function(evt) {
-      alive = false;
-    });
-    return {
-      game: game,
-      alive: alive,
-      aborted: aborted
-    }
-  }).then(function)
-
+    console.log(replay)
     for (var i = 0; i < replay.commands.length; ++i) {
       if (!alive) {
         aborted = true;
@@ -36,7 +30,7 @@ function validate(replay) {
       }
       game.update(replay.commands[i]);
     }
-
+  }).then(function() {
     var invalid = [];
 
     if (aborted) {
@@ -45,6 +39,7 @@ function validate(replay) {
     if (alive !== replay.validate.alive) {
       invalid.push('player alive state mismatch');
     }
+    console.log(game.score, replay.validate.score)
     if (game.score !== replay.validate.score) {
       invalid.push('score mismatch');
     }
@@ -53,8 +48,9 @@ function validate(replay) {
       console.log(invalid.join('\n'));
     }
 
-    game.destructor();
     return !invalid.length;
+  }).aside(function() {
+    game.destructor();
   });
 }
 
