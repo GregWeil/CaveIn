@@ -15,22 +15,24 @@ function validate(replay) {
     seed: replay.seed
   });
   
-  var alive = true;
   var aborted = false;
+  var alive = true;
   game.on('player-died', function(evt) {
     alive = false;
   });
 
-  return deferred(function() {
-    console.log(replay)
-    for (var i = 0; i < replay.commands.length; ++i) {
-      if (!alive) {
-        aborted = true;
-        break;
-      }
-      game.update(replay.commands[i]);
+  return deferred.reduce(replay.commands, function(unused, command) {
+    if (!alive) {
+      aborted = true;
     }
-  }).then(function() {
+    if (!aborted) {
+      game.update(command);
+      
+      var def = deferred();
+      _.delay(def.resolve, 1000);
+      return def.promise;
+    }
+  }).then(function(aborted) {
     var invalid = [];
 
     if (aborted) {
@@ -39,7 +41,6 @@ function validate(replay) {
     if (alive !== replay.validate.alive) {
       invalid.push('player alive state mismatch');
     }
-    console.log(game.score, replay.validate.score)
     if (game.score !== replay.validate.score) {
       invalid.push('score mismatch');
     }
