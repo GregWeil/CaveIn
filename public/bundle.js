@@ -1796,9 +1796,14 @@ Pages.home(new Pages.Page({
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
-    $('body').removeClass('save-exists');
+    var selector = (this.selector + ' .save');
+    $(selector).hide();
+    $(selector + '.loading').show();
     Game.save.get().done(function(save) {
-      $('body').toggleClass('save-exists', !!save);
+      $(selector).hide();
+      if (save) {
+        $(selector + '.exists').show();
+      }
     });
   },
   teardown: function() {
