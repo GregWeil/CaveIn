@@ -134,18 +134,22 @@ window.pause = function pause(evt) {
 };
 
 function createPlayable(config) {
+  var game, save, best;
   deferred(
     replayGetSave(), replayGetBestScore()
   ).then(function(results) {
-    var save = results[0];
-    var best = results[1];
+    save = results[0];
+    best = results[1];
     
-    var game = new Game({
+    game = new Game({
       canvas: document.getElementById('canvas'),
       seed: save ? save.seed : null,
       best: best
     });
     state.game = game;
+    
+    $(window).on('resize', resize);
+    resize();
 
     game.on('command-check', function (evt) {
       if (overlayCurrent) {
@@ -161,22 +165,21 @@ function createPlayable(config) {
         overlay('game-over', config.onRetry);
       }, 1000);
     });
-
+  }).then(function() {
     if (save) {
       game.headless = true;
-      for (var i = 0; i < save.commands.length; ++i) {
-        game.update(save.commands[i]);
-      }
-      game.headless = false;
+      return deferred.reduce(save.commands, function(x, command) {
+        game.update(command);
+        var def = deferred();
+        _.delay(def.resolve, 0);
+        return def.promise;
+      }).then(function() {
+        game.headless = false;
+      });
     }
+  }).then(function() {
     Replay.record(game, replayRecordSave, save);
-
     $(window).on('keydown touchstart', window.pause);
-    $(window).on('resize', resize);
-    resize();
-
-    //Fire it up
-    game.render();
   }).done();
 }
 
