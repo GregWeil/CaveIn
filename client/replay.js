@@ -15,24 +15,24 @@ function validate(replay) {
     seed: replay.seed
   });
   
-  var aborted = false;
   var alive = true;
   game.on('player-died', function(evt) {
     alive = false;
   });
 
-  return deferred.reduce(replay.commands, function(unused, command) {
-    if (!alive) {
-      aborted = true;
+  return deferred(
+    replay.commands
+  ).reduce(function(aborted, command) {
+    if (!alive || aborted) {
+      return true;
     }
-    if (!aborted) {
-      game.update(command);
-      
-      var def = deferred();
-      _.defer(def.resolve);
-      return def.promise;
-    }
-  }).then(function(aborted) {
+    
+    game.update(command);
+
+    var def = deferred();
+    _.defer(def.resolve, false);
+    return def.promise;
+  }, false).then(function(aborted) {
     var invalid = [];
 
     if (aborted) {
