@@ -2072,8 +2072,12 @@ function validate(replay) {
   }
   
   game.destructor();
-  console.log('validated');
-  return deferred(!invalid.length);
+  
+  var def = deferred();
+  _.delay(function(value) {
+    def.resolve(!invalid.length);
+  }, 1000);
+  return def.promise;
 }
 
 function record(game, callback, replay) {
