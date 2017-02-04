@@ -134,16 +134,12 @@ window.pause = function pause(evt) {
 };
 
 function createPlayable(config) {
-  var save, best;
   deferred(
-    replayGetSave()
-  ).then(function(theSave) {
-    save = theSave;
-  }).then(
-    replayGetBestScore()
-  ).then(function(theBest) {
-    best = theBest;
-  }).then(function() {
+    replayGetSave(), replayGetBestScore()
+  ).then(function(results) {
+    var save = results[0];
+    var best = results[1];
+    
     var game = new Game({
       canvas: document.getElementById('canvas'),
       seed: save ? save.seed : null,
