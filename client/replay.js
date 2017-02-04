@@ -29,7 +29,7 @@ function validate(replay) {
       game.update(command);
       
       var def = deferred();
-      _.delay(def.resolve, 1000);
+      _.defer(def.resolve);
       return def.promise;
     }
   }).then(function(aborted) {
@@ -49,6 +49,7 @@ function validate(replay) {
       console.log(invalid.join('\n'));
     }
 
+    console.log('done')
     return !invalid.length;
   }).aside(function() {
     game.destructor();
