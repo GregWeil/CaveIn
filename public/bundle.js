@@ -2307,7 +2307,7 @@ function createPlayable(config) {
       return deferred.reduce(save.commands, function(i, command) {
         game.update(command);
         var def = deferred();
-        _.delay(def.resolve, i > 4 ? 10 : 300, i - 1);
+        _.delay(def.resolve, i > 4 ? 0 : 300, i - 1);
         return def.promise;
       }, save.commands.length).then(function() {
         game.headless = false;
