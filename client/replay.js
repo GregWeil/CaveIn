@@ -14,44 +14,48 @@ function validate(replay) {
     headless: true,
     seed: replay.seed
   });
-  
-  var alive = true;
-  var aborted = false;
-  game.on('player-died', function(evt) {
-    alive = false;
-  });
-  
-  for (var i = 0; i < replay.commands.length; ++i) {
-    if (!alive) {
-      aborted = true;
-      break;
+
+  return deferred(function() {
+  }).then(function(game) {
+    var alive = true;
+    var aborted = false;
+    game.on('player-died', function(evt) {
+      alive = false;
+    });
+    return {
+      game: game,
+      alive: alive,
+      aborted: aborted
     }
-    game.update(replay.commands[i]);
-  }
-  
-  var invalid = [];
-  
-  if (aborted) {
-    invalid.push('player died before end of inputs');
-  }
-  if (alive !== replay.validate.alive) {
-    invalid.push('player alive state mismatch');
-  }
-  if (game.score !== replay.validate.score) {
-    invalid.push('score mismatch');
-  }
-  
-  if (invalid.length) {
-    console.log(invalid.join('\n'));
-  }
-  
-  game.destructor();
-  
-  var def = deferred();
-  _.delay(function(value) {
-    def.resolve(!invalid.length);
-  }, 1000);
-  return def.promise;
+  }).then(function)
+
+    for (var i = 0; i < replay.commands.length; ++i) {
+      if (!alive) {
+        aborted = true;
+        break;
+      }
+      game.update(replay.commands[i]);
+    }
+
+    var invalid = [];
+
+    if (aborted) {
+      invalid.push('player died before end of inputs');
+    }
+    if (alive !== replay.validate.alive) {
+      invalid.push('player alive state mismatch');
+    }
+    if (game.score !== replay.validate.score) {
+      invalid.push('score mismatch');
+    }
+
+    if (invalid.length) {
+      console.log(invalid.join('\n'));
+    }
+
+    game.destructor();
+    return !invalid.length;
+  });
 }
 
 function record(game, callback, replay) {
