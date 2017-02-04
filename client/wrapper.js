@@ -43,8 +43,7 @@ function replayGet(name, validate) {
         }
         return state[name];
       })
-    )
-    state[nameDeferred].done();
+    );
   }
   return state[nameDeferred];
 }
@@ -75,7 +74,7 @@ function replayRecordSave(replay, game) {
   if (game !== state.game) return;
   if (!replay) return;
   
-  if (replay.validate.score > 0) {
+  if (Replay.getScore(replay) > 0) {
     storage.set('save', replay);
     state.save = storage.get('save');
   }

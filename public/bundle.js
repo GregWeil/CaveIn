@@ -2023,12 +2023,13 @@ module.exports = {
 //Replay validation and recording
 
 var _ = require('underscore');
+var deferred = require('deferred');
 
 var Game = require('game.js');
 
 function validate(replay) {
-  if (!replay) return false;
-  if (!replay.validate) return false;
+  if (!replay) return deferred(false);
+  if (!replay.validate) return deferred(false);
   
   var game = new Game({
     headless: true,
@@ -2054,22 +2055,20 @@ function validate(replay) {
   if (aborted) {
     invalid.push('player died before end of inputs');
   }
-  
   if (alive !== replay.validate.alive) {
     invalid.push('player alive state mismatch');
   }
-  
   if (game.score !== replay.validate.score) {
     invalid.push('score mismatch');
   }
-  
-  game.destructor();
   
   if (invalid.length) {
     console.log(invalid.join('\n'));
   }
   
-  return !invalid.length;
+  game.destructor();
+  console.log('validated');
+  return deferred(!invalid.length);
 }
 
 function record(game, callback, replay) {
@@ -2124,7 +2123,7 @@ module.exports = {
   getAlive: getAlive,
   isContinuation: isContinuation
 };
-},{"game.js":10,"underscore":117}],19:[function(require,module,exports){
+},{"deferred":48,"game.js":10,"underscore":117}],19:[function(require,module,exports){
 /// wrapper.js
 //Provide simple functions for game management
 
@@ -2170,8 +2169,7 @@ function replayGet(name, validate) {
         }
         return state[name];
       })
-    )
-    state[nameDeferred].done();
+    );
   }
   return state[nameDeferred];
 }
@@ -2202,7 +2200,7 @@ function replayRecordSave(replay, game) {
   if (game !== state.game) return;
   if (!replay) return;
   
-  if (replay.validate.score > 0) {
+  if (Replay.getScore(replay) > 0) {
     storage.set('save', replay);
     state.save = storage.get('save');
   }

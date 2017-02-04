@@ -2,12 +2,13 @@
 //Replay validation and recording
 
 var _ = require('underscore');
+var deferred = require('deferred');
 
 var Game = require('game.js');
 
 function validate(replay) {
-  if (!replay) return false;
-  if (!replay.validate) return false;
+  if (!replay) return deferred(false);
+  if (!replay.validate) return deferred(false);
   
   var game = new Game({
     headless: true,
@@ -33,22 +34,20 @@ function validate(replay) {
   if (aborted) {
     invalid.push('player died before end of inputs');
   }
-  
   if (alive !== replay.validate.alive) {
     invalid.push('player alive state mismatch');
   }
-  
   if (game.score !== replay.validate.score) {
     invalid.push('score mismatch');
   }
-  
-  game.destructor();
   
   if (invalid.length) {
     console.log(invalid.join('\n'));
   }
   
-  return !invalid.length;
+  game.destructor();
+  console.log('validated');
+  return deferred(!invalid.length);
 }
 
 function record(game, callback, replay) {
