@@ -49,7 +49,6 @@ function validate(replay) {
       console.log(invalid.join('\n'));
     }
 
-    console.log('done')
     return !invalid.length;
   }).finally(function() {
     game.destructor();

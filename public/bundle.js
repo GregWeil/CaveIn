@@ -2075,7 +2075,6 @@ function validate(replay) {
       console.log(invalid.join('\n'));
     }
 
-    console.log('done')
     return !invalid.length;
   }).finally(function() {
     game.destructor();
@@ -2305,12 +2304,12 @@ function createPlayable(config) {
   }).then(function() {
     if (save) {
       game.headless = true;
-      return deferred.reduce(save.commands, function(x, command) {
+      return deferred.reduce(save.commands, function(i, command) {
         game.update(command);
         var def = deferred();
-        _.delay(def.resolve, 0);
+        _.delay(def.resolve, i > 5 ? 0 : 300, i - 1);
         return def.promise;
-      }).then(function() {
+      }, save.commands.length).then(function() {
         game.headless = false;
       });
     }
