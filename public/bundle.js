@@ -2212,10 +2212,8 @@ function replayRecordSave(replay, game) {
   if (!replay) return;
   if (Replay.getScore(replay) <= 0) return;
 
-  if (Replay.getAlive(replay)) {
-    storage.set('save', replay);
-    state.save = storage.get('save');
-  }
+  storage.set('save', Replay.getAlive(replay) ? replay : null);
+  state.save = storage.get('save');
 
   replayGetBest().done(function(best) {
     var isBetterScore = best && (Replay.getScore(replay) > Replay.getScore(best));
