@@ -97,6 +97,7 @@ function isContinuation(long, short) {
   if (!long || !short) return false;
   if (long.seed !== short.seed) return false;
   if (getScore(long) < getScore(short)) return false;
+  if (long.commands.length < short.commands.length) return false;
   return true;
 }
 

@@ -2123,6 +2123,7 @@ function isContinuation(long, short) {
   if (!long || !short) return false;
   if (long.seed !== short.seed) return false;
   if (getScore(long) < getScore(short)) return false;
+  if (long.commands.length < short.commands.length) return false;
   return true;
 }
 
@@ -2209,12 +2210,13 @@ function replayGetSave() {
 function replayRecordSave(replay, game) {
   if (game !== state.game) return;
   if (!replay) return;
-  
-  if (Replay.getScore(replay) > 0) {
+  if (Replay.getScore(replay) <= 0) return;
+
+  if (Replay.getAlive(replay)) {
     storage.set('save', replay);
     state.save = storage.get('save');
   }
-  
+
   replayGetBest().done(function(best) {
     var isBetterScore = best && (Replay.getScore(replay) > Replay.getScore(best));
     var isContinuation = Replay.isContinuation(replay, best);
@@ -2307,7 +2309,7 @@ function createPlayable(config) {
       return deferred.reduce(save.commands, function(i, command) {
         game.update(command);
         var def = deferred();
-        _.delay(def.resolve, i > 5 ? 0 : 300, i - 1);
+        _.delay(def.resolve, i > 4 ? 10 : 300, i - 1);
         return def.promise;
       }, save.commands.length).then(function() {
         game.headless = false;
