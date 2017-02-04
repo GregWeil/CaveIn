@@ -2032,6 +2032,15 @@ var deferred = require('deferred');
 
 var Game = require('game.js');
 
+function execute(game, commands, time) {
+  var def = deferred();
+  var aborted = false;
+  
+  
+  
+  return def.promise;
+}
+
 function validate(replay) {
   if (!replay) return deferred(false);
   if (!replay.validate) return deferred(false);
@@ -2128,6 +2137,7 @@ function isContinuation(long, short) {
 }
 
 module.exports = {
+  execute: execute,
   validate: validate,
   record: record,
   getScore: getScore,
