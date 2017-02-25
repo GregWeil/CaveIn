@@ -31,7 +31,7 @@ function validate(replay) {
 
   return deferred(
     replay.commands
-  ).reduce(function(aborted, command) {
+  ).reduce(function validateStep(aborted, command, index) {
     if (!alive || aborted) {
       return true;
     }
@@ -39,7 +39,12 @@ function validate(replay) {
     game.update(command);
 
     var def = deferred();
-    _.defer(def.resolve, false);
+    if (index % 25 === 0) {
+      console.log('skip')
+      def.resolve(false);
+    } else {
+      _.defer(def.resolve, false);
+    }
     return def.promise;
   }, false).then(function(aborted) {
     var invalid = [];
