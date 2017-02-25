@@ -170,7 +170,13 @@ function createPlayable(config) {
       return deferred.reduce(save.commands, function(i, command) {
         game.update(command);
         var def = deferred();
-        _.delay(def.resolve, i > 4 ? 0 : 300, i - 1);
+        var remaining = i - 1;
+        if (remaining > 10 && i % 5 !== 0) {
+          def.resolve(remaining);
+        } else {
+          var delay = remaining > 1 ? 0 : 500;
+          _.delay(def.resolve, delay, remaining);
+        }
         return def.promise;
       }, save.commands.length).then(function() {
         game.headless = false;

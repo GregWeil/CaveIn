@@ -39,8 +39,7 @@ function validate(replay) {
     game.update(command);
 
     var def = deferred();
-    if (index % 25 === 0) {
-      console.log('skip')
+    if (index % 25 !== 0) {
       def.resolve(false);
     } else {
       _.defer(def.resolve, false);
