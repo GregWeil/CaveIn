@@ -2322,10 +2322,14 @@ function createPlayable(config) {
         game.update(command);
         var def = deferred();
         var remaining = i - 1;
-        if (remaining > 10 && i % 5 !== 0) {
-          def.resolve(remaining);
+        if (remaining > 10) {
+          if (remaining % 25 === 0) {
+            _.defer(def.resolve, remaining);
+          } else {
+            def.resolve(remaining);
+          }
         } else {
-          var delay = remaining > 1 ? 0 : 500;
+          var delay = remaining > 1 ? 100 : 500;
           _.delay(def.resolve, delay, remaining);
         }
         return def.promise;
