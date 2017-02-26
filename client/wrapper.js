@@ -165,6 +165,10 @@ function createPlayable(config) {
       }, 1000);
     });
   }).then(function() {
+    var def = deferred();
+    _.delay(def.resolve);
+    return def.promise;
+  }).then(function() {
     if (save) {
       game.headless = true;
       return deferred.reduce(save.commands, function(i, command) {
@@ -172,7 +176,7 @@ function createPlayable(config) {
         var def = deferred();
         var remaining = i - 1;
         if (remaining > 10) {
-          if (remaining % 25 === 0) {
+          if (remaining % 100 === 0) {
             _.defer(def.resolve, remaining);
           } else {
             def.resolve(remaining);
