@@ -2329,10 +2329,9 @@ function createPlayable(config) {
   }).then(function() {
     if (save) {
       game.headless = true;
-      console.log(_.isEqual(save.commands, save.commands.slice(0, -10).concat(save.commands.slice(-10, -1)).concat(save.commands.slice(-1))))
-      return Replay.execute(game, save.commands.slice(0, -10), 500, 50
+      return Replay.execute(game, save.commands.slice(0, -5), 500, 50
       ).then(function(success) {
-        return success && Replay.execute(game, save.commands.slice(-10, -1), 10);
+        return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
       }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-1), 1);
       }).then(function(success) {
