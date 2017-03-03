@@ -14,7 +14,7 @@ function execute(game, commands, rate, limit) {
   limit = limit || Infinity;
 
   function step(index) {
-    var target = (_.now() - start) * (rate / 1000);
+    var target = Math.round((_.now() - start) * (rate / 1000));
     target = Math.min(target, (index + limit), commands.length);
     
     for (var i = index; i < target; ++i) {

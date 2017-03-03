@@ -171,6 +171,7 @@ function createPlayable(config) {
   }).then(function() {
     if (save) {
       game.headless = true;
+      /*
       return deferred.reduce(save.commands, function(i, command) {
         game.update(command);
         var def = deferred();
@@ -187,9 +188,10 @@ function createPlayable(config) {
         }
         return def.promise;
       }, save.commands.length);
-      return execute(
-        game, save.commands, 10
-      ).then(function() {
+      */
+      return Replay.execute(
+        game, save.commands, 1000
+      ).then(function(success) {
         game.headless = false;
       });
     }
