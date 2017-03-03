@@ -8,15 +8,27 @@ var Game = require('game.js');
 
 function execute(game, commands, rate, limit) {
   var def = deferred();
-  var aborted = false;
 
   var start = _.now();
   var index = 0;
-  
-  function () {
+
+  function step() {
     var target = (_.now() - start) * (rate / 1000);
     target = Math.min(target, index + limit, commands.length);
+    
+    for (var i = index; i < target; ++i) {
+      
+    }
+    index = target;
+    
+    if (index < commands.length) {
+      _.defer(step);
+    } else {
+      def.resolve(false);
+    }
   }
+  
+  _.defer(step);
 
   return def.promise;
 }
