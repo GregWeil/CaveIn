@@ -13,10 +13,10 @@ function execute(game, commands, rate, limit) {
   var start = _.now();
   var index = 0;
   
-  _.defer(function() {
-    var target = _.now() - start;
-    var count = 0;
-  });
+  function () {
+    var target = (_.now() - start) * (rate / 1000);
+    target = Math.min(target, index + limit, commands.length);
+  }
 
   return def.promise;
 }
