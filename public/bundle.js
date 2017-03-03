@@ -2329,27 +2329,13 @@ function createPlayable(config) {
   }).then(function() {
     if (save) {
       game.headless = true;
-      /*
-      return deferred.reduce(save.commands, function(i, command) {
-        game.update(command);
-        var def = deferred();
-        var remaining = i - 1;
-        if (remaining > 10) {
-          if (remaining % 50 === 0) {
-            _.defer(def.resolve, remaining);
-          } else {
-            def.resolve(remaining);
-          }
-        } else {
-          var delay = remaining > 1 ? 100 : 500;
-          _.delay(def.resolve, delay, remaining);
-        }
-        return def.promise;
-      }, save.commands.length);
-      */
-      return Replay.execute(
-        game, save.commands, 1000
+      console.log(_.isEqual(save.commands, save.commands.slice(0, -10).concat(save.commands.slice(-10, -1)).concat(save.commands.slice(-1))))
+      return Replay.execute(game, save.commands.slice(0, -10), 500, 50
       ).then(function(success) {
+        return success && Replay.execute(game, save.commands.slice(-10, -1), 10);
+      }).then(function(success) {
+        return success && Replay.execute(game, save.commands.slice(-1), 1);
+      }).then(function(success) {
         game.headless = false;
       });
     }
