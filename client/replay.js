@@ -9,22 +9,27 @@ var Game = require('game.js');
 function execute(game, commands, rate, limit) {
   var def = deferred();
   var aborted = false;
-  
-  var time = commands.length / rate;
+
   var start = _.now();
+  var index = 0;
   
+  _.defer(function() {
+    var target = _.now() - start;
+    var count = 0;
+  });
+
   return def.promise;
 }
 
 function validate(replay) {
   if (!replay) return deferred(false);
   if (!replay.validate) return deferred(false);
-  
+
   var game = new Game({
     headless: true,
     seed: replay.seed
   });
-  
+
   var alive = true;
   game.on('player-died', function(evt) {
     alive = false;
@@ -36,7 +41,7 @@ function validate(replay) {
     if (!alive || aborted) {
       return true;
     }
-    
+
     game.update(command);
 
     var def = deferred();
@@ -79,21 +84,21 @@ function record(game, callback, replay) {
       version: 1
     }
   };
-  
+
   callback(replay, game);
-  
+
   game.on('update', function(evt) {
     replay.commands.push(evt.data.command);
   }, undefined, -Infinity);
-  
+
   game.on('score', function(evt) {
     replay.validate.score = game.score;
   }, undefined, Infinity);
-  
+
   game.on('player-died', function(evt) {
     replay.validate.alive = false;
   }, undefined, Infinity);
-  
+
   game.on('update', function(evt) {
     callback(replay, game);
   }, undefined, Infinity);
