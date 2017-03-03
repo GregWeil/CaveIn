@@ -186,7 +186,10 @@ function createPlayable(config) {
           _.delay(def.resolve, delay, remaining);
         }
         return def.promise;
-      }, save.commands.length).then(function() {
+      }, save.commands.length);
+      return execute(
+        game, save.commands, 10
+      ).then(function() {
         game.headless = false;
       });
     }

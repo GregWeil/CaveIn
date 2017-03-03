@@ -8,18 +8,16 @@ var Game = require('game.js');
 
 function execute(game, commands, rate, limit) {
   var def = deferred();
-  var start = _.now();
+  var start = _.now() - 1;
   
   rate = rate || Infinity;
   limit = limit || Infinity;
-  console.log(commands)
 
   function step(index) {
     var target = (_.now() - start) * (rate / 1000);
     target = Math.min(target, (index + limit), commands.length);
     
     for (var i = index; i < target; ++i) {
-      console.log(commands[i])
       if (!game.commandCheck(commands[i])) {
         def.resolve(false);
         return;
@@ -27,7 +25,7 @@ function execute(game, commands, rate, limit) {
       game.update(commands[i]);
     }
     
-    if (index < commands.length) {
+    if (target < commands.length) {
       _.defer(step, target);
     } else {
       def.resolve(true);
@@ -53,11 +51,11 @@ function validate(replay) {
   });
 
   return execute(
-    game, replay.commands, Infinity, 1
-  ).then(function(aborted) {
+    game, replay.commands, Infinity, 100
+  ).then(function(success) {
     var invalid = [];
 
-    if (aborted) {
+    if (!success) {
       invalid.push('invalid inputs');
     }
     if (alive !== replay.validate.alive) {
