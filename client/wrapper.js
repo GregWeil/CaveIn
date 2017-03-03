@@ -176,7 +176,7 @@ function createPlayable(config) {
         var def = deferred();
         var remaining = i - 1;
         if (remaining > 10) {
-          if (remaining % 100 === 0) {
+          if (remaining % 50 === 0) {
             _.defer(def.resolve, remaining);
           } else {
             def.resolve(remaining);

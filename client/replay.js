@@ -6,10 +6,11 @@ var deferred = require('deferred');
 
 var Game = require('game.js');
 
-function execute(game, commands, time) {
+function execute(game, commands, rate, limit) {
   var def = deferred();
   var aborted = false;
   
+  var time = commands.length / rate;
   var start = _.now();
   
   return def.promise;
