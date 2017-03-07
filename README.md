@@ -19,7 +19,7 @@ Made for the Ludum Dare 37 (One room)
 
 ### Short Term
 
-- Use deferred/callbacks for replay handling
+- Store previous saves
 - Better title screen (widescreen layout)
 
 ### Long Term
