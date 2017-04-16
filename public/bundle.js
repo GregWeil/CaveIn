@@ -2333,7 +2333,7 @@ function createPlayable(config) {
       ).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
       }).then(function(success) {
-        return success && Replay.execute(game, save.commands.slice(-1), 1);
+        return success && Replay.execute(game, save.commands.slice(-1), 1.5);
       }).then(function(success) {
         game.headless = false;
       });
