@@ -1839,7 +1839,7 @@ $(document).ready(function() {
   Pages.setup();
 });
 
-var audioMusic = new Howl({ preload: false, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fcavein.wav'] });
+var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
 var audioMusicId = undefined;
 
 audioMusic.on('end', function() {
