@@ -20,7 +20,7 @@ var ghostSprites = [
   Render.addSprite('enemy-ghost-b', spritesheet, dimensions, new Vector2(1, 8))
 ];
 
-var audioStep = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy_move.wav'] });
+var audioStep = new Howl({ src: ['/assets/enemy_move.wav'] });
 var audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject {

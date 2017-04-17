@@ -20,7 +20,7 @@ Render.addSprite('gem-b-b', spritesheet, dimensions, new Vector2(1, 5));
 Render.addSprite('gem-c-a', spritesheet, dimensions, new Vector2(0, 6));
 Render.addSprite('gem-c-b', spritesheet, dimensions, new Vector2(1, 6));
 
-var audioGem = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem.wav'] });
+var audioGem = new Howl({ src: ['/assets/gem.wav'] });
 
 var gemTiers = [
   {
