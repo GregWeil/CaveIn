@@ -807,7 +807,7 @@ var ghostSprites = [
   Render.addSprite('enemy-ghost-b', spritesheet, dimensions, new Vector2(1, 8))
 ];
 
-var audioStep = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy_move.wav'] });
+var audioStep = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy_move.wav'] });
 var audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject {
@@ -1161,7 +1161,7 @@ Render.addSprite('gem-b-b', spritesheet, dimensions, new Vector2(1, 5));
 Render.addSprite('gem-c-a', spritesheet, dimensions, new Vector2(0, 6));
 Render.addSprite('gem-c-b', spritesheet, dimensions, new Vector2(1, 6));
 
-var audioGem = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem.wav'] });
+var audioGem = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem.wav'] });
 
 var gemTiers = [
   {
@@ -1582,9 +1582,9 @@ Render.addSprite('pickaxe-swing', spritesheet, dimensions, new Vector2(0, 0));
 Render.addSprite('pickaxe-dark-hit', spritesheet, dimensions, new Vector2(1, 7));
 Render.addSprite('pickaxe-dark-swing', spritesheet, dimensions, new Vector2(0, 7));
 
-var audioStep = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav'] });
-var audioHit = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fattack.wav'] });
-var audioDie = new Howl({ volume: 0.5, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fdie.wav'] });
+var audioStep = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav'] });
+var audioHit = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fattack.wav'] });
+var audioDie = new Howl({ volume: 0.5, src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fdie.wav'] });
 
 module.exports = class Player extends BaseObject {
   constructor(config) {

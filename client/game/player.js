@@ -24,9 +24,9 @@ Render.addSprite('pickaxe-swing', spritesheet, dimensions, new Vector2(0, 0));
 Render.addSprite('pickaxe-dark-hit', spritesheet, dimensions, new Vector2(1, 7));
 Render.addSprite('pickaxe-dark-swing', spritesheet, dimensions, new Vector2(0, 7));
 
-var audioStep = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav'] });
-var audioHit = new Howl({ src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fattack.wav'] });
-var audioDie = new Howl({ volume: 0.5, src: ['https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fdie.wav'] });
+var audioStep = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav'] });
+var audioHit = new Howl({ src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fattack.wav'] });
+var audioDie = new Howl({ volume: 0.5, src: ['https://cdn.glitch.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fdie.wav'] });
 
 module.exports = class Player extends BaseObject {
   constructor(config) {
