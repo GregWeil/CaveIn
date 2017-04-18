@@ -2179,11 +2179,11 @@ var state = {
 //Saves for the current and best game
 
 function replayGet(name, validate) {
-  if (!_.isUndefined(state[name])) {
+  if (state[name]) {
     return deferred(state[name]);
   }
   var nameDeferred = name + '_deferred';
-  if (_.isUndefined(state[nameDeferred])) {
+  if (!state[nameDeferred]) {
     //This is the first request, load and validate
     validate = validate || _.constant(true);
     var replay = storage.get(name);
