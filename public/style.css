@@ -3,6 +3,11 @@
   src: url('https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fidealgarbanzo.ttf');
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   margin: 0;
   background-color: white;

@@ -2179,7 +2179,7 @@ var state = {
 //Saves for the current and best game
 
 function replayGet(name, validate) {
-  if (state[name]) {
+  if (!_.isUndefined(state[name])) {
     return deferred(state[name]);
   }
   var nameDeferred = name + '_deferred';
