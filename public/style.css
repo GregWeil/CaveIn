@@ -15,7 +15,9 @@ body {
   overflow: hidden;
 }
 
-img {
+#canvas, img:not(.smooth) {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
 
@@ -65,10 +67,6 @@ body:not(.music-loaded) .hide-if-music-disabled,
 
 #game-page .area {
   font-size: 0;
-}
-
-#game-page #canvas {
-  image-rendering: pixelated;
 }
 
 #game-page .overlay {

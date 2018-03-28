@@ -16,7 +16,7 @@
   <body>
     <div id="title-page" class="page centered">
       <a id="boxart" href="#game">
-        <img src="/assets/boxart.png"/>
+        <img src="/assets/boxart.png" class="smooth"/>
       </a>
       <p>
         <span class="save loading">checking save or </span>
@@ -25,8 +25,8 @@
       </p>
       <p>
         <span class="show-if-music-loading">loading music</span>
-        <a href="javascript:music(true)" class="hide-if-music-enabled">enable music</a>
-        <a href="javascript:music(false)" class="hide-if-music-disabled">disable music</a>
+        <a onclick="music(true)" class="hide-if-music-enabled">enable music</a>
+        <a onclick="music(false)" class="hide-if-music-disabled">disable music</a>
         -
         <a href="javascript:fullscreenEnter()" class="hide-if-fullscreen-enabled">fullscreen</a>
         <a href="javascript:fullscreenExit()" class="hide-if-fullscreen-disabled">exit fullscreen</a>
