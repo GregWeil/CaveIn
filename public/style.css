@@ -12,6 +12,7 @@ body {
   margin: 0;
   background-color: white;
   font: 20px IdealGarbanzo;
+  user-select: none;
   overflow: hidden;
 }
 
@@ -43,6 +44,16 @@ body {
 
 .inverse a:active {
   color: orange;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:active {
+  color: red;
 }
 
 html:fullscreen .hide-if-fullscreen-enabled { display: none; }
