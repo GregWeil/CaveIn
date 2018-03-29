@@ -1805,6 +1805,9 @@ Pages.home(new Pages.Page({
         $(selector + '.exists').show();
       }
     });
+    Game.best.score().done(function(score) {
+      
+    });
   },
   teardown: function() {
     $(window).off('keydown', this.config.start);
