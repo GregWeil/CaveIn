@@ -555,7 +555,7 @@ module.exports = {
 module.exports = class Vector2 {
   constructor(x, y) {
     this.x = x || 0;
-    this.y = y !== undefined ? y : this.x;
+    this.y = y !== undefined ? y : x;
   }
   
   static new(x, y) {
