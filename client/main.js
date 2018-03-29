@@ -19,11 +19,12 @@ Pages.home(new Pages.Page({
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
+    var $save = $(this.selector).find('.save');
     var selector = (this.selector + ' .save');
-    $(selector).hide();
+    $save.hide();
     $(selector + '.loading').show();
     Game.save.get().done(function(save) {
-      $(selector).hide();
+      $save.hide();
       if (save) {
         $(selector + '.exists').show();
       }
