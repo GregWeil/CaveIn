@@ -171,6 +171,7 @@ function createPlayable(config) {
     var def = deferred();
     _.delay(def.resolve);
     return def.promise;
+    
   }).then(function() {
     if (save) {
       game.headless = true;

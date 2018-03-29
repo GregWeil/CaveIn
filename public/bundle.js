@@ -1810,6 +1810,7 @@ Pages.home(new Pages.Page({
       $best.hide();
       if (score > 0) {
         $best.filter('.exists').show();
+        $best.find('.score').text(score);
       }
     });
   },
@@ -2336,6 +2337,7 @@ function createPlayable(config) {
     var def = deferred();
     _.delay(def.resolve);
     return def.promise;
+    
   }).then(function() {
     if (save) {
       game.headless = true;

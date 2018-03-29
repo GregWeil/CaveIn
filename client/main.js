@@ -33,6 +33,7 @@ Pages.home(new Pages.Page({
       $best.hide();
       if (score > 0) {
         $best.filter('.exists').show();
+        $best.find('.score').text(score);
       }
     });
   },
