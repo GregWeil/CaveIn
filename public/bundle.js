@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 /// engine.js
 //Main engine loop
 
@@ -93,7 +93,7 @@ module.exports = class Engine extends EventEmitter {
     this.objects.splice(this.objects.indexOf(inst), 1);
   }
 };
-},{"events.js":2,"render.js":5,"underscore":117}],2:[function(require,module,exports){
+},{"events.js":2,"render.js":5,"underscore":124}],2:[function(require,module,exports){
 /// events.js
 //A pretty standard event system
 
@@ -170,7 +170,7 @@ module.exports = class EventEmitter {
     return handler;
   }
 };
-},{"underscore":117}],3:[function(require,module,exports){
+},{"underscore":124}],3:[function(require,module,exports){
 /// input.js
 //Take player input and send it to the game
 
@@ -445,7 +445,7 @@ module.exports = {
   Keyboard: InputKeyboard,
   Swipe: InputSwipe
 };
-},{"underscore":117,"vector2.js":6}],4:[function(require,module,exports){
+},{"underscore":124,"vector2.js":6}],4:[function(require,module,exports){
 /// object.js
 //Base game object that things inherit from
 
@@ -494,7 +494,7 @@ module.exports = class BaseObject {
     handler.active = false;
   }
 };
-},{"underscore":117}],5:[function(require,module,exports){
+},{"underscore":124}],5:[function(require,module,exports){
 /// render.js
 //A bunch of utility functions for drawing things
 
@@ -716,7 +716,7 @@ module.exports = class Collide extends BaseObject {
     return _.filter(_.values(this.collisions), 'length').length;
   }
 };
-},{"object.js":4,"render.js":5,"underscore":117,"vector2.js":6}],8:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":124,"vector2.js":6}],8:[function(require,module,exports){
 /// colors.js
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
@@ -962,7 +962,7 @@ module.exports = class Enemy extends BaseObject {
     Render.sprite(sprites[this.sprite], this.grid.getPos(displayPos));
   }
 };
-},{"howler":107,"object.js":4,"render.js":5,"vector2.js":6}],10:[function(require,module,exports){
+},{"howler":114,"object.js":4,"render.js":5,"vector2.js":6}],10:[function(require,module,exports){
 /// game.js
 //Wrap the engine and define game specific interactions
 
@@ -1138,7 +1138,7 @@ module.exports = class Game extends Engine {
     super.destructor();
   }
 };
-},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":114,"render.js":5,"score.js":15,"underscore":117,"vector2.js":6}],11:[function(require,module,exports){
+},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":121,"render.js":5,"score.js":15,"underscore":124,"vector2.js":6}],11:[function(require,module,exports){
 /// gem.js
 //A pickup that gives a point
 
@@ -1292,7 +1292,7 @@ module.exports = class Gem extends BaseObject {
     Render.sprite(this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };
-},{"grid.js":12,"howler":107,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
+},{"grid.js":12,"howler":114,"object.js":4,"render.js":5,"vector2.js":6}],12:[function(require,module,exports){
 /// grid.js
 //Grid utility functions
 
@@ -1439,7 +1439,7 @@ module.exports = class Grid extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5,"underscore":117,"vector2.js":6}],13:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"underscore":124,"vector2.js":6}],13:[function(require,module,exports){
 /// pathfind.js
 //Construct a grid where each cell has its distance to the player
 
@@ -1714,7 +1714,7 @@ module.exports = class Player extends BaseObject {
     }
   }
 };
-},{"enemy.js":9,"howler":107,"object.js":4,"render.js":5,"underscore":117,"vector2.js":6}],15:[function(require,module,exports){
+},{"enemy.js":9,"howler":114,"object.js":4,"render.js":5,"underscore":124,"vector2.js":6}],15:[function(require,module,exports){
 /// score.js
 //Show a popup when the player gets any points
 
@@ -1912,7 +1912,7 @@ window.fullscreenExit = function() {
     }
   }
 };
-},{"howler":107,"jquery":108,"local-storage":109,"pages.js":17,"underscore":117,"wrapper.js":19}],17:[function(require,module,exports){
+},{"howler":114,"jquery":115,"local-storage":116,"pages.js":17,"underscore":124,"wrapper.js":19}],17:[function(require,module,exports){
 /// pages.js
 //A really basic single page app system
 
@@ -2023,7 +2023,7 @@ module.exports = {
   navigate: navigate,
   setup: initialize
 };
-},{"jquery":108,"underscore":117}],18:[function(require,module,exports){
+},{"jquery":115,"underscore":124}],18:[function(require,module,exports){
 /// replays.js
 //Replay validation and recording
 
@@ -2155,7 +2155,7 @@ module.exports = {
   getAlive: getAlive,
   isContinuation: isContinuation
 };
-},{"deferred":48,"game.js":10,"underscore":117}],19:[function(require,module,exports){
+},{"deferred":49,"game.js":10,"underscore":124}],19:[function(require,module,exports){
 /// wrapper.js
 //Provide simple functions for game management
 
@@ -2366,7 +2366,7 @@ module.exports = {
     score: replayGetBestScore
   }
 };
-},{"deferred":48,"game.js":10,"jquery":108,"local-storage":109,"replay.js":18,"underscore":117,"vector2.js":6}],20:[function(require,module,exports){
+},{"deferred":49,"game.js":10,"jquery":115,"local-storage":116,"replay.js":18,"underscore":124,"vector2.js":6}],20:[function(require,module,exports){
 'use strict';
 
 var assign        = require('es5-ext/object/assign')
@@ -2431,74 +2431,82 @@ d.gs = function (dscr, get, set/*, options*/) {
 	return !options ? desc : assign(normalizeOpts(options), desc);
 };
 
-},{"es5-ext/object/assign":77,"es5-ext/object/is-callable":82,"es5-ext/object/normalize-options":88,"es5-ext/string/#/contains":92}],21:[function(require,module,exports){
-'use strict';
+},{"es5-ext/object/assign":79,"es5-ext/object/is-callable":85,"es5-ext/object/normalize-options":92,"es5-ext/string/#/contains":99}],21:[function(require,module,exports){
+"use strict";
 
-var callable   = require('es5-ext/object/valid-callable')
-  , d          = require('d')
-  , isCallable = require('es5-ext/object/is-callable')
-  , ee         = require('event-emitter')
-  , isPromise  = require('./is-promise')
+var callable   = require("es5-ext/object/valid-callable")
+  , isCallable = require("es5-ext/object/is-callable")
+  , isValue    = require("es5-ext/object/is-value")
+  , d          = require("d")
+  , ee         = require("event-emitter")
+  , isPromise  = require("./is-promise");
 
-  , create = Object.create, defineProperty = Object.defineProperty
-  , deferred, resolve, reject;
+var create = Object.create, defineProperty = Object.defineProperty, deferred, resolve, reject;
 
 module.exports = exports = function (name, unres, onres, res) {
 	name = String(name);
-	(callable(res) && ((onres == null) || callable(onres)) && callable(unres));
+	callable(res);
+	if (isValue(onres)) callable(onres);
+	callable(unres);
 	defineProperty(exports._unresolved, name, d(unres));
 	exports._onresolve[name] = onres;
 	defineProperty(exports._resolved, name, d(res));
 	exports._names.push(name);
 };
 
-exports._names = ['done', 'then', 'valueOf'];
+exports._names = ["done", "then", "valueOf"];
 
-exports._unresolved = ee(create(Function.prototype, {
-	then: d(function (win, fail) {
-		var def;
-		if (!this.pending) this.pending = [];
-		def = deferred();
-		this.pending.push('then', [win, fail, def.resolve, def.reject]);
-		return def.promise;
-	}),
-	done: d(function (win, fail) {
-		((win == null) || callable(win));
-		((fail == null) || callable(fail));
-		if (!this.pending) this.pending = [];
-		this.pending.push('done', arguments);
-	}),
-	resolved: d(false),
-	returnsPromise: d(true),
-	valueOf: d(function () { return this; })
-}));
+exports._unresolved = ee(
+	create(Function.prototype, {
+		then: d(function (win, fail) {
+			var def;
+			if (!this.pending) this.pending = [];
+			def = deferred();
+			this.pending.push("then", [win, fail, def.resolve, def.reject]);
+			return def.promise;
+		}),
+		done: d(function (win, fail) {
+			if (isValue(win)) callable(win);
+			if (isValue(fail)) callable(fail);
+			if (!this.pending) this.pending = [];
+			this.pending.push("done", arguments);
+		}),
+		resolved: d(false),
+		returnsPromise: d(true),
+		valueOf: d(function () {
+			return this;
+		})
+	})
+);
 
 exports._onresolve = {
-	then: function (win, fail, resolve, reject) {
-		var value, cb = this.failed ? fail : win;
-		if (cb == null) {
-			if (this.failed) reject(this.value);
-			else resolve(this.value);
+	then: function (win, fail, promiseResolve, promiseReject) {
+		var value, cont = this.failed ? fail : win;
+		if (!isValue(cont)) {
+			if (this.failed) promiseReject(this.value);
+			else promiseResolve(this.value);
 			return;
 		}
-		if (isCallable(cb)) {
-			if (isPromise(cb)) {
-				if (cb.resolved) {
-					if (cb.failed) reject(cb.value);
-					else resolve(cb.value);
+		if (isCallable(cont)) {
+			if (isPromise(cont)) {
+				if (cont.resolved) {
+					if (cont.failed) promiseReject(cont.value);
+					else promiseResolve(cont.value);
 					return;
 				}
-				cb.done(resolve, reject);
+				cont.done(promiseResolve, promiseReject);
 				return;
 			}
-			try { value = cb(this.value); } catch (e) {
-				reject(e);
+			try {
+				value = cont(this.value);
+			} catch (e) {
+				promiseReject(e);
 				return;
 			}
-			resolve(value);
+			promiseResolve(value);
 			return;
 		}
-		resolve(cb);
+		promiseResolve(cont);
 	},
 	done: function (win, fail) {
 		if (this.failed) {
@@ -2512,50 +2520,58 @@ exports._onresolve = {
 	}
 };
 
-exports._resolved = ee(create(Function.prototype, {
-	then: d(function (win, fail) {
-		var value, cb = this.failed ? fail : win;
-		if (cb == null) return this;
-		if (isCallable(cb)) {
-			if (isPromise(cb)) return cb;
-			try { value = cb(this.value); } catch (e) { return reject(e); }
-			return resolve(value);
-		}
-		return resolve(cb);
-	}),
-	done: d(function (win, fail) {
-		((win == null) || callable(win));
-		((fail == null) || callable(fail));
-		if (this.failed) {
-			if (fail) {
-				fail(this.value);
-				return;
+exports._resolved = ee(
+	create(Function.prototype, {
+		then: d(function (win, fail) {
+			var value, cont = this.failed ? fail : win;
+			if (!isValue(cont)) return this;
+			if (isCallable(cont)) {
+				if (isPromise(cont)) return cont;
+				try {
+					value = cont(this.value);
+				} catch (e) {
+					return reject(e);
+				}
+				return resolve(value);
 			}
-			throw this.value;
-		}
-		if (win) win(this.value);
-	}),
-	resolved: d(true),
-	returnsPromise: d(true),
-	valueOf: d(function () { return this.value; })
-}));
+			return resolve(cont);
+		}),
+		done: d(function (win, fail) {
+			if (isValue(win)) callable(win);
+			if (isValue(fail)) callable(fail);
+			if (this.failed) {
+				if (fail) {
+					fail(this.value);
+					return;
+				}
+				throw this.value;
+			}
+			if (win) win(this.value);
+		}),
+		resolved: d(true),
+		returnsPromise: d(true),
+		valueOf: d(function () {
+			return this.value;
+		})
+	})
+);
 
-deferred = require('./deferred');
+deferred = require("./deferred");
 resolve = deferred.resolve;
 reject = deferred.reject;
 deferred.extend = exports;
 
-},{"./deferred":23,"./is-promise":50,"d":20,"es5-ext/object/is-callable":82,"es5-ext/object/valid-callable":89,"event-emitter":105}],22:[function(require,module,exports){
+},{"./deferred":23,"./is-promise":51,"d":20,"es5-ext/object/is-callable":85,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"event-emitter":112}],22:[function(require,module,exports){
 // Assimilate eventual foreign promise
 
-'use strict';
+"use strict";
 
-var isObject  = require('es5-ext/object/is-object')
-  , isPromise = require('./is-promise')
-  , deferred  = require('./deferred')
-  , nextTick  = require('next-tick')
+var isObject  = require("es5-ext/object/is-object")
+  , isPromise = require("./is-promise")
+  , deferred  = require("./deferred")
+  , nextTick  = require("next-tick");
 
-  , getPrototypeOf = Object.getPrototypeOf;
+var getPrototypeOf = Object.getPrototypeOf;
 
 module.exports = function self(value) {
 	var then, done, def, resolve, reject;
@@ -2565,7 +2581,7 @@ module.exports = function self(value) {
 	} catch (e) {
 		return value;
 	}
-	if (typeof then !== 'function') return value;
+	if (typeof then !== "function") return value;
 	if (isPromise(value)) return value;
 	if (!isObject(value)) return value;
 	if (!getPrototypeOf(value)) return value;
@@ -2573,9 +2589,13 @@ module.exports = function self(value) {
 		done = value.done;
 	} catch (ignore) {}
 	def = deferred();
-	resolve = function (value) { def.resolve(self(value)); };
-	reject = function (value) { def.reject(value); };
-	if (typeof done === 'function') {
+	resolve = function (resolvedValue) {
+		def.resolve(self(resolvedValue));
+	};
+	reject = function (resolvedReason) {
+		def.reject(resolvedReason);
+	};
+	if (typeof done === "function") {
 		try {
 			done.call(value, resolve, reject);
 		} catch (e) {
@@ -2584,18 +2604,28 @@ module.exports = function self(value) {
 		return def.promise;
 	}
 	try {
-		then.call(value, function (value) { nextTick(function () {
-			resolve(value);
-		}); }, function (value) { nextTick(function () {
-			reject(value);
-		}); });
+		then.call(
+			value,
+			function (resolvedValue) {
+				nextTick(function () {
+					resolve(resolvedValue);
+				});
+			},
+			function (resolvedReason) {
+				nextTick(function () {
+					reject(resolvedReason);
+				});
+			}
+		);
 	} catch (e) {
 		return def.reject(e);
 	}
 	return def.promise;
 };
 
-},{"./deferred":23,"./is-promise":50,"es5-ext/object/is-object":83,"next-tick":112}],23:[function(require,module,exports){
+},{"./deferred":23,"./is-promise":51,"es5-ext/object/is-object":86,"next-tick":119}],23:[function(require,module,exports){
+/* eslint max-statements: "off", max-depth: "off" */
+
 // Returns function that returns deferred or promise object.
 //
 // 1. If invoked without arguments then deferred object is returned
@@ -2607,46 +2637,57 @@ module.exports = function self(value) {
 // 3. If invoked with more than one arguments then promise that resolves with
 //    array of all resolved arguments is returned.
 
-'use strict';
+"use strict";
 
-var isError    = require('es5-ext/error/is-error')
-  , noop       = require('es5-ext/function/noop')
-  , isPromise  = require('./is-promise')
+var isError        = require("es5-ext/error/is-error")
+  , noop           = require("es5-ext/function/noop")
+  , setPrototypeOf = require("es5-ext/object/set-prototype-of")
+  , isPromise      = require("./is-promise");
 
-  , every = Array.prototype.every, push = Array.prototype.push
-
-  , Deferred, createDeferred, count = 0, timeout, extendShim, ext
-  , protoSupported = Boolean(isPromise.__proto__)
-  , resolve, assimilate;
+var every = Array.prototype.every
+  , push = Array.prototype.push
+  , getPrototypeOf = Object.getPrototypeOf
+  , Deferred
+  , createDeferred
+  , count = 0
+  , timeout
+  , extendShim
+  , ext
+  , resolve
+  , assimilate;
 
 extendShim = function (promise) {
 	ext._names.forEach(function (name) {
 		promise[name] = function () {
-			return promise.__proto__[name].apply(promise, arguments);
+			return getPrototypeOf(promise)[name].apply(promise, arguments);
 		};
 	});
 	promise.returnsPromise = true;
-	promise.resolved = promise.__proto__.resolved;
+	promise.resolved = getPrototypeOf(promise).resolved;
 };
 
 resolve = function (value, failed) {
-	var promise = function (win, fail) { return promise.then(win, fail); };
+	var promise = function (win, fail) {
+		return promise.then(win, fail);
+	};
 	promise.value = value;
 	promise.failed = failed;
-	promise.__proto__ = ext._resolved;
-	if (!protoSupported) { extendShim(promise); }
+	if (setPrototypeOf) setPrototypeOf(promise, ext._resolved);
+	else extendShim(promise);
 	if (createDeferred._profile) createDeferred._profile(true);
 	return promise;
 };
 
 Deferred = function () {
-	var promise = function (win, fail) { return promise.then(win, fail); };
+	var promise = function (win, fail) {
+		return promise.then(win, fail);
+	};
 	if (!count) timeout = setTimeout(noop, 1e9);
 	++count;
 	if (createDeferred._monitor) promise.monitor = createDeferred._monitor();
-	promise.__proto__ = ext._unresolved;
-	if (!protoSupported) extendShim(promise);
-	(createDeferred._profile && createDeferred._profile());
+	if (setPrototypeOf) setPrototypeOf(promise, ext._unresolved);
+	else extendShim(promise);
+	if (createDeferred._profile) createDeferred._profile();
 	this.promise = promise;
 	this.resolve = this.resolve.bind(this);
 	this.reject = this.reject.bind(this);
@@ -2657,20 +2698,20 @@ Deferred.prototype = {
 	_settle: function (value) {
 		var i, name, data, deps, dPromise, nuDeps;
 		this.promise.value = value;
-		this.promise.__proto__ = ext._resolved;
-		if (!protoSupported) this.promise.resolved = true;
+		if (setPrototypeOf) setPrototypeOf(this.promise, ext._resolved);
+		else this.promise.resolved = true;
 		deps = this.promise.dependencies;
 		delete this.promise.dependencies;
 		while (deps) {
 			for (i = 0; (dPromise = deps[i]); ++i) {
 				dPromise.value = value;
 				dPromise.failed = this.failed;
-				dPromise.__proto__ = ext._resolved;
-				if (!protoSupported) dPromise.resolved = true;
+				if (setPrototypeOf) setPrototypeOf(dPromise, ext._resolved);
+				else dPromise.resolved = true;
 				delete dPromise.pending;
 				if (dPromise.dependencies) {
-					if (!nuDeps) nuDeps = dPromise.dependencies;
-					else push.apply(nuDeps, dPromise.dependencies);
+					if (nuDeps) push.apply(nuDeps, dPromise.dependencies);
+					else nuDeps = dPromise.dependencies;
 					delete dPromise.dependencies;
 				}
 			}
@@ -2699,7 +2740,9 @@ Deferred.prototype = {
 				value.dependencies.push(this.promise);
 				if (this.promise.pending) {
 					if (value.pending) {
-						push.apply(value.pending, this.promise.pending);
+						this.promise.pending.forEach(function (promise) {
+							value.pending.push(promise);
+						});
 						this.promise.pending = value.pending;
 						if (this.promise.dependencies) {
 							this.promise.dependencies.forEach(function self(dPromise) {
@@ -2735,29 +2778,29 @@ Deferred.prototype = {
 };
 
 module.exports = createDeferred = function (value) {
-	var l = arguments.length, d, waiting, initialized, result;
-	if (!l) return new Deferred();
-	if (l > 1) {
+	var length = arguments.length, d, waiting, initialized, result;
+	if (!length) return new Deferred();
+	if (length > 1) {
 		d = new Deferred();
 		waiting = 0;
-		result = new Array(l);
-		every.call(arguments, function (value, index) {
-			value = assimilate(value);
-			if (!isPromise(value)) {
-				result[index] = value;
+		result = new Array(length);
+		every.call(arguments, function (itemValue, index) {
+			itemValue = assimilate(itemValue);
+			if (!isPromise(itemValue)) {
+				result[index] = itemValue;
 				return true;
 			}
-			if (value.resolved) {
-				if (value.failed) {
-					d.reject(value.value);
+			if (itemValue.resolved) {
+				if (itemValue.failed) {
+					d.reject(itemValue.value);
 					return false;
 				}
-				result[index] = value.value;
+				result[index] = itemValue.value;
 				return true;
 			}
 			++waiting;
-			value.done(function (value) {
-				result[index] = value;
+			itemValue.done(function (resolvedValue) {
+				result[index] = resolvedValue;
 				if (!--waiting && initialized) d.resolve(result);
 			}, d.reject);
 			return true;
@@ -2772,30 +2815,32 @@ module.exports = createDeferred = function (value) {
 };
 
 createDeferred.Deferred = Deferred;
-createDeferred.reject = function (value) { return resolve(value, true); };
+createDeferred.reject = function (value) {
+	return resolve(value, true);
+};
 createDeferred.resolve = function (value) {
 	value = assimilate(value);
 	if (isPromise(value)) return value;
 	return resolve(value, false);
 };
-ext = require('./_ext');
-assimilate = require('./assimilate');
+ext = require("./_ext");
+assimilate = require("./assimilate");
 
-},{"./_ext":21,"./assimilate":22,"./is-promise":50,"es5-ext/error/is-error":62,"es5-ext/function/noop":68}],24:[function(require,module,exports){
+},{"./_ext":21,"./assimilate":22,"./is-promise":51,"es5-ext/error/is-error":64,"es5-ext/function/noop":70,"es5-ext/object/set-prototype-of":93}],24:[function(require,module,exports){
 // Dynamic queue handler
 // Allows to create a promise queue, where new promises can be added to queue until last promise in
 // a queue resolves. Queue promise resolves with `undefined` value, when last promises resolves.
 
-'use strict';
+"use strict";
 
-var aFrom          = require('es5-ext/array/from')
-  , ensureIterable = require('es5-ext/iterable/validate-object')
-  , assign         = require('es5-ext/object/assign')
-  , deferred       = require('./deferred')
-  , isPromise      = require('./is-promise')
-  , assimilate     = require('./assimilate')
+var aFrom          = require("es5-ext/array/from")
+  , ensureIterable = require("es5-ext/iterable/validate-object")
+  , assign         = require("es5-ext/object/assign")
+  , deferred       = require("./deferred")
+  , isPromise      = require("./is-promise")
+  , assimilate     = require("./assimilate");
 
-  , DynamicQueue;
+var DynamicQueue;
 
 module.exports = DynamicQueue = function (list) {
 	if (!(this instanceof DynamicQueue)) return new DynamicQueue(list);
@@ -2805,9 +2850,10 @@ module.exports = DynamicQueue = function (list) {
 	list.every(this.add, this);
 	if (!this.waiting) {
 		this.resolve();
-		return;
+		return null;
 	}
 	this.initialized = true;
+	return null;
 };
 
 DynamicQueue.prototype = {
@@ -2830,35 +2876,38 @@ DynamicQueue.prototype = {
 		return this._processValue();
 	},
 	_processValue: function () {
-		if (this.promise.resolved) return;
+		if (this.promise.resolved) return null;
 		if (!--this.waiting && this.initialized) this.resolve();
 		return true;
 	}
 };
 
-},{"./assimilate":22,"./deferred":23,"./is-promise":50,"es5-ext/array/from":55,"es5-ext/iterable/validate-object":70,"es5-ext/object/assign":77}],25:[function(require,module,exports){
-'use strict';
+},{"./assimilate":22,"./deferred":23,"./is-promise":51,"es5-ext/array/from":56,"es5-ext/iterable/validate-object":72,"es5-ext/object/assign":79}],25:[function(require,module,exports){
+"use strict";
 
-var arrayOf    = require('es5-ext/array/of')
-  , deferred   = require('../deferred')
-  , isPromise  = require('../is-promise')
-  , assimilate = require('../assimilate')
+var arrayOf    = require("es5-ext/array/of")
+  , isValue    = require("es5-ext/object/is-value")
+  , deferred   = require("../deferred")
+  , isPromise  = require("../is-promise")
+  , assimilate = require("../assimilate");
 
-  , push = Array.prototype.push, slice = Array.prototype.slice;
+var push = Array.prototype.push, slice = Array.prototype.slice;
 
 module.exports = function (args, length) {
-	var i, l, arg;
-	if ((length != null) && (args.length !== length)) {
+	var i, arg;
+	if (isValue(length) && args.length !== length) {
 		args = slice.call(args, 0, length);
 		if (args.length < length) {
 			push.apply(args, new Array(length - args.length));
 		}
+	} else {
+		length = args.length;
 	}
-	for (i = 0, l = args.length; i < l; ++i) {
+	for (i = 0; i < length; ++i) {
 		arg = assimilate(args[i]);
 		if (isPromise(arg)) {
 			if (!arg.resolved) {
-				if (l > 1) return deferred.apply(null, args);
+				if (length > 1) return deferred.apply(null, args);
 				return arg(arrayOf);
 			}
 			if (arg.failed) return arg;
@@ -2868,35 +2917,35 @@ module.exports = function (args, length) {
 	return args;
 };
 
-},{"../assimilate":22,"../deferred":23,"../is-promise":50,"es5-ext/array/of":58}],26:[function(require,module,exports){
+},{"../assimilate":22,"../deferred":23,"../is-promise":51,"es5-ext/array/of":59,"es5-ext/object/is-value":87}],26:[function(require,module,exports){
 // Promise aware Array's every
 
-'use strict';
+"use strict";
 
-module.exports = require('../../lib/some-every')(false);
+module.exports = require("../../lib/some-every")(false);
 
-},{"../../lib/some-every":51}],27:[function(require,module,exports){
+},{"../../lib/some-every":52}],27:[function(require,module,exports){
 // Promise aware Array's find
 // Additionally differs from some that it returns *first in order* item that matches constraint
 
-'use strict';
+"use strict";
 
-var assign     = require('es5-ext/object/assign')
-  , value      = require('es5-ext/object/valid-value')
-  , callable   = require('es5-ext/object/valid-callable')
-  , deferred   = require('../../deferred')
-  , isPromise  = require('../../is-promise')
-  , assimilate = require('../../assimilate')
+var assign          = require("es5-ext/object/assign")
+  , isValue         = require("es5-ext/object/is-value")
+  , ensureValue     = require("es5-ext/object/valid-value")
+  , callable        = require("es5-ext/object/valid-callable")
+  , toNaturalNumber = require("es5-ext/number/to-pos-integer")
+  , deferred        = require("../../deferred")
+  , isPromise       = require("../../is-promise")
+  , assimilate      = require("../../assimilate");
 
-  , call = Function.prototype.call
-  , resolve = deferred.resolve
-  , Find;
+var call = Function.prototype.call, resolve = deferred.resolve, Find;
 
 Find = function (list, cb, context) {
 	this.list = list;
 	this.cb = cb;
 	this.context = context;
-	this.length = list.length >>> 0;
+	this.length = toNaturalNumber(list.length);
 
 	while (this.current < this.length) {
 		if (this.current in list) {
@@ -2969,34 +3018,33 @@ Find.prototype = {
 };
 
 module.exports = function (cb/*, thisArg*/) {
-	value(this);
-	((cb == null) || callable(cb));
+	ensureValue(this);
+	if (isValue(cb)) callable(cb);
 
 	return new Find(this, cb, arguments[1]);
 };
 
-},{"../../assimilate":22,"../../deferred":23,"../../is-promise":50,"es5-ext/object/assign":77,"es5-ext/object/valid-callable":89,"es5-ext/object/valid-value":91}],28:[function(require,module,exports){
+},{"../../assimilate":22,"../../deferred":23,"../../is-promise":51,"es5-ext/number/to-pos-integer":77,"es5-ext/object/assign":79,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":98}],28:[function(require,module,exports){
 // Promise aware Array's map
 
-'use strict';
+"use strict";
 
-var assign     = require('es5-ext/object/assign')
-  , value      = require('es5-ext/object/valid-value')
-  , callable   = require('es5-ext/object/valid-callable')
-  , deferred   = require('../../deferred')
-  , isPromise  = require('../../is-promise')
-  , assimilate = require('../../assimilate')
+var assign          = require("es5-ext/object/assign")
+  , isValue         = require("es5-ext/object/is-value")
+  , ensureValue     = require("es5-ext/object/valid-value")
+  , callable        = require("es5-ext/object/valid-callable")
+  , toNaturalNumber = require("es5-ext/number/to-pos-integer")
+  , deferred        = require("../../deferred")
+  , isPromise       = require("../../is-promise")
+  , assimilate      = require("../../assimilate");
 
-  , every = Array.prototype.every
-  , call = Function.prototype.call
-
-  , DMap;
+var every = Array.prototype.every, call = Function.prototype.call, DMap;
 
 DMap = function (list, cb, context) {
 	this.list = list;
 	this.cb = cb;
 	this.context = context;
-	this.result = new Array(list.length >>> 0);
+	this.result = new Array(toNaturalNumber(list.length));
 
 	assign(this, deferred());
 	every.call(list, this.process, this);
@@ -3058,43 +3106,45 @@ DMap.prototype = {
 };
 
 module.exports = function (cb/*, thisArg*/) {
-	value(this);
-	((cb == null) || callable(cb));
+	ensureValue(this);
+	if (isValue(cb)) callable(cb);
 
 	return new DMap(this, cb, arguments[1]);
 };
 
-},{"../../assimilate":22,"../../deferred":23,"../../is-promise":50,"es5-ext/object/assign":77,"es5-ext/object/valid-callable":89,"es5-ext/object/valid-value":91}],29:[function(require,module,exports){
+},{"../../assimilate":22,"../../deferred":23,"../../is-promise":51,"es5-ext/number/to-pos-integer":77,"es5-ext/object/assign":79,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":98}],29:[function(require,module,exports){
 // Promise aware Array's reduce
 
-'use strict';
+"use strict";
 
-var assign     = require('es5-ext/object/assign')
-  , value      = require('es5-ext/object/valid-value')
-  , callable   = require('es5-ext/object/valid-callable')
-  , deferred   = require('../../deferred')
-  , isPromise  = require('../../is-promise')
-  , assimilate = require('../../assimilate')
+var assign          = require("es5-ext/object/assign")
+  , isValue         = require("es5-ext/object/is-value")
+  , ensureValue     = require("es5-ext/object/valid-value")
+  , callable        = require("es5-ext/object/valid-callable")
+  , toNaturalNumber = require("es5-ext/number/to-pos-integer")
+  , deferred        = require("../../deferred")
+  , isPromise       = require("../../is-promise")
+  , assimilate      = require("../../assimilate");
 
-  , call = Function.prototype.call
-  , hasOwnProperty = Object.prototype.hasOwnProperty
-  , resolve = deferred.resolve
-  , Reduce;
+var call = Function.prototype.call, resolve = deferred.resolve, Reduce;
 
 Reduce = function (list, cb, initial, initialized) {
 	this.list = list;
 	this.cb = cb;
 	this.initialized = initialized;
-	this.length = list.length >>> 0;
+	this.length = toNaturalNumber(list.length);
 
 	initial = assimilate(initial);
 	if (isPromise(initial)) {
 		if (!initial.resolved) {
 			assign(this, deferred());
-			initial.done(function (initial) {
-				this.value = initial;
-				this.init();
-			}.bind(this), this.reject);
+			initial.done(
+				function (resolvedInitial) {
+					this.value = resolvedInitial;
+					this.init();
+				}.bind(this),
+				this.reject
+			);
 			return this.promise;
 		}
 		this.value = initial.value;
@@ -3130,9 +3180,9 @@ Reduce.prototype = {
 		var result;
 		while (!this.state) {
 			result = this.process();
-			if (this.state !== 'cb') break;
+			if (this.state !== "cb") break;
 			result = this.processCb(result);
-			if (this.state !== 'value') break;
+			if (this.state !== "value") break;
 			this.processValue(result);
 		}
 	},
@@ -3140,55 +3190,60 @@ Reduce.prototype = {
 		var value = assimilate(this.list[this.current]);
 		if (isPromise(value)) {
 			if (!value.resolved) {
-				value.done(function (result) {
-					result = this.processCb(result);
-					if (this.state !== 'value') return;
-					this.processValue(result);
-					if (!this.state) this.continue();
-				}.bind(this), this.reject);
-				return;
+				value.done(
+					function (result) {
+						result = this.processCb(result);
+						if (this.state !== "value") return;
+						this.processValue(result);
+						if (!this.state) this.continue();
+					}.bind(this),
+					this.reject
+				);
+				return null;
 			}
 			if (value.failed) {
 				this.reject(value.value);
-				return;
+				return null;
 			}
 			value = value.value;
 		}
-		this.state = 'cb';
+		this.state = "cb";
 		return value;
 	},
 	processCb: function (value) {
 		if (!this.initialized) {
 			this.initialized = true;
-			this.state = 'value';
+			this.state = "value";
 			return value;
 		}
 		if (this.cb) {
 			try {
-				value = call.call(this.cb, undefined, this.value, value, this.current,
-					this.list);
+				value = call.call(this.cb, undefined, this.value, value, this.current, this.list);
 			} catch (e) {
 				this.reject(e);
-				return;
+				return null;
 			}
 			value = assimilate(value);
 			if (isPromise(value)) {
 				if (!value.resolved) {
-					value.done(function (result) {
-						this.state = 'value';
-						this.processValue(result);
-						if (!this.state) this.continue();
-					}.bind(this), this.reject);
-					return;
+					value.done(
+						function (result) {
+							this.state = "value";
+							this.processValue(result);
+							if (!this.state) this.continue();
+						}.bind(this),
+						this.reject
+					);
+					return null;
 				}
 				if (value.failed) {
 					this.reject(value.value);
-					return;
+					return null;
 				}
 				value = value.value;
 			}
 		}
-		this.state = 'value';
+		this.state = "value";
 		return value;
 	},
 	processValue: function (value) {
@@ -3204,43 +3259,43 @@ Reduce.prototype = {
 };
 
 module.exports = function (cb/*, initial*/) {
-	value(this);
-	((cb == null) || callable(cb));
+	ensureValue(this);
+	if (isValue(cb)) callable(cb);
 
 	return new Reduce(this, cb, arguments[1], arguments.length > 1);
 };
 
-},{"../../assimilate":22,"../../deferred":23,"../../is-promise":50,"es5-ext/object/assign":77,"es5-ext/object/valid-callable":89,"es5-ext/object/valid-value":91}],30:[function(require,module,exports){
+},{"../../assimilate":22,"../../deferred":23,"../../is-promise":51,"es5-ext/number/to-pos-integer":77,"es5-ext/object/assign":79,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":98}],30:[function(require,module,exports){
 // Promise aware Array's some
 
-'use strict';
+"use strict";
 
-module.exports = require('../../lib/some-every')(true);
+module.exports = require("../../lib/some-every")(true);
 
-},{"../../lib/some-every":51}],31:[function(require,module,exports){
+},{"../../lib/some-every":52}],31:[function(require,module,exports){
 // Call asynchronous function
 
-'use strict';
+"use strict";
 
-var toArray          = require('es5-ext/array/to-array')
-  , callable         = require('es5-ext/object/valid-callable')
-  , deferred         = require('../../deferred')
-  , isPromise        = require('../../is-promise')
-  , processArguments = require('../_process-arguments')
+var toArray          = require("es5-ext/array/to-array")
+  , isValue          = require("es5-ext/object/is-value")
+  , callable         = require("es5-ext/object/valid-callable")
+  , deferred         = require("../../deferred")
+  , isPromise        = require("../../is-promise")
+  , processArguments = require("../_process-arguments");
 
-  , slice = Array.prototype.slice, apply = Function.prototype.apply
-
-  , applyFn, callAsync;
+var slice = Array.prototype.slice, apply = Function.prototype.apply, applyFn, callAsync;
 
 applyFn = function (fn, args, def) {
 	args = toArray(args);
-	apply.call(fn,  this, args.concat(function (error, result) {
-		if (error == null) {
-			def.resolve((arguments.length > 2) ? slice.call(arguments, 1) : result);
-		} else {
-			def.reject(error);
-		}
-	}));
+	apply.call(
+		fn,
+		this,
+		args.concat(function (error, result) {
+			if (isValue(error)) def.reject(error);
+			else def.resolve(arguments.length > 2 ? slice.call(arguments, 1) : result);
+		})
+	);
 };
 
 callAsync = function (fn, length, context, args) {
@@ -3249,11 +3304,16 @@ callAsync = function (fn, length, context, args) {
 	if (isPromise(args)) {
 		if (args.failed) return args;
 		def = deferred();
-		args.done(function (args) {
-			if (fn.returnsPromise) return apply.call(fn, context, args);
+		args.done(function (resolvedArgs) {
+			if (fn.returnsPromise) {
+				apply.call(fn, context, resolvedArgs);
+				return;
+			}
 			try {
-				applyFn.call(context, fn, args, def);
-			} catch (e) { def.reject(e); }
+				applyFn.call(context, fn, resolvedArgs, def);
+			} catch (e) {
+				def.reject(e);
+			}
 		}, def.reject);
 		return def.promise;
 	}
@@ -3272,21 +3332,25 @@ module.exports = exports = function (context/*, …args*/) {
 	return callAsync(callable(this), null, context, slice.call(arguments, 1));
 };
 
-Object.defineProperty(exports, '_base', { configurable: true,
-	enumerable: false, writable: true, value: callAsync });
+Object.defineProperty(exports, "_base", {
+	configurable: true,
+	enumerable: false,
+	writable: true,
+	value: callAsync
+});
 
-},{"../../deferred":23,"../../is-promise":50,"../_process-arguments":25,"es5-ext/array/to-array":61,"es5-ext/object/valid-callable":89}],32:[function(require,module,exports){
+},{"../../deferred":23,"../../is-promise":51,"../_process-arguments":25,"es5-ext/array/to-array":62,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],32:[function(require,module,exports){
 // Delay function execution, return promise for delayed function result
 
-'use strict';
+"use strict";
 
-var callable      = require('es5-ext/object/valid-callable')
-  , nextTick      = require('next-tick')
-  , ensureTimeout = require('timers-ext/valid-timeout')
-  , deferred      = require('../../deferred')
+var isValue       = require("es5-ext/object/is-value")
+  , callable      = require("es5-ext/object/valid-callable")
+  , nextTick      = require("next-tick")
+  , ensureTimeout = require("timers-ext/valid-timeout")
+  , deferred      = require("../../deferred");
 
-  , apply    = Function.prototype.apply
-  , delayed;
+var apply = Function.prototype.apply, delayed;
 
 delayed = function (fn, args, resolve, reject) {
 	var value;
@@ -3302,11 +3366,11 @@ delayed = function (fn, args, resolve, reject) {
 module.exports = function (timeout) {
 	var fn, result, delay;
 	fn = callable(this);
-	if (timeout == null) {
-		delay = nextTick;
-	} else {
+	if (isValue(timeout)) {
 		timeout = ensureTimeout(timeout);
 		delay = setTimeout;
+	} else {
+		delay = nextTick;
 	}
 	result = function () {
 		var def = deferred();
@@ -3317,30 +3381,36 @@ module.exports = function (timeout) {
 	return result;
 };
 
-},{"../../deferred":23,"es5-ext/object/valid-callable":89,"next-tick":112,"timers-ext/valid-timeout":116}],33:[function(require,module,exports){
+},{"../../deferred":23,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"next-tick":119,"timers-ext/valid-timeout":123}],33:[function(require,module,exports){
+/* eslint max-statements: "off" */
+
 // Limit number of concurrent function executions (to cLimit number).
 // Limited calls are queued. Optionaly maximum queue length can also be
 // controlled with qLimit value, any calls that would reach over that limit
 // would be discarded (its promise would resolve with "Too many calls" error)
 
-'use strict';
+"use strict";
 
-var toPosInt   = require('es5-ext/number/to-pos-integer')
-  , callable   = require('es5-ext/object/valid-callable')
-  , eeUnify    = require('event-emitter/unify')
-  , deferred   = require('../../deferred')
-  , isPromise  = require('../../is-promise')
-  , assimilate = require('../../assimilate')
+var toPosInt   = require("es5-ext/number/to-pos-integer")
+  , callable   = require("es5-ext/object/valid-callable")
+  , isValue    = require("es5-ext/object/is-value")
+  , eeUnify    = require("event-emitter/unify")
+  , deferred   = require("../../deferred")
+  , isPromise  = require("../../is-promise")
+  , assimilate = require("../../assimilate");
 
-  , resolve = deferred.resolve, reject = deferred.reject
-  , apply = Function.prototype.apply, max = Math.max
+var resolve = deferred.resolve
+  , reject = deferred.reject
+  , apply = Function.prototype.apply
+  , max = Math.max
   , gateReject;
 
-require('../promise/finally');
+require("../promise/finally");
 
 gateReject = function () {
-	var e = new Error("Too many calls");
-	e.type = 'deferred-gate-rejected';
+	var e = new Error("Too many calls at the gate");
+	e.code = "DEFERRED_REJECTED_AT_GATE";
+	e.type = "deferred-gate-rejected";
 	return reject(e);
 };
 
@@ -3348,33 +3418,32 @@ module.exports = function (cLimit, qLimit) {
 	var fn, count, decrement, unload, queue, run, result;
 	fn = callable(this);
 	cLimit = max(toPosInt(cLimit), 1);
-	qLimit = ((qLimit == null) || isNaN(qLimit)) ? Infinity : toPosInt(qLimit);
+	qLimit = !isValue(qLimit) || isNaN(qLimit) ? Infinity : toPosInt(qLimit);
 	count = 0;
 	queue = [];
 
 	run = function (thisArg, args, def) {
-		var r;
+		var localResult;
 		try {
-			r = apply.call(fn, thisArg, args);
+			localResult = apply.call(fn, thisArg, args);
 		} catch (e) {
 			if (!def) return reject(e);
 			def.reject(e);
-			unload();
-			return;
+			return unload();
 		}
-		r = assimilate(r);
-		if (isPromise(r)) {
-			if (def) eeUnify(def.promise, r);
-			if (!r.resolved) {
+		localResult = assimilate(localResult);
+		if (isPromise(localResult)) {
+			if (def) eeUnify(def.promise, localResult);
+			if (!localResult.resolved) {
 				++count;
-				if (def) def.resolve(r);
-				return r.finally(decrement);
+				if (def) def.resolve(localResult);
+				return localResult.finally(decrement);
 			}
-			r = r.value;
+			if (!localResult.failed) localResult = localResult.value;
 		}
-		if (!def) return resolve(r);
-		def.resolve(r);
-		unload();
+		if (!def) return resolve(localResult);
+		def.resolve(localResult);
+		return unload();
 	};
 
 	decrement = function () {
@@ -3403,19 +3472,19 @@ module.exports = function (cLimit, qLimit) {
 	return result;
 };
 
-},{"../../assimilate":22,"../../deferred":23,"../../is-promise":50,"../promise/finally":40,"es5-ext/number/to-pos-integer":75,"es5-ext/object/valid-callable":89,"event-emitter/unify":106}],34:[function(require,module,exports){
+},{"../../assimilate":22,"../../deferred":23,"../../is-promise":51,"../promise/finally":40,"es5-ext/number/to-pos-integer":77,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"event-emitter/unify":113}],34:[function(require,module,exports){
 // Promisify synchronous function
 
-'use strict';
+"use strict";
 
-var callable         = require('es5-ext/object/valid-callable')
-  , deferred         = require('../../deferred')
-  , isPromise        = require('../../is-promise')
-  , processArguments = require('../_process-arguments')
+var isValue          = require("es5-ext/object/is-value")
+  , callable         = require("es5-ext/object/valid-callable")
+  , toNaturalNumber  = require("es5-ext/number/to-pos-integer")
+  , deferred         = require("../../deferred")
+  , isPromise        = require("../../is-promise")
+  , processArguments = require("../_process-arguments");
 
-  , apply = Function.prototype.apply
-
-  , applyFn;
+var apply = Function.prototype.apply, applyFn;
 
 applyFn = function (fn, args, resolve, reject) {
 	var value;
@@ -3432,7 +3501,7 @@ module.exports = function (length) {
 	var fn, result;
 	fn = callable(this);
 	if (fn.returnsPromise) return fn;
-	if (length != null) length = length >>> 0;
+	if (isValue(length)) length = toNaturalNumber(length);
 	result = function () {
 		var args, def;
 		args = processArguments(arguments, length);
@@ -3440,9 +3509,12 @@ module.exports = function (length) {
 		if (isPromise(args)) {
 			if (args.failed) return args;
 			def = deferred();
-			args.done(function (args) {
-				applyFn.call(this, fn, args, def.resolve, def.reject);
-			}.bind(this), def.reject);
+			args.done(
+				function (resolvedArgs) {
+					applyFn.call(this, fn, resolvedArgs, def.resolve, def.reject);
+				}.bind(this),
+				def.reject
+			);
 		} else {
 			def = deferred();
 			applyFn.call(this, fn, args, def.resolve, def.reject);
@@ -3454,67 +3526,77 @@ module.exports = function (length) {
 	return result;
 };
 
-},{"../../deferred":23,"../../is-promise":50,"../_process-arguments":25,"es5-ext/object/valid-callable":89}],35:[function(require,module,exports){
+},{"../../deferred":23,"../../is-promise":51,"../_process-arguments":25,"es5-ext/number/to-pos-integer":77,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],35:[function(require,module,exports){
 // Promisify asynchronous function
 
-'use strict';
+"use strict";
 
-var callable  = require('es5-ext/object/valid-callable')
-  , callAsync = require('./call-async')._base;
+var isValue         = require("es5-ext/object/is-value")
+  , callable        = require("es5-ext/object/valid-callable")
+  , toNaturalNumber = require("es5-ext/number/to-pos-integer")
+  , callAsync       = require("./call-async")._base;
 
 module.exports = function (length) {
 	var fn, result;
 	fn = callable(this);
 	if (fn.returnsPromise) return fn;
-	if (length != null) length = length >>> 0;
-	result = function () { return callAsync(fn, length, this, arguments); };
+	if (isValue(length)) length = toNaturalNumber(length);
+	result = function () {
+		return callAsync(fn, length, this, arguments);
+	};
 	result.returnsPromise = true;
 	return result;
 };
 
-},{"./call-async":31,"es5-ext/object/valid-callable":89}],36:[function(require,module,exports){
+},{"./call-async":31,"es5-ext/number/to-pos-integer":77,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],36:[function(require,module,exports){
 // Used by promise extensions that are based on array extensions.
 
-'use strict';
+"use strict";
 
-var callable = require('es5-ext/object/valid-callable')
-  , deferred = require('../../deferred')
+var isValue  = require("es5-ext/object/is-value")
+  , callable = require("es5-ext/object/valid-callable")
+  , deferred = require("../../deferred");
 
-  , reject = deferred.reject;
+var reject = deferred.reject;
 
 module.exports = function (name, ext) {
-	deferred.extend(name, function (cb) {
-		var def;
-		((cb == null) || callable(cb));
-		if (!this.pending) this.pending = [];
-		def = deferred();
-		this.pending.push(name, [arguments, def.resolve, def.reject]);
-		return def.promise;
-	}, function (args, resolve, reject) {
-		var result;
-		if (this.failed) {
-			reject(this.value);
-			return;
+	deferred.extend(
+		name,
+		function (cb) {
+			var def;
+			if (isValue(cb)) callable(cb);
+			if (!this.pending) this.pending = [];
+			def = deferred();
+			this.pending.push(name, [arguments, def.resolve, def.reject]);
+			return def.promise;
+		},
+		function (args, resolve) {
+			var result;
+			if (this.failed) {
+				reject(this.value);
+				return;
+			}
+			try {
+				result = ext.apply(this.value, args);
+			} catch (e) {
+				reject(e);
+				return;
+			}
+			resolve(result);
+		},
+		function (cb) {
+			if (isValue(cb)) callable(cb);
+			if (this.failed) return this;
+			try {
+				return ext.apply(this.value, arguments);
+			} catch (e) {
+				return reject(e);
+			}
 		}
-		try {
-			result = ext.apply(this.value, args);
-		} catch (e) {
-			reject(e);
-			return;
-		}
-		resolve(result);
-	}, function (cb) {
-		((cb == null) || callable(cb));
-		if (this.failed) return this;
-		try {
-			return ext.apply(this.value, arguments);
-		} catch (e) {
-			return reject(e);
-		}
-	});
+	);
 };
 
-},{"../../deferred":23,"es5-ext/object/valid-callable":89}],37:[function(require,module,exports){
+},{"../../deferred":23,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],37:[function(require,module,exports){
 // 'aside' - Promise extension
 //
 // promise.aside(win, fail)
@@ -3523,99 +3605,114 @@ module.exports = function (name, ext) {
 // but instead of adding promise to promise chain it returns context promise and
 // lets callback carry on with other processing logic
 
-'use strict';
+"use strict";
 
-var callable = require('es5-ext/object/valid-callable')
-  , deferred = require('../../deferred');
+var isValue  = require("es5-ext/object/is-value")
+  , callable = require("es5-ext/object/valid-callable")
+  , deferred = require("../../deferred");
 
-deferred.extend('aside', function (win, fail) {
-	((win == null) || callable(win));
-	((fail == null) || callable(fail));
-	if (win || fail) {
-		if (!this.pending) {
-			this.pending = [];
+deferred.extend(
+	"aside",
+	function (win, fail) {
+		if (isValue(win)) callable(win);
+		if (isValue(fail)) callable(fail);
+		if (win || fail) {
+			if (!this.pending) {
+				this.pending = [];
+			}
+			this.pending.push("aside", arguments);
 		}
-		this.pending.push('aside', arguments);
+		return this;
+	},
+	function (win, fail) {
+		var cb = this.failed ? fail : win;
+		if (cb) {
+			cb(this.value);
+		}
+	},
+	function (win, fail) {
+		var cb;
+		if (isValue(win)) callable(win);
+		if (isValue(fail)) callable(fail);
+		cb = this.failed ? fail : win;
+		if (cb) {
+			cb(this.value);
+		}
+		return this;
 	}
-	return this;
-}, function (win, fail) {
-	var cb = this.failed ? fail : win;
-	if (cb) {
-		cb(this.value);
-	}
-}, function (win, fail) {
-	var cb;
-	((win == null) || callable(win));
-	((fail == null) || callable(fail));
-	cb = this.failed ? fail : win;
-	if (cb) {
-		cb(this.value);
-	}
-	return this;
-});
+);
 
-},{"../../deferred":23,"es5-ext/object/valid-callable":89}],38:[function(require,module,exports){
+},{"../../deferred":23,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],38:[function(require,module,exports){
 // 'catch' - Promise extension
 //
 // promise.catch(cb)
 //
 // Same as `then` but accepts only onFail callback
 
-'use strict';
+"use strict";
 
-var isCallable = require('es5-ext/object/is-callable')
-  , validValue = require('es5-ext/object/valid-value')
-  , deferred   = require('../../deferred')
-  , isPromise  = require('../../is-promise')
+var isCallable = require("es5-ext/object/is-callable")
+  , validValue = require("es5-ext/object/valid-value")
+  , deferred   = require("../../deferred")
+  , isPromise  = require("../../is-promise")
+  , resolve    = deferred.resolve
+  , reject     = deferred.reject;
 
-  , resolve = deferred.resolve, reject = deferred.reject;
-
-deferred.extend('catch', function (cb) {
-	var def;
-	validValue(cb);
-	if (!this.pending) this.pending = [];
-	def = deferred();
-	this.pending.push('catch', [cb, def.resolve, def.reject]);
-	return def.promise;
-}, function (cb, resolve, reject) {
-	var value;
-	if (!this.failed) {
-		resolve(this.value);
-		return;
-	}
-	if (isCallable(cb)) {
-		if (isPromise(cb)) {
-			if (cb.resolved) {
-				if (cb.failed) reject(cb.value);
-				else resolve(cb.value);
-			} else {
-				cb.done(resolve, reject);
+deferred.extend(
+	"catch",
+	function (cb) {
+		var def;
+		validValue(cb);
+		if (!this.pending) this.pending = [];
+		def = deferred();
+		this.pending.push("catch", [cb, def.resolve, def.reject]);
+		return def.promise;
+	},
+	function (cb, localResolve, localReject) {
+		var value;
+		if (!this.failed) {
+			localResolve(this.value);
+			return;
+		}
+		if (isCallable(cb)) {
+			if (isPromise(cb)) {
+				if (cb.resolved) {
+					if (cb.failed) localReject(cb.value);
+					else localResolve(cb.value);
+				} else {
+					cb.done(localResolve, localReject);
+				}
+				return;
 			}
+			try {
+				value = cb(this.value);
+			} catch (e) {
+				localReject(e);
+				return;
+			}
+			localResolve(value);
 			return;
 		}
-		try { value = cb(this.value); } catch (e) {
-			reject(e);
-			return;
+		localResolve(cb);
+	},
+	function (cb) {
+		var value;
+		validValue(cb);
+		if (!this.failed) return this;
+		if (isCallable(cb)) {
+			if (isPromise(cb)) return cb;
+			try {
+				value = cb(this.value);
+			} catch (e) {
+				return reject(e);
+			}
+			return resolve(value);
 		}
-		resolve(value);
-		return;
+		return resolve(cb);
 	}
-	resolve(cb);
-}, function (cb) {
-	var value;
-	validValue(cb);
-	if (!this.failed) return this;
-	if (isCallable(cb)) {
-		if (isPromise(cb)) return cb;
-		try { value = cb(this.value); } catch (e) {
-			return reject(e);
-		}
-		return resolve(value);
-	}
-	return resolve(cb);
-});
+);
 
-},{"../../deferred":23,"../../is-promise":50,"es5-ext/object/is-callable":82,"es5-ext/object/valid-value":91}],39:[function(require,module,exports){
+},{"../../deferred":23,"../../is-promise":51,"es5-ext/object/is-callable":85,"es5-ext/object/valid-value":98}],39:[function(require,module,exports){
 // 'cb' - Promise extension
 //
 // promise.cb(cb)
@@ -3636,39 +3733,49 @@ deferred.extend('catch', function (cb) {
 //
 // `cb` extension returns promise and handles eventual callback (optional)
 
-'use strict';
+"use strict";
 
-var callable   = require('es5-ext/object/valid-callable')
-  , nextTick   = require('next-tick')
-  , deferred   = require('../../deferred');
+var isValue  = require("es5-ext/object/is-value")
+  , callable = require("es5-ext/object/valid-callable")
+  , nextTick = require("next-tick")
+  , deferred = require("../../deferred");
 
-deferred.extend('cb', function (cb) {
-	if (cb == null) return this;
-	callable(cb);
-	nextTick(function () {
-		if (this.resolved) {
-			if (this.failed) cb(this.value);
-			else cb(null, this.value);
-		} else {
-			if (!this.pending) this.pending = [];
-			this.pending.push('cb', [cb]);
-		}
-	}.bind(this));
-	return this;
-}, function (cb) {
-	if (this.failed) cb(this.value);
-	else cb(null, this.value);
-}, function (cb) {
-	if (cb == null) return this;
-	callable(cb);
-	nextTick(function () {
+deferred.extend(
+	"cb",
+	function (cb) {
+		if (!isValue(cb)) return this;
+		callable(cb);
+		nextTick(
+			function () {
+				if (this.resolved) {
+					if (this.failed) cb(this.value);
+					else cb(null, this.value);
+				} else {
+					if (!this.pending) this.pending = [];
+					this.pending.push("cb", [cb]);
+				}
+			}.bind(this)
+		);
+		return this;
+	},
+	function (cb) {
 		if (this.failed) cb(this.value);
 		else cb(null, this.value);
-	}.bind(this));
-	return this;
-});
+	},
+	function (cb) {
+		if (!isValue(cb)) return this;
+		callable(cb);
+		nextTick(
+			function () {
+				if (this.failed) cb(this.value);
+				else cb(null, this.value);
+			}.bind(this)
+		);
+		return this;
+	}
+);
 
-},{"../../deferred":23,"es5-ext/object/valid-callable":89,"next-tick":112}],40:[function(require,module,exports){
+},{"../../deferred":23,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"next-tick":119}],40:[function(require,module,exports){
 // 'finally' - Promise extension
 //
 // promise.finally(cb)
@@ -3676,69 +3783,84 @@ deferred.extend('cb', function (cb) {
 // Called on promise resolution returns same promise, doesn't pass any values to
 // provided callback
 
-'use strict';
+"use strict";
 
-var callable = require('es5-ext/object/valid-callable')
-  , deferred = require('../../deferred');
+var callable = require("es5-ext/object/valid-callable")
+  , deferred = require("../../deferred");
 
-deferred.extend('finally', function (cb) {
+deferred.extend("finally", function (cb) {
 	callable(cb);
 	if (!this.pending) this.pending = [];
-	this.pending.push('finally', arguments);
+	this.pending.push("finally", arguments);
 	return this;
-}, function (cb) { cb(); }, function (cb) {
+}, function (cb) {
+ cb();
+}, function (cb) {
 	callable(cb)();
 	return this;
 });
 
-},{"../../deferred":23,"es5-ext/object/valid-callable":89}],41:[function(require,module,exports){
+},{"../../deferred":23,"es5-ext/object/valid-callable":96}],41:[function(require,module,exports){
 // 'get' - Promise extension
 //
 // promise.get(name)
 //
 // Resolves with property of resolved object
 
-'use strict';
+"use strict";
 
-var value    = require('es5-ext/object/valid-value')
-  , deferred = require('../../deferred')
+var value    = require("es5-ext/object/valid-value")
+  , deferred = require("../../deferred");
 
-  , reduce = Array.prototype.reduce
-  , resolve = deferred.resolve, reject = deferred.reject;
+var reduce = Array.prototype.reduce, resolve = deferred.resolve, reject = deferred.reject;
 
-deferred.extend('get', function (/*…name*/) {
-	var def;
-	if (!this.pending) this.pending = [];
-	def = deferred();
-	this.pending.push('get', [arguments, def.resolve, def.reject]);
-	return def.promise;
-
-}, function (args, resolve, reject) {
-	var result;
-	if (this.failed) reject(this.value);
-	try {
-		result = reduce.call(args, function (obj, key) {
-			return value(obj)[String(key)];
-		}, this.value);
-	} catch (e) {
-		reject(e);
-		return;
+deferred.extend(
+	"get",
+	function (/* …name*/) {
+		var def;
+		if (!this.pending) this.pending = [];
+		def = deferred();
+		this.pending.push("get", [arguments, def.resolve, def.reject]);
+		return def.promise;
+	},
+	function (args, localResolve, localReject) {
+		var result;
+		if (this.failed) localReject(this.value);
+		try {
+			result = reduce.call(
+				args,
+				function (obj, key) {
+					return value(obj)[String(key)];
+				},
+				this.value
+			);
+		} catch (e) {
+			localReject(e);
+			return;
+		}
+		localResolve(result);
+	},
+	function (/* …name*/) {
+		var result;
+		if (this.failed) return this;
+		try {
+			result = reduce.call(
+				arguments,
+				function (obj, key) {
+					return value(obj)[String(key)];
+				},
+				this.value
+			);
+		} catch (e) {
+			return reject(e);
+		}
+		return resolve(result);
 	}
-	resolve(result);
-}, function (/*…name*/) {
-	var result;
-	if (this.failed) return this;
-	try {
-		result = reduce.call(arguments, function (obj, key) {
-			return value(obj)[String(key)];
-		}, this.value);
-	} catch (e) {
-		return reject(e);
-	}
-	return resolve(result);
-});
+);
 
-},{"../../deferred":23,"es5-ext/object/valid-value":91}],42:[function(require,module,exports){
+},{"../../deferred":23,"es5-ext/object/valid-value":98}],42:[function(require,module,exports){
+/* eslint max-statements: "off" */
+
 // 'invokeAsync' - Promise extension
 //
 // promise.invokeAsync(name[, arg0[, arg1[, ...]]])
@@ -3748,117 +3870,132 @@ deferred.extend('get', function (/*…name*/) {
 // Do not pass callback, it's handled by internal implementation.
 // 'name' can be method name or method itself.
 
-'use strict';
+"use strict";
 
-var toArray          = require('es5-ext/array/to-array')
-  , isCallable       = require('es5-ext/object/is-callable')
-  , deferred         = require('../../deferred')
-  , isPromise        = require('../../is-promise')
-  , processArguments = require('../_process-arguments')
+var toArray          = require("es5-ext/array/to-array")
+  , isValue          = require("es5-ext/object/is-value")
+  , isCallable       = require("es5-ext/object/is-callable")
+  , deferred         = require("../../deferred")
+  , isPromise        = require("../../is-promise")
+  , processArguments = require("../_process-arguments");
 
-  , slice = Array.prototype.slice, apply = Function.prototype.apply
+var slice = Array.prototype.slice
+  , apply = Function.prototype.apply
   , reject = deferred.reject
-
   , applyFn;
 
-applyFn = function (fn, args, resolve, reject) {
+applyFn = function (fn, args, localResolve, localReject) {
 	var result;
 	if (fn.returnsPromise) {
 		try {
 			result = apply.call(fn, this, args);
 		} catch (e) {
-			reject(e);
+			localReject(e);
 			return;
 		}
-		return resolve(result);
+		localResolve(result);
+		return;
 	}
-	args = toArray(args).concat(function (error, result) {
-		if (error == null) {
-			resolve((arguments.length > 2) ? slice.call(arguments, 1) : result);
+	args = toArray(args).concat(function (error, localResult) {
+		if (isValue(error)) {
+			localReject(error);
 		} else {
-			reject(error);
+			localResolve(arguments.length > 2 ? slice.call(arguments, 1) : localResult);
 		}
 	});
 	try {
 		apply.call(fn, this, args);
 	} catch (e2) {
-		reject(e2);
+		localReject(e2);
 	}
 };
 
-deferred.extend('invokeAsync', function (method/*, …args*/) {
-	var def;
-	if (!this.pending) this.pending = [];
-	def = deferred();
-	this.pending.push('invokeAsync', [arguments, def.resolve, def.reject]);
-	return def.promise;
-}, function (args, resolve, reject) {
-	var fn;
-	if (this.failed) {
-		reject(this.value);
-		return;
-	}
-
-	if (this.value == null) {
-		reject(new TypeError("Cannot use null or undefined"));
-		return;
-	}
-
-	fn = args[0];
-	if (!isCallable(fn)) {
-		fn = String(fn);
-		if (!isCallable(this.value[fn])) {
-			reject(new TypeError(fn + " is not a function"));
+deferred.extend(
+	"invokeAsync",
+	function (methodIgnored/*, …args*/) {
+		var def;
+		if (!this.pending) this.pending = [];
+		def = deferred();
+		this.pending.push("invokeAsync", [arguments, def.resolve, def.reject]);
+		return def.promise;
+	},
+	function (args, localResolve, localReject) {
+		var fn;
+		if (this.failed) {
+			localReject(this.value);
 			return;
 		}
-		fn = this.value[fn];
-	}
 
-	args = processArguments(slice.call(args, 1));
-	if (isPromise(args)) {
-		if (args.failed) {
-			reject(args.value);
+		if (!isValue(this.value)) {
+			localReject(new TypeError("Cannot use null or undefined"));
 			return;
 		}
-		args.done(function (args) {
-			applyFn.call(this, fn, args, resolve, reject);
-		}.bind(this.value), reject);
-	} else {
-		applyFn.call(this.value, fn, args, resolve, reject);
-	}
-}, function (method/*, …args*/) {
-	var args, def;
-	if (this.failed) return this;
 
-	if (this.value == null) {
-		return reject(new TypeError("Cannot use null or undefined"));
-	}
-
-	if (!isCallable(method)) {
-		method = String(method);
-		if (!isCallable(this.value[method])) {
-			return reject(new TypeError(method + " is not a function"));
+		fn = args[0];
+		if (!isCallable(fn)) {
+			fn = String(fn);
+			if (!isCallable(this.value[fn])) {
+				localReject(new TypeError(fn + " is not a function"));
+				return;
+			}
+			fn = this.value[fn];
 		}
-		method = this.value[method];
-	}
 
-	args = processArguments(slice.call(arguments, 1));
-	if (isPromise(args)) {
-		if (args.failed) return args;
-		def = deferred();
-		args.done(function (args) {
-			applyFn.call(this, method, args, def.resolve, def.reject);
-		}.bind(this.value), def.reject);
-	} else if (!method.returnsPromise) {
-		def = deferred();
-		applyFn.call(this.value, method, args, def.resolve, def.reject);
-	} else {
-		return applyFn.call(this.value, method, args, deferred, reject);
-	}
-	return def.promise;
-});
+		args = processArguments(slice.call(args, 1));
+		if (isPromise(args)) {
+			if (args.failed) {
+				localReject(args.value);
+				return;
+			}
+			args.done(
+				function (argsResolved) {
+					applyFn.call(this, fn, argsResolved, localResolve, localReject);
+				}.bind(this.value),
+				localReject
+			);
+		} else {
+			applyFn.call(this.value, fn, args, localResolve, localReject);
+		}
+	},
+	function (method/*, …args*/) {
+		var args, def;
+		if (this.failed) return this;
 
-},{"../../deferred":23,"../../is-promise":50,"../_process-arguments":25,"es5-ext/array/to-array":61,"es5-ext/object/is-callable":82}],43:[function(require,module,exports){
+		if (!isValue(this.value)) {
+			return reject(new TypeError("Cannot use null or undefined"));
+		}
+
+		if (!isCallable(method)) {
+			method = String(method);
+			if (!isCallable(this.value[method])) {
+				return reject(new TypeError(method + " is not a function"));
+			}
+			method = this.value[method];
+		}
+
+		args = processArguments(slice.call(arguments, 1));
+		if (isPromise(args)) {
+			if (args.failed) return args;
+			def = deferred();
+			args.done(
+				function (argsResolved) {
+					applyFn.call(this, method, argsResolved, def.resolve, def.reject);
+				}.bind(this.value),
+				def.reject
+			);
+		} else if (method.returnsPromise) {
+			return applyFn.call(this.value, method, args, deferred, reject);
+		} else {
+			def = deferred();
+			applyFn.call(this.value, method, args, def.resolve, def.reject);
+		}
+		return def.promise;
+	}
+);
+
+},{"../../deferred":23,"../../is-promise":51,"../_process-arguments":25,"es5-ext/array/to-array":62,"es5-ext/object/is-callable":85,"es5-ext/object/is-value":87}],43:[function(require,module,exports){
+/* eslint max-statements: "off" */
+
 // 'invoke' - Promise extension
 //
 // promise.invoke(name[, arg0[, arg1[, ...]]])
@@ -3866,105 +4003,118 @@ deferred.extend('invokeAsync', function (method/*, …args*/) {
 // On resolved object calls method that returns immediately.
 // 'name' can be method name or method itself.
 
-'use strict';
+"use strict";
 
-var isCallable       = require('es5-ext/object/is-callable')
-  , deferred         = require('../../deferred')
-  , isPromise        = require('../../is-promise')
-  , processArguments = require('../_process-arguments')
+var isValue          = require("es5-ext/object/is-value")
+  , isCallable       = require("es5-ext/object/is-callable")
+  , deferred         = require("../../deferred")
+  , isPromise        = require("../../is-promise")
+  , processArguments = require("../_process-arguments");
 
-  , slice = Array.prototype.slice, apply = Function.prototype.apply
+var slice = Array.prototype.slice
+  , apply = Function.prototype.apply
   , reject = deferred.reject
   , applyFn;
 
-applyFn = function (fn, args, resolve, reject) {
+applyFn = function (fn, args, localResolve, localReject) {
 	var value;
 	try {
 		value = apply.call(fn, this, args);
 	} catch (e) {
-		return reject(e);
+		return localReject(e);
 	}
-	return resolve(value);
+	return localResolve(value);
 };
 
-deferred.extend('invoke', function (method/*, …args*/) {
-	var def;
-	if (!this.pending) this.pending = [];
-	def = deferred();
-	this.pending.push('invoke', [arguments, def.resolve, def.reject]);
-	return def.promise;
-}, function (args, resolve, reject) {
-	var fn;
-	if (this.failed) {
-		reject(this.value);
-		return;
-	}
-
-	if (this.value == null) {
-		reject(new TypeError("Cannot use null or undefined"));
-		return;
-	}
-
-	fn = args[0];
-	if (!isCallable(fn)) {
-		fn = String(fn);
-		if (!isCallable(this.value[fn])) {
-			reject(new TypeError(fn + " is not a function"));
-			return;
-		}
-		fn = this.value[fn];
-	}
-
-	args = processArguments(slice.call(args, 1));
-	if (isPromise(args)) {
-		if (args.failed) {
-			reject(args.value);
-			return;
-		}
-		args.done(function (args) {
-			applyFn.call(this, fn, args, resolve, reject);
-		}.bind(this.value), reject);
-	} else {
-		applyFn.call(this.value, fn, args, resolve, reject);
-	}
-}, function (method/*, …args*/) {
-	var args, def;
-	if (this.failed) return this;
-
-	if (this.value == null) {
-		return reject(new TypeError("Cannot use null or undefined"));
-	}
-
-	if (!isCallable(method)) {
-		method = String(method);
-		if (!isCallable(this.value[method])) {
-			return reject(new TypeError(method + " is not a function"));
-		}
-		method = this.value[method];
-	}
-
-	args = processArguments(slice.call(arguments, 1));
-	if (isPromise(args)) {
-		if (args.failed) return args;
+deferred.extend(
+	"invoke",
+	function (methodIgnored/*, …args*/) {
+		var def;
+		if (!this.pending) this.pending = [];
 		def = deferred();
-		args.done(function (args) {
-			applyFn.call(this, method, args, def.resolve, def.reject);
-		}.bind(this.value), def.reject);
+		this.pending.push("invoke", [arguments, def.resolve, def.reject]);
 		return def.promise;
-	}
-	return applyFn.call(this.value, method, args, deferred, reject);
-});
+	},
+	function (args, localResolve, localReject) {
+		var fn;
+		if (this.failed) {
+			localReject(this.value);
+			return;
+		}
 
-},{"../../deferred":23,"../../is-promise":50,"../_process-arguments":25,"es5-ext/object/is-callable":82}],44:[function(require,module,exports){
+		if (!isValue(this.value)) {
+			localReject(new TypeError("Cannot use null or undefined"));
+			return;
+		}
+
+		fn = args[0];
+		if (!isCallable(fn)) {
+			fn = String(fn);
+			if (!isCallable(this.value[fn])) {
+				localReject(new TypeError(fn + " is not a function"));
+				return;
+			}
+			fn = this.value[fn];
+		}
+
+		args = processArguments(slice.call(args, 1));
+		if (isPromise(args)) {
+			if (args.failed) {
+				localReject(args.value);
+				return;
+			}
+			args.done(
+				function (argsResolved) {
+					applyFn.call(this, fn, argsResolved, localResolve, localReject);
+				}.bind(this.value),
+				localReject
+			);
+		} else {
+			applyFn.call(this.value, fn, args, localResolve, localReject);
+		}
+	},
+	function (method/*, …args*/) {
+		var args, def;
+		if (this.failed) return this;
+
+		if (!isValue(this.value)) {
+			return reject(new TypeError("Cannot use null or undefined"));
+		}
+
+		if (!isCallable(method)) {
+			method = String(method);
+			if (!isCallable(this.value[method])) {
+				return reject(new TypeError(method + " is not a function"));
+			}
+			method = this.value[method];
+		}
+
+		args = processArguments(slice.call(arguments, 1));
+		if (isPromise(args)) {
+			if (args.failed) return args;
+			def = deferred();
+			args.done(
+				function (argsResolved) {
+					applyFn.call(this, method, argsResolved, def.resolve, def.reject);
+				}.bind(this.value),
+				def.reject
+			);
+			return def.promise;
+		}
+		return applyFn.call(this.value, method, args, deferred, reject);
+	}
+);
+
+},{"../../deferred":23,"../../is-promise":51,"../_process-arguments":25,"es5-ext/object/is-callable":85,"es5-ext/object/is-value":87}],44:[function(require,module,exports){
 // 'map' - Promise extension
 //
 // promise.map(fn[, thisArg[, concurrentLimit]])
 //
 // Promise aware map for array-like results
 
-'use strict';
+"use strict";
 
-require('./_array')('map', require('../array/map'));
+require("./_array")("map", require("../array/map"));
 
 },{"../array/map":28,"./_array":36}],45:[function(require,module,exports){
 // 'reduce' - Promise extension
@@ -3973,9 +4123,9 @@ require('./_array')('map', require('../array/map'));
 //
 // Promise aware reduce for array-like results
 
-'use strict';
+"use strict";
 
-require('./_array')('reduce', require('../array/reduce'));
+require("./_array")("reduce", require("../array/reduce"));
 
 },{"../array/reduce":29,"./_array":36}],46:[function(require,module,exports){
 // 'some' - Promise extension
@@ -3984,9 +4134,9 @@ require('./_array')('reduce', require('../array/reduce'));
 //
 // Promise aware some for array-like results
 
-'use strict';
+"use strict";
 
-require('./_array')('some', require('../array/some'));
+require("./_array")("some", require("../array/some"));
 
 },{"../array/some":30,"./_array":36}],47:[function(require,module,exports){
 // 'spread' - Promise extensions
@@ -3996,118 +4146,169 @@ require('./_array')('some', require('../array/some'));
 // Matches eventual list result onto function arguments,
 // otherwise works same as 'then' (promise function itself)
 
-'use strict';
+"use strict";
 
-var spread     = require('es5-ext/function/#/spread')
-  , callable   = require('es5-ext/object/valid-callable')
-  , isCallable = require('es5-ext/object/is-callable')
-  , isPromise  = require('../../is-promise')
-  , deferred   = require('../../deferred')
+var spread     = require("es5-ext/function/#/spread")
+  , isValue    = require("es5-ext/object/is-value")
+  , callable   = require("es5-ext/object/valid-callable")
+  , isCallable = require("es5-ext/object/is-callable")
+  , isPromise  = require("../../is-promise")
+  , deferred   = require("../../deferred");
 
-  , resolve = deferred.resolve, reject = deferred.reject;
+var resolve = deferred.resolve, reject = deferred.reject;
 
-deferred.extend('spread', function (win, fail) {
-	var def;
-	((win == null) || callable(win));
-	if (!win && (fail == null)) return this;
-	if (!this.pending) this.pending = [];
-	def = deferred();
-	this.pending.push('spread', [win, fail, def.resolve, def.reject]);
-	return def.promise;
-}, function (win, fail, resolve, reject) {
-	var cb, value;
-	cb = this.failed ? fail : win;
-	if (cb == null) {
-		if (this.failed) reject(this.value);
-		else resolve(this.value);
-	}
-	if (isCallable(cb)) {
-		if (isPromise(cb)) {
-			if (cb.resolved) {
-				if (cb.failed) reject(cb.value);
-				else resolve(cb.value);
-			} else {
-				cb.done(resolve, reject);
+deferred.extend(
+	"spread",
+	function (win, fail) {
+		var def;
+		if (isValue(win)) callable(win);
+		if (!win && !isValue(fail)) return this;
+		if (!this.pending) this.pending = [];
+		def = deferred();
+		this.pending.push("spread", [win, fail, def.resolve, def.reject]);
+		return def.promise;
+	},
+	function (win, fail, localResolve, localReject) {
+		var cb, value;
+		cb = this.failed ? fail : win;
+		if (!isValue(cb)) {
+			if (this.failed) localReject(this.value);
+			else localResolve(this.value);
+		}
+		if (isCallable(cb)) {
+			if (isPromise(cb)) {
+				if (cb.resolved) {
+					if (cb.failed) localReject(cb.value);
+					else localResolve(cb.value);
+				} else {
+					cb.done(localResolve, localReject);
+				}
+				return;
 			}
-			return;
+			if (!this.failed) cb = spread.call(cb);
+			try {
+				value = cb(this.value);
+			} catch (e) {
+				localReject(e);
+				return;
+			}
+			localResolve(value);
+		} else {
+			localResolve(cb);
 		}
-		if (!this.failed) cb = spread.call(cb);
-		try {
-			value = cb(this.value);
-		} catch (e) {
-			reject(e);
-			return;
+	},
+	function (win, fail) {
+		var cb, value;
+		cb = this.failed ? fail : win;
+		if (!isValue(cb)) return this;
+		if (isCallable(cb)) {
+			if (isPromise(cb)) return cb;
+			if (!this.failed) cb = spread.call(cb);
+			try {
+				value = cb(this.value);
+			} catch (e) {
+				return reject(e);
+			}
+			return resolve(value);
 		}
-		resolve(value);
-	} else {
-		resolve(cb);
+		return resolve(cb);
 	}
-}, function (win, fail) {
-	var cb, value;
-	cb = this.failed ? fail : win;
-	if (cb == null) return this;
-	if (isCallable(cb)) {
-		if (isPromise(cb)) return cb;
-		if (!this.failed) cb = spread.call(cb);
-		try {
-			value = cb(this.value);
-		} catch (e) {
-			return reject(e);
-		}
-		return resolve(value);
-	}
-	return resolve(cb);
-});
+);
 
-},{"../../deferred":23,"../../is-promise":50,"es5-ext/function/#/spread":64,"es5-ext/object/is-callable":82,"es5-ext/object/valid-callable":89}],48:[function(require,module,exports){
+},{"../../deferred":23,"../../is-promise":51,"es5-ext/function/#/spread":66,"es5-ext/object/is-callable":85,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],48:[function(require,module,exports){
+// 'timeout' - Promise extension
+//
+// promise.timeout(ms)
+//
+// Resolves with resolution value of context promise assuming it settles before timeout time passes
+// Otherwise resolves with timeout rejection
+
+"use strict";
+
+var customError   = require("es5-ext/error/custom")
+  , isValue       = require("es5-ext/object/is-value")
+  , nextTick      = require("next-tick")
+  , ensureTimeout = require("timers-ext/valid-timeout")
+  , deferred      = require("../../deferred");
+
+deferred.extend(
+	"timeout",
+	function (timeout) {
+		var def;
+		var callback = function () {
+			if (this.resolved) return;
+			def.reject(customError("Operation timeout", "DEFERRED_TIMEOUT"));
+		}.bind(this);
+		if (isValue(timeout)) setTimeout(callback, ensureTimeout(timeout));
+		else nextTick(callback);
+		if (!this.pending) this.pending = [];
+		def = deferred();
+		this.pending.push("timeout", [def.promise, def.resolve]);
+		return def.promise;
+	},
+	function (promise, resolve) {
+		if (!promise.resolved) resolve(this);
+	},
+	function (timeout) {
+		if (isValue(timeout)) ensureTimeout(timeout);
+		return this;
+	}
+);
+
+},{"../../deferred":23,"es5-ext/error/custom":63,"es5-ext/object/is-value":87,"next-tick":119,"timers-ext/valid-timeout":123}],49:[function(require,module,exports){
 // This construct deferred with all needed goodies that are being exported
 // when we import 'deferred' by main name.
 // All available promise extensions are also initialized.
 
-'use strict';
+"use strict";
 
 var call   = Function.prototype.call
-  , assign = require('es5-ext/object/assign');
+  , assign = require("es5-ext/object/assign");
 
-module.exports = assign(require('./deferred'), {
-	invokeAsync:   require('./invoke-async'),
-	isPromise:     require('./is-promise'),
-	dynamicQueue:  require('./dynamic-queue'),
-	validPromise:  require('./valid-promise'),
-	callAsync:     call.bind(require('./ext/function/call-async')),
-	delay:         call.bind(require('./ext/function/delay')),
-	gate:          call.bind(require('./ext/function/gate')),
-	monitor:       require('./monitor'),
-	promisify:     call.bind(require('./ext/function/promisify')),
-	promisifySync: call.bind(require('./ext/function/promisify-sync')),
-	every:         call.bind(require('./ext/array/every')),
-	find:          call.bind(require('./ext/array/find')),
-	map:           call.bind(require('./ext/array/map')),
-	reduce:        call.bind(require('./ext/array/reduce')),
-	some:          call.bind(require('./ext/array/some'))
-}, require('./profiler'));
+module.exports = assign(
+	require("./deferred"),
+	{
+		invokeAsync: require("./invoke-async"),
+		isPromise: require("./is-promise"),
+		dynamicQueue: require("./dynamic-queue"),
+		validPromise: require("./valid-promise"),
+		callAsync: call.bind(require("./ext/function/call-async")),
+		delay: call.bind(require("./ext/function/delay")),
+		gate: call.bind(require("./ext/function/gate")),
+		monitor: require("./monitor"),
+		promisify: call.bind(require("./ext/function/promisify")),
+		promisifySync: call.bind(require("./ext/function/promisify-sync")),
+		every: call.bind(require("./ext/array/every")),
+		find: call.bind(require("./ext/array/find")),
+		map: call.bind(require("./ext/array/map")),
+		reduce: call.bind(require("./ext/array/reduce")),
+		some: call.bind(require("./ext/array/some"))
+	},
+	require("./profiler")
+);
 
-require('./ext/promise/aside');
-require('./ext/promise/catch');
-require('./ext/promise/cb');
-require('./ext/promise/finally');
-require('./ext/promise/get');
-require('./ext/promise/invoke');
-require('./ext/promise/invoke-async');
-require('./ext/promise/map');
-require('./ext/promise/spread');
-require('./ext/promise/some');
-require('./ext/promise/reduce');
+require("./ext/promise/aside");
+require("./ext/promise/catch");
+require("./ext/promise/cb");
+require("./ext/promise/finally");
+require("./ext/promise/get");
+require("./ext/promise/invoke");
+require("./ext/promise/invoke-async");
+require("./ext/promise/map");
+require("./ext/promise/reduce");
+require("./ext/promise/spread");
+require("./ext/promise/some");
+require("./ext/promise/timeout");
 
-},{"./deferred":23,"./dynamic-queue":24,"./ext/array/every":26,"./ext/array/find":27,"./ext/array/map":28,"./ext/array/reduce":29,"./ext/array/some":30,"./ext/function/call-async":31,"./ext/function/delay":32,"./ext/function/gate":33,"./ext/function/promisify":35,"./ext/function/promisify-sync":34,"./ext/promise/aside":37,"./ext/promise/catch":38,"./ext/promise/cb":39,"./ext/promise/finally":40,"./ext/promise/get":41,"./ext/promise/invoke":43,"./ext/promise/invoke-async":42,"./ext/promise/map":44,"./ext/promise/reduce":45,"./ext/promise/some":46,"./ext/promise/spread":47,"./invoke-async":49,"./is-promise":50,"./monitor":52,"./profiler":53,"./valid-promise":54,"es5-ext/object/assign":77}],49:[function(require,module,exports){
+},{"./deferred":23,"./dynamic-queue":24,"./ext/array/every":26,"./ext/array/find":27,"./ext/array/map":28,"./ext/array/reduce":29,"./ext/array/some":30,"./ext/function/call-async":31,"./ext/function/delay":32,"./ext/function/gate":33,"./ext/function/promisify":35,"./ext/function/promisify-sync":34,"./ext/promise/aside":37,"./ext/promise/catch":38,"./ext/promise/cb":39,"./ext/promise/finally":40,"./ext/promise/get":41,"./ext/promise/invoke":43,"./ext/promise/invoke-async":42,"./ext/promise/map":44,"./ext/promise/reduce":45,"./ext/promise/some":46,"./ext/promise/spread":47,"./ext/promise/timeout":48,"./invoke-async":50,"./is-promise":51,"./monitor":53,"./profiler":54,"./valid-promise":55,"es5-ext/object/assign":79}],50:[function(require,module,exports){
 // Invoke asynchronous function
 
-'use strict';
+"use strict";
 
-var isCallable = require('es5-ext/object/is-callable')
-  , callable   = require('es5-ext/object/valid-callable')
-  , value      = require('es5-ext/object/valid-value')
-  , callAsync  = require('./ext/function/call-async')._base
+var isCallable = require("es5-ext/object/is-callable")
+  , callable   = require("es5-ext/object/valid-callable")
+  , value      = require("es5-ext/object/valid-value")
+  , callAsync  = require("./ext/function/call-async")._base
 
   , slice = Array.prototype.slice;
 
@@ -4117,36 +4318,39 @@ module.exports = function (obj, fn/*, …args*/) {
 	return callAsync(fn, null, obj, slice.call(arguments, 2));
 };
 
-},{"./ext/function/call-async":31,"es5-ext/object/is-callable":82,"es5-ext/object/valid-callable":89,"es5-ext/object/valid-value":91}],50:[function(require,module,exports){
+},{"./ext/function/call-async":31,"es5-ext/object/is-callable":85,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":98}],51:[function(require,module,exports){
 // Whether given object is a promise
 
-'use strict';
+"use strict";
 
-module.exports = function (o) {
-	return (typeof o === 'function') && (typeof o.then === 'function') && (o.end !== o.done);
+module.exports = function (value) {
+	return (
+		typeof value === "function" && typeof value.then === "function" && value.end !== value.done
+	);
 };
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 // Promise aware Array's some
 
-'use strict';
+"use strict";
 
-var assign     = require('es5-ext/object/assign')
-  , value      = require('es5-ext/object/valid-value')
-  , callable   = require('es5-ext/object/valid-callable')
-  , deferred   = require('../deferred')
-  , isPromise  = require('../is-promise')
-  , assimilate = require('../assimilate')
+var assign          = require("es5-ext/object/assign")
+  , isValue         = require("es5-ext/object/is-value")
+  , ensureValue     = require("es5-ext/object/valid-value")
+  , callable        = require("es5-ext/object/valid-callable")
+  , toNaturalNumber = require("es5-ext/number/to-pos-integer")
+  , deferred        = require("../deferred")
+  , isPromise       = require("../is-promise")
+  , assimilate      = require("../assimilate");
 
-  , call = Function.prototype.call
-  , resolve = deferred.resolve;
+var call = Function.prototype.call, resolve = deferred.resolve;
 
 module.exports = function (resolvent) {
 	var Iterator = function (list, cb, context) {
 		this.list = list;
 		this.cb = cb;
 		this.context = context;
-		this.length = list.length >>> 0;
+		this.length = toNaturalNumber(list.length);
 
 		while (this.current < this.length) {
 			if (this.current in list) {
@@ -4168,9 +4372,9 @@ module.exports = function (resolvent) {
 			var result;
 			while (!this.state) {
 				result = this.process();
-				if (this.state !== 'cb') break;
+				if (this.state !== "cb") break;
 				result = this.processCb(result);
-				if (this.state !== 'value') break;
+				if (this.state !== "value") break;
 				this.processValue(result);
 			}
 		},
@@ -4178,21 +4382,24 @@ module.exports = function (resolvent) {
 			var value = assimilate(this.list[this.current]);
 			if (isPromise(value)) {
 				if (!value.resolved) {
-					value.done(function (result) {
-						result = this.processCb(result);
-						if (this.state !== 'value') return;
-						this.processValue(result);
-						if (!this.state) this.continue();
-					}.bind(this), this.reject);
-					return;
+					value.done(
+						function (result) {
+							result = this.processCb(result);
+							if (this.state !== "value") return;
+							this.processValue(result);
+							if (!this.state) this.continue();
+						}.bind(this),
+						this.reject
+					);
+					return null;
 				}
 				if (value.failed) {
 					this.reject(value.value);
-					return;
+					return null;
 				}
 				value = value.value;
 			}
-			this.state = 'cb';
+			this.state = "cb";
 			return value;
 		},
 		processCb: function (value) {
@@ -4201,26 +4408,29 @@ module.exports = function (resolvent) {
 					value = call.call(this.cb, this.context, value, this.current, this.list);
 				} catch (e) {
 					this.reject(e);
-					return;
+					return null;
 				}
 				value = assimilate(value);
 				if (isPromise(value)) {
 					if (!value.resolved) {
-						value.done(function (result) {
-							this.state = 'value';
-							this.processValue(result);
-							if (!this.state) this.continue();
-						}.bind(this), this.reject);
-						return;
+						value.done(
+							function (result) {
+								this.state = "value";
+								this.processValue(result);
+								if (!this.state) this.continue();
+							}.bind(this),
+							this.reject
+						);
+						return null;
 					}
 					if (value.failed) {
 						this.reject(value.value);
-						return;
+						return null;
 					}
 					value = value.value;
 				}
 			}
-			this.state = 'value';
+			this.state = "value";
 			return value;
 		},
 		processValue: function (value) {
@@ -4239,24 +4449,27 @@ module.exports = function (resolvent) {
 	};
 
 	return function (cb/*, thisArg*/) {
-		value(this);
-		((cb == null) || callable(cb));
+		ensureValue(this);
+		if (isValue(cb)) callable(cb);
 
 		return new Iterator(this, cb, arguments[1]);
 	};
 };
 
-},{"../assimilate":22,"../deferred":23,"../is-promise":50,"es5-ext/object/assign":77,"es5-ext/object/valid-callable":89,"es5-ext/object/valid-value":91}],52:[function(require,module,exports){
+},{"../assimilate":22,"../deferred":23,"../is-promise":51,"es5-ext/number/to-pos-integer":77,"es5-ext/object/assign":79,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":98}],53:[function(require,module,exports){
+/* eslint no-console: "off" */
+
 // Run if you want to monitor unresolved promises (in properly working
 // application there should be no promises that are never resolved)
 
-'use strict';
+"use strict";
 
 var max        = Math.max
-  , callable   = require('es5-ext/object/valid-callable')
-  , isCallable = require('es5-ext/object/is-callable')
-  , toPosInt   = require('es5-ext/number/to-pos-integer')
-  , deferred   = require('./deferred');
+  , isValue    = require("es5-ext/object/is-value")
+  , callable   = require("es5-ext/object/valid-callable")
+  , isCallable = require("es5-ext/object/is-callable")
+  , toPosInt   = require("es5-ext/number/to-pos-integer")
+  , deferred   = require("./deferred");
 
 exports = module.exports = function (timeout, cb) {
 	if (timeout === false) {
@@ -4267,16 +4480,14 @@ exports = module.exports = function (timeout, cb) {
 		return;
 	}
 	exports.timeout = timeout = max(toPosInt(timeout) || 5000, 50);
-	if (cb == null) {
-		if ((typeof console !== 'undefined') && console &&
-				isCallable(console.error)) {
-			cb = function (e) {
-				console.error(((e.stack && e.stack.toString()) ||
-					"Unresolved promise: no stack available"));
-			};
-		}
-	} else {
+	if (isValue(cb)) {
 		callable(cb);
+	} else if (typeof console !== "undefined" && console && isCallable(console.error)) {
+		cb = function (e) {
+			console.error(
+				(e.stack && e.stack.toString()) || "Unresolved promise: no stack available"
+			);
+		};
 	}
 	exports.callback = cb;
 
@@ -4288,15 +4499,15 @@ exports = module.exports = function (timeout, cb) {
 	};
 };
 
-},{"./deferred":23,"es5-ext/number/to-pos-integer":75,"es5-ext/object/is-callable":82,"es5-ext/object/valid-callable":89}],53:[function(require,module,exports){
-'use strict';
+},{"./deferred":23,"es5-ext/number/to-pos-integer":77,"es5-ext/object/is-callable":85,"es5-ext/object/is-value":87,"es5-ext/object/valid-callable":96}],54:[function(require,module,exports){
+"use strict";
 
-var partial  = require('es5-ext/function/#/partial')
-  , forEach  = require('es5-ext/object/for-each')
-  , pad      = require('es5-ext/string/#/pad')
-  , deferred = require('./deferred')
+var partial  = require("es5-ext/function/#/partial")
+  , forEach  = require("es5-ext/object/for-each")
+  , pad      = require("es5-ext/string/#/pad")
+  , deferred = require("./deferred");
 
-  , resolved, rStats, unresolved, uStats, profile;
+var resolved, rStats, unresolved, uStats, profile;
 
 exports.profile = function () {
 	resolved = 0;
@@ -4317,19 +4528,27 @@ profile = function (isResolved) {
 		data = uStats;
 	}
 
-	stack = (new Error()).stack;
-	if (!stack.split('\n').slice(3).some(function (line) {
-			if ((line.search(/[\/\\]deferred[\/\\]/) === -1) &&
-					(line.search(/[\/\\]es5-ext[\/\\]/) === -1) &&
-					(line.indexOf(' (native)') === -1)) {
-				line = line.replace(/\n/g, "\\n").trim();
-				if (!data[line]) {
-					data[line] = { count: 0 };
+	stack = new Error().stack;
+	if (
+		!stack
+			.split("\n")
+			.slice(3)
+			.some(function (line) {
+				if (
+					line.search(/[/\\]deferred[/\\]/) === -1 &&
+					line.search(/[/\\]es5-ext[/\\]/) === -1 &&
+					line.indexOf(" (native)") === -1
+				) {
+					line = line.replace(/\n/g, "\\n").trim();
+					if (!data[line]) {
+						data[line] = { count: 0 };
+					}
+					++data[line].count;
+					return true;
 				}
-				++data[line].count;
-				return true;
-			}
-		})) {
+				return false;
+			})
+	) {
 		if (!data.unknown) {
 			data.unknown = { count: 0, stack: stack };
 		}
@@ -4338,7 +4557,7 @@ profile = function (isResolved) {
 };
 
 exports.profileEnd = function () {
-	var total, lpad, log = '';
+	var total, lpad, log = "";
 
 	if (!deferred._profile) {
 		throw new Error("Deferred profiler was not initialized");
@@ -4356,20 +4575,30 @@ exports.profileEnd = function () {
 
 	if (unresolved) {
 		log += "\nUnresolved promises were initialized at:\n";
-		forEach(uStats, function (data, name) {
-			log += lpad.call(data.count) + " " + name + "\n";
-		}, null, function (a, b) {
-			return this[b].count - this[a].count;
-		});
+		forEach(
+			uStats,
+			function (data, name) {
+				log += lpad.call(data.count) + " " + name + "\n";
+			},
+			null,
+			function (data1, data2) {
+				return this[data2].count - this[data1].count;
+			}
+		);
 	}
 
 	if (resolved) {
 		log += "\nResolved promises were initialized at:\n";
-		forEach(rStats, function (data, name) {
-			log += lpad.call(data.count) + " " + name + "\n";
-		}, null, function (a, b) {
-			return this[b].count - this[a].count;
-		});
+		forEach(
+			rStats,
+			function (data, name) {
+				log += lpad.call(data.count) + " " + name + "\n";
+			},
+			null,
+			function (data1, data2) {
+				return this[data2].count - this[data1].count;
+			}
+		);
 	}
 	log += "------------------------------------------------------------\n";
 
@@ -4380,186 +4609,199 @@ exports.profileEnd = function () {
 	};
 };
 
-},{"./deferred":23,"es5-ext/function/#/partial":63,"es5-ext/object/for-each":80,"es5-ext/string/#/pad":95}],54:[function(require,module,exports){
-'use strict';
+},{"./deferred":23,"es5-ext/function/#/partial":65,"es5-ext/object/for-each":83,"es5-ext/string/#/pad":102}],55:[function(require,module,exports){
+"use strict";
 
-var isPromise = require('./is-promise');
+var isPromise = require("./is-promise");
 
-module.exports = function (x) {
-	if (!isPromise(x)) {
-		throw new TypeError(x + " is not a promise object");
+module.exports = function (value) {
+	if (!isPromise(value)) {
+		throw new TypeError(value + " is not a promise object");
 	}
-	return x;
+	return value;
 };
 
-},{"./is-promise":50}],55:[function(require,module,exports){
-'use strict';
+},{"./is-promise":51}],56:[function(require,module,exports){
+"use strict";
 
-module.exports = require('./is-implemented')()
+module.exports = require("./is-implemented")()
 	? Array.from
-	: require('./shim');
+	: require("./shim");
 
-},{"./is-implemented":56,"./shim":57}],56:[function(require,module,exports){
-'use strict';
+},{"./is-implemented":57,"./shim":58}],57:[function(require,module,exports){
+"use strict";
 
 module.exports = function () {
 	var from = Array.from, arr, result;
-	if (typeof from !== 'function') return false;
-	arr = ['raz', 'dwa'];
+	if (typeof from !== "function") return false;
+	arr = ["raz", "dwa"];
 	result = from(arr);
-	return Boolean(result && (result !== arr) && (result[1] === 'dwa'));
+	return Boolean(result && (result !== arr) && (result[1] === "dwa"));
 };
 
-},{}],57:[function(require,module,exports){
-'use strict';
+},{}],58:[function(require,module,exports){
+"use strict";
 
-var iteratorSymbol = require('es6-symbol').iterator
-  , isArguments    = require('../../function/is-arguments')
-  , isFunction     = require('../../function/is-function')
-  , toPosInt       = require('../../number/to-pos-integer')
-  , callable       = require('../../object/valid-callable')
-  , validValue     = require('../../object/valid-value')
-  , isString       = require('../../string/is-string')
-
-  , isArray = Array.isArray, call = Function.prototype.call
-  , desc = { configurable: true, enumerable: true, writable: true, value: null }
+var iteratorSymbol = require("es6-symbol").iterator
+  , isArguments    = require("../../function/is-arguments")
+  , isFunction     = require("../../function/is-function")
+  , toPosInt       = require("../../number/to-pos-integer")
+  , callable       = require("../../object/valid-callable")
+  , validValue     = require("../../object/valid-value")
+  , isValue        = require("../../object/is-value")
+  , isString       = require("../../string/is-string")
+  , isArray        = Array.isArray
+  , call           = Function.prototype.call
+  , desc           = { configurable: true, enumerable: true, writable: true, value: null }
   , defineProperty = Object.defineProperty;
 
-module.exports = function (arrayLike/*, mapFn, thisArg*/) {
-	var mapFn = arguments[1], thisArg = arguments[2], Constructor, i, j, arr, l, code, iterator
-	  , result, getIterator, value;
+// eslint-disable-next-line complexity
+module.exports = function (arrayLike /*, mapFn, thisArg*/) {
+	var mapFn = arguments[1]
+	  , thisArg = arguments[2]
+	  , Context
+	  , i
+	  , j
+	  , arr
+	  , length
+	  , code
+	  , iterator
+	  , result
+	  , getIterator
+	  , value;
 
 	arrayLike = Object(validValue(arrayLike));
 
-	if (mapFn != null) callable(mapFn);
-	if (!this || (this === Array) || !isFunction(this)) {
+	if (isValue(mapFn)) callable(mapFn);
+	if (!this || this === Array || !isFunction(this)) {
 		// Result: Plain array
 		if (!mapFn) {
 			if (isArguments(arrayLike)) {
 				// Source: Arguments
-				l = arrayLike.length;
-				if (l !== 1) return Array.apply(null, arrayLike);
+				length = arrayLike.length;
+				if (length !== 1) return Array.apply(null, arrayLike);
 				arr = new Array(1);
 				arr[0] = arrayLike[0];
 				return arr;
 			}
 			if (isArray(arrayLike)) {
 				// Source: Array
-				arr = new Array(l = arrayLike.length);
-				for (i = 0; i < l; ++i) arr[i] = arrayLike[i];
+				arr = new Array(length = arrayLike.length);
+				for (i = 0; i < length; ++i) arr[i] = arrayLike[i];
 				return arr;
 			}
 		}
 		arr = [];
 	} else {
 		// Result: Non plain array
-		Constructor = this;
+		Context = this;
 	}
 
 	if (!isArray(arrayLike)) {
 		if ((getIterator = arrayLike[iteratorSymbol]) !== undefined) {
 			// Source: Iterator
 			iterator = callable(getIterator).call(arrayLike);
-			if (Constructor) arr = new Constructor();
+			if (Context) arr = new Context();
 			result = iterator.next();
 			i = 0;
 			while (!result.done) {
 				value = mapFn ? call.call(mapFn, thisArg, result.value, i) : result.value;
-				if (!Constructor) {
-					arr[i] = value;
-				} else {
+				if (Context) {
 					desc.value = value;
 					defineProperty(arr, i, desc);
+				} else {
+					arr[i] = value;
 				}
 				result = iterator.next();
 				++i;
 			}
-			l = i;
+			length = i;
 		} else if (isString(arrayLike)) {
 			// Source: String
-			l = arrayLike.length;
-			if (Constructor) arr = new Constructor();
-			for (i = 0, j = 0; i < l; ++i) {
+			length = arrayLike.length;
+			if (Context) arr = new Context();
+			for (i = 0, j = 0; i < length; ++i) {
 				value = arrayLike[i];
-				if ((i + 1) < l) {
+				if (i + 1 < length) {
 					code = value.charCodeAt(0);
-					if ((code >= 0xD800) && (code <= 0xDBFF)) value += arrayLike[++i];
+					// eslint-disable-next-line max-depth
+					if (code >= 0xd800 && code <= 0xdbff) value += arrayLike[++i];
 				}
 				value = mapFn ? call.call(mapFn, thisArg, value, j) : value;
-				if (!Constructor) {
-					arr[j] = value;
-				} else {
+				if (Context) {
 					desc.value = value;
 					defineProperty(arr, j, desc);
+				} else {
+					arr[j] = value;
 				}
 				++j;
 			}
-			l = j;
+			length = j;
 		}
 	}
-	if (l === undefined) {
+	if (length === undefined) {
 		// Source: array or array-like
-		l = toPosInt(arrayLike.length);
-		if (Constructor) arr = new Constructor(l);
-		for (i = 0; i < l; ++i) {
+		length = toPosInt(arrayLike.length);
+		if (Context) arr = new Context(length);
+		for (i = 0; i < length; ++i) {
 			value = mapFn ? call.call(mapFn, thisArg, arrayLike[i], i) : arrayLike[i];
-			if (!Constructor) {
-				arr[i] = value;
-			} else {
+			if (Context) {
 				desc.value = value;
 				defineProperty(arr, i, desc);
+			} else {
+				arr[i] = value;
 			}
 		}
 	}
-	if (Constructor) {
+	if (Context) {
 		desc.value = null;
-		arr.length = l;
+		arr.length = length;
 	}
 	return arr;
 };
 
-},{"../../function/is-arguments":66,"../../function/is-function":67,"../../number/to-pos-integer":75,"../../object/valid-callable":89,"../../object/valid-value":91,"../../string/is-string":99,"es6-symbol":100}],58:[function(require,module,exports){
-'use strict';
+},{"../../function/is-arguments":68,"../../function/is-function":69,"../../number/to-pos-integer":77,"../../object/is-value":87,"../../object/valid-callable":96,"../../object/valid-value":98,"../../string/is-string":106,"es6-symbol":107}],59:[function(require,module,exports){
+"use strict";
 
-module.exports = require('./is-implemented')()
+module.exports = require("./is-implemented")()
 	? Array.of
-	: require('./shim');
+	: require("./shim");
 
-},{"./is-implemented":59,"./shim":60}],59:[function(require,module,exports){
-'use strict';
+},{"./is-implemented":60,"./shim":61}],60:[function(require,module,exports){
+"use strict";
 
 module.exports = function () {
 	var of = Array.of, result;
-	if (typeof of !== 'function') return false;
-	result = of('foo', 'bar');
-	return Boolean(result && (result[1] === 'bar'));
+	if (typeof of !== "function") return false;
+	result = of("foo", "bar");
+	return Boolean(result && (result[1] === "bar"));
 };
 
-},{}],60:[function(require,module,exports){
-'use strict';
+},{}],61:[function(require,module,exports){
+"use strict";
 
-var isFunction = require('../../function/is-function')
+var isFunction     = require("../../function/is-function")
+  , slice          = Array.prototype.slice
+  , defineProperty = Object.defineProperty
+  , desc           = { configurable: true, enumerable: true, writable: true, value: null };
 
-  , slice = Array.prototype.slice, defineProperty = Object.defineProperty
-  , desc = { configurable: true, enumerable: true, writable: true, value: null };
-
-module.exports = function (/*…items*/) {
-	var result, i, l;
-	if (!this || (this === Array) || !isFunction(this)) return slice.call(arguments);
-	result = new this(l = arguments.length);
-	for (i = 0; i < l; ++i) {
+module.exports = function (/* …items*/) {
+	var result, i, length;
+	if (!this || this === Array || !isFunction(this)) return slice.call(arguments);
+	result = new this(length = arguments.length);
+	for (i = 0; i < length; ++i) {
 		desc.value = arguments[i];
 		defineProperty(result, i, desc);
 	}
 	desc.value = null;
-	result.length = l;
+	result.length = length;
 	return result;
 };
 
-},{"../../function/is-function":67}],61:[function(require,module,exports){
-'use strict';
+},{"../../function/is-function":69}],62:[function(require,module,exports){
+"use strict";
 
-var from = require('./from')
+var from = require("./from")
 
   , isArray = Array.isArray;
 
@@ -4567,27 +4809,47 @@ module.exports = function (arrayLike) {
 	return isArray(arrayLike) ? arrayLike : from(arrayLike);
 };
 
-},{"./from":55}],62:[function(require,module,exports){
-'use strict';
+},{"./from":56}],63:[function(require,module,exports){
+"use strict";
 
-var toString = Object.prototype.toString
+var assign            = require("../object/assign")
+  , isObject          = require("../object/is-object")
+  , isValue           = require("../object/is-value")
+  , captureStackTrace = Error.captureStackTrace;
 
-  , id = toString.call(new Error());
-
-module.exports = function (x) {
-	return (x && ((x instanceof Error) || (toString.call(x)) === id)) || false;
+exports = module.exports = function (message /*, code, ext*/) {
+	var err = new Error(message), code = arguments[1], ext = arguments[2];
+	if (!isValue(ext)) {
+		if (isObject(code)) {
+			ext = code;
+			code = null;
+		}
+	}
+	if (isValue(ext)) assign(err, ext);
+	if (isValue(code)) err.code = code;
+	if (captureStackTrace) captureStackTrace(err, exports);
+	return err;
 };
 
-},{}],63:[function(require,module,exports){
-'use strict';
+},{"../object/assign":79,"../object/is-object":86,"../object/is-value":87}],64:[function(require,module,exports){
+"use strict";
 
-var callable     = require('../../object/valid-callable')
-  , aFrom        = require('../../array/from')
-  , defineLength = require('../_define-length')
+var objToString = Object.prototype.toString, id = objToString.call(new Error());
+
+module.exports = function (value) {
+	return (value && (value instanceof Error || objToString.call(value) === id)) || false;
+};
+
+},{}],65:[function(require,module,exports){
+"use strict";
+
+var callable     = require("../../object/valid-callable")
+  , aFrom        = require("../../array/from")
+  , defineLength = require("../_define-length")
 
   , apply = Function.prototype.apply;
 
-module.exports = function (/*…args*/) {
+module.exports = function (/* …args*/) {
 	var fn = callable(this)
 	  , args = aFrom(arguments);
 
@@ -4596,29 +4858,38 @@ module.exports = function (/*…args*/) {
 	}, fn.length - args.length);
 };
 
-},{"../../array/from":55,"../../object/valid-callable":89,"../_define-length":65}],64:[function(require,module,exports){
-'use strict';
+},{"../../array/from":56,"../../object/valid-callable":96,"../_define-length":67}],66:[function(require,module,exports){
+"use strict";
 
-var callable = require('../../object/valid-callable')
+var callable = require("../../object/valid-callable")
 
   , apply = Function.prototype.apply;
 
 module.exports = function () {
 	var fn = callable(this);
-	return function (args) { return apply.call(fn, this, args); };
+	return function (args) {
+ return apply.call(fn, this, args);
+};
 };
 
-},{"../../object/valid-callable":89}],65:[function(require,module,exports){
-'use strict';
+},{"../../object/valid-callable":96}],67:[function(require,module,exports){
+"use strict";
 
-var toPosInt = require('../number/to-pos-integer')
+var toPosInt = require("../number/to-pos-integer");
 
-  , test = function (a, b) {}, desc, defineProperty
-  , generate, mixin;
+var test = function (arg1, arg2) {
+	return arg2;
+};
+
+var desc, defineProperty, generate, mixin;
 
 try {
-	Object.defineProperty(test, 'length', { configurable: true, writable: false,
-		enumerable: false, value: 1 });
+	Object.defineProperty(test, "length", {
+		configurable: true,
+		writable: false,
+		enumerable: false,
+		value: 1
+	});
 } catch (ignore) {}
 
 if (test.length === 1) {
@@ -4629,19 +4900,22 @@ if (test.length === 1) {
 		length = toPosInt(length);
 		if (fn.length === length) return fn;
 		desc.value = length;
-		return defineProperty(fn, 'length', desc);
+		return defineProperty(fn, "length", desc);
 	};
 } else {
-	mixin = require('../object/mixin');
+	mixin = require("../object/mixin");
 	generate = (function () {
 		var cache = [];
-		return function (l) {
+		return function (length) {
 			var args, i = 0;
-			if (cache[l]) return cache[l];
+			if (cache[length]) return cache[length];
 			args = [];
-			while (l--) args.push('a' + (++i).toString(36));
-			return new Function('fn', 'return function (' + args.join(', ') +
-				') { return fn.apply(this, arguments); };');
+			while (length--) args.push("a" + (++i).toString(36));
+			// eslint-disable-next-line no-new-func
+			return new Function(
+				"fn",
+				"return function (" + args.join(", ") + ") { return fn.apply(this, arguments); };"
+			);
 		};
 	}());
 	module.exports = function (src, length) {
@@ -4649,88 +4923,95 @@ if (test.length === 1) {
 		length = toPosInt(length);
 		if (src.length === length) return src;
 		target = generate(length)(src);
-		try { mixin(target, src); } catch (ignore) {}
+		try {
+			mixin(target, src);
+		} catch (ignore) {}
 		return target;
 	};
 }
 
-},{"../number/to-pos-integer":75,"../object/mixin":87}],66:[function(require,module,exports){
-'use strict';
+},{"../number/to-pos-integer":77,"../object/mixin":91}],68:[function(require,module,exports){
+"use strict";
 
-var toString = Object.prototype.toString
+var objToString = Object.prototype.toString
+  , id = objToString.call(
+	(function () {
+		return arguments;
+	})()
+);
 
-  , id = toString.call((function () { return arguments; }()));
-
-module.exports = function (x) { return (toString.call(x) === id); };
-
-},{}],67:[function(require,module,exports){
-'use strict';
-
-var toString = Object.prototype.toString
-
-  , id = toString.call(require('./noop'));
-
-module.exports = function (f) {
-	return (typeof f === "function") && (toString.call(f) === id);
+module.exports = function (value) {
+	return objToString.call(value) === id;
 };
-
-},{"./noop":68}],68:[function(require,module,exports){
-'use strict';
-
-module.exports = function () {};
 
 },{}],69:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var iteratorSymbol = require('es6-symbol').iterator
-  , isArrayLike    = require('../object/is-array-like');
+var objToString = Object.prototype.toString, id = objToString.call(require("./noop"));
 
-module.exports = function (x) {
-	if (x == null) return false;
-	if (typeof x[iteratorSymbol] === 'function') return true;
-	return isArrayLike(x);
+module.exports = function (value) {
+	return typeof value === "function" && objToString.call(value) === id;
 };
 
-},{"../object/is-array-like":81,"es6-symbol":100}],70:[function(require,module,exports){
-'use strict';
+},{"./noop":70}],70:[function(require,module,exports){
+"use strict";
 
-var isObject = require('../object/is-object')
-  , is       = require('./is');
+// eslint-disable-next-line no-empty-function
+module.exports = function () {};
 
-module.exports = function (x) {
-	if (is(x) && isObject(x)) return x;
-	throw new TypeError(x + " is not an iterable or array-like object");
+},{}],71:[function(require,module,exports){
+"use strict";
+
+var iteratorSymbol = require("es6-symbol").iterator
+  , isValue        = require("../object/is-value")
+  , isArrayLike    = require("../object/is-array-like");
+
+module.exports = function (value) {
+	if (!isValue(value)) return false;
+	if (typeof value[iteratorSymbol] === "function") return true;
+	return isArrayLike(value);
 };
 
-},{"../object/is-object":83,"./is":69}],71:[function(require,module,exports){
-'use strict';
+},{"../object/is-array-like":84,"../object/is-value":87,"es6-symbol":107}],72:[function(require,module,exports){
+"use strict";
 
-module.exports = require('./is-implemented')()
+var isObject = require("../object/is-object")
+  , is       = require("./is");
+
+module.exports = function (value) {
+	if (is(value) && isObject(value)) return value;
+	throw new TypeError(value + " is not an iterable or array-like object");
+};
+
+},{"../object/is-object":86,"./is":71}],73:[function(require,module,exports){
+"use strict";
+
+module.exports = require("./is-implemented")()
 	? Math.sign
-	: require('./shim');
+	: require("./shim");
 
-},{"./is-implemented":72,"./shim":73}],72:[function(require,module,exports){
-'use strict';
+},{"./is-implemented":74,"./shim":75}],74:[function(require,module,exports){
+"use strict";
 
 module.exports = function () {
 	var sign = Math.sign;
-	if (typeof sign !== 'function') return false;
-	return ((sign(10) === 1) && (sign(-20) === -1));
+	if (typeof sign !== "function") return false;
+	return (sign(10) === 1) && (sign(-20) === -1);
 };
 
-},{}],73:[function(require,module,exports){
-'use strict';
+},{}],75:[function(require,module,exports){
+"use strict";
 
 module.exports = function (value) {
 	value = Number(value);
 	if (isNaN(value) || (value === 0)) return value;
-	return (value > 0) ? 1 : -1;
+	return value > 0 ? 1 : -1;
 };
 
-},{}],74:[function(require,module,exports){
-'use strict';
+},{}],76:[function(require,module,exports){
+"use strict";
 
-var sign = require('../math/sign')
+var sign = require("../math/sign")
 
   , abs = Math.abs, floor = Math.floor;
 
@@ -4741,81 +5022,85 @@ module.exports = function (value) {
 	return sign(value) * floor(abs(value));
 };
 
-},{"../math/sign":71}],75:[function(require,module,exports){
-'use strict';
+},{"../math/sign":73}],77:[function(require,module,exports){
+"use strict";
 
-var toInteger = require('./to-integer')
+var toInteger = require("./to-integer")
 
   , max = Math.max;
 
-module.exports = function (value) { return max(0, toInteger(value)); };
+module.exports = function (value) {
+ return max(0, toInteger(value));
+};
 
-},{"./to-integer":74}],76:[function(require,module,exports){
+},{"./to-integer":76}],78:[function(require,module,exports){
 // Internal method, used by iteration functions.
 // Calls a function for each key-value pair found in object
 // Optionally takes compareFn to iterate object in specific order
 
-'use strict';
+"use strict";
 
-var callable = require('./valid-callable')
-  , value    = require('./valid-value')
-
-  , bind = Function.prototype.bind, call = Function.prototype.call, keys = Object.keys
-  , propertyIsEnumerable = Object.prototype.propertyIsEnumerable;
+var callable                = require("./valid-callable")
+  , value                   = require("./valid-value")
+  , bind                    = Function.prototype.bind
+  , call                    = Function.prototype.call
+  , keys                    = Object.keys
+  , objPropertyIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 module.exports = function (method, defVal) {
-	return function (obj, cb/*, thisArg, compareFn*/) {
+	return function (obj, cb /*, thisArg, compareFn*/) {
 		var list, thisArg = arguments[2], compareFn = arguments[3];
 		obj = Object(value(obj));
 		callable(cb);
 
 		list = keys(obj);
 		if (compareFn) {
-			list.sort((typeof compareFn === 'function') ? bind.call(compareFn, obj) : undefined);
+			list.sort(typeof compareFn === "function" ? bind.call(compareFn, obj) : undefined);
 		}
-		if (typeof method !== 'function') method = list[method];
+		if (typeof method !== "function") method = list[method];
 		return call.call(method, list, function (key, index) {
-			if (!propertyIsEnumerable.call(obj, key)) return defVal;
+			if (!objPropertyIsEnumerable.call(obj, key)) return defVal;
 			return call.call(cb, thisArg, obj[key], key, obj, index);
 		});
 	};
 };
 
-},{"./valid-callable":89,"./valid-value":91}],77:[function(require,module,exports){
-'use strict';
+},{"./valid-callable":96,"./valid-value":98}],79:[function(require,module,exports){
+"use strict";
 
-module.exports = require('./is-implemented')()
+module.exports = require("./is-implemented")()
 	? Object.assign
-	: require('./shim');
+	: require("./shim");
 
-},{"./is-implemented":78,"./shim":79}],78:[function(require,module,exports){
-'use strict';
+},{"./is-implemented":80,"./shim":81}],80:[function(require,module,exports){
+"use strict";
 
 module.exports = function () {
 	var assign = Object.assign, obj;
-	if (typeof assign !== 'function') return false;
-	obj = { foo: 'raz' };
-	assign(obj, { bar: 'dwa' }, { trzy: 'trzy' });
-	return (obj.foo + obj.bar + obj.trzy) === 'razdwatrzy';
+	if (typeof assign !== "function") return false;
+	obj = { foo: "raz" };
+	assign(obj, { bar: "dwa" }, { trzy: "trzy" });
+	return (obj.foo + obj.bar + obj.trzy) === "razdwatrzy";
 };
 
-},{}],79:[function(require,module,exports){
-'use strict';
+},{}],81:[function(require,module,exports){
+"use strict";
 
-var keys  = require('../keys')
-  , value = require('../valid-value')
+var keys  = require("../keys")
+  , value = require("../valid-value")
+  , max   = Math.max;
 
-  , max = Math.max;
-
-module.exports = function (dest, src/*, …srcn*/) {
-	var error, i, l = max(arguments.length, 2), assign;
+module.exports = function (dest, src /*, …srcn*/) {
+	var error, i, length = max(arguments.length, 2), assign;
 	dest = Object(value(dest));
 	assign = function (key) {
-		try { dest[key] = src[key]; } catch (e) {
+		try {
+			dest[key] = src[key];
+		} catch (e) {
 			if (!error) error = e;
 		}
 	};
-	for (i = 1; i < l; ++i) {
+	for (i = 1; i < length; ++i) {
 		src = arguments[i];
 		keys(src).forEach(assign);
 	}
@@ -4823,73 +5108,143 @@ module.exports = function (dest, src/*, …srcn*/) {
 	return dest;
 };
 
-},{"../keys":84,"../valid-value":91}],80:[function(require,module,exports){
-'use strict';
+},{"../keys":88,"../valid-value":98}],82:[function(require,module,exports){
+// Workaround for http://code.google.com/p/v8/issues/detail?id=2804
 
-module.exports = require('./_iterate')('forEach');
+"use strict";
 
-},{"./_iterate":76}],81:[function(require,module,exports){
-'use strict';
+var create = Object.create, shim;
 
-var isFunction = require('../function/is-function')
-  , isObject   = require('./is-object');
+if (!require("./set-prototype-of/is-implemented")()) {
+	shim = require("./set-prototype-of/shim");
+}
 
-module.exports = function (x) {
-	return ((x != null) && (typeof x.length === 'number') &&
+module.exports = (function () {
+	var nullObject, polyProps, desc;
+	if (!shim) return create;
+	if (shim.level !== 1) return create;
 
-		// Just checking ((typeof x === 'object') && (typeof x !== 'function'))
-		// won't work right for some cases, e.g.:
-		// type of instance of NodeList in Safari is a 'function'
+	nullObject = {};
+	polyProps = {};
+	desc = {
+		configurable: false,
+		enumerable: false,
+		writable: true,
+		value: undefined
+	};
+	Object.getOwnPropertyNames(Object.prototype).forEach(function (name) {
+		if (name === "__proto__") {
+			polyProps[name] = {
+				configurable: true,
+				enumerable: false,
+				writable: true,
+				value: undefined
+			};
+			return;
+		}
+		polyProps[name] = desc;
+	});
+	Object.defineProperties(nullObject, polyProps);
 
-		((isObject(x) && !isFunction(x)) || (typeof x === "string"))) || false;
+	Object.defineProperty(shim, "nullPolyfill", {
+		configurable: false,
+		enumerable: false,
+		writable: false,
+		value: nullObject
+	});
+
+	return function (prototype, props) {
+		return create(prototype === null ? nullObject : prototype, props);
+	};
+}());
+
+},{"./set-prototype-of/is-implemented":94,"./set-prototype-of/shim":95}],83:[function(require,module,exports){
+"use strict";
+
+module.exports = require("./_iterate")("forEach");
+
+},{"./_iterate":78}],84:[function(require,module,exports){
+"use strict";
+
+var isFunction = require("../function/is-function")
+  , isObject   = require("./is-object")
+  , isValue    = require("./is-value");
+
+module.exports = function (value) {
+	return (
+		(isValue(value) &&
+			typeof value.length === "number" &&
+			// Just checking ((typeof x === 'object') && (typeof x !== 'function'))
+			// won't work right for some cases, e.g.:
+			// type of instance of NodeList in Safari is a 'function'
+			((isObject(value) && !isFunction(value)) || typeof value === "string")) ||
+		false
+	);
 };
 
-},{"../function/is-function":67,"./is-object":83}],82:[function(require,module,exports){
+},{"../function/is-function":69,"./is-object":86,"./is-value":87}],85:[function(require,module,exports){
 // Deprecated
 
-'use strict';
+"use strict";
 
-module.exports = function (obj) { return typeof obj === 'function'; };
-
-},{}],83:[function(require,module,exports){
-'use strict';
-
-var map = { function: true, object: true };
-
-module.exports = function (x) {
-	return ((x != null) && map[typeof x]) || false;
-};
-
-},{}],84:[function(require,module,exports){
-'use strict';
-
-module.exports = require('./is-implemented')()
-	? Object.keys
-	: require('./shim');
-
-},{"./is-implemented":85,"./shim":86}],85:[function(require,module,exports){
-'use strict';
-
-module.exports = function () {
-	try {
-		Object.keys('primitive');
-		return true;
-	} catch (e) { return false; }
+module.exports = function (obj) {
+ return typeof obj === "function";
 };
 
 },{}],86:[function(require,module,exports){
-'use strict';
+"use strict";
+
+var isValue = require("./is-value");
+
+var map = { function: true, object: true };
+
+module.exports = function (value) {
+	return (isValue(value) && map[typeof value]) || false;
+};
+
+},{"./is-value":87}],87:[function(require,module,exports){
+"use strict";
+
+var _undefined = require("../function/noop")(); // Support ES3 engines
+
+module.exports = function (val) {
+ return (val !== _undefined) && (val !== null);
+};
+
+},{"../function/noop":70}],88:[function(require,module,exports){
+"use strict";
+
+module.exports = require("./is-implemented")()
+	? Object.keys
+	: require("./shim");
+
+},{"./is-implemented":89,"./shim":90}],89:[function(require,module,exports){
+"use strict";
+
+module.exports = function () {
+	try {
+		Object.keys("primitive");
+		return true;
+	} catch (e) {
+ return false;
+}
+};
+
+},{}],90:[function(require,module,exports){
+"use strict";
+
+var isValue = require("../is-value");
 
 var keys = Object.keys;
 
 module.exports = function (object) {
-	return keys(object == null ? object : Object(object));
+	return keys(isValue(object) ? Object(object) : object);
 };
 
-},{}],87:[function(require,module,exports){
-'use strict';
+},{"../is-value":87}],91:[function(require,module,exports){
+"use strict";
 
-var value = require('./valid-value')
+var value = require("./valid-value")
 
   , defineProperty = Object.defineProperty
   , getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor
@@ -4902,21 +5257,27 @@ module.exports = function (target, source) {
 	getOwnPropertyNames(sourceObject).forEach(function (name) {
 		try {
 			defineProperty(target, name, getOwnPropertyDescriptor(source, name));
-		} catch (e) { error = e; }
+		} catch (e) {
+ error = e;
+}
 	});
-	if (typeof getOwnPropertySymbols === 'function') {
+	if (typeof getOwnPropertySymbols === "function") {
 		getOwnPropertySymbols(sourceObject).forEach(function (symbol) {
 			try {
 				defineProperty(target, symbol, getOwnPropertyDescriptor(source, symbol));
-			} catch (e) { error = e; }
+			} catch (e) {
+ error = e;
+}
 		});
 	}
 	if (error !== undefined) throw error;
 	return target;
 };
 
-},{"./valid-value":91}],88:[function(require,module,exports){
-'use strict';
+},{"./valid-value":98}],92:[function(require,module,exports){
+"use strict";
+
+var isValue = require("./is-value");
 
 var forEach = Array.prototype.forEach, create = Object.create;
 
@@ -4925,60 +5286,169 @@ var process = function (src, obj) {
 	for (key in src) obj[key] = src[key];
 };
 
-module.exports = function (options/*, …options*/) {
+// eslint-disable-next-line no-unused-vars
+module.exports = function (opts1 /*, …options*/) {
 	var result = create(null);
 	forEach.call(arguments, function (options) {
-		if (options == null) return;
+		if (!isValue(options)) return;
 		process(Object(options), result);
 	});
 	return result;
 };
 
-},{}],89:[function(require,module,exports){
-'use strict';
+},{"./is-value":87}],93:[function(require,module,exports){
+"use strict";
+
+module.exports = require("./is-implemented")()
+	? Object.setPrototypeOf
+	: require("./shim");
+
+},{"./is-implemented":94,"./shim":95}],94:[function(require,module,exports){
+"use strict";
+
+var create = Object.create, getPrototypeOf = Object.getPrototypeOf, plainObject = {};
+
+module.exports = function (/* CustomCreate*/) {
+	var setPrototypeOf = Object.setPrototypeOf, customCreate = arguments[0] || create;
+	if (typeof setPrototypeOf !== "function") return false;
+	return getPrototypeOf(setPrototypeOf(customCreate(null), plainObject)) === plainObject;
+};
+
+},{}],95:[function(require,module,exports){
+/* eslint no-proto: "off" */
+
+// Big thanks to @WebReflection for sorting this out
+// https://gist.github.com/WebReflection/5593554
+
+"use strict";
+
+var isObject        = require("../is-object")
+  , value           = require("../valid-value")
+  , objIsPrototypeOf = Object.prototype.isPrototypeOf
+  , defineProperty  = Object.defineProperty
+  , nullDesc        = {
+	configurable: true,
+	enumerable: false,
+	writable: true,
+	value: undefined
+}
+  , validate;
+
+validate = function (obj, prototype) {
+	value(obj);
+	if (prototype === null || isObject(prototype)) return obj;
+	throw new TypeError("Prototype must be null or an object");
+};
+
+module.exports = (function (status) {
+	var fn, set;
+	if (!status) return null;
+	if (status.level === 2) {
+		if (status.set) {
+			set = status.set;
+			fn = function (obj, prototype) {
+				set.call(validate(obj, prototype), prototype);
+				return obj;
+			};
+		} else {
+			fn = function (obj, prototype) {
+				validate(obj, prototype).__proto__ = prototype;
+				return obj;
+			};
+		}
+	} else {
+		fn = function self(obj, prototype) {
+			var isNullBase;
+			validate(obj, prototype);
+			isNullBase = objIsPrototypeOf.call(self.nullPolyfill, obj);
+			if (isNullBase) delete self.nullPolyfill.__proto__;
+			if (prototype === null) prototype = self.nullPolyfill;
+			obj.__proto__ = prototype;
+			if (isNullBase) defineProperty(self.nullPolyfill, "__proto__", nullDesc);
+			return obj;
+		};
+	}
+	return Object.defineProperty(fn, "level", {
+		configurable: false,
+		enumerable: false,
+		writable: false,
+		value: status.level
+	});
+}(
+	(function () {
+		var tmpObj1 = Object.create(null)
+		  , tmpObj2 = {}
+		  , set
+		  , desc = Object.getOwnPropertyDescriptor(Object.prototype, "__proto__");
+
+		if (desc) {
+			try {
+				set = desc.set; // Opera crashes at this point
+				set.call(tmpObj1, tmpObj2);
+			} catch (ignore) {}
+			if (Object.getPrototypeOf(tmpObj1) === tmpObj2) return { set: set, level: 2 };
+		}
+
+		tmpObj1.__proto__ = tmpObj2;
+		if (Object.getPrototypeOf(tmpObj1) === tmpObj2) return { level: 2 };
+
+		tmpObj1 = {};
+		tmpObj1.__proto__ = tmpObj2;
+		if (Object.getPrototypeOf(tmpObj1) === tmpObj2) return { level: 1 };
+
+		return false;
+	})()
+));
+
+require("../create");
+
+},{"../create":82,"../is-object":86,"../valid-value":98}],96:[function(require,module,exports){
+"use strict";
 
 module.exports = function (fn) {
-	if (typeof fn !== 'function') throw new TypeError(fn + " is not a function");
+	if (typeof fn !== "function") throw new TypeError(fn + " is not a function");
 	return fn;
 };
 
-},{}],90:[function(require,module,exports){
-'use strict';
+},{}],97:[function(require,module,exports){
+"use strict";
 
-var isObject = require('./is-object');
+var isObject = require("./is-object");
 
 module.exports = function (value) {
 	if (!isObject(value)) throw new TypeError(value + " is not an Object");
 	return value;
 };
 
-},{"./is-object":83}],91:[function(require,module,exports){
-'use strict';
+},{"./is-object":86}],98:[function(require,module,exports){
+"use strict";
+
+var isValue = require("./is-value");
 
 module.exports = function (value) {
-	if (value == null) throw new TypeError("Cannot use null or undefined");
+	if (!isValue(value)) throw new TypeError("Cannot use null or undefined");
 	return value;
 };
 
-},{}],92:[function(require,module,exports){
-'use strict';
+},{"./is-value":87}],99:[function(require,module,exports){
+"use strict";
 
-module.exports = require('./is-implemented')()
+module.exports = require("./is-implemented")()
 	? String.prototype.contains
-	: require('./shim');
+	: require("./shim");
 
-},{"./is-implemented":93,"./shim":94}],93:[function(require,module,exports){
-'use strict';
+},{"./is-implemented":100,"./shim":101}],100:[function(require,module,exports){
+"use strict";
 
-var str = 'razdwatrzy';
+var str = "razdwatrzy";
 
 module.exports = function () {
-	if (typeof str.contains !== 'function') return false;
-	return ((str.contains('dwa') === true) && (str.contains('foo') === false));
+	if (typeof str.contains !== "function") return false;
+	return (str.contains("dwa") === true) && (str.contains("foo") === false);
 };
 
-},{}],94:[function(require,module,exports){
-'use strict';
+},{}],101:[function(require,module,exports){
+"use strict";
 
 var indexOf = String.prototype.indexOf;
 
@@ -4986,12 +5456,12 @@ module.exports = function (searchString/*, position*/) {
 	return indexOf.call(this, searchString, arguments[1]) > -1;
 };
 
-},{}],95:[function(require,module,exports){
-'use strict';
+},{}],102:[function(require,module,exports){
+"use strict";
 
-var toInteger = require('../../number/to-integer')
-  , value     = require('../../object/valid-value')
-  , repeat    = require('./repeat')
+var toInteger = require("../../number/to-integer")
+  , value     = require("../../object/valid-value")
+  , repeat    = require("./repeat")
 
   , abs = Math.abs, max = Math.max;
 
@@ -5003,68 +5473,73 @@ module.exports = function (fill/*, length*/) {
 	length = isNaN(length) ? 1 : toInteger(length);
 	fill = repeat.call(String(fill), abs(length));
 	if (length >= 0) return fill.slice(0, max(0, length - sLength)) + self;
-	return self + (((sLength + length) >= 0) ? '' : fill.slice(length + sLength));
+	return self + ((sLength + length) >= 0 ? "" : fill.slice(length + sLength));
 };
 
-},{"../../number/to-integer":74,"../../object/valid-value":91,"./repeat":96}],96:[function(require,module,exports){
-'use strict';
+},{"../../number/to-integer":76,"../../object/valid-value":98,"./repeat":103}],103:[function(require,module,exports){
+"use strict";
 
-module.exports = require('./is-implemented')()
+module.exports = require("./is-implemented")()
 	? String.prototype.repeat
-	: require('./shim');
+	: require("./shim");
 
-},{"./is-implemented":97,"./shim":98}],97:[function(require,module,exports){
-'use strict';
+},{"./is-implemented":104,"./shim":105}],104:[function(require,module,exports){
+"use strict";
 
-var str = 'foo';
+var str = "foo";
 
 module.exports = function () {
-	if (typeof str.repeat !== 'function') return false;
-	return (str.repeat(2) === 'foofoo');
+	if (typeof str.repeat !== "function") return false;
+	return str.repeat(2) === "foofoo";
 };
 
-},{}],98:[function(require,module,exports){
-// Thanks: http://www.2ality.com/2014/01/efficient-string-repeat.html
+},{}],105:[function(require,module,exports){
+// Thanks
+// @rauchma http://www.2ality.com/2014/01/efficient-string-repeat.html
+// @mathiasbynens https://github.com/mathiasbynens/String.prototype.repeat/blob/4a4b567def/repeat.js
 
-'use strict';
+"use strict";
 
-var value     = require('../../../object/valid-value')
-  , toInteger = require('../../../number/to-integer');
+var value     = require("../../../object/valid-value")
+  , toInteger = require("../../../number/to-integer");
 
 module.exports = function (count) {
 	var str = String(value(this)), result;
 	count = toInteger(count);
 	if (count < 0) throw new RangeError("Count must be >= 0");
 	if (!isFinite(count)) throw new RangeError("Count must be < ∞");
-	result = '';
-	if (!count) return result;
-	while (true) {
-		if (count & 1) result += str;
-		count >>>= 1;
-		if (count <= 0) break;
-		str += str;
+
+	result = "";
+	while (count) {
+		if (count % 2) result += str;
+		if (count > 1) str += str;
+		// eslint-disable-next-line no-bitwise
+		count >>= 1;
 	}
 	return result;
 };
 
-},{"../../../number/to-integer":74,"../../../object/valid-value":91}],99:[function(require,module,exports){
-'use strict';
+},{"../../../number/to-integer":76,"../../../object/valid-value":98}],106:[function(require,module,exports){
+"use strict";
 
-var toString = Object.prototype.toString
+var objToString = Object.prototype.toString, id = objToString.call("");
 
-  , id = toString.call('');
-
-module.exports = function (x) {
-	return (typeof x === 'string') || (x && (typeof x === 'object') &&
-		((x instanceof String) || (toString.call(x) === id))) || false;
+module.exports = function (value) {
+	return (
+		typeof value === "string" ||
+		(value &&
+			typeof value === "object" &&
+			(value instanceof String || objToString.call(value) === id)) ||
+		false
+	);
 };
 
-},{}],100:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')() ? Symbol : require('./polyfill');
 
-},{"./is-implemented":101,"./polyfill":103}],101:[function(require,module,exports){
+},{"./is-implemented":108,"./polyfill":110}],108:[function(require,module,exports){
 'use strict';
 
 var validTypes = { object: true, symbol: true };
@@ -5083,7 +5558,7 @@ module.exports = function () {
 	return true;
 };
 
-},{}],102:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 'use strict';
 
 module.exports = function (x) {
@@ -5094,8 +5569,8 @@ module.exports = function (x) {
 	return (x[x.constructor.toStringTag] === 'Symbol');
 };
 
-},{}],103:[function(require,module,exports){
-// ES2015 Symbol polyfill for environments that do not support it (or partially support it)
+},{}],110:[function(require,module,exports){
+// ES2015 Symbol polyfill for environments that do not (or partially) support it
 
 'use strict';
 
@@ -5140,7 +5615,7 @@ var generateName = (function () {
 // Internal constructor (not one exposed) for creating Symbol instances.
 // This one is used to ensure that `someSymbol instanceof Symbol` always return false
 HiddenSymbol = function Symbol(description) {
-	if (this instanceof HiddenSymbol) throw new TypeError('TypeError: Symbol is not a constructor');
+	if (this instanceof HiddenSymbol) throw new TypeError('Symbol is not a constructor');
 	return SymbolPolyfill(description);
 };
 
@@ -5148,7 +5623,7 @@ HiddenSymbol = function Symbol(description) {
 // (returns instances of HiddenSymbol)
 module.exports = SymbolPolyfill = function Symbol(description) {
 	var symbol;
-	if (this instanceof Symbol) throw new TypeError('TypeError: Symbol is not a constructor');
+	if (this instanceof Symbol) throw new TypeError('Symbol is not a constructor');
 	if (isNativeSafe) return NativeSymbol(description);
 	symbol = create(HiddenSymbol.prototype);
 	description = (description === undefined ? '' : String(description));
@@ -5168,8 +5643,8 @@ defineProperties(SymbolPolyfill, {
 		for (key in globalSymbols) if (globalSymbols[key] === s) return key;
 	}),
 
-	// If there's native implementation of given symbol, let's fallback to it
-	// to ensure proper interoperability with other native functions e.g. Array.from
+	// To ensure proper interoperability with other native functions (e.g. Array.from)
+	// fallback to eventual native implementation of given symbol
 	hasInstance: d('', (NativeSymbol && NativeSymbol.hasInstance) || SymbolPolyfill('hasInstance')),
 	isConcatSpreadable: d('', (NativeSymbol && NativeSymbol.isConcatSpreadable) ||
 		SymbolPolyfill('isConcatSpreadable')),
@@ -5214,7 +5689,7 @@ defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toStringTag,
 defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toPrimitive,
 	d('c', SymbolPolyfill.prototype[SymbolPolyfill.toPrimitive]));
 
-},{"./validate-symbol":104,"d":20}],104:[function(require,module,exports){
+},{"./validate-symbol":111,"d":20}],111:[function(require,module,exports){
 'use strict';
 
 var isSymbol = require('./is-symbol');
@@ -5224,7 +5699,7 @@ module.exports = function (value) {
 	return value;
 };
 
-},{"./is-symbol":102}],105:[function(require,module,exports){
+},{"./is-symbol":109}],112:[function(require,module,exports){
 'use strict';
 
 var d        = require('d')
@@ -5358,7 +5833,7 @@ module.exports = exports = function (o) {
 };
 exports.methods = methods;
 
-},{"d":20,"es5-ext/object/valid-callable":89}],106:[function(require,module,exports){
+},{"d":20,"es5-ext/object/valid-callable":96}],113:[function(require,module,exports){
 'use strict';
 
 var forEach    = require('es5-ext/object/for-each')
@@ -5410,13 +5885,13 @@ module.exports = function (e1, e2) {
 	d.value = null;
 };
 
-},{"es5-ext/object/for-each":80,"es5-ext/object/valid-object":90}],107:[function(require,module,exports){
+},{"es5-ext/object/for-each":83,"es5-ext/object/valid-object":97}],114:[function(require,module,exports){
 (function (global){
 /*!
- *  howler.js v2.0.2
+ *  howler.js v2.0.9
  *  howlerjs.com
  *
- *  (c) 2013-2016, James Simpson of GoldFire Studios
+ *  (c) 2013-2018, James Simpson of GoldFire Studios
  *  goldfirestudios.com
  *
  *  MIT License
@@ -5443,6 +5918,9 @@ module.exports = function (e1, e2) {
      */
     init: function() {
       var self = this || Howler;
+
+      // Create a global ID counter.
+      self._counter = 1000;
 
       // Internal properties.
       self._codecs = {};
@@ -5492,7 +5970,7 @@ module.exports = function (e1, e2) {
 
         // When using Web Audio, we just need to adjust the master gain.
         if (self.usingWebAudio) {
-          self.masterGain.gain.value = vol;
+          self.masterGain.gain.setValueAtTime(vol, Howler.ctx.currentTime);
         }
 
         // Loop through and change volume for all HTML5 audio nodes.
@@ -5534,7 +6012,7 @@ module.exports = function (e1, e2) {
 
       // With Web Audio, we just need to mute the master gain.
       if (self.usingWebAudio) {
-        self.masterGain.gain.value = muted ? 0 : self._volume;
+        self.masterGain.gain.setValueAtTime(muted ? 0 : self._volume, Howler.ctx.currentTime);
       }
 
       // Loop through and mute all HTML5 Audio nodes.
@@ -5714,6 +6192,9 @@ module.exports = function (e1, e2) {
       // then check if the audio actually played to determine if
       // audio has now been unlocked on iOS, Android, etc.
       var unlock = function() {
+        // Fix Android can not play in suspend state.
+        Howler._autoResume();
+
         // Create an empty buffer.
         var source = self.ctx.createBufferSource();
         source.buffer = self._scratchBuffer;
@@ -5726,6 +6207,11 @@ module.exports = function (e1, e2) {
           source.start(0);
         }
 
+        // Calling resume() on a stack initiated by user gesture is what actually unlocks the audio on Android Chrome >= 55.
+        if (typeof self.ctx.resume === 'function') {
+          self.ctx.resume();
+        }
+
         // Setup a timeout to check that we are unlocked on the next event loop.
         source.onended = function() {
           source.disconnect(0);
@@ -5735,11 +6221,13 @@ module.exports = function (e1, e2) {
           self.mobileAutoEnable = false;
 
           // Remove the touch start listener.
+          document.removeEventListener('touchstart', unlock, true);
           document.removeEventListener('touchend', unlock, true);
         };
       };
 
       // Setup a touch start listener to attempt an unlock in.
+      document.addEventListener('touchstart', unlock, true);
       document.addEventListener('touchend', unlock, true);
 
       return self;
@@ -5808,7 +6296,6 @@ module.exports = function (e1, e2) {
         clearTimeout(self._suspendTimer);
         self._suspendTimer = null;
       } else if (self.state === 'suspended') {
-        self.state = 'resuming';
         self.ctx.resume().then(function() {
           self.state = 'running';
 
@@ -5877,6 +6364,7 @@ module.exports = function (e1, e2) {
       self._sprite = o.sprite || {};
       self._src = (typeof o.src !== 'string') ? o.src : [o.src];
       self._volume = o.volume !== undefined ? o.volume : 1;
+      self._xhrWithCredentials = o.xhrWithCredentials || false;
 
       // Setup all other default properties.
       self._duration = 0;
@@ -5884,12 +6372,14 @@ module.exports = function (e1, e2) {
       self._sounds = [];
       self._endTimers = {};
       self._queue = [];
+      self._playLock = false;
 
       // Setup event listeners.
       self._onend = o.onend ? [{fn: o.onend}] : [];
       self._onfade = o.onfade ? [{fn: o.onfade}] : [];
       self._onload = o.onload ? [{fn: o.onload}] : [];
       self._onloaderror = o.onloaderror ? [{fn: o.onloaderror}] : [];
+      self._onplayerror = o.onplayerror ? [{fn: o.onplayerror}] : [];
       self._onpause = o.onpause ? [{fn: o.onpause}] : [];
       self._onplay = o.onplay ? [{fn: o.onplay}] : [];
       self._onstop = o.onstop ? [{fn: o.onstop}] : [];
@@ -5973,8 +6463,13 @@ module.exports = function (e1, e2) {
           }
         }
 
+        // Log a warning if no extension was found.
+        if (!ext) {
+          console.warn('No file extension was found. Consider using the "format" property or specify an extension.');
+        }
+
         // Check if this extension is available.
-        if (Howler.codecs(ext)) {
+        if (ext && Howler.codecs(ext)) {
           url = self._src[i];
           break;
         }
@@ -6057,26 +6552,33 @@ module.exports = function (e1, e2) {
         sprite = sound._sprite || '__default';
       }
 
-      // If we have no sprite and the sound hasn't loaded, we must wait
-      // for the sound to load to get our audio's duration.
-      if (self._state !== 'loaded' && !self._sprite[sprite]) {
+      // If the sound hasn't loaded, we must wait to get the audio's duration.
+      // We also need to wait to make sure we don't run into race conditions with
+      // the order of function calls.
+      if (self._state !== 'loaded') {
+        // Set the sprite value on this sound.
+        sound._sprite = sprite;
+
+        // Makr this sounded as not ended in case another sound is played before this one loads.
+        sound._ended = false;
+
+        // Add the sound to the queue to be played on load.
+        var soundId = sound._id;
         self._queue.push({
           event: 'play',
           action: function() {
-            self.play(self._soundById(sound._id) ? sound._id : undefined);
+            self.play(soundId);
           }
         });
 
-        return sound._id;
+        return soundId;
       }
 
       // Don't play the sound if an id was passed and it is already playing.
       if (id && !sound._paused) {
         // Trigger the play event, in order to keep iterating through queue.
         if (!internal) {
-          setTimeout(function() {
-            self._emit('play', sound._id);
-          }, 0);
+          self._loadQueue('play');
         }
 
         return sound._id;
@@ -6132,12 +6634,10 @@ module.exports = function (e1, e2) {
           }
         };
 
-        var isRunning = (Howler.state === 'running');
-        if (self._state === 'loaded' && isRunning) {
+        if (Howler.state === 'running') {
           playWebAudio();
         } else {
-          // Wait for the audio to load and then begin playback.
-          self.once(isRunning ? 'load' : 'resume', playWebAudio, isRunning ? sound._id : null);
+          self.once('resume', playWebAudio);
 
           // Cancel the end timer.
           self._clearTimer(sound._id);
@@ -6150,23 +6650,55 @@ module.exports = function (e1, e2) {
           node.volume = sound._volume * Howler.volume();
           node.playbackRate = sound._rate;
 
-          setTimeout(function() {
-            node.play();
+          // Mobile browsers will throw an error if this is called without user interaction.
+          try {
+            var play = node.play();
 
-            // Setup the new end timer.
-            if (timeout !== Infinity) {
-              self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
-            }
+            // Support older browsers that don't support promises, and thus don't have this issue.
+            if (typeof Promise !== 'undefined' && play instanceof Promise) {
+              // Implements a lock to prevent DOMException: The play() request was interrupted by a call to pause().
+              self._playLock = true;
 
-            if (!internal) {
+              // Releases the lock and executes queued actions.
+              var runLoadQueue = function() {
+                self._playLock = false;
+                if (!internal) {
+                  self._emit('play', sound._id);
+                }
+              };
+              play.then(runLoadQueue, runLoadQueue);
+            } else if (!internal) {
               self._emit('play', sound._id);
             }
-          }, 0);
+
+            // If the node is still paused, then we can assume there was a playback issue.
+            if (node.paused) {
+              self._emit('playerror', sound._id, 'Playback was unable to start. This is most commonly an issue ' +
+                'on mobile devices where playback was not within a user interaction.');
+              return;
+            }
+
+            // Setup the end timer on sprites or listen for the ended event.
+            if (sprite !== '__default') {
+              self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
+            } else {
+              self._endTimers[sound._id] = function() {
+                // Fire ended on this audio node.
+                self._ended(sound);
+
+                // Clear this listener.
+                node.removeEventListener('ended', self._endTimers[sound._id], false);
+              };
+              node.addEventListener('ended', self._endTimers[sound._id], false);
+            }
+          } catch (err) {
+            self._emit('playerror', sound._id, err);
+          }
         };
 
         // Play immediately if ready, or wait for the 'canplaythrough'e vent.
-        var loadedNoReadyState = (self._state === 'loaded' && (window && window.ejecta || !node.readyState && Howler._navigator.isCocoonJS));
-        if (node.readyState === 4 || loadedNoReadyState) {
+        var loadedNoReadyState = (window && window.ejecta) || (!node.readyState && Howler._navigator.isCocoonJS);
+        if (node.readyState >= 3 || loadedNoReadyState) {
           playHtml5();
         } else {
           var listener = function() {
@@ -6194,8 +6726,8 @@ module.exports = function (e1, e2) {
     pause: function(id) {
       var self = this;
 
-      // If the sound hasn't loaded, add it to the load queue to pause when capable.
-      if (self._state !== 'loaded') {
+      // If the sound hasn't loaded or a play() promise is pending, add it to the load queue to pause when capable.
+      if (self._state !== 'loaded' || self._playLock) {
         self._queue.push({
           event: 'pause',
           action: function() {
@@ -6227,9 +6759,9 @@ module.exports = function (e1, e2) {
 
           if (sound._node) {
             if (self._webAudio) {
-              // make sure the sound has been created
+              // Make sure the sound has been created.
               if (!sound._node.bufferSource) {
-                return self;
+                continue;
               }
 
               if (typeof sound._node.bufferSource.stop === 'undefined') {
@@ -6298,32 +6830,26 @@ module.exports = function (e1, e2) {
 
           if (sound._node) {
             if (self._webAudio) {
-              // make sure the sound has been created
-              if (!sound._node.bufferSource) {
-                if (!internal) {
-                  self._emit('stop', sound._id);
+              // Make sure the sound's AudioBufferSourceNode has been created.
+              if (sound._node.bufferSource) {
+                if (typeof sound._node.bufferSource.stop === 'undefined') {
+                  sound._node.bufferSource.noteOff(0);
+                } else {
+                  sound._node.bufferSource.stop(0);
                 }
 
-                return self;
+                // Clean up the buffer source.
+                self._cleanBuffer(sound._node);
               }
-
-              if (typeof sound._node.bufferSource.stop === 'undefined') {
-                sound._node.bufferSource.noteOff(0);
-              } else {
-                sound._node.bufferSource.stop(0);
-              }
-
-              // Clean up the buffer source.
-              self._cleanBuffer(sound._node);
             } else if (!isNaN(sound._node.duration) || sound._node.duration === Infinity) {
               sound._node.currentTime = sound._start || 0;
               sound._node.pause();
             }
           }
-        }
 
-        if (sound && !internal) {
-          self._emit('stop', sound._id);
+          if (!internal) {
+            self._emit('stop', sound._id);
+          }
         }
       }
 
@@ -6369,6 +6895,11 @@ module.exports = function (e1, e2) {
 
         if (sound) {
           sound._muted = muted;
+
+          // Cancel active fade and set the volume to the end value.
+          if (sound._interval) {
+            self._stopFade(sound._id);
+          }
 
           if (self._webAudio && sound._node) {
             sound._node.gain.setValueAtTime(muted ? 0 : sound._volume, Howler.ctx.currentTime);
@@ -6475,16 +7006,6 @@ module.exports = function (e1, e2) {
      */
     fade: function(from, to, len, id) {
       var self = this;
-      var diff = Math.abs(from - to);
-      var dir = from > to ? 'out' : 'in';
-      var steps = diff / 0.01;
-      var stepLen = (steps > 0) ? len / steps : len;
-
-      // Since browsers clamp timeouts to 4ms, we need to clamp our steps to that too.
-      if (stepLen < 4) {
-        steps = Math.ceil(steps / (4 / stepLen));
-        stepLen = 4;
-      }
 
       // If the sound hasn't loaded, add it to the load queue to fade when capable.
       if (self._state !== 'loaded') {
@@ -6523,43 +7044,68 @@ module.exports = function (e1, e2) {
             sound._node.gain.linearRampToValueAtTime(to, end);
           }
 
-          var vol = from;
-          sound._interval = setInterval(function(soundId, sound) {
-            // Update the volume amount, but only if the volume should change.
-            if (steps > 0) {
-              vol += (dir === 'in' ? 0.01 : -0.01);
-            }
-
-            // Make sure the volume is in the right bounds.
-            vol = Math.max(0, vol);
-            vol = Math.min(1, vol);
-
-            // Round to within 2 decimal points.
-            vol = Math.round(vol * 100) / 100;
-
-            // Change the volume.
-            if (self._webAudio) {
-              if (typeof id === 'undefined') {
-                self._volume = vol;
-              }
-
-              sound._volume = vol;
-            } else {
-              self.volume(vol, soundId, true);
-            }
-
-            // When the fade is complete, stop it and fire event.
-            if (vol === to) {
-              clearInterval(sound._interval);
-              sound._interval = null;
-              self.volume(vol, soundId);
-              self._emit('fade', soundId);
-            }
-          }.bind(self, ids[i], sound), stepLen);
+          self._startFadeInterval(sound, from, to, len, ids[i], typeof id === 'undefined');
         }
       }
 
       return self;
+    },
+
+    /**
+     * Starts the internal interval to fade a sound.
+     * @param  {Object} sound Reference to sound to fade.
+     * @param  {Number} from The value to fade from (0.0 to 1.0).
+     * @param  {Number} to   The volume to fade to (0.0 to 1.0).
+     * @param  {Number} len  Time in milliseconds to fade.
+     * @param  {Number} id   The sound id to fade.
+     * @param  {Boolean} isGroup   If true, set the volume on the group.
+     */
+    _startFadeInterval: function(sound, from, to, len, id, isGroup) {
+      var self = this;
+      var vol = from;
+      var diff = to - from;
+      var steps = Math.abs(diff / 0.01);
+      var stepLen = Math.max(4, (steps > 0) ? len / steps : len);
+      var lastTick = Date.now();
+
+      // Store the value being faded to.
+      sound._fadeTo = to;
+
+      // Update the volume value on each interval tick.
+      sound._interval = setInterval(function() {
+        // Update the volume based on the time since the last tick.
+        var tick = (Date.now() - lastTick) / len;
+        lastTick = Date.now();
+        vol += diff * tick;
+
+        // Make sure the volume is in the right bounds.
+        vol = Math.max(0, vol);
+        vol = Math.min(1, vol);
+
+        // Round to within 2 decimal points.
+        vol = Math.round(vol * 100) / 100;
+
+        // Change the volume.
+        if (self._webAudio) {
+          sound._volume = vol;
+        } else {
+          self.volume(vol, sound._id, true);
+        }
+
+        // Set the group's volume.
+        if (isGroup) {
+          self._volume = vol;
+        }
+
+        // When the fade is complete, stop it and fire event.
+        if ((to < from && vol <= to) || (to > from && vol >= to)) {
+          clearInterval(sound._interval);
+          sound._interval = null;
+          sound._fadeTo = null;
+          self.volume(to, sound._id);
+          self._emit('fade', sound._id);
+        }
+      }, stepLen);
     },
 
     /**
@@ -6579,6 +7125,8 @@ module.exports = function (e1, e2) {
 
         clearInterval(sound._interval);
         sound._interval = null;
+        self.volume(sound._fadeTo, id);
+        sound._fadeTo = null;
         self._emit('fade', id);
       }
 
@@ -6702,7 +7250,7 @@ module.exports = function (e1, e2) {
 
             // Change the playback rate.
             if (self._webAudio && sound._node && sound._node.bufferSource) {
-              sound._node.bufferSource.playbackRate.value = rate;
+              sound._node.bufferSource.playbackRate.setValueAtTime(rate, Howler.ctx.currentTime);
             } else if (sound._node) {
               sound._node.playbackRate = rate;
             }
@@ -6752,7 +7300,7 @@ module.exports = function (e1, e2) {
         var index = ids.indexOf(args[0]);
         if (index >= 0) {
           id = parseInt(args[0], 10);
-        } else {
+        } else if (self._sounds.length) {
           id = self._sounds[0]._id;
           seek = parseFloat(args[0]);
         }
@@ -6804,7 +7352,19 @@ module.exports = function (e1, e2) {
             sound._node.currentTime = seek;
           }
 
-          self._emit('seek', id);
+          // Wait for the play lock to be unset before emitting (HTML5 Audio).
+          if (playing && !self._webAudio) {
+            var emitSeek = function() {
+              if (!self._playLock) {
+                self._emit('seek', id);
+              } else {
+                setTimeout(emitSeek, 0);
+              }
+            };
+            setTimeout(emitSeek, 0);
+          } else {
+            self._emit('seek', id);
+          }
         } else {
           if (self._webAudio) {
             var realTime = self.playing(id) ? Howler.ctx.currentTime - sound._playStart : 0;
@@ -6882,13 +7442,15 @@ module.exports = function (e1, e2) {
         // Stop the sound if it is currently playing.
         if (!sounds[i]._paused) {
           self.stop(sounds[i]._id);
-          self._emit('end', sounds[i]._id);
         }
 
         // Remove the source or disconnect.
         if (!self._webAudio) {
-          // Set the source to 0-second silence to stop any downloading.
-          sounds[i]._node.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
+          // Set the source to 0-second silence to stop any downloading (except in IE).
+          var checkIE = /MSIE |Trident\//.test(Howler._navigator && Howler._navigator.userAgent);
+          if (!checkIE) {
+            sounds[i]._node.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+          }
 
           // Remove any event listeners.
           sounds[i]._node.removeEventListener('error', sounds[i]._errorFn, false);
@@ -6963,10 +7525,17 @@ module.exports = function (e1, e2) {
       var events = self['_on' + event];
       var i = 0;
 
-      if (fn) {
+      // Allow passing just an event and ID.
+      if (typeof fn === 'number') {
+        id = fn;
+        fn = null;
+      }
+
+      if (fn || id) {
         // Loop through event store and remove the passed function.
         for (i=0; i<events.length; i++) {
-          if (fn === events[i].fn && id === events[i].id) {
+          var isId = (id === events[i].id);
+          if (fn === events[i].fn && isId || !fn && isId) {
             events.splice(i, 1);
             break;
           }
@@ -7016,6 +7585,7 @@ module.exports = function (e1, e2) {
 
       // Loop through event store and fire all functions.
       for (var i=events.length-1; i>=0; i--) {
+        // Only fire the listener if the correct ID is used.
         if (!events[i].id || events[i].id === id || event === 'load') {
           setTimeout(function(fn) {
             fn.call(this, id, msg);
@@ -7028,6 +7598,9 @@ module.exports = function (e1, e2) {
         }
       }
 
+      // Pass the event type into load queue so that it can continue stepping.
+      self._loadQueue(event);
+
       return self;
     },
 
@@ -7037,19 +7610,22 @@ module.exports = function (e1, e2) {
      * after the previous has finished executing (even if async like play).
      * @return {Howl}
      */
-    _loadQueue: function() {
+    _loadQueue: function(event) {
       var self = this;
 
       if (self._queue.length > 0) {
         var task = self._queue[0];
 
-        // don't move onto the next task until this one is done
-        self.once(task.event, function() {
+        // Remove this task if a matching event was passed.
+        if (task.event === event) {
           self._queue.shift();
           self._loadQueue();
-        });
+        }
 
-        task.action();
+        // Run the task if no event type is passed.
+        if (!event) {
+          task.action();
+        }
       }
 
       return self;
@@ -7063,6 +7639,14 @@ module.exports = function (e1, e2) {
     _ended: function(sound) {
       var self = this;
       var sprite = sound._sprite;
+
+      // If we are using IE and there was network latency we may be clipping
+      // audio before it completes playing. Lets check the node to make sure it
+      // believes it has completed, before ending the playback.
+      if (!self._webAudio && sound._node && !sound._node.paused && !sound._node.ended && sound._node.currentTime < sound._stop) {
+        setTimeout(self._ended.bind(self, sound), 100);
+        return self;
+      }
 
       // Should this sound loop?
       var loop = !!(sound._loop || self._sprite[sprite][2]);
@@ -7118,7 +7702,16 @@ module.exports = function (e1, e2) {
       var self = this;
 
       if (self._endTimers[id]) {
-        clearTimeout(self._endTimers[id]);
+        // Clear the timeout or remove the ended listener.
+        if (typeof self._endTimers[id] !== 'function') {
+          clearTimeout(self._endTimers[id]);
+        } else {
+          var sound = self._soundById(id);
+          if (sound && sound._node) {
+            sound._node.removeEventListener('ended', self._endTimers[id], false);
+          }
+        }
+
         delete self._endTimers[id];
       }
 
@@ -7248,7 +7841,7 @@ module.exports = function (e1, e2) {
         sound._node.bufferSource.loopStart = sound._start || 0;
         sound._node.bufferSource.loopEnd = sound._stop;
       }
-      sound._node.bufferSource.playbackRate.value = sound._rate;
+      sound._node.bufferSource.playbackRate.setValueAtTime(sound._rate, Howler.ctx.currentTime);
 
       return self;
     },
@@ -7261,10 +7854,10 @@ module.exports = function (e1, e2) {
     _cleanBuffer: function(node) {
       var self = this;
 
-      if (self._scratchBuffer) {
+      if (Howler._scratchBuffer) {
         node.bufferSource.onended = null;
         node.bufferSource.disconnect(0);
-        try { node.bufferSource.buffer = self._scratchBuffer; } catch(e) {}
+        try { node.bufferSource.buffer = Howler._scratchBuffer; } catch(e) {}
       }
       node.bufferSource = null;
 
@@ -7296,7 +7889,6 @@ module.exports = function (e1, e2) {
       self._muted = parent._muted;
       self._loop = parent._loop;
       self._volume = parent._volume;
-      self._muted = parent._muted;
       self._rate = parent._rate;
       self._seek = 0;
       self._paused = true;
@@ -7304,7 +7896,7 @@ module.exports = function (e1, e2) {
       self._sprite = '__default';
 
       // Generate a unique ID for this sound.
-      self._id = Math.round(Date.now() * Math.random());
+      self._id = ++Howler._counter;
 
       // Add itself to the parent's pool.
       parent._sounds.push(self);
@@ -7365,7 +7957,6 @@ module.exports = function (e1, e2) {
       self._muted = parent._muted;
       self._loop = parent._loop;
       self._volume = parent._volume;
-      self._muted = parent._muted;
       self._rate = parent._rate;
       self._seek = 0;
       self._rateSeek = 0;
@@ -7374,7 +7965,7 @@ module.exports = function (e1, e2) {
       self._sprite = '__default';
 
       // Generate a new ID so that it isn't confused with the previous sound.
-      self._id = Math.round(Date.now() * Math.random());
+      self._id = ++Howler._counter;
 
       return self;
     },
@@ -7389,7 +7980,7 @@ module.exports = function (e1, e2) {
       self._parent._emit('loaderror', self._id, self._node.error ? self._node.error.code : 0);
 
       // Clear the event listener.
-      self._node.removeEventListener('error', self._errorListener, false);
+      self._node.removeEventListener('error', self._errorFn, false);
     },
 
     /**
@@ -7454,6 +8045,7 @@ module.exports = function (e1, e2) {
       // Load the buffer from the URL.
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
+      xhr.withCredentials = self._xhrWithCredentials;
       xhr.responseType = 'arraybuffer';
       xhr.onload = function() {
         // Make sure we get a successful response back.
@@ -7564,7 +8156,7 @@ module.exports = function (e1, e2) {
     // Create and expose the master GainNode when using Web Audio (useful for plugins or advanced usage).
     if (Howler.usingWebAudio) {
       Howler.masterGain = (typeof Howler.ctx.createGain === 'undefined') ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
-      Howler.masterGain.gain.value = 1;
+      Howler.masterGain.gain.setValueAtTime(Howler._muted ? 0 : 1, Howler.ctx.currentTime);
       Howler.masterGain.connect(Howler.ctx.destination);
     }
 
@@ -7606,10 +8198,10 @@ module.exports = function (e1, e2) {
 /*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
  *  
- *  howler.js v2.0.2
+ *  howler.js v2.0.9
  *  howlerjs.com
  *
- *  (c) 2013-2016, James Simpson of GoldFire Studios
+ *  (c) 2013-2018, James Simpson of GoldFire Studios
  *  goldfirestudios.com
  *
  *  MIT License
@@ -7818,7 +8410,7 @@ module.exports = function (e1, e2) {
             if (pannerType === 'spatial') {
               sound._panner.setPosition(pan, 0, 0);
             } else {
-              sound._panner.pan.value = pan;
+              sound._panner.pan.setValueAtTime(pan, Howler.ctx.currentTime);
             }
           }
 
@@ -7833,13 +8425,10 @@ module.exports = function (e1, e2) {
   };
 
   /**
-   * Get/set the 3D spatial position of the audio source for this sound or
-   * all in the group. The most common usage is to set the 'x' position for
-   * left/right panning. Setting any value higher than 1.0 will begin to
-   * decrease the volume of the sound as it moves further away.
-   * @param  {Number} x  The x-position of the audio from -1000.0 to 1000.0.
-   * @param  {Number} y  The y-position of the audio from -1000.0 to 1000.0.
-   * @param  {Number} z  The z-position of the audio from -1000.0 to 1000.0.
+   * Get/set the 3D spatial position of the audio source for this sound or group relative to the global listener.
+   * @param  {Number} x  The x-position of the audio source.
+   * @param  {Number} y  The y-position of the audio source.
+   * @param  {Number} z  The z-position of the audio source.
    * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
    * @return {Howl/Array}    Returns self or the current 3D spatial position: [x, y, z].
    */
@@ -7993,18 +8582,24 @@ module.exports = function (e1, e2) {
    *   pannerAttr(o, id) -> Set's the values of passed sound id.
    *
    *   Attributes:
-   *     coneInnerAngle - (360 by default) There will be no volume reduction inside this angle.
-   *     coneOuterAngle - (360 by default) The volume will be reduced to a constant value of
-   *                      `coneOuterGain` outside this angle.
-   *     coneOuterGain - (0 by default) The amount of volume reduction outside of `coneOuterAngle`.
-   *     distanceModel - ('inverse' by default) Determines algorithm to use to reduce volume as audio moves
-   *                      away from listener. Can be `linear`, `inverse` or `exponential`.
-   *     maxDistance - (10000 by default) Volume won't reduce between source/listener beyond this distance.
+   *     coneInnerAngle - (360 by default) A parameter for directional audio sources, this is an angle, in degrees,
+   *                      inside of which there will be no volume reduction.
+   *     coneOuterAngle - (360 by default) A parameter for directional audio sources, this is an angle, in degrees,
+   *                      outside of which the volume will be reduced to a constant value of `coneOuterGain`.
+   *     coneOuterGain - (0 by default) A parameter for directional audio sources, this is the gain outside of the
+   *                     `coneOuterAngle`. It is a linear value in the range `[0, 1]`.
+   *     distanceModel - ('inverse' by default) Determines algorithm used to reduce volume as audio moves away from
+   *                     listener. Can be `linear`, `inverse` or `exponential.
+   *     maxDistance - (10000 by default) The maximum distance between source and listener, after which the volume
+   *                   will not be reduced any further.
+   *     refDistance - (1 by default) A reference distance for reducing volume as source moves further from the listener.
+   *                   This is simply a variable of the distance model and has a different effect depending on which model
+   *                   is used and the scale of your coordinates. Generally, volume will be equal to 1 at this distance.
+   *     rolloffFactor - (1 by default) How quickly the volume reduces as source moves from listener. This is simply a
+   *                     variable of the distance model and can be in the range of `[0, 1]` with `linear` and `[0, ∞]`
+   *                     with `inverse` and `exponential`.
    *     panningModel - ('HRTF' by default) Determines which spatialization algorithm is used to position audio.
    *                     Can be `HRTF` or `equalpower`.
-   *     refDistance - (1 by default) A reference distance for reducing volume as the source
-   *                    moves away from the listener.
-   *     rolloffFactor - (1 by default) How quickly the volume reduces as source moves from listener.
    * 
    * @return {Howl/Object} Returns self or current panner attributes.
    */
@@ -8028,15 +8623,28 @@ module.exports = function (e1, e2) {
 
         // Set the grou's panner attribute values.
         if (typeof id === 'undefined') {
+          if (!o.pannerAttr) {
+            o.pannerAttr = {
+              coneInnerAngle: o.coneInnerAngle,
+              coneOuterAngle: o.coneOuterAngle,
+              coneOuterGain: o.coneOuterGain,
+              distanceModel: o.distanceModel,
+              maxDistance: o.maxDistance,
+              refDistance: o.refDistance,
+              rolloffFactor: o.rolloffFactor,
+              panningModel: o.panningModel
+            };
+          }
+
           self._pannerAttr = {
-            coneInnerAngle: typeof o.coneInnerAngle !== 'undefined' ? o.coneInnerAngle : self._coneInnerAngle,
-            coneOuterAngle: typeof o.coneOuterAngle !== 'undefined' ? o.coneOuterAngle : self._coneOuterAngle,
-            coneOuterGain: typeof o.coneOuterGain !== 'undefined' ? o.coneOuterGain : self._coneOuterGain,
-            distanceModel: typeof o.distanceModel !== 'undefined' ? o.distanceModel : self._distanceModel,
-            maxDistance: typeof o.maxDistance !== 'undefined' ? o.maxDistance : self._maxDistance,
-            panningModel: typeof o.panningModel !== 'undefined' ? o.panningModel : self._panningModel,
-            refDistance: typeof o.refDistance !== 'undefined' ? o.refDistance : self._refDistance,
-            rolloffFactor: typeof o.rolloffFactor !== 'undefined' ? o.rolloffFactor : self._rolloffFactor
+            coneInnerAngle: typeof o.pannerAttr.coneInnerAngle !== 'undefined' ? o.pannerAttr.coneInnerAngle : self._coneInnerAngle,
+            coneOuterAngle: typeof o.pannerAttr.coneOuterAngle !== 'undefined' ? o.pannerAttr.coneOuterAngle : self._coneOuterAngle,
+            coneOuterGain: typeof o.pannerAttr.coneOuterGain !== 'undefined' ? o.pannerAttr.coneOuterGain : self._coneOuterGain,
+            distanceModel: typeof o.pannerAttr.distanceModel !== 'undefined' ? o.pannerAttr.distanceModel : self._distanceModel,
+            maxDistance: typeof o.pannerAttr.maxDistance !== 'undefined' ? o.pannerAttr.maxDistance : self._maxDistance,
+            refDistance: typeof o.pannerAttr.refDistance !== 'undefined' ? o.pannerAttr.refDistance : self._refDistance,
+            rolloffFactor: typeof o.pannerAttr.rolloffFactor !== 'undefined' ? o.pannerAttr.rolloffFactor : self._rolloffFactor,
+            panningModel: typeof o.pannerAttr.panningModel !== 'undefined' ? o.pannerAttr.panningModel : self._panningModel
           };
         }
       } else {
@@ -8063,9 +8671,9 @@ module.exports = function (e1, e2) {
           coneOuterGain: typeof o.coneOuterGain !== 'undefined' ? o.coneOuterGain : pa.coneOuterGain,
           distanceModel: typeof o.distanceModel !== 'undefined' ? o.distanceModel : pa.distanceModel,
           maxDistance: typeof o.maxDistance !== 'undefined' ? o.maxDistance : pa.maxDistance,
-          panningModel: typeof o.panningModel !== 'undefined' ? o.panningModel : pa.panningModel,
           refDistance: typeof o.refDistance !== 'undefined' ? o.refDistance : pa.refDistance,
-          rolloffFactor: typeof o.rolloffFactor !== 'undefined' ? o.rolloffFactor : pa.rolloffFactor
+          rolloffFactor: typeof o.rolloffFactor !== 'undefined' ? o.rolloffFactor : pa.rolloffFactor,
+          panningModel: typeof o.panningModel !== 'undefined' ? o.panningModel : pa.panningModel
         };
 
         // Update the panner values or create a new panner if none exists.
@@ -8076,9 +8684,9 @@ module.exports = function (e1, e2) {
           panner.coneOuterGain = pa.coneOuterGain;
           panner.distanceModel = pa.distanceModel;
           panner.maxDistance = pa.maxDistance;
-          panner.panningModel = pa.panningModel;
           panner.refDistance = pa.refDistance;
           panner.rolloffFactor = pa.rolloffFactor;
+          panner.panningModel = pa.panningModel;
         } else {
           // Make sure we have a position to setup the node with.
           if (!sound._pos) {
@@ -8164,39 +8772,39 @@ module.exports = function (e1, e2) {
       sound._panner.coneOuterGain = sound._pannerAttr.coneOuterGain;
       sound._panner.distanceModel = sound._pannerAttr.distanceModel;
       sound._panner.maxDistance = sound._pannerAttr.maxDistance;
-      sound._panner.panningModel = sound._pannerAttr.panningModel;
       sound._panner.refDistance = sound._pannerAttr.refDistance;
       sound._panner.rolloffFactor = sound._pannerAttr.rolloffFactor;
+      sound._panner.panningModel = sound._pannerAttr.panningModel;
       sound._panner.setPosition(sound._pos[0], sound._pos[1], sound._pos[2]);
       sound._panner.setOrientation(sound._orientation[0], sound._orientation[1], sound._orientation[2]);
     } else {
       sound._panner = Howler.ctx.createStereoPanner();
-      sound._panner.pan.value = sound._stereo;
+      sound._panner.pan.setValueAtTime(sound._stereo, Howler.ctx.currentTime);
     }
 
     sound._panner.connect(sound._node);
 
     // Update the connections.
     if (!sound._paused) {
-      sound._parent.pause(sound._id, true).play(sound._id);
+      sound._parent.pause(sound._id, true).play(sound._id, true);
     }
   };
 })();
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],108:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v3.1.1
+ * jQuery JavaScript Library v3.3.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
  * https://sizzlejs.com/
  *
- * Copyright jQuery Foundation and other contributors
+ * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2016-09-22T22:30Z
+ * Date: 2018-01-20T17:24Z
  */
 ( function( global, factory ) {
 
@@ -8258,16 +8866,57 @@ var ObjectFunctionString = fnToString.call( Object );
 
 var support = {};
 
+var isFunction = function isFunction( obj ) {
+
+      // Support: Chrome <=57, Firefox <=52
+      // In some browsers, typeof returns "function" for HTML <object> elements
+      // (i.e., `typeof document.createElement( "object" ) === "function"`).
+      // We don't want to classify *any* DOM node as a function.
+      return typeof obj === "function" && typeof obj.nodeType !== "number";
+  };
 
 
-	function DOMEval( code, doc ) {
+var isWindow = function isWindow( obj ) {
+		return obj != null && obj === obj.window;
+	};
+
+
+
+
+	var preservedScriptAttributes = {
+		type: true,
+		src: true,
+		noModule: true
+	};
+
+	function DOMEval( code, doc, node ) {
 		doc = doc || document;
 
-		var script = doc.createElement( "script" );
+		var i,
+			script = doc.createElement( "script" );
 
 		script.text = code;
+		if ( node ) {
+			for ( i in preservedScriptAttributes ) {
+				if ( node[ i ] ) {
+					script[ i ] = node[ i ];
+				}
+			}
+		}
 		doc.head.appendChild( script ).parentNode.removeChild( script );
 	}
+
+
+function toType( obj ) {
+	if ( obj == null ) {
+		return obj + "";
+	}
+
+	// Support: Android <=2.3 only (functionish RegExp)
+	return typeof obj === "object" || typeof obj === "function" ?
+		class2type[ toString.call( obj ) ] || "object" :
+		typeof obj;
+}
 /* global Symbol */
 // Defining this global in .eslintrc.json would create a danger of using the global
 // unguarded in another place, it seems safer to define global only for this module
@@ -8275,7 +8924,7 @@ var support = {};
 
 
 var
-	version = "3.1.1",
+	version = "3.3.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -8287,16 +8936,7 @@ var
 
 	// Support: Android <=4.0 only
 	// Make sure we trim BOM and NBSP
-	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
-
-	// Matches dashed string for camelizing
-	rmsPrefix = /^-ms-/,
-	rdashAlpha = /-([a-z])/g,
-
-	// Used by jQuery.camelCase as callback to replace()
-	fcamelCase = function( all, letter ) {
-		return letter.toUpperCase();
-	};
+	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
 jQuery.fn = jQuery.prototype = {
 
@@ -8396,7 +9036,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)
-	if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
+	if ( typeof target !== "object" && !isFunction( target ) ) {
 		target = {};
 	}
 
@@ -8423,11 +9063,11 @@ jQuery.extend = jQuery.fn.extend = function() {
 
 				// Recurse if we're merging plain objects or arrays
 				if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
-					( copyIsArray = jQuery.isArray( copy ) ) ) ) {
+					( copyIsArray = Array.isArray( copy ) ) ) ) {
 
 					if ( copyIsArray ) {
 						copyIsArray = false;
-						clone = src && jQuery.isArray( src ) ? src : [];
+						clone = src && Array.isArray( src ) ? src : [];
 
 					} else {
 						clone = src && jQuery.isPlainObject( src ) ? src : {};
@@ -8462,30 +9102,6 @@ jQuery.extend( {
 
 	noop: function() {},
 
-	isFunction: function( obj ) {
-		return jQuery.type( obj ) === "function";
-	},
-
-	isArray: Array.isArray,
-
-	isWindow: function( obj ) {
-		return obj != null && obj === obj.window;
-	},
-
-	isNumeric: function( obj ) {
-
-		// As of jQuery 3.0, isNumeric is limited to
-		// strings and numbers (primitives or objects)
-		// that can be coerced to finite numbers (gh-2662)
-		var type = jQuery.type( obj );
-		return ( type === "number" || type === "string" ) &&
-
-			// parseFloat NaNs numeric-cast false positives ("")
-			// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
-			// subtraction forces infinities to NaN
-			!isNaN( obj - parseFloat( obj ) );
-	},
-
 	isPlainObject: function( obj ) {
 		var proto, Ctor;
 
@@ -8519,31 +9135,9 @@ jQuery.extend( {
 		return true;
 	},
 
-	type: function( obj ) {
-		if ( obj == null ) {
-			return obj + "";
-		}
-
-		// Support: Android <=2.3 only (functionish RegExp)
-		return typeof obj === "object" || typeof obj === "function" ?
-			class2type[ toString.call( obj ) ] || "object" :
-			typeof obj;
-	},
-
 	// Evaluates a script in a global context
 	globalEval: function( code ) {
 		DOMEval( code );
-	},
-
-	// Convert dashed to camelCase; used by the css and data modules
-	// Support: IE <=9 - 11, Edge 12 - 13
-	// Microsoft forgot to hump their vendor prefix (#9572)
-	camelCase: function( string ) {
-		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
-	},
-
-	nodeName: function( elem, name ) {
-		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 	},
 
 	each: function( obj, callback ) {
@@ -8666,37 +9260,6 @@ jQuery.extend( {
 	// A global GUID counter for objects
 	guid: 1,
 
-	// Bind a function to a context, optionally partially applying any
-	// arguments.
-	proxy: function( fn, context ) {
-		var tmp, args, proxy;
-
-		if ( typeof context === "string" ) {
-			tmp = fn[ context ];
-			context = fn;
-			fn = tmp;
-		}
-
-		// Quick check to determine if target is callable, in the spec
-		// this throws a TypeError, but we will just return undefined.
-		if ( !jQuery.isFunction( fn ) ) {
-			return undefined;
-		}
-
-		// Simulated bind
-		args = slice.call( arguments, 2 );
-		proxy = function() {
-			return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
-		};
-
-		// Set the guid of unique handler to the same of original handler, so it can be removed
-		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
-
-		return proxy;
-	},
-
-	now: Date.now,
-
 	// jQuery.support is not used in Core but other projects attach their
 	// properties to it so it needs to exist.
 	support: support
@@ -8719,9 +9282,9 @@ function isArrayLike( obj ) {
 	// hasOwn isn't used here due to false negatives
 	// regarding Nodelist length in IE
 	var length = !!obj && "length" in obj && obj.length,
-		type = jQuery.type( obj );
+		type = toType( obj );
 
-	if ( type === "function" || jQuery.isWindow( obj ) ) {
+	if ( isFunction( obj ) || isWindow( obj ) ) {
 		return false;
 	}
 
@@ -11030,15 +11593,20 @@ var siblings = function( n, elem ) {
 
 var rneedsContext = jQuery.expr.match.needsContext;
 
+
+
+function nodeName( elem, name ) {
+
+  return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
+
+};
 var rsingleTag = ( /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i );
 
 
 
-var risSimple = /^.[^:#\[\.,]*$/;
-
 // Implement the identical functionality for filter and not
 function winnow( elements, qualifier, not ) {
-	if ( jQuery.isFunction( qualifier ) ) {
+	if ( isFunction( qualifier ) ) {
 		return jQuery.grep( elements, function( elem, i ) {
 			return !!qualifier.call( elem, i, elem ) !== not;
 		} );
@@ -11058,16 +11626,8 @@ function winnow( elements, qualifier, not ) {
 		} );
 	}
 
-	// Simple selector that can be filtered directly, removing non-Elements
-	if ( risSimple.test( qualifier ) ) {
-		return jQuery.filter( qualifier, elements, not );
-	}
-
-	// Complex selector, compare the two sets, removing non-Elements
-	qualifier = jQuery.filter( qualifier, elements );
-	return jQuery.grep( elements, function( elem ) {
-		return ( indexOf.call( qualifier, elem ) > -1 ) !== not && elem.nodeType === 1;
-	} );
+	// Filtered directly for both simple and complex selectors
+	return jQuery.filter( qualifier, elements, not );
 }
 
 jQuery.filter = function( expr, elems, not ) {
@@ -11188,7 +11748,7 @@ var rootjQuery,
 						for ( match in context ) {
 
 							// Properties of context are called as methods if possible
-							if ( jQuery.isFunction( this[ match ] ) ) {
+							if ( isFunction( this[ match ] ) ) {
 								this[ match ]( context[ match ] );
 
 							// ...and otherwise set as attributes
@@ -11231,7 +11791,7 @@ var rootjQuery,
 
 		// HANDLE: $(function)
 		// Shortcut for document ready
-		} else if ( jQuery.isFunction( selector ) ) {
+		} else if ( isFunction( selector ) ) {
 			return root.ready !== undefined ?
 				root.ready( selector ) :
 
@@ -11381,7 +11941,18 @@ jQuery.each( {
 		return siblings( elem.firstChild );
 	},
 	contents: function( elem ) {
-		return elem.contentDocument || jQuery.merge( [], elem.childNodes );
+        if ( nodeName( elem, "iframe" ) ) {
+            return elem.contentDocument;
+        }
+
+        // Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
+        // Treat the template element as a regular one in browsers that
+        // don't support it.
+        if ( nodeName( elem, "template" ) ) {
+            elem = elem.content || elem;
+        }
+
+        return jQuery.merge( [], elem.childNodes );
 	}
 }, function( name, fn ) {
 	jQuery.fn[ name ] = function( until, selector ) {
@@ -11479,7 +12050,7 @@ jQuery.Callbacks = function( options ) {
 		fire = function() {
 
 			// Enforce single-firing
-			locked = options.once;
+			locked = locked || options.once;
 
 			// Execute callbacks for all pending executions,
 			// respecting firingIndex overrides and runtime changes
@@ -11535,11 +12106,11 @@ jQuery.Callbacks = function( options ) {
 
 					( function add( args ) {
 						jQuery.each( args, function( _, arg ) {
-							if ( jQuery.isFunction( arg ) ) {
+							if ( isFunction( arg ) ) {
 								if ( !options.unique || !self.has( arg ) ) {
 									list.push( arg );
 								}
-							} else if ( arg && arg.length && jQuery.type( arg ) !== "string" ) {
+							} else if ( arg && arg.length && toType( arg ) !== "string" ) {
 
 								// Inspect recursively
 								add( arg );
@@ -11648,25 +12219,26 @@ function Thrower( ex ) {
 	throw ex;
 }
 
-function adoptValue( value, resolve, reject ) {
+function adoptValue( value, resolve, reject, noValue ) {
 	var method;
 
 	try {
 
 		// Check for promise aspect first to privilege synchronous behavior
-		if ( value && jQuery.isFunction( ( method = value.promise ) ) ) {
+		if ( value && isFunction( ( method = value.promise ) ) ) {
 			method.call( value ).done( resolve ).fail( reject );
 
 		// Other thenables
-		} else if ( value && jQuery.isFunction( ( method = value.then ) ) ) {
+		} else if ( value && isFunction( ( method = value.then ) ) ) {
 			method.call( value, resolve, reject );
 
 		// Other non-thenables
 		} else {
 
-			// Support: Android 4.0 only
-			// Strict mode functions invoked without .call/.apply get global-object context
-			resolve.call( undefined, value );
+			// Control `resolve` arguments by letting Array#slice cast boolean `noValue` to integer:
+			// * false: [ value ].slice( 0 ) => resolve( value )
+			// * true: [ value ].slice( 1 ) => resolve()
+			resolve.apply( undefined, [ value ].slice( noValue ) );
 		}
 
 	// For Promises/A+, convert exceptions into rejections
@@ -11676,7 +12248,7 @@ function adoptValue( value, resolve, reject ) {
 
 		// Support: Android 4.0 only
 		// Strict mode functions invoked without .call/.apply get global-object context
-		reject.call( undefined, value );
+		reject.apply( undefined, [ value ] );
 	}
 }
 
@@ -11715,14 +12287,14 @@ jQuery.extend( {
 						jQuery.each( tuples, function( i, tuple ) {
 
 							// Map tuples (progress, done, fail) to arguments (done, fail, progress)
-							var fn = jQuery.isFunction( fns[ tuple[ 4 ] ] ) && fns[ tuple[ 4 ] ];
+							var fn = isFunction( fns[ tuple[ 4 ] ] ) && fns[ tuple[ 4 ] ];
 
 							// deferred.progress(function() { bind to newDefer or newDefer.notify })
 							// deferred.done(function() { bind to newDefer or newDefer.resolve })
 							// deferred.fail(function() { bind to newDefer or newDefer.reject })
 							deferred[ tuple[ 1 ] ]( function() {
 								var returned = fn && fn.apply( this, arguments );
-								if ( returned && jQuery.isFunction( returned.promise ) ) {
+								if ( returned && isFunction( returned.promise ) ) {
 									returned.promise()
 										.progress( newDefer.notify )
 										.done( newDefer.resolve )
@@ -11776,7 +12348,7 @@ jQuery.extend( {
 										returned.then;
 
 									// Handle a returned thenable
-									if ( jQuery.isFunction( then ) ) {
+									if ( isFunction( then ) ) {
 
 										// Special processors (notify) just wait for resolution
 										if ( special ) {
@@ -11872,7 +12444,7 @@ jQuery.extend( {
 							resolve(
 								0,
 								newDefer,
-								jQuery.isFunction( onProgress ) ?
+								isFunction( onProgress ) ?
 									onProgress :
 									Identity,
 								newDefer.notifyWith
@@ -11884,7 +12456,7 @@ jQuery.extend( {
 							resolve(
 								0,
 								newDefer,
-								jQuery.isFunction( onFulfilled ) ?
+								isFunction( onFulfilled ) ?
 									onFulfilled :
 									Identity
 							)
@@ -11895,7 +12467,7 @@ jQuery.extend( {
 							resolve(
 								0,
 								newDefer,
-								jQuery.isFunction( onRejected ) ?
+								isFunction( onRejected ) ?
 									onRejected :
 									Thrower
 							)
@@ -11935,8 +12507,15 @@ jQuery.extend( {
 					// fulfilled_callbacks.disable
 					tuples[ 3 - i ][ 2 ].disable,
 
+					// rejected_handlers.disable
+					// fulfilled_handlers.disable
+					tuples[ 3 - i ][ 3 ].disable,
+
 					// progress_callbacks.lock
-					tuples[ 0 ][ 2 ].lock
+					tuples[ 0 ][ 2 ].lock,
+
+					// progress_handlers.lock
+					tuples[ 0 ][ 3 ].lock
 				);
 			}
 
@@ -12001,11 +12580,12 @@ jQuery.extend( {
 
 		// Single- and empty arguments are adopted like Promise.resolve
 		if ( remaining <= 1 ) {
-			adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject );
+			adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject,
+				!remaining );
 
 			// Use .then() to unwrap secondary thenables (cf. gh-3000)
 			if ( master.state() === "pending" ||
-				jQuery.isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
+				isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
 
 				return master.then();
 			}
@@ -12073,15 +12653,6 @@ jQuery.extend( {
 	// the ready event fires. See #6781
 	readyWait: 1,
 
-	// Hold (or release) the ready event
-	holdReady: function( hold ) {
-		if ( hold ) {
-			jQuery.readyWait++;
-		} else {
-			jQuery.ready( true );
-		}
-	},
-
 	// Handle when the DOM is ready
 	ready: function( wait ) {
 
@@ -12142,7 +12713,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		bulk = key == null;
 
 	// Sets many values
-	if ( jQuery.type( key ) === "object" ) {
+	if ( toType( key ) === "object" ) {
 		chainable = true;
 		for ( i in key ) {
 			access( elems, fn, i, key[ i ], true, emptyGet, raw );
@@ -12152,7 +12723,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 	} else if ( value !== undefined ) {
 		chainable = true;
 
-		if ( !jQuery.isFunction( value ) ) {
+		if ( !isFunction( value ) ) {
 			raw = true;
 		}
 
@@ -12194,6 +12765,23 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 
 	return len ? fn( elems[ 0 ], key ) : emptyGet;
 };
+
+
+// Matches dashed string for camelizing
+var rmsPrefix = /^-ms-/,
+	rdashAlpha = /-([a-z])/g;
+
+// Used by camelCase as callback to replace()
+function fcamelCase( all, letter ) {
+	return letter.toUpperCase();
+}
+
+// Convert dashed to camelCase; used by the css and data modules
+// Support: IE <=9 - 11, Edge 12 - 15
+// Microsoft forgot to hump their vendor prefix (#9572)
+function camelCase( string ) {
+	return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
+}
 var acceptData = function( owner ) {
 
 	// Accepts only:
@@ -12256,14 +12844,14 @@ Data.prototype = {
 		// Handle: [ owner, key, value ] args
 		// Always use camelCase key (gh-2257)
 		if ( typeof data === "string" ) {
-			cache[ jQuery.camelCase( data ) ] = value;
+			cache[ camelCase( data ) ] = value;
 
 		// Handle: [ owner, { properties } ] args
 		} else {
 
 			// Copy the properties one-by-one to the cache object
 			for ( prop in data ) {
-				cache[ jQuery.camelCase( prop ) ] = data[ prop ];
+				cache[ camelCase( prop ) ] = data[ prop ];
 			}
 		}
 		return cache;
@@ -12273,7 +12861,7 @@ Data.prototype = {
 			this.cache( owner ) :
 
 			// Always use camelCase key (gh-2257)
-			owner[ this.expando ] && owner[ this.expando ][ jQuery.camelCase( key ) ];
+			owner[ this.expando ] && owner[ this.expando ][ camelCase( key ) ];
 	},
 	access: function( owner, key, value ) {
 
@@ -12317,13 +12905,13 @@ Data.prototype = {
 		if ( key !== undefined ) {
 
 			// Support array or space separated string of keys
-			if ( jQuery.isArray( key ) ) {
+			if ( Array.isArray( key ) ) {
 
 				// If key is an array of keys...
 				// We always set camelCase keys, so remove that.
-				key = key.map( jQuery.camelCase );
+				key = key.map( camelCase );
 			} else {
-				key = jQuery.camelCase( key );
+				key = camelCase( key );
 
 				// If a key with the spaces exists, use it.
 				// Otherwise, create an array by matching non-whitespace
@@ -12469,7 +13057,7 @@ jQuery.fn.extend( {
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
 							if ( name.indexOf( "data-" ) === 0 ) {
-								name = jQuery.camelCase( name.slice( 5 ) );
+								name = camelCase( name.slice( 5 ) );
 								dataAttr( elem, name, data[ name ] );
 							}
 						}
@@ -12543,7 +13131,7 @@ jQuery.extend( {
 
 			// Speed up dequeue by getting out quickly if this is just a lookup
 			if ( data ) {
-				if ( !queue || jQuery.isArray( data ) ) {
+				if ( !queue || Array.isArray( data ) ) {
 					queue = dataPriv.access( elem, type, jQuery.makeArray( data ) );
 				} else {
 					queue.push( data );
@@ -12716,8 +13304,7 @@ var swap = function( elem, options, callback, args ) {
 
 
 function adjustCSS( elem, prop, valueParts, tween ) {
-	var adjusted,
-		scale = 1,
+	var adjusted, scale,
 		maxIterations = 20,
 		currentValue = tween ?
 			function() {
@@ -12735,30 +13322,33 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 
 	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
 
+		// Support: Firefox <=54
+		// Halve the iteration target value to prevent interference from CSS upper bounds (gh-2144)
+		initial = initial / 2;
+
 		// Trust units reported by jQuery.css
 		unit = unit || initialInUnit[ 3 ];
-
-		// Make sure we update the tween properties later on
-		valueParts = valueParts || [];
 
 		// Iteratively approximate from a nonzero starting point
 		initialInUnit = +initial || 1;
 
-		do {
+		while ( maxIterations-- ) {
 
-			// If previous iteration zeroed out, double until we get *something*.
-			// Use string for doubling so we don't accidentally see scale as unchanged below
-			scale = scale || ".5";
-
-			// Adjust and apply
-			initialInUnit = initialInUnit / scale;
+			// Evaluate and update our best guess (doubling guesses that zero out).
+			// Finish if the scale equals or crosses 1 (making the old*new product non-positive).
 			jQuery.style( elem, prop, initialInUnit + unit );
+			if ( ( 1 - scale ) * ( 1 - ( scale = currentValue() / initial || 0.5 ) ) <= 0 ) {
+				maxIterations = 0;
+			}
+			initialInUnit = initialInUnit / scale;
 
-		// Update scale, tolerating zero or NaN from tween.cur()
-		// Break the loop if scale is unchanged or perfect, or if we've just had enough.
-		} while (
-			scale !== ( scale = currentValue() / initial ) && scale !== 1 && --maxIterations
-		);
+		}
+
+		initialInUnit = initialInUnit * 2;
+		jQuery.style( elem, prop, initialInUnit + unit );
+
+		// Make sure we update the tween properties later on
+		valueParts = valueParts || [];
 	}
 
 	if ( valueParts ) {
@@ -12876,7 +13466,7 @@ var rcheckableType = ( /^(?:checkbox|radio)$/i );
 
 var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]+)/i );
 
-var rscriptType = ( /^$|\/(?:java|ecma)script/i );
+var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
 
 
 
@@ -12920,7 +13510,7 @@ function getAll( context, tag ) {
 		ret = [];
 	}
 
-	if ( tag === undefined || tag && jQuery.nodeName( context, tag ) ) {
+	if ( tag === undefined || tag && nodeName( context, tag ) ) {
 		return jQuery.merge( [ context ], ret );
 	}
 
@@ -12958,7 +13548,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 		if ( elem || elem === 0 ) {
 
 			// Add nodes directly
-			if ( jQuery.type( elem ) === "object" ) {
+			if ( toType( elem ) === "object" ) {
 
 				// Support: Android <=4.0 only, PhantomJS 1 only
 				// push.apply(_, arraylike) throws on ancient WebKit
@@ -13468,7 +14058,7 @@ jQuery.event = {
 			enumerable: true,
 			configurable: true,
 
-			get: jQuery.isFunction( hook ) ?
+			get: isFunction( hook ) ?
 				function() {
 					if ( this.originalEvent ) {
 							return hook( this.originalEvent );
@@ -13527,7 +14117,7 @@ jQuery.event = {
 
 			// For checkbox, fire native event so checked state will be right
 			trigger: function() {
-				if ( this.type === "checkbox" && this.click && jQuery.nodeName( this, "input" ) ) {
+				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
 					this.click();
 					return false;
 				}
@@ -13535,7 +14125,7 @@ jQuery.event = {
 
 			// For cross-browser consistency, don't fire native .click() on links
 			_default: function( event ) {
-				return jQuery.nodeName( event.target, "a" );
+				return nodeName( event.target, "a" );
 			}
 		},
 
@@ -13603,7 +14193,7 @@ jQuery.Event = function( src, props ) {
 	}
 
 	// Create a timestamp if incoming event doesn't have one
-	this.timeStamp = src && src.timeStamp || jQuery.now();
+	this.timeStamp = src && src.timeStamp || Date.now();
 
 	// Mark it as fixed
 	this[ jQuery.expando ] = true;
@@ -13802,21 +14392,21 @@ var
 
 	/* eslint-enable */
 
-	// Support: IE <=10 - 11, Edge 12 - 13
+	// Support: IE <=10 - 11, Edge 12 - 13 only
 	// In IE/Edge using regex groups here causes severe slowdowns.
 	// See https://connect.microsoft.com/IE/feedback/details/1736512/
 	rnoInnerhtml = /<script|<style|<link/i,
 
 	// checked="checked" or checked
 	rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
-	rscriptTypeMasked = /^true\/(.*)/,
 	rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
+// Prefer a tbody over its parent table for containing new rows
 function manipulationTarget( elem, content ) {
-	if ( jQuery.nodeName( elem, "table" ) &&
-		jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
+	if ( nodeName( elem, "table" ) &&
+		nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
 
-		return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
+		return jQuery( elem ).children( "tbody" )[ 0 ] || elem;
 	}
 
 	return elem;
@@ -13828,10 +14418,8 @@ function disableScript( elem ) {
 	return elem;
 }
 function restoreScript( elem ) {
-	var match = rscriptTypeMasked.exec( elem.type );
-
-	if ( match ) {
-		elem.type = match[ 1 ];
+	if ( ( elem.type || "" ).slice( 0, 5 ) === "true/" ) {
+		elem.type = elem.type.slice( 5 );
 	} else {
 		elem.removeAttribute( "type" );
 	}
@@ -13897,15 +14485,15 @@ function domManip( collection, args, callback, ignored ) {
 		l = collection.length,
 		iNoClone = l - 1,
 		value = args[ 0 ],
-		isFunction = jQuery.isFunction( value );
+		valueIsFunction = isFunction( value );
 
 	// We can't cloneNode fragments that contain checked, in WebKit
-	if ( isFunction ||
+	if ( valueIsFunction ||
 			( l > 1 && typeof value === "string" &&
 				!support.checkClone && rchecked.test( value ) ) ) {
 		return collection.each( function( index ) {
 			var self = collection.eq( index );
-			if ( isFunction ) {
+			if ( valueIsFunction ) {
 				args[ 0 ] = value.call( this, index, self.html() );
 			}
 			domManip( self, args, callback, ignored );
@@ -13959,14 +14547,14 @@ function domManip( collection, args, callback, ignored ) {
 						!dataPriv.access( node, "globalEval" ) &&
 						jQuery.contains( doc, node ) ) {
 
-						if ( node.src ) {
+						if ( node.src && ( node.type || "" ).toLowerCase()  !== "module" ) {
 
 							// Optional AJAX dependency, but won't run scripts if not present
 							if ( jQuery._evalUrl ) {
 								jQuery._evalUrl( node.src );
 							}
 						} else {
-							DOMEval( node.textContent.replace( rcleanScript, "" ), doc );
+							DOMEval( node.textContent.replace( rcleanScript, "" ), doc, node );
 						}
 					}
 				}
@@ -14246,8 +14834,6 @@ jQuery.each( {
 		return this.pushStack( ret );
 	};
 } );
-var rmargin = ( /^margin/ );
-
 var rnumnonpx = new RegExp( "^(" + pnum + ")(?!px)[a-z%]+$", "i" );
 
 var getStyles = function( elem ) {
@@ -14264,6 +14850,8 @@ var getStyles = function( elem ) {
 		return view.getComputedStyle( elem );
 	};
 
+var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
+
 
 
 ( function() {
@@ -14277,25 +14865,33 @@ var getStyles = function( elem ) {
 			return;
 		}
 
+		container.style.cssText = "position:absolute;left:-11111px;width:60px;" +
+			"margin-top:1px;padding:0;border:0";
 		div.style.cssText =
-			"box-sizing:border-box;" +
-			"position:relative;display:block;" +
+			"position:relative;display:block;box-sizing:border-box;overflow:scroll;" +
 			"margin:auto;border:1px;padding:1px;" +
-			"top:1%;width:50%";
-		div.innerHTML = "";
-		documentElement.appendChild( container );
+			"width:60%;top:1%";
+		documentElement.appendChild( container ).appendChild( div );
 
 		var divStyle = window.getComputedStyle( div );
 		pixelPositionVal = divStyle.top !== "1%";
 
 		// Support: Android 4.0 - 4.3 only, Firefox <=3 - 44
-		reliableMarginLeftVal = divStyle.marginLeft === "2px";
-		boxSizingReliableVal = divStyle.width === "4px";
+		reliableMarginLeftVal = roundPixelMeasures( divStyle.marginLeft ) === 12;
 
-		// Support: Android 4.0 - 4.3 only
+		// Support: Android 4.0 - 4.3 only, Safari <=9.1 - 10.1, iOS <=7.0 - 9.3
 		// Some styles come back with percentage values, even though they shouldn't
-		div.style.marginRight = "50%";
-		pixelMarginRightVal = divStyle.marginRight === "4px";
+		div.style.right = "60%";
+		pixelBoxStylesVal = roundPixelMeasures( divStyle.right ) === 36;
+
+		// Support: IE 9 - 11 only
+		// Detect misreporting of content dimensions for box-sizing:border-box elements
+		boxSizingReliableVal = roundPixelMeasures( divStyle.width ) === 36;
+
+		// Support: IE 9 only
+		// Detect overflow:scroll screwiness (gh-3699)
+		div.style.position = "absolute";
+		scrollboxSizeVal = div.offsetWidth === 36 || "absolute";
 
 		documentElement.removeChild( container );
 
@@ -14304,7 +14900,12 @@ var getStyles = function( elem ) {
 		div = null;
 	}
 
-	var pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal,
+	function roundPixelMeasures( measure ) {
+		return Math.round( parseFloat( measure ) );
+	}
+
+	var pixelPositionVal, boxSizingReliableVal, scrollboxSizeVal, pixelBoxStylesVal,
+		reliableMarginLeftVal,
 		container = document.createElement( "div" ),
 		div = document.createElement( "div" );
 
@@ -14319,26 +14920,26 @@ var getStyles = function( elem ) {
 	div.cloneNode( true ).style.backgroundClip = "";
 	support.clearCloneStyle = div.style.backgroundClip === "content-box";
 
-	container.style.cssText = "border:0;width:8px;height:0;top:0;left:-9999px;" +
-		"padding:0;margin-top:1px;position:absolute";
-	container.appendChild( div );
-
 	jQuery.extend( support, {
-		pixelPosition: function() {
-			computeStyleTests();
-			return pixelPositionVal;
-		},
 		boxSizingReliable: function() {
 			computeStyleTests();
 			return boxSizingReliableVal;
 		},
-		pixelMarginRight: function() {
+		pixelBoxStyles: function() {
 			computeStyleTests();
-			return pixelMarginRightVal;
+			return pixelBoxStylesVal;
+		},
+		pixelPosition: function() {
+			computeStyleTests();
+			return pixelPositionVal;
 		},
 		reliableMarginLeft: function() {
 			computeStyleTests();
 			return reliableMarginLeftVal;
+		},
+		scrollboxSize: function() {
+			computeStyleTests();
+			return scrollboxSizeVal;
 		}
 	} );
 } )();
@@ -14346,12 +14947,18 @@ var getStyles = function( elem ) {
 
 function curCSS( elem, name, computed ) {
 	var width, minWidth, maxWidth, ret,
+
+		// Support: Firefox 51+
+		// Retrieving style before computed somehow
+		// fixes an issue with getting wrong values
+		// on detached elements
 		style = elem.style;
 
 	computed = computed || getStyles( elem );
 
-	// Support: IE <=9 only
-	// getPropertyValue is only needed for .css('filter') (#12537)
+	// getPropertyValue is needed for:
+	//   .css('filter') (IE 9 only, #12537)
+	//   .css('--customProperty) (#3144)
 	if ( computed ) {
 		ret = computed.getPropertyValue( name ) || computed[ name ];
 
@@ -14364,7 +14971,7 @@ function curCSS( elem, name, computed ) {
 		// but width seems to be reliably pixels.
 		// This is against the CSSOM draft spec:
 		// https://drafts.csswg.org/cssom/#resolved-values
-		if ( !support.pixelMarginRight() && rnumnonpx.test( ret ) && rmargin.test( name ) ) {
+		if ( !support.pixelBoxStyles() && rnumnonpx.test( ret ) && rboxStyle.test( name ) ) {
 
 			// Remember the original values
 			width = style.width;
@@ -14417,6 +15024,7 @@ var
 	// except "table", "table-cell", or "table-caption"
 	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
 	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
+	rcustomProp = /^--/,
 	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
 		letterSpacing: "0",
@@ -14446,6 +15054,16 @@ function vendorPropName( name ) {
 	}
 }
 
+// Return a property mapped along what jQuery.cssProps suggests or to
+// a vendor prefixed property.
+function finalPropName( name ) {
+	var ret = jQuery.cssProps[ name ];
+	if ( !ret ) {
+		ret = jQuery.cssProps[ name ] = vendorPropName( name ) || name;
+	}
+	return ret;
+}
+
 function setPositiveNumber( elem, value, subtract ) {
 
 	// Any relative (+/-) values have already been
@@ -14458,100 +15076,120 @@ function setPositiveNumber( elem, value, subtract ) {
 		value;
 }
 
-function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
-	var i,
-		val = 0;
+function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computedVal ) {
+	var i = dimension === "width" ? 1 : 0,
+		extra = 0,
+		delta = 0;
 
-	// If we already have the right measurement, avoid augmentation
-	if ( extra === ( isBorderBox ? "border" : "content" ) ) {
-		i = 4;
-
-	// Otherwise initialize for horizontal or vertical properties
-	} else {
-		i = name === "width" ? 1 : 0;
+	// Adjustment may not be necessary
+	if ( box === ( isBorderBox ? "border" : "content" ) ) {
+		return 0;
 	}
 
 	for ( ; i < 4; i += 2 ) {
 
-		// Both box models exclude margin, so add it if we want it
-		if ( extra === "margin" ) {
-			val += jQuery.css( elem, extra + cssExpand[ i ], true, styles );
+		// Both box models exclude margin
+		if ( box === "margin" ) {
+			delta += jQuery.css( elem, box + cssExpand[ i ], true, styles );
 		}
 
-		if ( isBorderBox ) {
+		// If we get here with a content-box, we're seeking "padding" or "border" or "margin"
+		if ( !isBorderBox ) {
 
-			// border-box includes padding, so remove it if we want content
-			if ( extra === "content" ) {
-				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+			// Add padding
+			delta += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+
+			// For "border" or "margin", add border
+			if ( box !== "padding" ) {
+				delta += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+
+			// But still keep track of it otherwise
+			} else {
+				extra += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
 
-			// At this point, extra isn't border nor margin, so remove border
-			if ( extra !== "margin" ) {
-				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
-			}
+		// If we get here with a border-box (content + padding + border), we're seeking "content" or
+		// "padding" or "margin"
 		} else {
 
-			// At this point, extra isn't content, so add padding
-			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+			// For "content", subtract padding
+			if ( box === "content" ) {
+				delta -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+			}
 
-			// At this point, extra isn't content nor padding, so add border
-			if ( extra !== "padding" ) {
-				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+			// For "content" or "padding", subtract border
+			if ( box !== "margin" ) {
+				delta -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
 		}
 	}
 
-	return val;
+	// Account for positive content-box scroll gutter when requested by providing computedVal
+	if ( !isBorderBox && computedVal >= 0 ) {
+
+		// offsetWidth/offsetHeight is a rounded sum of content, padding, scroll gutter, and border
+		// Assuming integer scroll gutter, subtract the rest and round down
+		delta += Math.max( 0, Math.ceil(
+			elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
+			computedVal -
+			delta -
+			extra -
+			0.5
+		) );
+	}
+
+	return delta;
 }
 
-function getWidthOrHeight( elem, name, extra ) {
+function getWidthOrHeight( elem, dimension, extra ) {
 
-	// Start with offset property, which is equivalent to the border-box value
-	var val,
-		valueIsBorderBox = true,
-		styles = getStyles( elem ),
-		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
+	// Start with computed style
+	var styles = getStyles( elem ),
+		val = curCSS( elem, dimension, styles ),
+		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+		valueIsBorderBox = isBorderBox;
 
-	// Support: IE <=11 only
-	// Running getBoundingClientRect on a disconnected node
-	// in IE throws an error.
-	if ( elem.getClientRects().length ) {
-		val = elem.getBoundingClientRect()[ name ];
-	}
-
-	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
-	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
-	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
-	if ( val <= 0 || val == null ) {
-
-		// Fall back to computed then uncomputed css if necessary
-		val = curCSS( elem, name, styles );
-		if ( val < 0 || val == null ) {
-			val = elem.style[ name ];
-		}
-
-		// Computed unit is not pixels. Stop here and return.
-		if ( rnumnonpx.test( val ) ) {
+	// Support: Firefox <=54
+	// Return a confounding non-pixel value or feign ignorance, as appropriate.
+	if ( rnumnonpx.test( val ) ) {
+		if ( !extra ) {
 			return val;
 		}
-
-		// Check for style in case a browser which returns unreliable values
-		// for getComputedStyle silently falls back to the reliable elem.style
-		valueIsBorderBox = isBorderBox &&
-			( support.boxSizingReliable() || val === elem.style[ name ] );
-
-		// Normalize "", auto, and prepare for extra
-		val = parseFloat( val ) || 0;
+		val = "auto";
 	}
 
-	// Use the active box-sizing model to add/subtract irrelevant styles
+	// Check for style in case a browser which returns unreliable values
+	// for getComputedStyle silently falls back to the reliable elem.style
+	valueIsBorderBox = valueIsBorderBox &&
+		( support.boxSizingReliable() || val === elem.style[ dimension ] );
+
+	// Fall back to offsetWidth/offsetHeight when value is "auto"
+	// This happens for inline elements with no explicit setting (gh-3571)
+	// Support: Android <=4.1 - 4.3 only
+	// Also use offsetWidth/offsetHeight for misreported inline dimensions (gh-3602)
+	if ( val === "auto" ||
+		!parseFloat( val ) && jQuery.css( elem, "display", false, styles ) === "inline" ) {
+
+		val = elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ];
+
+		// offsetWidth/offsetHeight provide border-box values
+		valueIsBorderBox = true;
+	}
+
+	// Normalize "" and auto
+	val = parseFloat( val ) || 0;
+
+	// Adjust for the element's box model
 	return ( val +
-		augmentWidthOrHeight(
+		boxModelAdjustment(
 			elem,
-			name,
+			dimension,
 			extra || ( isBorderBox ? "border" : "content" ),
 			valueIsBorderBox,
-			styles
+			styles,
+
+			// Provide the current computed size to request scroll gutter calculation (gh-3589)
+			val
 		)
 	) + "px";
 }
@@ -14592,9 +15230,7 @@ jQuery.extend( {
 
 	// Add in properties whose names you wish to fix before
 	// setting or getting the value
-	cssProps: {
-		"float": "cssFloat"
-	},
+	cssProps: {},
 
 	// Get and set the style property on a DOM Node
 	style: function( elem, name, value, extra ) {
@@ -14606,11 +15242,16 @@ jQuery.extend( {
 
 		// Make sure that we're working with the right name
 		var ret, type, hooks,
-			origName = jQuery.camelCase( name ),
+			origName = camelCase( name ),
+			isCustomProp = rcustomProp.test( name ),
 			style = elem.style;
 
-		name = jQuery.cssProps[ origName ] ||
-			( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
+		// Make sure that we're working with the right name. We don't
+		// want to query the value if it is a CSS custom property
+		// since they are user-defined.
+		if ( !isCustomProp ) {
+			name = finalPropName( origName );
+		}
 
 		// Gets hook for the prefixed version, then unprefixed version
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
@@ -14646,7 +15287,11 @@ jQuery.extend( {
 			if ( !hooks || !( "set" in hooks ) ||
 				( value = hooks.set( elem, value, extra ) ) !== undefined ) {
 
-				style[ name ] = value;
+				if ( isCustomProp ) {
+					style.setProperty( name, value );
+				} else {
+					style[ name ] = value;
+				}
 			}
 
 		} else {
@@ -14665,11 +15310,15 @@ jQuery.extend( {
 
 	css: function( elem, name, extra, styles ) {
 		var val, num, hooks,
-			origName = jQuery.camelCase( name );
+			origName = camelCase( name ),
+			isCustomProp = rcustomProp.test( name );
 
-		// Make sure that we're working with the right name
-		name = jQuery.cssProps[ origName ] ||
-			( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
+		// Make sure that we're working with the right name. We don't
+		// want to modify the value if it is a CSS custom property
+		// since they are user-defined.
+		if ( !isCustomProp ) {
+			name = finalPropName( origName );
+		}
 
 		// Try prefixed name followed by the unprefixed name
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
@@ -14694,12 +15343,13 @@ jQuery.extend( {
 			num = parseFloat( val );
 			return extra === true || isFinite( num ) ? num || 0 : val;
 		}
+
 		return val;
 	}
 } );
 
-jQuery.each( [ "height", "width" ], function( i, name ) {
-	jQuery.cssHooks[ name ] = {
+jQuery.each( [ "height", "width" ], function( i, dimension ) {
+	jQuery.cssHooks[ dimension ] = {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
 
@@ -14715,29 +15365,41 @@ jQuery.each( [ "height", "width" ], function( i, name ) {
 					// in IE throws an error.
 					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
 						swap( elem, cssShow, function() {
-							return getWidthOrHeight( elem, name, extra );
+							return getWidthOrHeight( elem, dimension, extra );
 						} ) :
-						getWidthOrHeight( elem, name, extra );
+						getWidthOrHeight( elem, dimension, extra );
 			}
 		},
 
 		set: function( elem, value, extra ) {
 			var matches,
-				styles = extra && getStyles( elem ),
-				subtract = extra && augmentWidthOrHeight(
+				styles = getStyles( elem ),
+				isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+				subtract = extra && boxModelAdjustment(
 					elem,
-					name,
+					dimension,
 					extra,
-					jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+					isBorderBox,
 					styles
 				);
+
+			// Account for unreliable border-box dimensions by comparing offset* to computed and
+			// faking a content-box to get border and padding (gh-3699)
+			if ( isBorderBox && support.scrollboxSize() === styles.position ) {
+				subtract -= Math.ceil(
+					elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
+					parseFloat( styles[ dimension ] ) -
+					boxModelAdjustment( elem, dimension, "border", false, styles ) -
+					0.5
+				);
+			}
 
 			// Convert to pixels if value adjustment is needed
 			if ( subtract && ( matches = rcssNum.exec( value ) ) &&
 				( matches[ 3 ] || "px" ) !== "px" ) {
 
-				elem.style[ name ] = value;
-				value = jQuery.css( elem, name );
+				elem.style[ dimension ] = value;
+				value = jQuery.css( elem, dimension );
 			}
 
 			return setPositiveNumber( elem, value, subtract );
@@ -14781,7 +15443,7 @@ jQuery.each( {
 		}
 	};
 
-	if ( !rmargin.test( prefix ) ) {
+	if ( prefix !== "margin" ) {
 		jQuery.cssHooks[ prefix + suffix ].set = setPositiveNumber;
 	}
 } );
@@ -14793,7 +15455,7 @@ jQuery.fn.extend( {
 				map = {},
 				i = 0;
 
-			if ( jQuery.isArray( name ) ) {
+			if ( Array.isArray( name ) ) {
 				styles = getStyles( elem );
 				len = name.length;
 
@@ -14931,13 +15593,18 @@ jQuery.fx.step = {};
 
 
 var
-	fxNow, timerId,
+	fxNow, inProgress,
 	rfxtypes = /^(?:toggle|show|hide)$/,
 	rrun = /queueHooks$/;
 
-function raf() {
-	if ( timerId ) {
-		window.requestAnimationFrame( raf );
+function schedule() {
+	if ( inProgress ) {
+		if ( document.hidden === false && window.requestAnimationFrame ) {
+			window.requestAnimationFrame( schedule );
+		} else {
+			window.setTimeout( schedule, jQuery.fx.interval );
+		}
+
 		jQuery.fx.tick();
 	}
 }
@@ -14947,7 +15614,7 @@ function createFxNow() {
 	window.setTimeout( function() {
 		fxNow = undefined;
 	} );
-	return ( fxNow = jQuery.now() );
+	return ( fxNow = Date.now() );
 }
 
 // Generate parameters to create a standard animation
@@ -15051,9 +15718,10 @@ function defaultPrefilter( elem, props, opts ) {
 	// Restrict "overflow" and "display" styles during box animations
 	if ( isBox && elem.nodeType === 1 ) {
 
-		// Support: IE <=9 - 11, Edge 12 - 13
+		// Support: IE <=9 - 11, Edge 12 - 15
 		// Record all 3 overflow attributes because IE does not infer the shorthand
-		// from identically-valued overflowX and overflowY
+		// from identically-valued overflowX and overflowY and Edge just mirrors
+		// the overflowX value there.
 		opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
 
 		// Identify a display type, preferring old show/hide data over the CSS cascade
@@ -15161,10 +15829,10 @@ function propFilter( props, specialEasing ) {
 
 	// camelCase, specialEasing and expand cssHook pass
 	for ( index in props ) {
-		name = jQuery.camelCase( index );
+		name = camelCase( index );
 		easing = specialEasing[ name ];
 		value = props[ index ];
-		if ( jQuery.isArray( value ) ) {
+		if ( Array.isArray( value ) ) {
 			easing = value[ 1 ];
 			value = props[ index ] = value[ 0 ];
 		}
@@ -15223,12 +15891,19 @@ function Animation( elem, properties, options ) {
 
 			deferred.notifyWith( elem, [ animation, percent, remaining ] );
 
+			// If there's more to do, yield
 			if ( percent < 1 && length ) {
 				return remaining;
-			} else {
-				deferred.resolveWith( elem, [ animation ] );
-				return false;
 			}
+
+			// If this was an empty animation, synthesize a final progress notification
+			if ( !length ) {
+				deferred.notifyWith( elem, [ animation, 1, 0 ] );
+			}
+
+			// Resolve the animation and report its conclusion
+			deferred.resolveWith( elem, [ animation ] );
+			return false;
 		},
 		animation = deferred.promise( {
 			elem: elem,
@@ -15279,9 +15954,9 @@ function Animation( elem, properties, options ) {
 	for ( ; index < length; index++ ) {
 		result = Animation.prefilters[ index ].call( animation, elem, props, animation.opts );
 		if ( result ) {
-			if ( jQuery.isFunction( result.stop ) ) {
+			if ( isFunction( result.stop ) ) {
 				jQuery._queueHooks( animation.elem, animation.opts.queue ).stop =
-					jQuery.proxy( result.stop, result );
+					result.stop.bind( result );
 			}
 			return result;
 		}
@@ -15289,9 +15964,16 @@ function Animation( elem, properties, options ) {
 
 	jQuery.map( props, createTween, animation );
 
-	if ( jQuery.isFunction( animation.opts.start ) ) {
+	if ( isFunction( animation.opts.start ) ) {
 		animation.opts.start.call( elem, animation );
 	}
+
+	// Attach callbacks from options
+	animation
+		.progress( animation.opts.progress )
+		.done( animation.opts.done, animation.opts.complete )
+		.fail( animation.opts.fail )
+		.always( animation.opts.always );
 
 	jQuery.fx.timer(
 		jQuery.extend( tick, {
@@ -15301,11 +15983,7 @@ function Animation( elem, properties, options ) {
 		} )
 	);
 
-	// attach callbacks from options
-	return animation.progress( animation.opts.progress )
-		.done( animation.opts.done, animation.opts.complete )
-		.fail( animation.opts.fail )
-		.always( animation.opts.always );
+	return animation;
 }
 
 jQuery.Animation = jQuery.extend( Animation, {
@@ -15319,7 +15997,7 @@ jQuery.Animation = jQuery.extend( Animation, {
 	},
 
 	tweener: function( props, callback ) {
-		if ( jQuery.isFunction( props ) ) {
+		if ( isFunction( props ) ) {
 			callback = props;
 			props = [ "*" ];
 		} else {
@@ -15351,13 +16029,13 @@ jQuery.Animation = jQuery.extend( Animation, {
 jQuery.speed = function( speed, easing, fn ) {
 	var opt = speed && typeof speed === "object" ? jQuery.extend( {}, speed ) : {
 		complete: fn || !fn && easing ||
-			jQuery.isFunction( speed ) && speed,
+			isFunction( speed ) && speed,
 		duration: speed,
-		easing: fn && easing || easing && !jQuery.isFunction( easing ) && easing
+		easing: fn && easing || easing && !isFunction( easing ) && easing
 	};
 
-	// Go to the end state if fx are off or if document is hidden
-	if ( jQuery.fx.off || document.hidden ) {
+	// Go to the end state if fx are off
+	if ( jQuery.fx.off ) {
 		opt.duration = 0;
 
 	} else {
@@ -15380,7 +16058,7 @@ jQuery.speed = function( speed, easing, fn ) {
 	opt.old = opt.complete;
 
 	opt.complete = function() {
-		if ( jQuery.isFunction( opt.old ) ) {
+		if ( isFunction( opt.old ) ) {
 			opt.old.call( this );
 		}
 
@@ -15544,12 +16222,12 @@ jQuery.fx.tick = function() {
 		i = 0,
 		timers = jQuery.timers;
 
-	fxNow = jQuery.now();
+	fxNow = Date.now();
 
 	for ( ; i < timers.length; i++ ) {
 		timer = timers[ i ];
 
-		// Checks the timer has not already been removed
+		// Run the timer and safely remove it when done (allowing for external removal)
 		if ( !timer() && timers[ i ] === timer ) {
 			timers.splice( i--, 1 );
 		}
@@ -15563,30 +16241,21 @@ jQuery.fx.tick = function() {
 
 jQuery.fx.timer = function( timer ) {
 	jQuery.timers.push( timer );
-	if ( timer() ) {
-		jQuery.fx.start();
-	} else {
-		jQuery.timers.pop();
-	}
+	jQuery.fx.start();
 };
 
 jQuery.fx.interval = 13;
 jQuery.fx.start = function() {
-	if ( !timerId ) {
-		timerId = window.requestAnimationFrame ?
-			window.requestAnimationFrame( raf ) :
-			window.setInterval( jQuery.fx.tick, jQuery.fx.interval );
+	if ( inProgress ) {
+		return;
 	}
+
+	inProgress = true;
+	schedule();
 };
 
 jQuery.fx.stop = function() {
-	if ( window.cancelAnimationFrame ) {
-		window.cancelAnimationFrame( timerId );
-	} else {
-		window.clearInterval( timerId );
-	}
-
-	timerId = null;
+	inProgress = null;
 };
 
 jQuery.fx.speeds = {
@@ -15703,7 +16372,7 @@ jQuery.extend( {
 		type: {
 			set: function( elem, value ) {
 				if ( !support.radioValue && value === "radio" &&
-					jQuery.nodeName( elem, "input" ) ) {
+					nodeName( elem, "input" ) ) {
 					var val = elem.value;
 					elem.setAttribute( "type", value );
 					if ( val ) {
@@ -15906,7 +16575,7 @@ jQuery.each( [
 
 
 	// Strip and collapse whitespace according to HTML spec
-	// https://html.spec.whatwg.org/multipage/infrastructure.html#strip-and-collapse-whitespace
+	// https://infra.spec.whatwg.org/#strip-and-collapse-ascii-whitespace
 	function stripAndCollapse( value ) {
 		var tokens = value.match( rnothtmlwhite ) || [];
 		return tokens.join( " " );
@@ -15917,20 +16586,30 @@ function getClass( elem ) {
 	return elem.getAttribute && elem.getAttribute( "class" ) || "";
 }
 
+function classesToArray( value ) {
+	if ( Array.isArray( value ) ) {
+		return value;
+	}
+	if ( typeof value === "string" ) {
+		return value.match( rnothtmlwhite ) || [];
+	}
+	return [];
+}
+
 jQuery.fn.extend( {
 	addClass: function( value ) {
 		var classes, elem, cur, curValue, clazz, j, finalValue,
 			i = 0;
 
-		if ( jQuery.isFunction( value ) ) {
+		if ( isFunction( value ) ) {
 			return this.each( function( j ) {
 				jQuery( this ).addClass( value.call( this, j, getClass( this ) ) );
 			} );
 		}
 
-		if ( typeof value === "string" && value ) {
-			classes = value.match( rnothtmlwhite ) || [];
+		classes = classesToArray( value );
 
+		if ( classes.length ) {
 			while ( ( elem = this[ i++ ] ) ) {
 				curValue = getClass( elem );
 				cur = elem.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
@@ -15959,7 +16638,7 @@ jQuery.fn.extend( {
 		var classes, elem, cur, curValue, clazz, j, finalValue,
 			i = 0;
 
-		if ( jQuery.isFunction( value ) ) {
+		if ( isFunction( value ) ) {
 			return this.each( function( j ) {
 				jQuery( this ).removeClass( value.call( this, j, getClass( this ) ) );
 			} );
@@ -15969,9 +16648,9 @@ jQuery.fn.extend( {
 			return this.attr( "class", "" );
 		}
 
-		if ( typeof value === "string" && value ) {
-			classes = value.match( rnothtmlwhite ) || [];
+		classes = classesToArray( value );
 
+		if ( classes.length ) {
 			while ( ( elem = this[ i++ ] ) ) {
 				curValue = getClass( elem );
 
@@ -16001,13 +16680,14 @@ jQuery.fn.extend( {
 	},
 
 	toggleClass: function( value, stateVal ) {
-		var type = typeof value;
+		var type = typeof value,
+			isValidValue = type === "string" || Array.isArray( value );
 
-		if ( typeof stateVal === "boolean" && type === "string" ) {
+		if ( typeof stateVal === "boolean" && isValidValue ) {
 			return stateVal ? this.addClass( value ) : this.removeClass( value );
 		}
 
-		if ( jQuery.isFunction( value ) ) {
+		if ( isFunction( value ) ) {
 			return this.each( function( i ) {
 				jQuery( this ).toggleClass(
 					value.call( this, i, getClass( this ), stateVal ),
@@ -16019,12 +16699,12 @@ jQuery.fn.extend( {
 		return this.each( function() {
 			var className, i, self, classNames;
 
-			if ( type === "string" ) {
+			if ( isValidValue ) {
 
 				// Toggle individual class names
 				i = 0;
 				self = jQuery( this );
-				classNames = value.match( rnothtmlwhite ) || [];
+				classNames = classesToArray( value );
 
 				while ( ( className = classNames[ i++ ] ) ) {
 
@@ -16083,7 +16763,7 @@ var rreturn = /\r/g;
 
 jQuery.fn.extend( {
 	val: function( value ) {
-		var hooks, ret, isFunction,
+		var hooks, ret, valueIsFunction,
 			elem = this[ 0 ];
 
 		if ( !arguments.length ) {
@@ -16112,7 +16792,7 @@ jQuery.fn.extend( {
 			return;
 		}
 
-		isFunction = jQuery.isFunction( value );
+		valueIsFunction = isFunction( value );
 
 		return this.each( function( i ) {
 			var val;
@@ -16121,7 +16801,7 @@ jQuery.fn.extend( {
 				return;
 			}
 
-			if ( isFunction ) {
+			if ( valueIsFunction ) {
 				val = value.call( this, i, jQuery( this ).val() );
 			} else {
 				val = value;
@@ -16134,7 +16814,7 @@ jQuery.fn.extend( {
 			} else if ( typeof val === "number" ) {
 				val += "";
 
-			} else if ( jQuery.isArray( val ) ) {
+			} else if ( Array.isArray( val ) ) {
 				val = jQuery.map( val, function( value ) {
 					return value == null ? "" : value + "";
 				} );
@@ -16193,7 +16873,7 @@ jQuery.extend( {
 							// Don't return options that are disabled or in a disabled optgroup
 							!option.disabled &&
 							( !option.parentNode.disabled ||
-								!jQuery.nodeName( option.parentNode, "optgroup" ) ) ) {
+								!nodeName( option.parentNode, "optgroup" ) ) ) {
 
 						// Get the specific value for the option
 						value = jQuery( option ).val();
@@ -16245,7 +16925,7 @@ jQuery.extend( {
 jQuery.each( [ "radio", "checkbox" ], function() {
 	jQuery.valHooks[ this ] = {
 		set: function( elem, value ) {
-			if ( jQuery.isArray( value ) ) {
+			if ( Array.isArray( value ) ) {
 				return ( elem.checked = jQuery.inArray( jQuery( elem ).val(), value ) > -1 );
 			}
 		}
@@ -16263,18 +16943,24 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 // Return jQuery for attributes-only inclusion
 
 
-var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/;
+support.focusin = "onfocusin" in window;
+
+
+var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
+	stopPropagationCallback = function( e ) {
+		e.stopPropagation();
+	};
 
 jQuery.extend( jQuery.event, {
 
 	trigger: function( event, data, elem, onlyHandlers ) {
 
-		var i, cur, tmp, bubbleType, ontype, handle, special,
+		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
 			eventPath = [ elem || document ],
 			type = hasOwn.call( event, "type" ) ? event.type : event,
 			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
 
-		cur = tmp = elem = elem || document;
+		cur = lastElement = tmp = elem = elem || document;
 
 		// Don't do events on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
@@ -16326,7 +17012,7 @@ jQuery.extend( jQuery.event, {
 
 		// Determine event propagation path in advance, per W3C events spec (#9951)
 		// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
-		if ( !onlyHandlers && !special.noBubble && !jQuery.isWindow( elem ) ) {
+		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
 
 			bubbleType = special.delegateType || type;
 			if ( !rfocusMorph.test( bubbleType + type ) ) {
@@ -16346,7 +17032,7 @@ jQuery.extend( jQuery.event, {
 		// Fire handlers on the event path
 		i = 0;
 		while ( ( cur = eventPath[ i++ ] ) && !event.isPropagationStopped() ) {
-
+			lastElement = cur;
 			event.type = i > 1 ?
 				bubbleType :
 				special.bindType || type;
@@ -16378,7 +17064,7 @@ jQuery.extend( jQuery.event, {
 
 				// Call a native DOM method on the target with the same name as the event.
 				// Don't do default actions on window, that's where global variables be (#6170)
-				if ( ontype && jQuery.isFunction( elem[ type ] ) && !jQuery.isWindow( elem ) ) {
+				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
 
 					// Don't re-trigger an onFOO event when we call its FOO() method
 					tmp = elem[ ontype ];
@@ -16389,7 +17075,17 @@ jQuery.extend( jQuery.event, {
 
 					// Prevent re-triggering of the same event, since we already bubbled it above
 					jQuery.event.triggered = type;
+
+					if ( event.isPropagationStopped() ) {
+						lastElement.addEventListener( type, stopPropagationCallback );
+					}
+
 					elem[ type ]();
+
+					if ( event.isPropagationStopped() ) {
+						lastElement.removeEventListener( type, stopPropagationCallback );
+					}
+
 					jQuery.event.triggered = undefined;
 
 					if ( tmp ) {
@@ -16435,31 +17131,6 @@ jQuery.fn.extend( {
 } );
 
 
-jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
-	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
-	function( i, name ) {
-
-	// Handle event binding
-	jQuery.fn[ name ] = function( data, fn ) {
-		return arguments.length > 0 ?
-			this.on( name, null, data, fn ) :
-			this.trigger( name );
-	};
-} );
-
-jQuery.fn.extend( {
-	hover: function( fnOver, fnOut ) {
-		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
-	}
-} );
-
-
-
-
-support.focusin = "onfocusin" in window;
-
-
 // Support: Firefox <=44
 // Firefox doesn't have focus(in | out) events
 // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
@@ -16503,7 +17174,7 @@ if ( !support.focusin ) {
 }
 var location = window.location;
 
-var nonce = jQuery.now();
+var nonce = Date.now();
 
 var rquery = ( /\?/ );
 
@@ -16540,7 +17211,7 @@ var
 function buildParams( prefix, obj, traditional, add ) {
 	var name;
 
-	if ( jQuery.isArray( obj ) ) {
+	if ( Array.isArray( obj ) ) {
 
 		// Serialize array item.
 		jQuery.each( obj, function( i, v ) {
@@ -16561,7 +17232,7 @@ function buildParams( prefix, obj, traditional, add ) {
 			}
 		} );
 
-	} else if ( !traditional && jQuery.type( obj ) === "object" ) {
+	} else if ( !traditional && toType( obj ) === "object" ) {
 
 		// Serialize object item.
 		for ( name in obj ) {
@@ -16583,7 +17254,7 @@ jQuery.param = function( a, traditional ) {
 		add = function( key, valueOrFunction ) {
 
 			// If value is a function, invoke it and use its return value
-			var value = jQuery.isFunction( valueOrFunction ) ?
+			var value = isFunction( valueOrFunction ) ?
 				valueOrFunction() :
 				valueOrFunction;
 
@@ -16592,7 +17263,7 @@ jQuery.param = function( a, traditional ) {
 		};
 
 	// If an array was passed in, assume that it is an array of form elements.
-	if ( jQuery.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
+	if ( Array.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
 
 		// Serialize the form elements
 		jQuery.each( a, function() {
@@ -16638,7 +17309,7 @@ jQuery.fn.extend( {
 				return null;
 			}
 
-			if ( jQuery.isArray( val ) ) {
+			if ( Array.isArray( val ) ) {
 				return jQuery.map( val, function( val ) {
 					return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
 				} );
@@ -16701,7 +17372,7 @@ function addToPrefiltersOrTransports( structure ) {
 			i = 0,
 			dataTypes = dataTypeExpression.toLowerCase().match( rnothtmlwhite ) || [];
 
-		if ( jQuery.isFunction( func ) ) {
+		if ( isFunction( func ) ) {
 
 			// For each dataType in the dataTypeExpression
 			while ( ( dataType = dataTypes[ i++ ] ) ) {
@@ -17173,7 +17844,7 @@ jQuery.extend( {
 		if ( s.crossDomain == null ) {
 			urlAnchor = document.createElement( "a" );
 
-			// Support: IE <=8 - 11, Edge 12 - 13
+			// Support: IE <=8 - 11, Edge 12 - 15
 			// IE throws exception on accessing the href property if url is malformed,
 			// e.g. http://example.com:80x/
 			try {
@@ -17231,8 +17902,8 @@ jQuery.extend( {
 			// Remember the hash so we can put it back
 			uncached = s.url.slice( cacheURL.length );
 
-			// If data is available, append data to url
-			if ( s.data ) {
+			// If data is available and should be processed, append data to url
+			if ( s.data && ( s.processData || typeof s.data === "string" ) ) {
 				cacheURL += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data;
 
 				// #9682: remove data so that it's not used in an eventual retry
@@ -17469,7 +18140,7 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 	jQuery[ method ] = function( url, data, callback, type ) {
 
 		// Shift arguments if data argument was omitted
-		if ( jQuery.isFunction( data ) ) {
+		if ( isFunction( data ) ) {
 			type = type || callback;
 			callback = data;
 			data = undefined;
@@ -17507,7 +18178,7 @@ jQuery.fn.extend( {
 		var wrap;
 
 		if ( this[ 0 ] ) {
-			if ( jQuery.isFunction( html ) ) {
+			if ( isFunction( html ) ) {
 				html = html.call( this[ 0 ] );
 			}
 
@@ -17533,7 +18204,7 @@ jQuery.fn.extend( {
 	},
 
 	wrapInner: function( html ) {
-		if ( jQuery.isFunction( html ) ) {
+		if ( isFunction( html ) ) {
 			return this.each( function( i ) {
 				jQuery( this ).wrapInner( html.call( this, i ) );
 			} );
@@ -17553,10 +18224,10 @@ jQuery.fn.extend( {
 	},
 
 	wrap: function( html ) {
-		var isFunction = jQuery.isFunction( html );
+		var htmlIsFunction = isFunction( html );
 
 		return this.each( function( i ) {
-			jQuery( this ).wrapAll( isFunction ? html.call( this, i ) : html );
+			jQuery( this ).wrapAll( htmlIsFunction ? html.call( this, i ) : html );
 		} );
 	},
 
@@ -17648,7 +18319,8 @@ jQuery.ajaxTransport( function( options ) {
 					return function() {
 						if ( callback ) {
 							callback = errorCallback = xhr.onload =
-								xhr.onerror = xhr.onabort = xhr.onreadystatechange = null;
+								xhr.onerror = xhr.onabort = xhr.ontimeout =
+									xhr.onreadystatechange = null;
 
 							if ( type === "abort" ) {
 								xhr.abort();
@@ -17688,7 +18360,7 @@ jQuery.ajaxTransport( function( options ) {
 
 				// Listen to events
 				xhr.onload = callback();
-				errorCallback = xhr.onerror = callback( "error" );
+				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
 
 				// Support: IE 9 only
 				// Use onreadystatechange to replace onabort
@@ -17842,7 +18514,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
 
 		// Get callback name, remembering preexisting value associated with it
-		callbackName = s.jsonpCallback = jQuery.isFunction( s.jsonpCallback ) ?
+		callbackName = s.jsonpCallback = isFunction( s.jsonpCallback ) ?
 			s.jsonpCallback() :
 			s.jsonpCallback;
 
@@ -17893,7 +18565,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			}
 
 			// Call if it was a function and we have a response
-			if ( responseContainer && jQuery.isFunction( overwritten ) ) {
+			if ( responseContainer && isFunction( overwritten ) ) {
 				overwritten( responseContainer[ 0 ] );
 			}
 
@@ -17985,7 +18657,7 @@ jQuery.fn.load = function( url, params, callback ) {
 	}
 
 	// If it's a function
-	if ( jQuery.isFunction( params ) ) {
+	if ( isFunction( params ) ) {
 
 		// We assume that it's the callback
 		callback = params;
@@ -18063,13 +18735,6 @@ jQuery.expr.pseudos.animated = function( elem ) {
 
 
 
-/**
- * Gets a window from an element
- */
-function getWindow( elem ) {
-	return jQuery.isWindow( elem ) ? elem : elem.nodeType === 9 && elem.defaultView;
-}
-
 jQuery.offset = {
 	setOffset: function( elem, options, i ) {
 		var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition,
@@ -18100,7 +18765,7 @@ jQuery.offset = {
 			curLeft = parseFloat( curCSSLeft ) || 0;
 		}
 
-		if ( jQuery.isFunction( options ) ) {
+		if ( isFunction( options ) ) {
 
 			// Use jQuery.extend here to allow modification of coordinates argument (gh-1848)
 			options = options.call( elem, i, jQuery.extend( {}, curOffset ) );
@@ -18123,6 +18788,8 @@ jQuery.offset = {
 };
 
 jQuery.fn.extend( {
+
+	// offset() relates an element's border box to the document origin
 	offset: function( options ) {
 
 		// Preserve chaining for setter
@@ -18134,13 +18801,14 @@ jQuery.fn.extend( {
 				} );
 		}
 
-		var docElem, win, rect, doc,
+		var rect, win,
 			elem = this[ 0 ];
 
 		if ( !elem ) {
 			return;
 		}
 
+		// Return zeros for disconnected and hidden (display: none) elements (gh-2310)
 		// Support: IE <=11 only
 		// Running getBoundingClientRect on a
 		// disconnected node in IE throws an error
@@ -18148,56 +18816,52 @@ jQuery.fn.extend( {
 			return { top: 0, left: 0 };
 		}
 
+		// Get document-relative position by adding viewport scroll to viewport-relative gBCR
 		rect = elem.getBoundingClientRect();
-
-		// Make sure element is not hidden (display: none)
-		if ( rect.width || rect.height ) {
-			doc = elem.ownerDocument;
-			win = getWindow( doc );
-			docElem = doc.documentElement;
-
-			return {
-				top: rect.top + win.pageYOffset - docElem.clientTop,
-				left: rect.left + win.pageXOffset - docElem.clientLeft
-			};
-		}
-
-		// Return zeros for disconnected and hidden elements (gh-2310)
-		return rect;
+		win = elem.ownerDocument.defaultView;
+		return {
+			top: rect.top + win.pageYOffset,
+			left: rect.left + win.pageXOffset
+		};
 	},
 
+	// position() relates an element's margin box to its offset parent's padding box
+	// This corresponds to the behavior of CSS absolute positioning
 	position: function() {
 		if ( !this[ 0 ] ) {
 			return;
 		}
 
-		var offsetParent, offset,
+		var offsetParent, offset, doc,
 			elem = this[ 0 ],
 			parentOffset = { top: 0, left: 0 };
 
-		// Fixed elements are offset from window (parentOffset = {top:0, left: 0},
-		// because it is its only offset parent
+		// position:fixed elements are offset from the viewport, which itself always has zero offset
 		if ( jQuery.css( elem, "position" ) === "fixed" ) {
 
-			// Assume getBoundingClientRect is there when computed position is fixed
+			// Assume position:fixed implies availability of getBoundingClientRect
 			offset = elem.getBoundingClientRect();
 
 		} else {
-
-			// Get *real* offsetParent
-			offsetParent = this.offsetParent();
-
-			// Get correct offsets
 			offset = this.offset();
-			if ( !jQuery.nodeName( offsetParent[ 0 ], "html" ) ) {
-				parentOffset = offsetParent.offset();
-			}
 
-			// Add offsetParent borders
-			parentOffset = {
-				top: parentOffset.top + jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ),
-				left: parentOffset.left + jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true )
-			};
+			// Account for the *real* offset parent, which can be the document or its root element
+			// when a statically positioned element is identified
+			doc = elem.ownerDocument;
+			offsetParent = elem.offsetParent || doc.documentElement;
+			while ( offsetParent &&
+				( offsetParent === doc.body || offsetParent === doc.documentElement ) &&
+				jQuery.css( offsetParent, "position" ) === "static" ) {
+
+				offsetParent = offsetParent.parentNode;
+			}
+			if ( offsetParent && offsetParent !== elem && offsetParent.nodeType === 1 ) {
+
+				// Incorporate borders into its offset, since they are outside its content origin
+				parentOffset = jQuery( offsetParent ).offset();
+				parentOffset.top += jQuery.css( offsetParent, "borderTopWidth", true );
+				parentOffset.left += jQuery.css( offsetParent, "borderLeftWidth", true );
+			}
 		}
 
 		// Subtract parent offsets and element margins
@@ -18236,7 +18900,14 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 
 	jQuery.fn[ method ] = function( val ) {
 		return access( this, function( elem, method, val ) {
-			var win = getWindow( elem );
+
+			// Coalesce documents and windows
+			var win;
+			if ( isWindow( elem ) ) {
+				win = elem;
+			} else if ( elem.nodeType === 9 ) {
+				win = elem.defaultView;
+			}
 
 			if ( val === undefined ) {
 				return win ? win[ prop ] : elem[ method ];
@@ -18290,7 +18961,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 			return access( this, function( elem, type, value ) {
 				var doc;
 
-				if ( jQuery.isWindow( elem ) ) {
+				if ( isWindow( elem ) ) {
 
 					// $( window ).outerWidth/Height return w/h including scrollbars (gh-1729)
 					return funcName.indexOf( "outer" ) === 0 ?
@@ -18324,6 +18995,28 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 } );
 
 
+jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
+	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
+	function( i, name ) {
+
+	// Handle event binding
+	jQuery.fn[ name ] = function( data, fn ) {
+		return arguments.length > 0 ?
+			this.on( name, null, data, fn ) :
+			this.trigger( name );
+	};
+} );
+
+jQuery.fn.extend( {
+	hover: function( fnOver, fnOut ) {
+		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
+	}
+} );
+
+
+
+
 jQuery.fn.extend( {
 
 	bind: function( types, data, fn ) {
@@ -18345,7 +19038,67 @@ jQuery.fn.extend( {
 	}
 } );
 
+// Bind a function to a context, optionally partially applying any
+// arguments.
+// jQuery.proxy is deprecated to promote standards (specifically Function#bind)
+// However, it is not slated for removal any time soon
+jQuery.proxy = function( fn, context ) {
+	var tmp, args, proxy;
+
+	if ( typeof context === "string" ) {
+		tmp = fn[ context ];
+		context = fn;
+		fn = tmp;
+	}
+
+	// Quick check to determine if target is callable, in the spec
+	// this throws a TypeError, but we will just return undefined.
+	if ( !isFunction( fn ) ) {
+		return undefined;
+	}
+
+	// Simulated bind
+	args = slice.call( arguments, 2 );
+	proxy = function() {
+		return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
+	};
+
+	// Set the guid of unique handler to the same of original handler, so it can be removed
+	proxy.guid = fn.guid = fn.guid || jQuery.guid++;
+
+	return proxy;
+};
+
+jQuery.holdReady = function( hold ) {
+	if ( hold ) {
+		jQuery.readyWait++;
+	} else {
+		jQuery.ready( true );
+	}
+};
+jQuery.isArray = Array.isArray;
 jQuery.parseJSON = JSON.parse;
+jQuery.nodeName = nodeName;
+jQuery.isFunction = isFunction;
+jQuery.isWindow = isWindow;
+jQuery.camelCase = camelCase;
+jQuery.type = toType;
+
+jQuery.now = Date.now;
+
+jQuery.isNumeric = function( obj ) {
+
+	// As of jQuery 3.0, isNumeric is limited to
+	// strings and numbers (primitives or objects)
+	// that can be coerced to finite numbers (gh-2662)
+	var type = jQuery.type( obj );
+	return ( type === "number" || type === "string" ) &&
+
+		// parseFloat NaNs numeric-cast false positives ("")
+		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+		// subtraction forces infinities to NaN
+		!isNaN( obj - parseFloat( obj ) );
+};
 
 
 
@@ -18402,11 +19155,10 @@ if ( !noGlobal ) {
 
 
 
-
 return jQuery;
 } );
 
-},{}],109:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -18452,7 +19204,7 @@ accessor.off = tracking.off;
 module.exports = accessor;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./stub":110,"./tracking":111}],110:[function(require,module,exports){
+},{"./stub":117,"./tracking":118}],117:[function(require,module,exports){
 'use strict';
 
 var ms = {};
@@ -18486,7 +19238,7 @@ module.exports = {
   clear: clear
 };
 
-},{}],111:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -18543,7 +19295,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],112:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -18555,17 +19307,29 @@ callable = function (fn) {
 };
 
 byObserver = function (Observer) {
-	var node = document.createTextNode(''), queue, i = 0;
+	var node = document.createTextNode(''), queue, currentQueue, i = 0;
 	new Observer(function () {
-		var data;
-		if (!queue) return;
-		data = queue;
+		var callback;
+		if (!queue) {
+			if (!currentQueue) return;
+			queue = currentQueue;
+		} else if (currentQueue) {
+			queue = currentQueue.concat(queue);
+		}
+		currentQueue = queue;
 		queue = null;
-		if (typeof data === 'function') {
-			data();
+		if (typeof currentQueue === 'function') {
+			callback = currentQueue;
+			currentQueue = null;
+			callback();
 			return;
 		}
-		data.forEach(function (fn) { fn(); });
+		node.data = (i = ++i % 2); // Invoke other batch, to handle leftover callbacks in case of crash
+		while (currentQueue) {
+			callback = currentQueue.shift();
+			if (!currentQueue.length) currentQueue = null;
+			callback();
+		}
 	}).observe(node, { characterData: true });
 	return function (fn) {
 		callable(fn);
@@ -18581,19 +19345,14 @@ byObserver = function (Observer) {
 
 module.exports = (function () {
 	// Node.js
-	if ((typeof process !== 'undefined') && process &&
-			(typeof process.nextTick === 'function')) {
+	if ((typeof process === 'object') && process && (typeof process.nextTick === 'function')) {
 		return process.nextTick;
 	}
 
-	// MutationObserver=
+	// MutationObserver
 	if ((typeof document === 'object') && document) {
-		if (typeof MutationObserver === 'function') {
-			return byObserver(MutationObserver);
-		}
-		if (typeof WebKitMutationObserver === 'function') {
-			return byObserver(WebKitMutationObserver);
-		}
+		if (typeof MutationObserver === 'function') return byObserver(MutationObserver);
+		if (typeof WebKitMutationObserver === 'function') return byObserver(WebKitMutationObserver);
 	}
 
 	// W3C Draft
@@ -18603,7 +19362,7 @@ module.exports = (function () {
 	}
 
 	// Wide available standard
-	if (typeof setTimeout === 'function') {
+	if ((typeof setTimeout === 'function') || (typeof setTimeout === 'object')) {
 		return function (cb) { setTimeout(callable(cb), 0); };
 	}
 
@@ -18611,7 +19370,7 @@ module.exports = (function () {
 }());
 
 }).call(this,require('_process'))
-},{"_process":113}],113:[function(require,module,exports){
+},{"_process":120}],120:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -18782,6 +19541,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -18793,7 +19556,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],114:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 /*jshint eqnull:true*/
 (function (root) {
   "use strict";
@@ -19510,16 +20273,16 @@ process.umask = function() { return 0; };
     root[GLOBAL_KEY] = Random;
   }
 }(this));
-},{}],115:[function(require,module,exports){
-'use strict';
+},{}],122:[function(require,module,exports){
+"use strict";
 
 module.exports = 2147483647;
 
-},{}],116:[function(require,module,exports){
-'use strict';
+},{}],123:[function(require,module,exports){
+"use strict";
 
-var toPosInt   = require('es5-ext/number/to-pos-integer')
-  , maxTimeout = require('./max-timeout');
+var toPosInt   = require("es5-ext/number/to-pos-integer")
+  , maxTimeout = require("./max-timeout");
 
 module.exports = function (value) {
 	value = toPosInt(value);
@@ -19527,7 +20290,7 @@ module.exports = function (value) {
 	return value;
 };
 
-},{"./max-timeout":115,"es5-ext/number/to-pos-integer":75}],117:[function(require,module,exports){
+},{"./max-timeout":122,"es5-ext/number/to-pos-integer":77}],124:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
