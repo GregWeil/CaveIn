@@ -1797,17 +1797,20 @@ Pages.home(new Pages.Page({
   setup: function() {
     $(window).on('keydown', this.config.start);
     var $save = $(this.selector).find('.save');
-    var selector = (this.selector + ' .save');
-    $save.hide();
-    $(selector + '.loading').show();
+    $save.hide().filter('.loading').show();
     Game.save.get().done(function(save) {
       $save.hide();
       if (save) {
-        $(selector + '.exists').show();
+        $save.filter('.exists').show();
       }
     });
+    var $best = $(this.selector).find('.best');
+    $best.hide().filter('.loading').show();
     Game.best.score().done(function(score) {
-      
+      $best.hide();
+      if (score > 0) {
+        $best.filter('.exists').show();
+      }
     });
   },
   teardown: function() {
