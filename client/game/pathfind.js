@@ -64,7 +64,7 @@ module.exports = class Pathfind extends BaseObject {
   }
   
   generateDistanceField(goal) {
-    var distance = [];
+    var distance = Array(this.grid.gridSize.x);
     for (let i = 0; i < this.grid.gridSize.x; ++i) {
       distance[i] = Array(this.grid.gridSize.y).fill(Infinity);
     }
