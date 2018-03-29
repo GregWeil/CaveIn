@@ -2292,8 +2292,10 @@ window.pause = function pause(evt) {
 
 function createPlayable(config) {
   var game, save, best;
+  
   deferred(
     replayGetSave(), replayGetBestScore()
+    
   ).then(function(results) {
     save = results[0];
     best = results[1];
@@ -2322,6 +2324,7 @@ function createPlayable(config) {
         overlay('game-over', config.onRetry);
       }, 1000);
     });
+    
   }).then(function() {
     var def = deferred();
     _.delay(def.resolve);
@@ -2329,7 +2332,8 @@ function createPlayable(config) {
   }).then(function() {
     if (save) {
       game.headless = true;
-      return Replay.execute(game, save.commands.slice(0, -5), 500, 50
+      return Replay.execute(
+        game, save.commands.slice(0, -5), 500, 100
       ).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
       }).then(function(success) {
@@ -2338,9 +2342,11 @@ function createPlayable(config) {
         game.headless = false;
       });
     }
+    
   }).then(function() {
     Replay.record(game, replayRecordSave, save);
     $(window).on('keydown touchstart', window.pause);
+    
   }).done();
 }
 
