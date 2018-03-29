@@ -175,8 +175,10 @@ function createPlayable(config) {
     if (save) {
       game.headless = true;
       return Replay.execute(
-        game, save.commands.slice(0, -5), 500, 100
+        game, save.commands.slice(0, -100), 2500, 100
       ).then(function(success) {
+        return success && Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
+      }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
       }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-1), 1.5);
