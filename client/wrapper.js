@@ -168,11 +168,6 @@ function createPlayable(config) {
     });
     
   }).then(function() {
-    var def = deferred();
-    _.defer(def.resolve);
-    return def.promise;
-    
-  }).then(function() {
     if (save) {
       game.headless = true;
       return Replay.execute(
@@ -203,7 +198,7 @@ function destroyPlayable() {
   state.game = null;
 }
 
-function createReplay() {
+function createWatchable(config) {
   var game, save, best;
   
   deferred(
@@ -216,21 +211,16 @@ function createReplay() {
     
     game = new Game({
       canvas: document.getElementById('canvas'),
-      seed: save.seed, best: best,
-      headless: true
+      seed: save.seed, best: best
     });
+    game.headless = true;
     state.game = game;
     
     $(window).on('resize', resize);
     resize();
     
   }).then(function() {
-    var def = deferred();
-    _.defer(def.resolve);
-    return def.promise;
-    
-  }).then(function() {
-    return Replay.execute(game, save.commands, 1);
+    return Replay.execute(game, save.commands, 5);
     
   }).then(function() {
     var def = deferred();
@@ -238,12 +228,12 @@ function createReplay() {
     return def.promise;
     
   }).then(function() {
-    
+    config.onComplete();
     
   }).done();
 }
 
-function destroyReplay() {
+function destroyWatchable() {
   overlay();
   state.game.destructor();
   state.game = null;
@@ -253,6 +243,10 @@ module.exports = {
   playable: {
     create: createPlayable,
     destroy: destroyPlayable
+  },
+  watchable: {
+    create: createWatchable,
+    destroy: destroyWatchable
   },
   save: {
     get: replayGetSave,

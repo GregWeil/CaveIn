@@ -66,6 +66,21 @@ Pages.add(new Pages.Page({
   }
 }));
 
+Pages.add(new Pages.Page({
+  name: 'replay',
+  selector: '#game-page',
+  setup: function() {
+    Game.watchable.create({
+      onComplete: function() {
+        Pages.navigate('title');
+      }
+    });
+  },
+  teardown: function() {
+    Game.watchable.destroy();
+  }
+}));
+
 $(document).ready(function() {
   Pages.setup();
 });
