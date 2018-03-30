@@ -12,6 +12,7 @@ module.exports = class Engine extends EventEmitter {
     
     this.active = true;
     this.headless = !_.isUndefined(config.headless) ? config.headless : !config.canvas;
+    this.locked = !_.isUndefined(config.locked) ? config.headless : !config.canvas
     
     this.canvas = config.canvas || document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');

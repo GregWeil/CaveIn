@@ -147,6 +147,7 @@ function createPlayable(config) {
       seed: save ? save.seed : null,
       best: best
     });
+    game.headless = true;
     state.game = game;
     
     $(window).on('resize', resize);
@@ -169,21 +170,21 @@ function createPlayable(config) {
     
   }).then(function() {
     if (save) {
-      game.headless = true;
-      return Replay.execute(
-        game, save.commands.slice(0, -100), 2500, 100
+      return deferred(
+        true
       ).then(function(success) {
+        return success && Replay.execute(game, save.commands.slice(0, -100), 2500, 100);
+      }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
       }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
       }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-1), 1.5);
-      }).then(function(success) {
-        game.headless = false;
       });
     }
     
   }).then(function() {
+    game.headless = false;
     Replay.record(game, replayRecordSave, save);
     $(window).on('keydown touchstart', window.pause);
     
@@ -224,7 +225,7 @@ function createWatchable(config) {
     
   }).then(function() {
     var def = deferred();
-    _.delay(def.resolve, 1000);
+    _.delay(def.resolve, 5000);
     return def.promise;
     
   }).then(function() {
