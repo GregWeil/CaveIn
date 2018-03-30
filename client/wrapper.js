@@ -145,9 +145,8 @@ function createPlayable(config) {
     game = new Game({
       canvas: document.getElementById('canvas'),
       seed: save ? save.seed : null,
-      best: best
+      best: best, locked: true
     });
-    game.headless = true;
     state.game = game;
     
     $(window).on('resize', resize);
@@ -170,6 +169,7 @@ function createPlayable(config) {
     
   }).then(function() {
     if (save) {
+      game.silent = true;
       return deferred(
         true
       ).then(function(success) {
@@ -177,6 +177,7 @@ function createPlayable(config) {
       }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
       }).then(function(success) {
+        game.silent = false;
         return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
       }).then(function(success) {
         return success && Replay.execute(game, save.commands.slice(-1), 1.5);
@@ -184,7 +185,7 @@ function createPlayable(config) {
     }
     
   }).then(function() {
-    game.headless = false;
+    game.locked = false;
     Replay.record(game, replayRecordSave, save);
     $(window).on('keydown touchstart', window.pause);
     
@@ -212,9 +213,9 @@ function createWatchable(config) {
     
     game = new Game({
       canvas: document.getElementById('canvas'),
-      seed: save.seed, best: best
+      seed: save.seed, best: best,
+      locked: true
     });
-    game.headless = true;
     state.game = game;
     
     $(window).on('resize', resize);

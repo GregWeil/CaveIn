@@ -41,7 +41,6 @@ function validate(replay) {
   if (!replay.validate) return deferred(false);
 
   var game = new Game({
-    headless: true,
     seed: replay.seed
   });
 

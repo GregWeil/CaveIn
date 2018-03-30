@@ -11,8 +11,9 @@ module.exports = class Engine extends EventEmitter {
     super();
     
     this.active = true;
-    this.headless = !_.isUndefined(config.headless) ? config.headless : !config.canvas;
-    this.locked = !_.isUndefined(config.locked) ? config.headless : !config.canvas
+    this.headless = !config.canvas;
+    this.locked = config.locked || this.headless;
+    this.silent = config.silent || this.headless;
     
     this.canvas = config.canvas || document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
@@ -69,7 +70,7 @@ module.exports = class Engine extends EventEmitter {
   }
   
   sound(asset, config) {
-    if (this.headless) {
+    if (this.silent) {
       return null;
     }
     var audio = asset.play();
