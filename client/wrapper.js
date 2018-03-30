@@ -226,7 +226,7 @@ function createWatchable(config) {
     
   }).then(function() {
     var def = deferred();
-    _.delay(def.resolve, 5000);
+    _.delay(def.resolve, 3000);
     return def.promise;
     
   }).then(function() {
