@@ -169,7 +169,7 @@ function createPlayable(config) {
     
   }).then(function() {
     var def = deferred();
-    _.delay(def.resolve);
+    _.defer(def.resolve);
     return def.promise;
     
   }).then(function() {
@@ -199,6 +199,52 @@ function destroyPlayable() {
   overlay();
   $(window).off('keydown touchstart', window.pause);
   $(window).off('resize', resize);
+  state.game.destructor();
+  state.game = null;
+}
+
+function createReplay() {
+  var game, save, best;
+  
+  deferred(
+    replayGetBest(),
+    replayGetBestScore()
+    
+  ).then(function(result) {
+    save = result[0];
+    best = result[1];
+    
+    game = new Game({
+      canvas: document.getElementById('canvas'),
+      seed: save.seed, best: best,
+      headless: true
+    });
+    state.game = game;
+    
+    $(window).on('resize', resize);
+    resize();
+    
+  }).then(function() {
+    var def = deferred();
+    _.defer(def.resolve);
+    return def.promise;
+    
+  }).then(function() {
+    return Replay.execute(game, save.commands, 1);
+    
+  }).then(function() {
+    var def = deferred();
+    _.delay(def.resolve, 1000);
+    return def.promise;
+    
+  }).then(function() {
+    
+    
+  }).done();
+}
+
+function destroyReplay() {
+  overlay();
   state.game.destructor();
   state.game = null;
 }
