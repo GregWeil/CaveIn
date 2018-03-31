@@ -2101,12 +2101,15 @@ async function validate(replay) {
   var invalid = [];
   
   try {
-    await execute(game, replay.commands, Infinity, 100);
+    await execute(game, replay.commands, Infinity, 500);
   } catch (e) {
     invalid.push('invalid inputs');
   }
-  if (alive !== replay.validate.alive) {
-    invalid.push('player alive state mismatch');
+  if (alive && !replay.validate.alive) {
+    invalid.push('player should have died');
+  }
+  if (!alive && replay.validate.alive) {
+    invalid.push('player should have lived');
   }
   if (game.score !== replay.validate.score) {
     invalid.push('score mismatch');
