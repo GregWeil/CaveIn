@@ -101,8 +101,6 @@ module.exports = class Engine extends EventEmitter {
 //Prioritized handlers, lower numbers first
 //Unbind handlers by setting hander.active = false
 
-var _ = require('underscore');
-
 class Event {
   constructor(data) {
     this.source = data.source;
@@ -116,7 +114,7 @@ class Handler {
     this.active = true;
     
     this.type = data.type;
-    this.func = data.as ? _.bind(data.func, data.as) : data.func;
+    this.func = data.as ? data.func.bind(data.as) : data.func;
     this.priority = data.priority || 0;
     
     this.funcName = data.func.name;
@@ -170,7 +168,7 @@ module.exports = class EventEmitter {
     return handler;
   }
 };
-},{"underscore":26}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /// input.js
 //Take player input and send it to the game
 
@@ -197,11 +195,11 @@ class InputWrapper extends Input {
   constructor(config, inputs) {
     super(config);
     
-    this.inputs = _.map(inputs, function(Input) {
-      return new Input(_.defaults({
-        emit: _.bind(this.handler, this)
-      }, config));
-    }, this);
+    this.inputs = inputs.map(InputType =>
+      new InputType(Object.create(config, {
+        emit: this.handler.bind(this)
+      }))
+    );
   }
   
   destructor() {
@@ -257,12 +255,12 @@ class InputQueued extends InputWrapper {
       window.clearTimeout(this.callback);
     }
     
-    this.callback = window.setTimeout(_.bind(function() {
+    this.callback = window.setTimeout(() => {
       this.callback = null;
       if (this.queued) {
         this.command(this.queued);
       }
-    }, this), 150);
+    }, 150);
   }
   
   handler(cmd) {

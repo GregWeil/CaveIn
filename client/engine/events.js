@@ -5,8 +5,6 @@
 //Prioritized handlers, lower numbers first
 //Unbind handlers by setting hander.active = false
 
-var _ = require('underscore');
-
 class Event {
   constructor(data) {
     this.source = data.source;
@@ -20,7 +18,7 @@ class Handler {
     this.active = true;
     
     this.type = data.type;
-    this.func = data.as ? _.bind(data.func, data.as) : data.func;
+    this.func = data.as ? data.func.bind(data.as) : data.func;
     this.priority = data.priority || 0;
     
     this.funcName = data.func.name;

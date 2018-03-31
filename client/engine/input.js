@@ -24,11 +24,11 @@ class InputWrapper extends Input {
   constructor(config, inputs) {
     super(config);
     
-    this.inputs = _.map(inputs, function(Input) {
-      return new Input(_.defaults({
-        emit: _.bind(this.handler, this)
-      }, config));
-    }, this);
+    this.inputs = inputs.map(InputType =>
+      new InputType(Object.create(config, {
+        emit: this.handler.bind(this)
+      }))
+    );
   }
   
   destructor() {
@@ -84,12 +84,12 @@ class InputQueued extends InputWrapper {
       window.clearTimeout(this.callback);
     }
     
-    this.callback = window.setTimeout(_.bind(function() {
+    this.callback = window.setTimeout(() => {
       this.callback = null;
       if (this.queued) {
         this.command(this.queued);
       }
-    }, this), 150);
+    }, 150);
   }
   
   handler(cmd) {
