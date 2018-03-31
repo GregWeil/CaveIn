@@ -28,16 +28,14 @@ async function replayGet(name, validate) {
     //This is the first request, load and validate
     validate = validate || _.constant(true);
     var replay = storage.get(name);
-    state[nameDeferred] = new Promise((resolve, reject) => {
-      Replay.validate(replay).then(
-        valid => valid && validate(replay)
-      ).done(valid => {
-        if (_.isUndefined(state[name])) {
-          state[name] = valid ? replay : null;
-          state[nameDeferred] = undefined;
-        }
-        resolve(state[name]);
-      });
+    state[nameDeferred] = Replay.validate(replay).then(
+      valid => valid && validate(replay)
+    ).then(valid => {
+      if (_.isUndefined(state[name])) {
+        state[name] = valid ? replay : null;
+        state[nameDeferred] = undefined;
+      }
+      return state[name];
     });
   }
   return await state[nameDeferred];
@@ -154,11 +152,11 @@ async function createPlayable(config) {
   
   if (save) {
     game.silent = true;
-    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(0, -100), 2500, 100).then(resolve).done());
-    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(-100, -5), 500, 100).then(resolve).done());
+    await Replay.execute(game, save.commands.slice(0, -100), 2500, 100);
+    await Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
     game.silent = false;
-    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(-5, -1), 5).then(resolve).done());
-    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(-1), 1.5).then(resolve).done());
+    await Replay.execute(game, save.commands.slice(-5, -1), 5);
+    await Replay.execute(game, save.commands.slice(-1), 1.5);
   }
   
   game.locked = false;
@@ -188,7 +186,7 @@ async function createWatchable(config) {
   $(window).on('resize', resize);
   resize();
   
-  await new Promise((resolve, reject) => Replay.execute(game, save.commands, 5).then(resolve).done());
+  await Replay.execute(game, save.commands, 5);
   await new Promise((resolve, reject) => _.delay(resolve, 3000));
   
   config.onComplete();

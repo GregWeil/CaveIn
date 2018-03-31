@@ -1,6 +1,5 @@
 dependencies:
   browserify: 16.1.1
-  deferred: 0.7.9
   express: 4.16.3
   howler: 2.0.9
   jquery: 3.3.1
@@ -449,12 +448,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fz4spIh+znjO2VjL+IdhEpRJ3YN6sMzITSBijk6FK2UvTqruSQW+/cCZTSNsMiZNvUeq0CqurF+dAbyiGOY6Wg==
-  /d/1.0.0:
-    dependencies:
-      es5-ext: 0.10.42
-    dev: false
-    resolution:
-      integrity: sha1-dUu1v+VUUdpppYuU1F9MWwRi1Y8=
   /date-now/0.1.4:
     dev: false
     resolution:
@@ -465,16 +458,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
-  /deferred/0.7.9:
-    dependencies:
-      d: 1.0.0
-      es5-ext: 0.10.42
-      event-emitter: 0.3.5
-      next-tick: 1.0.0
-      timers-ext: 0.1.5
-    dev: false
-    resolution:
-      integrity: sha1-+2KuCqDboFypH+0gHC9QE2ejYKI=
   /defined/1.0.0:
     dev: false
     resolution:
@@ -564,29 +547,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
-  /es5-ext/0.10.42:
-    dependencies:
-      es6-iterator: 2.0.3
-      es6-symbol: 3.1.1
-      next-tick: 1.0.0
-    dev: false
-    resolution:
-      integrity: sha512-AJxO1rmPe1bDEfSR6TJ/FgMFYuTBhR5R57KW58iCkYACMyFbrkqVyzXSurYoScDGvgyMpk7uRF/lPUPPTmsRSA==
-  /es6-iterator/2.0.3:
-    dependencies:
-      d: 1.0.0
-      es5-ext: 0.10.42
-      es6-symbol: 3.1.1
-    dev: false
-    resolution:
-      integrity: sha1-p96IkUGgWpSwhUQDstCg+/qY87c=
-  /es6-symbol/3.1.1:
-    dependencies:
-      d: 1.0.0
-      es5-ext: 0.10.42
-    dev: false
-    resolution:
-      integrity: sha1-vwDvT9q2uhtG7Le2KbTH7VcVzHc=
   /escape-html/1.0.3:
     dev: false
     resolution:
@@ -597,13 +557,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
-  /event-emitter/0.3.5:
-    dependencies:
-      d: 1.0.0
-      es5-ext: 0.10.42
-    dev: false
-    resolution:
-      integrity: sha1-34xp7vFkeSPHFXuc6DhAYQsCzDk=
   /events/2.0.0:
     dev: false
     engines:
@@ -1185,10 +1138,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
-  /next-tick/1.0.0:
-    dev: false
-    resolution:
-      integrity: sha1-yobR/ogoFpsBICCOPchCS524NCw=
   /normalize-path/2.1.1:
     dependencies:
       remove-trailing-separator: 1.1.0
@@ -1635,13 +1584,6 @@ packages:
       node: '>=0.6.0'
     resolution:
       integrity: sha1-ycWLV1voQHN1y14kYtrO50NZ9B0=
-  /timers-ext/0.1.5:
-    dependencies:
-      es5-ext: 0.10.42
-      next-tick: 1.0.0
-    dev: false
-    resolution:
-      integrity: sha512-tsEStd7kmACHENhsUPaxb8Jf8/+GZZxyNFQbZD07HQOyooOa6At1rQqjffgvg7n+dxscQa9cjjMdWhJtsP2sxg==
   /to-arraybuffer/1.0.1:
     dev: false
     resolution:
@@ -1739,7 +1681,6 @@ shrinkwrapMinorVersion: 4
 shrinkwrapVersion: 3
 specifiers:
   browserify: ^16.1.1
-  deferred: ^0.7.9
   express: ^4.16.3
   howler: ^2.0.9
   jquery: ^3.3.1

@@ -2,7 +2,6 @@
 //Replay validation and recording
 
 var _ = require('underscore');
-var deferred = require('deferred');
 
 var Game = require('game.js');
 
@@ -39,7 +38,7 @@ function execute(game, commands, rate, limit) {
 async function validate(replay) {
   if (!replay) return false;
   if (!replay.validate) return false;
-
+  
   var game = new Game({
     seed: replay.seed
   });
@@ -49,11 +48,11 @@ async function validate(replay) {
     alive = false;
   });
   
-  await execute(game, replay.commands, Infinity, 100);
-  
   var invalid = [];
-
-  if (!success) {
+  
+  try {
+    await execute(game, replay.commands, Infinity, 100);
+  } catch (e) {
     invalid.push('invalid inputs');
   }
   if (alive !== replay.validate.alive) {
@@ -62,14 +61,13 @@ async function validate(replay) {
   if (game.score !== replay.validate.score) {
     invalid.push('score mismatch');
   }
-
+  game.destructor();
+  
   if (invalid.length) {
     console.log(invalid.join('\n'));
   }
-
-  return !invalid.length;
   
-  game.destructor();
+  return !invalid.length;
 }
 
 function record(game, callback, replay) {
