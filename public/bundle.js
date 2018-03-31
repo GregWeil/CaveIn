@@ -1296,8 +1296,6 @@ module.exports = class Gem extends BaseObject {
 /// grid.js
 //Grid utility functions
 
-var _ = require('underscore');
-
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 var BaseObject = require('object.js');
@@ -1439,7 +1437,7 @@ module.exports = class Grid extends BaseObject {
     }
   }
 };
-},{"object.js":4,"render.js":5,"underscore":26,"vector2.js":6}],13:[function(require,module,exports){
+},{"object.js":4,"render.js":5,"vector2.js":6}],13:[function(require,module,exports){
 /// pathfind.js
 //Construct a grid where each cell has its distance to the player
 

@@ -1,8 +1,6 @@
 /// grid.js
 //Grid utility functions
 
-var _ = require('underscore');
-
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 var BaseObject = require('object.js');
