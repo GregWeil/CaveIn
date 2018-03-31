@@ -1,8 +1,6 @@
 /// engine.js
 //Main engine loop
 
-var _ = require('underscore');
-
 var EventEmitter = require('events.js');
 var Render = require('render.js');
 
@@ -75,7 +73,7 @@ module.exports = class Engine extends EventEmitter {
     }
     var audio = asset.play();
     if (config) {
-      if (_.has(config, 'volume')) {
+      if ('volume' in config) {
         asset.volume(config.volume, audio);
       }
     }
@@ -83,7 +81,7 @@ module.exports = class Engine extends EventEmitter {
   }
   
   create(Obj, config) {
-    config = _.extend({ game: this }, (config || {}));
+    config = Object.assign({ game: this }, (config || {}));
     var inst = new Obj(config);
     this.objects.push(inst);
     return inst;
