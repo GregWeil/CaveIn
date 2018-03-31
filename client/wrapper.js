@@ -31,6 +31,7 @@ async function replayGet(name, validate) {
     state[nameDeferred] = Replay.validate(replay).then(
       valid => valid && validate(replay)
     ).then(valid => {
+      //Make sure nothing touched it while we were working
       if (_.isUndefined(state[name])) {
         state[name] = valid ? replay : null;
         state[nameDeferred] = undefined;
@@ -80,7 +81,7 @@ async function replayRecordSave(replay, game) {
 //Manipulate the player's game
 
 function resize() {
-  var pixel = window.devicePixelRatio || 1;
+  var pixel = window.devicePixelRatio;
   var canvas = $('#game-page .area');
   canvas.css('transform', '');
   var sizeCanvas = new Vector2(canvas.width(), canvas.height());
