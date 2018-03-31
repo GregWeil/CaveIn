@@ -172,8 +172,6 @@ module.exports = class EventEmitter {
 /// input.js
 //Take player input and send it to the game
 
-var _ = require('underscore');
-
 var Vector2 = require('vector2.js');
 
 class Input {
@@ -196,14 +194,14 @@ class InputWrapper extends Input {
     super(config);
     
     this.inputs = inputs.map(InputType =>
-      new InputType(Object.create(config, {
+      new InputType(Object.assign({
         emit: this.handler.bind(this)
-      }))
+      }, config))
     );
   }
   
   destructor() {
-    _.invoke(this.inputs, 'destructor');
+    this.inputs.forEach(input => input.destructor());
     super.destructor();
   }
   
@@ -443,7 +441,7 @@ module.exports = {
   Keyboard: InputKeyboard,
   Swipe: InputSwipe
 };
-},{"underscore":26,"vector2.js":6}],4:[function(require,module,exports){
+},{"vector2.js":6}],4:[function(require,module,exports){
 /// object.js
 //Base game object that things inherit from
 
@@ -467,12 +465,12 @@ module.exports = class BaseObject {
         this.unhandle(data);
       }
     }
-    window.setTimeout((function() {
+    window.setTimeout(() => {
       var handlers = _.clone(this.handlers);
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
       }
-    }).bind(this), !_.isUndefined(displayTime) ? displayTime*1000 : 30);
+    }, displayTime !== undefined ? displayTime*1000 : 30);
   }
   
   storeHandler(handler) {

@@ -21,12 +21,12 @@ module.exports = class BaseObject {
         this.unhandle(data);
       }
     }
-    window.setTimeout((function() {
+    window.setTimeout(() => {
       var handlers = _.clone(this.handlers);
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
       }
-    }).bind(this), !_.isUndefined(displayTime) ? displayTime*1000 : 30);
+    }, displayTime !== undefined ? displayTime*1000 : 30);
   }
   
   storeHandler(handler) {
