@@ -2314,64 +2314,47 @@ window.pause = function pause(evt) {
   }
 };
 
-function createPlayable(config) {
-  var game, save, best;
+async function createPlayable(config) {
+  var save = await new Promise((resolve, reject) => replayGetSave().then(resolve).done());
+  var best = await new Promise((resolve, reject) => replayGetBestScore().then(resolve).done());
   
-  deferred(
-    replayGetSave(), replayGetBestScore()
-    
-  ).then(function(results) {
-    save = results[0];
-    best = results[1];
-    
-    game = new Game({
-      canvas: document.getElementById('canvas'),
-      seed: save ? save.seed : null,
-      best: best, locked: true
-    });
-    state.game = game;
-    
-    $(window).on('resize', resize);
-    resize();
-
-    game.on('command-check', function (evt) {
-      if (overlayCurrent) {
-        evt.data.accept = false;
-        if (overlayAction && evt.data.command === 'action') {
-          overlayAction();
-        }
+  var game = new Game({
+    canvas: document.getElementById('canvas'),
+    seed: save ? save.seed : null,
+    best: best, locked: true
+  });
+  state.game = game;
+  
+  $(window).on('resize', resize);
+  resize();
+  
+  game.on('command-check', function (evt) {
+    if (overlayCurrent) {
+      evt.data.accept = false;
+      if (overlayAction && evt.data.command === 'action') {
+        overlayAction();
       }
-    }, undefined, Infinity);
-
-    game.on('player-died', function() {
-      window.setTimeout(function() {
-        overlay('game-over', config.onRetry);
-      }, 1000);
-    });
-    
-  }).then(function() {
-    if (save) {
-      game.silent = true;
-      return deferred(
-        true
-      ).then(function(success) {
-        return success && Replay.execute(game, save.commands.slice(0, -100), 2500, 100);
-      }).then(function(success) {
-        return success && Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
-      }).then(function(success) {
-        game.silent = false;
-        return success && Replay.execute(game, save.commands.slice(-5, -1), 5);
-      }).then(function(success) {
-        return success && Replay.execute(game, save.commands.slice(-1), 1.5);
-      });
     }
-    
-  }).then(function() {
-    game.locked = false;
-    Replay.record(game, replayRecordSave, save);
-    $(window).on('keydown touchstart', window.pause);
-    
-  }).done();
+  }, undefined, Infinity);
+  
+  game.on('player-died', function() {
+    window.setTimeout(function() {
+      overlay('game-over', config.onRetry);
+    }, 1000);
+  });
+  
+  if (save) {
+    game.silent = true;
+    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(0, -100), 2500, 100).then(resolve).done());
+    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(-100, -5), 500, 100).then(resolve).done());
+    game.silent = false;
+    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(-5, -1), 5).then(resolve).done());
+    await new Promise((resolve, reject) => Replay.execute(game, save.commands.slice(-1), 1.5).then(resolve).done());
+  }
+  
+  game.locked = false;
+  Replay.record(game, replayRecordSave, save);
+  $(window).on('keydown touchstart', window.pause);
 }
 
 function destroyPlayable() {
