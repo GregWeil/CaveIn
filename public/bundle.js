@@ -141,8 +141,8 @@ module.exports = class EventEmitter {
     });
     
     var handlers = this.handlers[type] || [];
-    handlers = _.where(handlers, { active: true });
-    this.handlers[type] = _.clone(handlers);
+    handlers = handlers.filter(handler => handler.active);
+    this.handlers[type] = handlers;
     
     for (let i = 0; i < handlers.length; ++i) {
       handlers[i].handle(event);
