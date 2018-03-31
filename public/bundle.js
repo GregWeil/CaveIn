@@ -1561,7 +1561,6 @@ module.exports = class Pathfind extends BaseObject {
 /// player.js
 //Time to get some interactivity
 
-var _ = require('underscore');
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -1652,7 +1651,7 @@ module.exports = class Player extends BaseObject {
   }
   
   acceptCommand(evt) {
-    if (_.contains(['up', 'down', 'left', 'right', 'action'], evt.data.command)) {
+    if (['up', 'down', 'left', 'right', 'action'].includes(evt.data.command)) {
       evt.data.accept = true;
     }
   }
@@ -1716,7 +1715,7 @@ module.exports = class Player extends BaseObject {
     }
   }
 };
-},{"enemy.js":9,"howler":20,"object.js":4,"render.js":5,"underscore":26,"vector2.js":6}],15:[function(require,module,exports){
+},{"enemy.js":9,"howler":20,"object.js":4,"render.js":5,"vector2.js":6}],15:[function(require,module,exports){
 /// score.js
 //Show a popup when the player gets any points
 

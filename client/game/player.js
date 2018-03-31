@@ -1,7 +1,6 @@
 /// player.js
 //Time to get some interactivity
 
-var _ = require('underscore');
 var Howl = require('howler').Howl;
 
 var Vector2 = require('vector2.js');
@@ -92,7 +91,7 @@ module.exports = class Player extends BaseObject {
   }
   
   acceptCommand(evt) {
-    if (_.contains(['up', 'down', 'left', 'right', 'action'], evt.data.command)) {
+    if (['up', 'down', 'left', 'right', 'action'].includes(evt.data.command)) {
       evt.data.accept = true;
     }
   }
