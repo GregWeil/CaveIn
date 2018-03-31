@@ -21,7 +21,7 @@ Pages.home(new Pages.Page({
     $(window).on('keydown', this.config.start);
     var $save = $(this.selector).find('.save');
     $save.hide().filter('.loading').show();
-    Game.save.get().done(function(save) {
+    Game.save.get().then(function(save) {
       $save.hide();
       if (save) {
         $save.filter('.exists').show();
@@ -29,7 +29,7 @@ Pages.home(new Pages.Page({
     });
     var $best = $(this.selector).find('.best');
     $best.hide().filter('.loading').show();
-    Game.best.score().done(function(score) {
+    Game.best.score().then(score => {
       $best.hide();
       if (score > 0) {
         $best.filter('.exists').show();

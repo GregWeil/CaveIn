@@ -20,11 +20,11 @@ var state = {
 
 //Saves for the current and best game
 
-function replayGet(name, validate) {
+async function replayGet(name, validate) {
   if (!_.isUndefined(state[name])) {
-    return deferred(state[name]);
+    return state[name];
   }
-  var nameDeferred = name + '_deferred';
+  var nameDeferred = name + '_loader';
   if (!state[nameDeferred]) {
     //This is the first request, load and validate
     validate = validate || _.constant(true);
@@ -52,20 +52,17 @@ function replayGetBest() {
   return replayGet('best');
 }
 
-function replayGetBestScore() {
-  return replayGetBest().then(function(replay) {
-    return replay ? Replay.getScore(replay) : null;
-  });
+async function replayGetBestScore() {
+  var replay = await new Promise((resolve, reject) => replayGetBest().done(resolve));
+  return replay ? Replay.getScore(replay) : null;
 }
 
 function replayRemoveSave() {
   state.save = null;
 }
 
-function replayGetSave() {
-  return replayGet('save', function(replay) {
-    return Replay.getAlive(replay);
-  });
+async function replayGetSave() {
+  return replayGet('save', replay => Replay.getAlive(replay));
 }
 
 //Record the player's current game
@@ -134,7 +131,7 @@ window.pause = function pause(evt) {
 
 async function createPlayable(config) {
   var save = await new Promise((resolve, reject) => replayGetSave().then(resolve).done());
-  var best = await new Promise((resolve, reject) => replayGetBestScore().then(resolve).done());
+  var best = await replayGetBestScore();
   
   var game = new Game({
     canvas: document.getElementById('canvas'),
