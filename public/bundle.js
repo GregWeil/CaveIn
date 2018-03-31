@@ -961,7 +961,6 @@ module.exports = class Enemy extends BaseObject {
 /// game.js
 //Wrap the engine and define game specific interactions
 
-var _ = require('underscore');
 var Random = require('random-js');
 
 var Vector2 = require('vector2.js');
@@ -1133,7 +1132,7 @@ module.exports = class Game extends Engine {
     super.destructor();
   }
 };
-},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":25,"render.js":5,"score.js":15,"underscore":26,"vector2.js":6}],11:[function(require,module,exports){
+},{"collide.js":7,"colors.js":8,"enemy.js":9,"engine.js":1,"gem.js":11,"grid.js":12,"input.js":3,"pathfind.js":13,"player.js":14,"random-js":25,"render.js":5,"score.js":15,"vector2.js":6}],11:[function(require,module,exports){
 /// gem.js
 //A pickup that gives a point
 

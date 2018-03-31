@@ -1,7 +1,6 @@
 /// game.js
 //Wrap the engine and define game specific interactions
 
-var _ = require('underscore');
 var Random = require('random-js');
 
 var Vector2 = require('vector2.js');
