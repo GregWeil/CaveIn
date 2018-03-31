@@ -201,38 +201,23 @@ function destroyPlayable() {
 }
 
 async function createWatchable(config) {
-  var game, save, best;
+  var save = await new Promise((resolve, reject) => replayGetBest().then(resolve).done());
+  var score = Replay.getScore(save);
   
-  deferred(
-    replayGetBest(),
-    replayGetBestScore()
-    
-  ).then(function(result) {
-    save = result[0];
-    best = result[1];
-    
-    game = new Game({
-      canvas: document.getElementById('canvas'),
-      seed: save.seed, best: best,
-      locked: true
-    });
-    state.game = game;
-    
-    $(window).on('resize', resize);
-    resize();
-    
-  }).then(function() {
-    return Replay.execute(game, save.commands, 5);
-    
-  }).then(function() {
-    var def = deferred();
-    _.delay(def.resolve, 3000);
-    return def.promise;
-    
-  }).then(function() {
-    config.onComplete();
-    
-  }).done();
+  var game = new Game({
+    canvas: document.getElementById('canvas'),
+    seed: save.seed, best: score,
+    locked: true
+  });
+  state.game = game;
+  
+  $(window).on('resize', resize);
+  resize();
+  
+  await new Promise((resolve, reject) => Replay.execute(game, save.commands, 5).then(resolve).done());
+  await new Promise((resolve, reject) => _.delay(resolve, 3000));
+  
+  config.onComplete();
 }
 
 function destroyWatchable() {
