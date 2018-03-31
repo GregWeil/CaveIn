@@ -29,45 +29,41 @@ async function replayGet(name, validate) {
     //This is the first request, load and validate
     validate = validate || _.constant(true);
     var replay = storage.get(name);
-    state[nameDeferred] = (deferred(
-        //Make sure the replay is legitimate
-        Replay.validate(replay)
-      ).then(function(valid) {
-        //Check the caller's requirements
-        return valid && validate(replay);
-      }).then(function(valid) {
-        //Make sure nothing saved over us
+    state[nameDeferred] = new Promise((resolve, reject) => {
+      Replay.validate(replay).then(
+        valid => valid && validate(replay)
+      ).done(valid => {
         if (_.isUndefined(state[name])) {
           state[name] = valid ? replay : null;
           state[nameDeferred] = undefined;
         }
-        return state[name];
-      })
-    );
+        resolve(state[name]);
+      });
+    });
   }
-  return state[nameDeferred];
+  return await state[nameDeferred];
 }
 
-function replayGetBest() {
-  return replayGet('best');
+async function replayGetBest() {
+  return await replayGet('best');
 }
 
 async function replayGetBestScore() {
-  var replay = await new Promise((resolve, reject) => replayGetBest().done(resolve));
+  var replay = await replayGetBest();
   return replay ? Replay.getScore(replay) : null;
+}
+
+async function replayGetSave() {
+  return await replayGet('save', replay => Replay.getAlive(replay));
 }
 
 function replayRemoveSave() {
   state.save = null;
 }
 
-async function replayGetSave() {
-  return replayGet('save', replay => Replay.getAlive(replay));
-}
-
 //Record the player's current game
 
-function replayRecordSave(replay, game) {
+async function replayRecordSave(replay, game) {
   if (game !== state.game) return;
   if (!replay) return;
   if (Replay.getScore(replay) <= 0) return;
@@ -75,14 +71,13 @@ function replayRecordSave(replay, game) {
   storage.set('save', Replay.getAlive(replay) ? replay : null);
   state.save = storage.get('save');
 
-  replayGetBest().done(function(best) {
-    var isBetterScore = best && (Replay.getScore(replay) > Replay.getScore(best));
-    var isContinuation = Replay.isContinuation(replay, best);
-    if (!best || isBetterScore || isContinuation) {
-      storage.set('best', replay);
-      state.best = storage.get('best');
-    }
-  });
+  var best = await replayGetBest();
+  var isBetterScore = best && (Replay.getScore(replay) > Replay.getScore(best));
+  var isContinuation = Replay.isContinuation(replay, best);
+  if (!best || isBetterScore || isContinuation) {
+    storage.set('best', replay);
+    state.best = storage.get('best');
+  }
 }
 
 //Manipulate the player's game
