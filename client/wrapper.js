@@ -200,7 +200,7 @@ function destroyPlayable() {
   state.game = null;
 }
 
-function createWatchable(config) {
+async function createWatchable(config) {
   var game, save, best;
   
   deferred(
