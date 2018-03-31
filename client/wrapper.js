@@ -2,7 +2,6 @@
 //Provide simple functions for game management
 
 var $ = require('jquery');
-var _ = require('underscore');
 var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
@@ -20,19 +19,19 @@ var state = {
 //Saves for the current and best game
 
 async function replayGet(name, validate) {
-  if (!_.isUndefined(state[name])) {
+  if (state[name] !== undefined) {
     return state[name];
   }
   var nameDeferred = name + '_loader';
   if (!state[nameDeferred]) {
     //This is the first request, load and validate
-    validate = validate || _.constant(true);
+    validate = validate || (replay => true);
     var replay = storage.get(name);
     state[nameDeferred] = Replay.validate(replay).then(
       valid => valid && validate(replay)
     ).then(valid => {
       //Make sure nothing touched it while we were working
-      if (_.isUndefined(state[name])) {
+      if (state[name] === undefined) {
         state[name] = valid ? replay : null;
         state[nameDeferred] = undefined;
       }
@@ -188,7 +187,7 @@ async function createWatchable(config) {
   resize();
   
   await Replay.execute(game, save.commands, 5);
-  await new Promise((resolve, reject) => _.delay(resolve, 3000));
+  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
   
   config.onComplete();
 }

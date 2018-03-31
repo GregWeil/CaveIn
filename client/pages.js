@@ -49,7 +49,7 @@ function registerRedirect(from, to, func) {
   registerPage(new Page({
     name: from,
     setup: function() {
-      _.defer(() => { window.location.replace('#' + to); });
+      setTimeout(() => { window.location.replace('#' + to); }, 0);
       func();
     }
   }))
