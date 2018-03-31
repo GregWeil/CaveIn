@@ -445,8 +445,6 @@ module.exports = {
 /// object.js
 //Base game object that things inherit from
 
-var _ = require('underscore');
-
 module.exports = class BaseObject {
   constructor(config) {
     this.game = config.game;
@@ -456,7 +454,7 @@ module.exports = class BaseObject {
   
   destroy(displayTime) {
     this.active = false;
-    var handlers = _.clone(this.handlers);
+    var handlers = Array.from(this.handlers);
     for (let i = 0; i < handlers.length; ++i) {
       var data = handlers[i];
       //Things render for a little after they die
@@ -466,7 +464,7 @@ module.exports = class BaseObject {
       }
     }
     window.setTimeout(() => {
-      var handlers = _.clone(this.handlers);
+      var handlers = Array.from(this.handlers);
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
       }
@@ -478,7 +476,8 @@ module.exports = class BaseObject {
   }
   
   dropHandler(handler) {
-    this.handlers = _.without(this.handlers, handler);
+    var index = this.handlers.indexOf(handler);
+    this.handlers.splice(index, 1);
   }
   
   handle(obj, type, func, priority) {
@@ -490,7 +489,7 @@ module.exports = class BaseObject {
     handler.active = false;
   }
 };
-},{"underscore":26}],5:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /// render.js
 //A bunch of utility functions for drawing things
 
@@ -1771,7 +1770,6 @@ module.exports = class Score extends BaseObject {
 /// main.js
 //Define the different pages and how they interact
 
-var _ = require('underscore');
 var $ = require('jquery');
 var Howl = require('howler').Howl;
 var storage = require('local-storage');
@@ -1858,7 +1856,7 @@ $(document).ready(function() {
 });
 
 var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
-var audioMusicId = undefined;
+var audioMusicId = null;
 
 audioMusic.on('end', function() {
   audioMusicId = audioMusic.play();
@@ -1883,7 +1881,7 @@ window.music = function(enable) {
   if (document.hidden) {
     enable = false;
   }
-  if (enable && _.isUndefined(audioMusicId)) {
+  if (enable && audioMusicId === null) {
     audioMusicId = audioMusic.play();
   } else if (enable) {
     audioMusic.play(audioMusicId);
@@ -1930,7 +1928,7 @@ window.fullscreenExit = function() {
     }
   }
 };
-},{"howler":20,"jquery":21,"local-storage":22,"pages.js":17,"underscore":26,"wrapper.js":19}],17:[function(require,module,exports){
+},{"howler":20,"jquery":21,"local-storage":22,"pages.js":17,"wrapper.js":19}],17:[function(require,module,exports){
 /// pages.js
 //A really basic single page app system
 
@@ -1982,7 +1980,7 @@ function registerRedirect(from, to, func) {
   registerPage(new Page({
     name: from,
     setup: function() {
-      _.defer(function() { window.location.replace('#' + to); });
+      _.defer(() => { window.location.replace('#' + to); });
       func();
     }
   }))
@@ -1996,7 +1994,7 @@ function getPage(name) {
 }
 
 function setPage(page) {
-  if (_.isString(page)) {
+  if (page !== undefined) {
     page = getPage(page);
   }
   if (current) {

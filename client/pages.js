@@ -49,7 +49,7 @@ function registerRedirect(from, to, func) {
   registerPage(new Page({
     name: from,
     setup: function() {
-      _.defer(function() { window.location.replace('#' + to); });
+      _.defer(() => { window.location.replace('#' + to); });
       func();
     }
   }))
@@ -63,7 +63,7 @@ function getPage(name) {
 }
 
 function setPage(page) {
-  if (_.isString(page)) {
+  if (page !== undefined) {
     page = getPage(page);
   }
   if (current) {

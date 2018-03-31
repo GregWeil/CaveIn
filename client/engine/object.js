@@ -1,8 +1,6 @@
 /// object.js
 //Base game object that things inherit from
 
-var _ = require('underscore');
-
 module.exports = class BaseObject {
   constructor(config) {
     this.game = config.game;
@@ -12,7 +10,7 @@ module.exports = class BaseObject {
   
   destroy(displayTime) {
     this.active = false;
-    var handlers = _.clone(this.handlers);
+    var handlers = Array.from(this.handlers);
     for (let i = 0; i < handlers.length; ++i) {
       var data = handlers[i];
       //Things render for a little after they die
@@ -22,7 +20,7 @@ module.exports = class BaseObject {
       }
     }
     window.setTimeout(() => {
-      var handlers = _.clone(this.handlers);
+      var handlers = Array.from(this.handlers);
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
       }
@@ -34,7 +32,8 @@ module.exports = class BaseObject {
   }
   
   dropHandler(handler) {
-    this.handlers = _.without(this.handlers, handler);
+    var index = this.handlers.indexOf(handler);
+    this.handlers.splice(index, 1);
   }
   
   handle(obj, type, func, priority) {

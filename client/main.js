@@ -1,7 +1,6 @@
 /// main.js
 //Define the different pages and how they interact
 
-var _ = require('underscore');
 var $ = require('jquery');
 var Howl = require('howler').Howl;
 var storage = require('local-storage');
@@ -88,7 +87,7 @@ $(document).ready(function() {
 });
 
 var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
-var audioMusicId = undefined;
+var audioMusicId = null;
 
 audioMusic.on('end', function() {
   audioMusicId = audioMusic.play();
@@ -113,7 +112,7 @@ window.music = function(enable) {
   if (document.hidden) {
     enable = false;
   }
-  if (enable && _.isUndefined(audioMusicId)) {
+  if (enable && audioMusicId === null) {
     audioMusicId = audioMusic.play();
   } else if (enable) {
     audioMusic.play(audioMusicId);
