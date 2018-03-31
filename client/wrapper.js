@@ -3,7 +3,6 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var deferred = require('deferred');
 var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
@@ -125,7 +124,7 @@ window.pause = function pause(evt) {
 };
 
 async function createPlayable(config) {
-  var save = await new Promise((resolve, reject) => replayGetSave().then(resolve).done());
+  var save = await replayGetSave();
   var best = await replayGetBestScore();
   
   var game = new Game({
@@ -176,7 +175,7 @@ function destroyPlayable() {
 }
 
 async function createWatchable(config) {
-  var save = await new Promise((resolve, reject) => replayGetBest().then(resolve).done());
+  var save = await replayGetBest();
   var score = Replay.getScore(save);
   
   var game = new Game({

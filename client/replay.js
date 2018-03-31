@@ -7,71 +7,69 @@ var deferred = require('deferred');
 var Game = require('game.js');
 
 function execute(game, commands, rate, limit) {
-  var def = deferred();
-  var start = _.now() - 1;
-  
-  rate = rate || Infinity;
-  limit = limit || Infinity;
+  return new Promise((resolve, reject) => {
+    var start = _.now() - 1;
 
-  function step(index) {
-    var target = Math.round((_.now() - start) * (rate / 1000));
-    target = Math.min(target, (index + limit), commands.length);
-    
-    for (var i = index; i < target; ++i) {
-      if (!game.commandCheck(commands[i])) {
-        def.resolve(false);
-        return;
+    rate = rate || Infinity;
+    limit = limit || Infinity;
+
+    function step(index) {
+      var target = Math.round((_.now() - start) * (rate / 1000));
+      target = Math.min(target, (index + limit), commands.length);
+
+      for (var i = index; i < target; ++i) {
+        if (!game.commandCheck(commands[i])) {
+          reject();
+          return;
+        }
+        game.update(commands[i]);
       }
-      game.update(commands[i]);
+
+      if (target < commands.length) {
+        _.defer(step, target);
+      } else {
+        resolve();
+      }
     }
-    
-    if (target < commands.length) {
-      _.defer(step, target);
-    } else {
-      def.resolve(true);
-    }
-  }
-  
-  step(0);
-  return def.promise;
+
+    step(0);
+  });
 }
 
-function validate(replay) {
-  if (!replay) return deferred(false);
-  if (!replay.validate) return deferred(false);
+async function validate(replay) {
+  if (!replay) return false;
+  if (!replay.validate) return false;
 
   var game = new Game({
     seed: replay.seed
   });
-
+  
   var alive = true;
   game.on('player-died', function(evt) {
     alive = false;
   });
+  
+  await execute(game, replay.commands, Infinity, 100);
+  
+  var invalid = [];
 
-  return execute(
-    game, replay.commands, Infinity, 100
-  ).then(function(success) {
-    var invalid = [];
+  if (!success) {
+    invalid.push('invalid inputs');
+  }
+  if (alive !== replay.validate.alive) {
+    invalid.push('player alive state mismatch');
+  }
+  if (game.score !== replay.validate.score) {
+    invalid.push('score mismatch');
+  }
 
-    if (!success) {
-      invalid.push('invalid inputs');
-    }
-    if (alive !== replay.validate.alive) {
-      invalid.push('player alive state mismatch');
-    }
-    if (game.score !== replay.validate.score) {
-      invalid.push('score mismatch');
-    }
+  if (invalid.length) {
+    console.log(invalid.join('\n'));
+  }
 
-    if (invalid.length) {
-      console.log(invalid.join('\n'));
-    }
-
-    return !invalid.length;
-  }).finally(function() {
-    game.destructor();
-  });
+  return !invalid.length;
+  
+  game.destructor();
 }
 
 function record(game, callback, replay) {

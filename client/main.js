@@ -19,14 +19,16 @@ Pages.home(new Pages.Page({
   },
   setup: function() {
     $(window).on('keydown', this.config.start);
+    
     var $save = $(this.selector).find('.save');
     $save.hide().filter('.loading').show();
-    Game.save.get().then(function(save) {
+    Game.save.get().then(save => {
       $save.hide();
       if (save) {
         $save.filter('.exists').show();
       }
     });
+    
     var $best = $(this.selector).find('.best');
     $best.hide().filter('.loading').show();
     Game.best.score().then(score => {
