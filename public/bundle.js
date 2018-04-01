@@ -1854,9 +1854,7 @@ Pages.add(new Pages.Page({
   }
 }));
 
-$(document).ready(function() {
-  Pages.setup();
-});
+Pages.setup();
 
 var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
 var audioMusicId = null;
@@ -1895,7 +1893,7 @@ window.music = function(enable) {
 };
 
 audioMusic.once('load', function() {
-  $('body').addClass('music-loaded');
+  document.body.classList.add('music-loaded');
   window.music();
 }).load();
 
@@ -1905,8 +1903,7 @@ window.fullscreenEnter = function() {
     'requestFullscreen',
     'webkitRequestFullscreen',
     'mozRequestFullScreen',
-    'msRequestFullscreen',
-    'webkitEnterFullscreen'
+    'msRequestFullscreen'
   ];
   for (var i = 0; i < names.length; ++i) {
     if (element[names[i]]) {
