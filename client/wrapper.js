@@ -94,6 +94,9 @@ function resize() {
   }
   canvas.css('transform', 'scale(' + (scale / pixel) + ')');
 }
+window.addEventListener('resize', () => {
+  if (state.game) resize();
+});
 
 var overlayCurrent = null;
 var overlayAction = null;
@@ -110,6 +113,7 @@ function overlay(name, action) {
 }
 
 window.pause = function pause(evt) {
+  console.log(evt)
   var evtCanPause = !evt ||
     (evt.type.indexOf('key') >= 0 && evt.key === 'Escape') ||
     (evt.type.indexOf('touch') >= 0 && evt.target === document.documentElement);
@@ -131,8 +135,6 @@ async function createPlayable(config) {
     best: best, locked: true
   });
   state.game = game;
-  
-  $(window).on('resize', resize);
   resize();
   
   game.on('command-check', function (evt) {
@@ -160,14 +162,15 @@ async function createPlayable(config) {
   }
   
   Replay.record(game, replayRecordSave, save);
-  $(window).on('keydown touchstart', window.pause);
+  window.addEventListener('keydown', window.pause);
+  document.body.addEventListener('touchstart', window.pause);
   game.locked = false;
 }
 
 function destroyPlayable() {
   overlay();
-  $(window).off('keydown touchstart', window.pause);
-  $(window).off('resize', resize);
+  window.removeEventListener('keydown', window.pause);
+  document.removeEventListener('touchstart', window.pause);
   state.game && state.game.destructor();
   state.game = null;
 }
@@ -186,8 +189,6 @@ async function createWatchable(config) {
     locked: true
   });
   state.game = game;
-  
-  $(window).on('resize', resize);
   resize();
   
   await Replay.execute(game, save.commands, 5);
@@ -198,7 +199,6 @@ async function createWatchable(config) {
 
 function destroyWatchable() {
   overlay();
-  $(window).off('resize', resize);
   state.game && state.game.destructor();
   state.game = null;
 }
