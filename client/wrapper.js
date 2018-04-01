@@ -159,22 +159,25 @@ async function createPlayable(config) {
     await Replay.execute(game, save.commands.slice(-1), 1.5);
   }
   
-  game.locked = false;
   Replay.record(game, replayRecordSave, save);
   $(window).on('keydown touchstart', window.pause);
+  game.locked = false;
 }
 
 function destroyPlayable() {
   overlay();
   $(window).off('keydown touchstart', window.pause);
   $(window).off('resize', resize);
-  state.game.destructor();
+  state.game && state.game.destructor();
   state.game = null;
 }
 
 async function createWatchable(config) {
   var save = await replayGetBest();
-  if (!save) config.onComplete();
+  if (!save) {
+    config.onComplete();
+    return;
+  }
   var score = Replay.getScore(save);
   
   var game = new Game({
@@ -195,7 +198,8 @@ async function createWatchable(config) {
 
 function destroyWatchable() {
   overlay();
-  state.game.destructor();
+  $(window).off('resize', resize);
+  state.game && state.game.destructor();
   state.game = null;
 }
 
