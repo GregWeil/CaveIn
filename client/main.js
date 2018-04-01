@@ -17,9 +17,9 @@ Pages.home(new Pages.Page({
     }
   },
   setup: function() {
-    $(window).on('keydown', this.config.start);
+    window.addEventListener('keydown', this.config.start);
     
-    var $save = $(this.selector).find('.save');
+    document.querySelector(this.selector + ' .save.loading');
     $save.hide().filter('.loading').show();
     Game.save.get().then(save => {
       $save.hide();
@@ -28,7 +28,7 @@ Pages.home(new Pages.Page({
       }
     });
     
-    var $best = $(this.selector).find('.best');
+    var $best = document.querySelector(this.selector + ' .best');
     $best.hide().filter('.loading').show();
     Game.best.score().then(score => {
       $best.hide();
@@ -39,7 +39,7 @@ Pages.home(new Pages.Page({
     });
   },
   teardown: function() {
-    $(window).off('keydown', this.config.start);
+    window.removeEventListener('keydown', this.config.start);
   }
 }));
 

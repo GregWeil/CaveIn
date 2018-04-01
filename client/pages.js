@@ -15,7 +15,7 @@ class Page {
   
   setup() {
     if (this.selector) {
-      document.querySelector(this.selector).style.display = '';
+      document.querySelector(this.selector).classList.add('visible');
     }
     this.funcSetup();
     this.active = true;
@@ -23,7 +23,7 @@ class Page {
   
   teardown() {
     if (this.selector) {
-      document.querySelector(this.selector).style.display = 'none';
+      document.querySelector(this.selector).classList.remove('visible')
     }
     this.funcTeardown();
     this.active = false;
@@ -89,7 +89,7 @@ function navigate(name) {
 
 function initialize() {
   setPage(getCurrentHash());
-  $(window).on('hashchange', function (evt) {
+  window.addEventListener('hashchange', evt => {
     setPage(getCurrentHash());
   });
   $(document.body).on('click', 'a[href^="#"]', function(evt) {
