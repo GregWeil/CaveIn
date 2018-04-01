@@ -1773,7 +1773,7 @@ module.exports = class Score extends BaseObject {
 /// main.js
 //Define the different pages and how they interact
 
-var Howler = require('howler');
+var { Howler, Howl } = require('howler');
 var storage = require('local-storage');
 
 var Pages = require('pages.js');
@@ -1859,7 +1859,7 @@ Pages.add(new Pages.Page({
 
 Pages.setup();
 
-var audioMusic = new Howler.Howl({ preload: false, src: ['/assets/cavein.wav'] });
+var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
 var audioMusicId = null;
 
 audioMusic.on('end', function() {
