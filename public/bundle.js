@@ -1773,7 +1773,6 @@ module.exports = class Score extends BaseObject {
 /// main.js
 //Define the different pages and how they interact
 
-var $ = require('jquery');
 var Howl = require('howler').Howl;
 var storage = require('local-storage');
 
@@ -1783,9 +1782,9 @@ var Game = require('wrapper.js');
 function showSingle(select, except) {
   document.querySelectorAll(select).forEach(e => {
     if (e.matches(except)) {
-      e.classList.add('hidden');
-    } else {
       e.classList.remove('hidden');
+    } else {
+      e.classList.add('hidden');
     }
   });
 }
@@ -1801,21 +1800,16 @@ Pages.home(new Pages.Page({
   setup: function() {
     window.addEventListener('keydown', this.config.start);
     
-    
+    showSingle(this.selector + ' .save', 'loading');
     Game.save.get().then(save => {
-      $save.hide();
-      if (save) {
-        $save.filter('.exists').show();
-      }
+      showSingle(this.selector + ' .save', save ? '.exists' : '.missing');
     });
     
-    var $best = $(this.selector + ' .best');
-    $best.hide().filter('.loading').show();
+    showSingle(this.selector + ' .best', '.loading');
     Game.best.score().then(score => {
-      $best.hide();
+      showSingle(this.selector + ' .best', score > 0 ? '.exists' : '.missing');
       if (score > 0) {
-        $best.filter('.exists').show();
-        $best.find('.score').text(score);
+        document.querySelector(this.selector + ' .best.exists .score').textContent = score;
       }
     });
   },
@@ -1938,7 +1932,7 @@ window.fullscreenExit = function() {
     }
   }
 };
-},{"howler":20,"jquery":21,"local-storage":22,"pages.js":17,"wrapper.js":19}],17:[function(require,module,exports){
+},{"howler":20,"local-storage":22,"pages.js":17,"wrapper.js":19}],17:[function(require,module,exports){
 /// pages.js
 //A really basic single page app system
 
