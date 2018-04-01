@@ -19,7 +19,7 @@ Pages.home(new Pages.Page({
   setup: function() {
     window.addEventListener('keydown', this.config.start);
     
-    document.querySelector(this.selector + ' .save.loading');
+    var $save = $(this.selector + ' .save');
     $save.hide().filter('.loading').show();
     Game.save.get().then(save => {
       $save.hide();
@@ -28,7 +28,7 @@ Pages.home(new Pages.Page({
       }
     });
     
-    var $best = document.querySelector(this.selector + ' .best');
+    var $best = $(this.selector + ' .best');
     $best.hide().filter('.loading').show();
     Game.best.score().then(score => {
       $best.hide();
@@ -92,14 +92,12 @@ var audioMusicId = null;
 audioMusic.on('end', function() {
   audioMusicId = audioMusic.play();
 }).on('play', function() {
-  $('body').addClass('music-enabled');
+  document.body.classList.add('music-enabled');
 }).on('pause', function() {
-    $('body').removeClass('music-enabled');
+  document.body.classList.remove('music-enabled');
 });
 
-$(window).on('visibilitychange', function() {
-  window.music();
-});
+window.addEventListener('visibilitychange', () => window.music());
 
 window.music = function(enable) {
   if (enable === undefined) {
@@ -109,9 +107,12 @@ window.music = function(enable) {
   } else {
     storage.set('no-music', true);
   }
+  
+  //Make sure the page is visible
   if (document.hidden) {
     enable = false;
   }
+  
   if (enable && audioMusicId === null) {
     audioMusicId = audioMusic.play();
   } else if (enable) {
