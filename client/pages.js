@@ -15,7 +15,7 @@ class Page {
   
   setup() {
     if (this.selector) {
-      document.querySelector(this.selector).classList.add('visible');
+      document.querySelector(this.selector).classList.remove('hidden');
     }
     this.funcSetup();
     this.active = true;
@@ -23,7 +23,7 @@ class Page {
   
   teardown() {
     if (this.selector) {
-      document.querySelector(this.selector).classList.remove('visible')
+      document.querySelector(this.selector).classList.add('hidden')
     }
     this.funcTeardown();
     this.active = false;
@@ -88,6 +88,7 @@ function navigate(name) {
 }
 
 function initialize() {
+  document.querySelectorAll('.page').forEach(pg => pg.classList.add('hidden'));
   setPage(getCurrentHash());
   window.addEventListener('hashchange', evt => {
     setPage(getCurrentHash());

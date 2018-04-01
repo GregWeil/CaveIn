@@ -1,7 +1,6 @@
 /// wrapper.js
 //Provide simple functions for game management
 
-var $ = require('jquery');
 var storage = require('local-storage');
 
 var Vector2 = require('vector2.js');
@@ -126,6 +125,7 @@ window.pause = function pause(evt) {
 };
 
 async function createPlayable(config) {
+  overlay();
   var save = await replayGetSave();
   var best = await replayGetBestScore();
   
@@ -168,7 +168,6 @@ async function createPlayable(config) {
 }
 
 function destroyPlayable() {
-  overlay();
   window.removeEventListener('keydown', window.pause);
   document.body.removeEventListener('touchstart', window.pause);
   state.game && state.game.destructor();
@@ -176,6 +175,7 @@ function destroyPlayable() {
 }
 
 async function createWatchable(config) {
+  overlay();
   var save = await replayGetBest();
   if (!save) {
     config.onComplete();
@@ -198,7 +198,6 @@ async function createWatchable(config) {
 }
 
 function destroyWatchable() {
-  overlay();
   state.game && state.game.destructor();
   state.game = null;
 }

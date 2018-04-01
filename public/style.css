@@ -24,7 +24,7 @@ body {
   image-rendering: pixelated;
 }
 
-.hidden, .page:not(.visible) {
+.hidden {
   display: none;
 }
 
@@ -83,7 +83,6 @@ body:not(.music-loaded) .hide-if-music-disabled,
 }
 
 #game-page .overlay {
-  display: none;
   font-size: 32px;
 }
 
