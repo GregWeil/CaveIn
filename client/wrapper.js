@@ -174,6 +174,7 @@ function destroyPlayable() {
 
 async function createWatchable(config) {
   var save = await replayGetBest();
+  if (!save) config.onComplete();
   var score = Replay.getScore(save);
   
   var game = new Game({

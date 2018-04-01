@@ -682,9 +682,12 @@ module.exports = class Collide extends BaseObject {
   
   remove(pos, instance) {
     var hash = pos.hash();
-    var data = this.getData(hash);
-    var removed = data.findIndex(item => item.instance === instance);
-    this.setData(hash, data.splice(removed, 1));
+    var data = Array.from(this.getData(hash));
+    var index = data.findIndex(item => item.instance === instance);
+    console.log(index);
+    var removed = data[index];
+    data.splice(index, 1);
+    this.setData(hash, data);
     return removed;
   }
   
@@ -699,7 +702,7 @@ module.exports = class Collide extends BaseObject {
   get(pos, config) {
     config = Object.assign({ ignore: [] }, config);
     var data = this.getData(pos.hash());
-    var item = _.find(data, function(item) {
+    var item = data.find(item => {
       if (config.ignore.includes(item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
@@ -708,7 +711,7 @@ module.exports = class Collide extends BaseObject {
   }
   
   count() {
-    return _.filter(_.values(this.collisions), 'length').length;
+    return _.filter(Object.values(this.collisions), 'length').length;
   }
 };
 },{"object.js":4,"render.js":5,"underscore":26,"vector2.js":6}],8:[function(require,module,exports){
@@ -2342,6 +2345,7 @@ function destroyPlayable() {
 
 async function createWatchable(config) {
   var save = await replayGetBest();
+  if (!save) config.onComplete();
   var score = Replay.getScore(save);
   
   var game = new Game({
