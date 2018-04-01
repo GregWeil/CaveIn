@@ -1,8 +1,6 @@
 /// collide.js
 //General grid-based collision checking
 
-var _ = require('underscore');
-
 var Vector2 = require('vector2.js');
 var Render = require('render.js');
 
@@ -62,8 +60,11 @@ module.exports = class Collide extends BaseObject {
   remove(pos, instance) {
     var hash = pos.hash();
     var data = this.getData(hash);
-    var removed = data.find(item => item.instance === instance);
-    this.setData(hash, _.without(data, removed));
+    var index = data.findIndex(item => item.instance === instance);
+    if (index < 0) return null;
+    var removed = data[index];
+    data.splice(index, 1);
+    this.setData(hash, data);
     return removed;
   }
   
@@ -78,7 +79,7 @@ module.exports = class Collide extends BaseObject {
   get(pos, config) {
     config = Object.assign({ ignore: [] }, config);
     var data = this.getData(pos.hash());
-    var item = _.find(data, function(item) {
+    var item = data.find(item => {
       if (config.ignore.includes(item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
@@ -87,6 +88,6 @@ module.exports = class Collide extends BaseObject {
   }
   
   count() {
-    return _.filter(_.values(this.collisions), 'length').length;
+    return Object.values(this.collisions).filter(data => data.length).length;
   }
 };

@@ -88,7 +88,10 @@ module.exports = class Engine extends EventEmitter {
   }
   
   destroy(inst, displayTime) {
-    inst.destroy(displayTime);
-    this.objects.splice(this.objects.indexOf(inst), 1);
+    var index = this.objects.indexOf(inst);
+    if (index >= 0) {
+      inst.destroy(displayTime);
+      this.objects.splice(index, 1);
+    }
   }
 };
