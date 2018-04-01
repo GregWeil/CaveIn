@@ -1,0 +1,11 @@
+{
+  "include": ["src/**/*.js"],
+  "compilerOptions": {
+    "outDir": "bin/",
+    "baseUrl": "src/",
+    "target": "es6",
+    "module": "commonjs",
+    "noEmit": true,
+    "allowJs": true
+  }
+}

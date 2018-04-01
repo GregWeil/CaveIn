@@ -12,8 +12,8 @@ var watchify = require('watchify');
 var express = require('express');
 
 var b = browserify({
-  entries: ['./client/main.js'],
-  paths: ['./client', './client/game', './client/engine'],
+  entries: ['./src/main.js'],
+  paths: ['./src', './src/game', './src/engine'],
   plugin: [watchify],
   cache: {}, packageCache: {}
 });
