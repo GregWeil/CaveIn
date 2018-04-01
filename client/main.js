@@ -1,7 +1,7 @@
 /// main.js
 //Define the different pages and how they interact
 
-var Howl = require('howler').Howl;
+var Howler = require('howler');
 var storage = require('local-storage');
 
 var Pages = require('pages.js');
@@ -87,7 +87,7 @@ Pages.add(new Pages.Page({
 
 Pages.setup();
 
-var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
+var audioMusic = new Howler.Howl({ preload: false, src: ['/assets/cavein.wav'] });
 var audioMusicId = null;
 
 audioMusic.on('end', function() {
@@ -98,7 +98,10 @@ audioMusic.on('end', function() {
   document.body.classList.remove('music-enabled');
 });
 
-window.addEventListener('visibilitychange', () => window.music());
+window.addEventListener('visibilitychange', () => {
+  Howler.mute(document.hidden);
+  window.music();
+});
 
 window.music = function(enable) {
   if (enable === undefined) {

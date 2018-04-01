@@ -1,8 +1,6 @@
 /// pages.js
 //A really basic single page app system
 
-var $ = require('jquery');
-
 class Page {
   constructor(config) {
     this.config = config;
@@ -91,10 +89,12 @@ function initialize() {
   document.querySelectorAll('.page').forEach(pg => pg.classList.add('hidden'));
   window.addEventListener('hashchange', evt => setPage(getCurrentHash()));
   setPage(getCurrentHash());
-  $(document.body).on('click', 'a[href^="#"]', function(evt) {
-    var link = $(evt.target).closest('a');
-    navigate(link.attr('href').slice(1));
-    evt.preventDefault();
+  document.body.addEventListener('click', evt => {
+    var link = evt.target.closest('a[href^="#"]');
+    if (link) {
+      navigate(link.attr('href').slice(1));
+      evt.preventDefault();
+    }
   });
 }
 

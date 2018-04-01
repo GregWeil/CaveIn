@@ -2,7 +2,6 @@ dependencies:
   browserify: 16.1.1
   express: 4.16.3
   howler: 2.0.9
-  jquery: 3.3.1
   local-storage: 1.4.2
   random-js: 1.0.8
   watchify: 3.11.0
@@ -946,10 +945,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-8GVWEJaj8dou9GJy+BXIQNh+DIk=
-  /jquery/3.3.1:
-    dev: false
-    resolution:
-      integrity: sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
   /json-stable-stringify/0.0.1:
     dependencies:
       jsonify: 0.0.0
@@ -1678,7 +1673,6 @@ specifiers:
   browserify: ^16.1.1
   express: ^4.16.3
   howler: ^2.0.9
-  jquery: ^3.3.1
   local-storage: ^1.4.2
   random-js: ^1.0.8
   watchify: ^3.11.0
