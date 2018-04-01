@@ -14,7 +14,8 @@
     "watchify": "^3.11.0",
     "random-js": "^1.0.8",
     "howler": "^2.0.9",
-    "local-storage": "^1.4.2"
+    "local-storage": "^1.4.2",
+    "typescript": "^2.8.1"
   },
   "engines": {
     "node": "9"
