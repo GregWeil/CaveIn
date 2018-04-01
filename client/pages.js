@@ -89,10 +89,8 @@ function navigate(name) {
 
 function initialize() {
   document.querySelectorAll('.page').forEach(pg => pg.classList.add('hidden'));
+  window.addEventListener('hashchange', evt => setPage(getCurrentHash()));
   setPage(getCurrentHash());
-  window.addEventListener('hashchange', evt => {
-    setPage(getCurrentHash());
-  });
   $(document.body).on('click', 'a[href^="#"]', function(evt) {
     var link = $(evt.target).closest('a');
     navigate(link.attr('href').slice(1));
