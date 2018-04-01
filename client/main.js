@@ -8,6 +8,16 @@ var storage = require('local-storage');
 var Pages = require('pages.js');
 var Game = require('wrapper.js');
 
+function showSingle(select, except) {
+  document.querySelectorAll(select).forEach(e => {
+    if (e.matches(except)) {
+      e.classList.add('hidden');
+    } else {
+      e.classList.remove('hidden');
+    }
+  });
+}
+
 Pages.home(new Pages.Page({
   name: 'title',
   selector: '#title-page',
@@ -19,8 +29,7 @@ Pages.home(new Pages.Page({
   setup: function() {
     window.addEventListener('keydown', this.config.start);
     
-    var $save = $(this.selector + ' .save');
-    $save.hide().filter('.loading').show();
+    show
     Game.save.get().then(save => {
       $save.hide();
       if (save) {
@@ -139,7 +148,7 @@ window.fullscreenEnter = function() {
       break;
     }
   }
-  screen.orientation.lock('landscape').catch(console.warn);
+  screen.orientation.lock('landscape');
 };
 
 window.fullscreenExit = function() {

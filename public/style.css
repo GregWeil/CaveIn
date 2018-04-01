@@ -24,7 +24,7 @@ body {
   image-rendering: pixelated;
 }
 
-.page:not(.visible) {
+.hidden, .page:not(.visible) {
   display: none;
 }
 
