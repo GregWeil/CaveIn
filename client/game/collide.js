@@ -62,8 +62,8 @@ module.exports = class Collide extends BaseObject {
   remove(pos, instance) {
     var hash = pos.hash();
     var data = this.getData(hash);
-    var removed = _.findWhere(data, { instance: instance });
-    this.setData(hash, _.without(data, removed));
+    var removed = data.findIndex(item => item.instance === instance);
+    this.setData(hash, data.splice(removed, 1));
     return removed;
   }
   
@@ -76,10 +76,10 @@ module.exports = class Collide extends BaseObject {
   }
   
   get(pos, config) {
-    config = _.extend({ ignore: [] }, config);
+    config = Object.assign({ ignore: [] }, config);
     var data = this.getData(pos.hash());
     var item = _.find(data, function(item) {
-      if (_.contains(config.ignore, item.instance)) return false;
+      if (config.ignore.includes(item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
     });

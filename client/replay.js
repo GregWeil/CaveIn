@@ -1,19 +1,17 @@
 /// replays.js
 //Replay validation and recording
 
-var _ = require('underscore');
-
 var Game = require('game.js');
 
 function execute(game, commands, rate, limit) {
   return new Promise((resolve, reject) => {
-    var start = _.now() - 1;
+    var start = performance.now() - 1;
 
     rate = rate || Infinity;
     limit = limit || Infinity;
 
     function step(index) {
-      var target = Math.round((_.now() - start) * (rate / 1000));
+      var target = Math.round((performance.now() - start) * (rate / 1000));
       target = Math.min(target, (index + limit), commands.length);
 
       for (var i = index; i < target; ++i) {
@@ -25,7 +23,7 @@ function execute(game, commands, rate, limit) {
       }
 
       if (target < commands.length) {
-        _.defer(step, target);
+        setTimeout(step, 0, target);
       } else {
         resolve();
       }

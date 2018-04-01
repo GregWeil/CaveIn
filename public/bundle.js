@@ -683,8 +683,8 @@ module.exports = class Collide extends BaseObject {
   remove(pos, instance) {
     var hash = pos.hash();
     var data = this.getData(hash);
-    var removed = _.findWhere(data, { instance: instance });
-    this.setData(hash, _.without(data, removed));
+    var removed = data.findIndex(item => item.instance === instance);
+    this.setData(hash, data.splice(removed, 1));
     return removed;
   }
   
@@ -697,10 +697,10 @@ module.exports = class Collide extends BaseObject {
   }
   
   get(pos, config) {
-    config = _.extend({ ignore: [] }, config);
+    config = Object.assign({ ignore: [] }, config);
     var data = this.getData(pos.hash());
     var item = _.find(data, function(item) {
-      if (_.contains(config.ignore, item.instance)) return false;
+      if (config.ignore.includes(item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
     });
@@ -1931,7 +1931,6 @@ window.fullscreenExit = function() {
 /// pages.js
 //A really basic single page app system
 
-var _ = require('underscore');
 var $ = require('jquery');
 
 class Page {
@@ -1939,8 +1938,8 @@ class Page {
     this.config = config;
     this.name = config.name;
     this.selector = config.selector;
-    this.funcSetup = config.setup || _.noop;
-    this.funcTeardown = config.teardown || _.noop;
+    this.funcSetup = config.setup || (() => {});
+    this.funcTeardown = config.teardown || (() => {});
     this.active = false;
   }
   
@@ -2038,23 +2037,21 @@ module.exports = {
   navigate: navigate,
   setup: initialize
 };
-},{"jquery":21,"underscore":26}],18:[function(require,module,exports){
+},{"jquery":21}],18:[function(require,module,exports){
 /// replays.js
 //Replay validation and recording
-
-var _ = require('underscore');
 
 var Game = require('game.js');
 
 function execute(game, commands, rate, limit) {
   return new Promise((resolve, reject) => {
-    var start = _.now() - 1;
+    var start = performance.now() - 1;
 
     rate = rate || Infinity;
     limit = limit || Infinity;
 
     function step(index) {
-      var target = Math.round((_.now() - start) * (rate / 1000));
+      var target = Math.round((performance.now() - start) * (rate / 1000));
       target = Math.min(target, (index + limit), commands.length);
 
       for (var i = index; i < target; ++i) {
@@ -2066,7 +2063,7 @@ function execute(game, commands, rate, limit) {
       }
 
       if (target < commands.length) {
-        _.defer(step, target);
+        setTimeout(step, 0, target);
       } else {
         resolve();
       }
@@ -2168,7 +2165,7 @@ module.exports = {
   getAlive: getAlive,
   isContinuation: isContinuation
 };
-},{"game.js":10,"underscore":26}],19:[function(require,module,exports){
+},{"game.js":10}],19:[function(require,module,exports){
 /// wrapper.js
 //Provide simple functions for game management
 

@@ -1,7 +1,6 @@
 /// pages.js
 //A really basic single page app system
 
-var _ = require('underscore');
 var $ = require('jquery');
 
 class Page {
@@ -9,8 +8,8 @@ class Page {
     this.config = config;
     this.name = config.name;
     this.selector = config.selector;
-    this.funcSetup = config.setup || _.noop;
-    this.funcTeardown = config.teardown || _.noop;
+    this.funcSetup = config.setup || (() => {});
+    this.funcTeardown = config.teardown || (() => {});
     this.active = false;
   }
   
