@@ -1949,7 +1949,7 @@ class Page {
   
   setup() {
     if (this.selector) {
-      $(this.selector).show();
+      document.querySelector(this.selector).style.display = '';
     }
     this.funcSetup();
     this.active = true;
@@ -1957,7 +1957,7 @@ class Page {
   
   teardown() {
     if (this.selector) {
-      $(this.selector).hide();
+      document.querySelector(this.selector).style.display = 'none';
     }
     this.funcTeardown();
     this.active = false;
