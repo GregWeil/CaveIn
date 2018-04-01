@@ -28,7 +28,7 @@ Pages.home(new Pages.Page({
   setup: function() {
     window.addEventListener('keydown', this.config.start);
     
-    showSingle(this.selector + ' .save', 'loading');
+    showSingle(this.selector + ' .save', '.loading');
     Game.save.get().then(save => {
       showSingle(this.selector + ' .save', save ? '.exists' : '.missing');
     });

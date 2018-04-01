@@ -29,7 +29,7 @@ function execute(game, commands, rate, limit) {
       }
     }
 
-    step(0);
+    setTimeout(step, 0, 0);
   });
 }
 
