@@ -81,9 +81,9 @@ async function replayRecordSave(replay, game) {
 
 function resize() {
   var pixel = window.devicePixelRatio;
-  var canvas = $('#game-page .area');
-  canvas.css('transform', '');
-  var sizeCanvas = new Vector2(canvas.width(), canvas.height());
+  var canvas = document.querySelector('#game-page .area');
+  canvas.style.transform = '';
+  var sizeCanvas = new Vector2(canvas.offsetWidth, canvas.offsetHeight);
   var sizeWindow = new Vector2(window.innerWidth, window.innerHeight);
   var scaleAxes = sizeWindow.divide(sizeCanvas.divide(pixel));
   var scale = Math.min(scaleAxes.x, scaleAxes.y);
@@ -92,7 +92,7 @@ function resize() {
   } else if (scale < 1) {
     scale = (1 / Math.ceil(1 / scale));
   }
-  canvas.css('transform', 'scale(' + (scale / pixel) + ')');
+  canvas.style.transform = ('scale(' + (scale / pixel) + ')');
 }
 window.addEventListener('resize', () => {
   if (state.game) resize();
@@ -101,11 +101,12 @@ window.addEventListener('resize', () => {
 var overlayCurrent = null;
 var overlayAction = null;
 function overlay(name, action) {
-  $('#game-page .overlay').hide();
+  document.querySelectorAll('#game-page .overlay')
+    .forEach(e => e.classList.add('hidden'));
   if (name) {
     overlayCurrent = name;
     overlayAction = action;
-    $('#game-page #' + name + '.overlay').show();
+    document.getElementById(name).classList.remove('hidden');
   } else {
     overlayCurrent = null;
     overlayAction = null;
@@ -113,10 +114,9 @@ function overlay(name, action) {
 }
 
 window.pause = function pause(evt) {
-  console.log(evt)
   var evtCanPause = !evt ||
-    (evt.type.indexOf('key') >= 0 && evt.key === 'Escape') ||
-    (evt.type.indexOf('touch') >= 0 && evt.target === document.documentElement);
+    (evt.type.startsWith('key') && evt.key === 'Escape') ||
+    (evt.type.startsWith('touch') && evt.target === document.body);
   var evtCanResume = !evt || evt.key === 'Escape';
   if (evtCanPause && !overlayCurrent) {
     overlay('game-pause');
@@ -170,7 +170,7 @@ async function createPlayable(config) {
 function destroyPlayable() {
   overlay();
   window.removeEventListener('keydown', window.pause);
-  document.removeEventListener('touchstart', window.pause);
+  document.body.removeEventListener('touchstart', window.pause);
   state.game && state.game.destructor();
   state.game = null;
 }
