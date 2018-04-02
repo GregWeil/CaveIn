@@ -1,7 +1,14 @@
 /// pages.js
 //A really basic single page app system
 
-class Page {
+export class Page {
+  config: any;
+  name: string;
+  selector: string;
+  funcSetup: () => void;
+  funcTeardown: () => void;
+  active: boolean
+  
   constructor(config) {
     this.config = config;
     this.name = config.name;
@@ -33,16 +40,16 @@ var home = null;
 
 var current = null;
 
-function registerPage(page) {
+export function registerPage(page) {
   pages[page.name] = page;
 }
 
-function registerHome(page) {
+export function registerHome(page) {
   registerPage(page);
   home = page;
 }
 
-function registerRedirect(from, to, func) {
+export function registerRedirect(from, to, func) {
   registerPage(new Page({
     name: from,
     setup: function() {
@@ -76,7 +83,7 @@ function getCurrentHash() {
   return window.location.hash.slice(1);
 }
 
-function navigate(name) {
+export function navigate(name) {
   var newHash = (getPage(name) !== home) ? name : '';
   if (getCurrentHash() === newHash) {
     setPage(name);
@@ -85,24 +92,15 @@ function navigate(name) {
   }
 }
 
-function initialize() {
+export function initialize() {
   document.querySelectorAll('.page').forEach(pg => pg.classList.add('hidden'));
   window.addEventListener('hashchange', evt => setPage(getCurrentHash()));
   setPage(getCurrentHash());
   document.body.addEventListener('click', evt => {
-    var link = evt.target.closest('a[href^="#"]');
+    var link = evt.target.closest('a[href^="#"]') as HTMLAnchorElement;
     if (link) {
-      navigate(link.attr('href').slice(1));
+      navigate(link.href.slice(1));
       evt.preventDefault();
     }
   });
 }
-
-module.exports = {
-  Page: Page,
-  add: registerPage,
-  home: registerHome,
-  redirect: registerRedirect,
-  navigate: navigate,
-  setup: initialize
-};

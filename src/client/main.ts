@@ -17,7 +17,7 @@ function showSingle(select, except) {
   });
 }
 
-Pages.home(new Pages.Page({
+Pages.registerHome(new Pages.Page({
   name: 'title',
   selector: '#title-page',
   start: function(evt) {
@@ -46,16 +46,16 @@ Pages.home(new Pages.Page({
   }
 }));
 
-Pages.add(new Pages.Page({
+Pages.registerPage(new Pages.Page({
   name: 'tutorial',
   selector: '#tutorial-page'
 }));
 
-Pages.redirect('newgame', 'game', function() {
+Pages.registerRedirect('newgame', 'game', function() {
   Game.save.clear();
 });
 
-Pages.add(new Pages.Page({
+Pages.registerPage(new Pages.Page({
   name: 'game',
   selector: '#game-page',
   setup: function() {
@@ -70,7 +70,7 @@ Pages.add(new Pages.Page({
   }
 }));
 
-Pages.add(new Pages.Page({
+Pages.registerPage(new Pages.Page({
   name: 'replay',
   selector: '#game-page',
   setup: function() {
@@ -85,7 +85,7 @@ Pages.add(new Pages.Page({
   }
 }));
 
-Pages.setup();
+Pages.initialize();
 
 // Background music setup
 
