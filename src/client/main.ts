@@ -133,7 +133,9 @@ audioMusic.once('load', () => {
   console.log('music loaded');
   document.body.classList.add('music-loaded');
   music();
-});
+}).on('loaderror', evt => {
+  console.warn(evt);
+}).load();
 
 // Fullscreen toggling
 
