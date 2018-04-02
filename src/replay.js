@@ -1,7 +1,7 @@
 /// replays.js
 //Replay validation and recording
 
-var Game = require('./game/game');
+var Game = require('game/game');
 
 function execute(game, commands, rate, limit) {
   return new Promise((resolve, reject) => {
