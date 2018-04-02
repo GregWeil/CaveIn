@@ -1,10 +1,9 @@
 /// collide.js
 //General grid-based collision checking
 
-var Vector2 = require('vector2.js');
-var Render = require('render.js');
-
-var BaseObject = require('object.js');
+var Vector2 = require('./engine/vector2');
+var Render = require('./engine/render');
+var BaseObject = require('./engine/object');
 
 module.exports = class Collide extends BaseObject {
   constructor(config) {

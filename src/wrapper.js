@@ -3,9 +3,9 @@
 
 var storage = require('local-storage');
 
-var Vector2 = require('vector2.js');
-var Game = require('game.js');
-var Replay = require('replay.js');
+var Vector2 = require('./engine/vector2');
+var Game = require('./game/game');
+var Replay = require('./replay');
 
 //Player game state
 

@@ -2,9 +2,9 @@
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
 
-var Vector2 = require('vector2.js');
-var Render = require('render.js');
-var BaseObject = require('object.js');
+var Vector2 = require('./engine/vector2');
+var Render = require('./engine/render');
+var BaseObject = require('./engine/object');
 
 var colors = [
   '#F00', '#0F0', '#06F', '#FF0', '#F0F', '#0FF',
