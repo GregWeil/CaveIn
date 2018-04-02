@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "bin/",
     "baseUrl": "src/",
-    "target": "es6",
+    "target": "es2017",
     "module": "commonjs",
     "strict": false,
     "allowJs": true

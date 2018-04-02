@@ -93,11 +93,11 @@ Pages.initialize();
 var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
 var audioMusicId = null;
 
-audioMusic.on('end', function() {
+audioMusic.on('end', () => {
   audioMusicId = audioMusic.play();
-}).on('play', function() {
+}).on('play', () => {
   document.body.classList.add('music-enabled');
-}).on('pause', function() {
+}).on('pause', () => {
   document.body.classList.remove('music-enabled');
 });
 
@@ -129,7 +129,8 @@ window.addEventListener('visibilitychange', () => {
   music();
 });
 
-audioMusic.once('load', function() {
+audioMusic.once('load', () => {
+  console.log('music loaded');
   document.body.classList.add('music-loaded');
   music();
 }).load();
@@ -174,11 +175,13 @@ function fullscreenExit() {
 const listeners: { [key: string]: () => void } = {
   'enable-music': () => music(true),
   'disable-music': () => music(false),
+  'enter-fullscreen': () => fullscreenEnter(),
+  'exit-fullscreen': () => fullscreenExit(),
 };
 document.addEventListener('click', (evt) => {
   Object.entries(listeners).forEach(([key, func]) => {
     const target = evt.target as HTMLElement;
-    if (target.closest('a[data-' + key + ']')) {
+    if (target.closest('a[data-onclick-' + key + ']')) {
       func();
     }
   });

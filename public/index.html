@@ -28,11 +28,11 @@
       </p>
       <p>
         <span class="show-if-music-loading">loading music</span>
-        <a onclick="music(true)" data-enable-music class="hide-if-music-enabled">enable music</a>
-        <a onclick="music(false)" data-disable-music class="hide-if-music-disabled">disable music</a>
+        <a data-onclick-enable-music class="hide-if-music-enabled">enable music</a>
+        <a data-onclick-disable-music class="hide-if-music-disabled">disable music</a>
         -
-        <a onclick="fullscreenEnter()" class="hide-if-fullscreen-enabled">fullscreen</a>
-        <a onclick="fullscreenExit()" class="hide-if-fullscreen-disabled">exit fullscreen</a>
+        <a data-onclick-enter-fullscreen class="hide-if-fullscreen-enabled">fullscreen</a>
+        <a data-onclick-exit-fullscreen class="hide-if-fullscreen-disabled">exit fullscreen</a>
       </p>
       <p><a href="#tutorial">instructions</a></p>
       <p>made for Ludum Dare 37 "One Room"</p>
@@ -50,11 +50,11 @@
             <p><span class="inverse"><a onclick="pause()">RESUME</a> or <a href="#title">TITLE</a></span></p>
             <p class="small"><span class="inverse">
               <span class="show-if-music-loading">loading music</span>
-              <a onclick="music(true)" class="hide-if-music-enabled">enable music</a>
-              <a onclick="music(false)" class="hide-if-music-disabled">disable music</a>
+              <a data-onclick-enable-music class="hide-if-music-enabled">enable music</a>
+              <a data-onclick-disable-music class="hide-if-music-disabled">disable music</a>
               -
-              <a onclick="fullscreenEnter()" class="hide-if-fullscreen-enabled">fullscreen</a>
-              <a onclick="fullscreenExit()" class="hide-if-fullscreen-disabled">exit fullscreen</a>
+              <a data-onclick-enter-fullscreen class="hide-if-fullscreen-enabled">fullscreen</a>
+              <a data-onclick-exit-fullscreen class="hide-if-fullscreen-disabled">exit fullscreen</a>
             </span></p>
           </div>
           
