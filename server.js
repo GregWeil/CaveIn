@@ -13,7 +13,6 @@ var express = require('express');
 
 var b = browserify({
   entries: ['./src/main.js'],
-  paths: ['./src', './src/game', './src/engine'],
   plugin: [watchify],
   cache: {}, packageCache: {}
 });
