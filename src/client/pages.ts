@@ -1,16 +1,23 @@
 /// pages.js
 //A really basic single page app system
 
+interface PageConfig {
+  name: string;
+  selector?: string;
+  setup?: () => void;
+  teardown?: () => void;
+}
+
 export class Page {
   name: string;
-  selector: string;
+  selector: string | null;
   funcSetup: () => void;
   funcTeardown: () => void;
   active: boolean
   
-  constructor(config: any) {
+  constructor(config: PageConfig) {
     this.name = config.name;
-    this.selector = config.selector;
+    this.selector = config.selector || null;
     this.funcSetup = config.setup || (() => {});
     this.funcTeardown = config.teardown || (() => {});
     this.active = false;
@@ -65,11 +72,10 @@ function getPage(name: string) {
 }
 
 function setPage(name?: string) {
-  const page = name ? getPage(name) : home;
   if (current) {
     current.teardown();
   }
-  current = page;
+  current = name ? getPage(name) : home;
   if (current) {
     current.setup();
   }
