@@ -17,16 +17,17 @@ function showSingle(select, except) {
   });
 }
 
+function startGame(evt) {
+  if (evt.key === ' ') {
+    Pages.navigate('game');
+  }
+}
+
 Pages.registerHome(new Pages.Page({
   name: 'title',
   selector: '#title-page',
-  start: function(evt) {
-    if (evt.key === ' ') {
-      Pages.navigate('game');
-    }
-  },
   setup: function() {
-    window.addEventListener('keydown', this.config.start);
+    window.addEventListener('keydown', startGame);
     
     showSingle(this.selector + ' .save', '.loading');
     Game.save.get().then(save => {
@@ -42,7 +43,7 @@ Pages.registerHome(new Pages.Page({
     });
   },
   teardown: function() {
-    window.removeEventListener('keydown', this.config.start);
+    window.removeEventListener('keydown', startGame);
   }
 }));
 

@@ -2,7 +2,6 @@
 //A really basic single page app system
 
 export class Page {
-  config: any;
   name: string;
   selector: string;
   funcSetup: () => void;
@@ -10,7 +9,6 @@ export class Page {
   active: boolean
   
   constructor(config) {
-    this.config = config;
     this.name = config.name;
     this.selector = config.selector;
     this.funcSetup = config.setup || (() => {});
@@ -97,7 +95,7 @@ export function initialize() {
   window.addEventListener('hashchange', evt => setPage(getCurrentHash()));
   setPage(getCurrentHash());
   document.body.addEventListener('click', evt => {
-    var link = evt.target.closest('a[href^="#"]') as HTMLAnchorElement;
+    const link = (evt.target as Element).closest('a[href^="#"]') as HTMLAnchorElement;
     if (link) {
       navigate(link.href.slice(1));
       evt.preventDefault();
