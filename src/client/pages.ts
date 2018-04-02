@@ -8,7 +8,7 @@ export class Page {
   funcTeardown: () => void;
   active: boolean
   
-  constructor(config) {
+  constructor(config: any) {
     this.name = config.name;
     this.selector = config.selector;
     this.funcSetup = config.setup || (() => {});
@@ -18,7 +18,7 @@ export class Page {
   
   setup() {
     if (this.selector) {
-      document.querySelector(this.selector).classList.remove('hidden');
+      document.querySelector(this.selector)!.classList.remove('hidden');
     }
     this.funcSetup();
     this.active = true;
@@ -26,45 +26,45 @@ export class Page {
   
   teardown() {
     if (this.selector) {
-      document.querySelector(this.selector).classList.add('hidden')
+      document.querySelector(this.selector)!.classList.add('hidden')
     }
     this.funcTeardown();
     this.active = false;
   }
 }
 
-var pages = {};
-var home = null;
+const pages: { [key: string]: Page } = {};
+let home: Page | null = null;
 
-var current = null;
+let current: Page | null = null;
 
-export function registerPage(page) {
+export function registerPage(page: Page) {
   pages[page.name] = page;
 }
 
-export function registerHome(page) {
+export function registerHome(page: Page) {
   registerPage(page);
   home = page;
 }
 
-export function registerRedirect(from, to, func) {
+export function registerRedirect(from: string, to: string, func: () => void) {
   registerPage(new Page({
     name: from,
-    setup: function() {
+    setup: () => {
       setTimeout(() => { window.location.replace('#' + to); }, 0);
       func();
     }
   }))
 }
 
-function getPage(name) {
-  if (pages[name]) {
+function getPage(name: string) {
+  if (name in pages) {
     return pages[name];
   }
   return home;
 }
 
-function setPage(page) {
+function setPage(page?: any) {
   if (page !== undefined) {
     page = getPage(page);
   }
@@ -81,8 +81,8 @@ function getCurrentHash() {
   return window.location.hash.slice(1);
 }
 
-export function navigate(name) {
-  var newHash = (getPage(name) !== home) ? name : '';
+export function navigate(name: string) {
+  const newHash = (getPage(name) !== home) ? name : '';
   if (getCurrentHash() === newHash) {
     setPage(name);
   } else {

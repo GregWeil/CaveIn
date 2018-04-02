@@ -92,7 +92,7 @@ Pages.initialize();
 // Background music setup
 
 const audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
-let audioMusicId: number | undefined = undefined;
+let audioMusicId: number | null = null;
 
 audioMusic.on('end', () => {
   audioMusicId = audioMusic.play();
@@ -116,8 +116,10 @@ function music(enable?: boolean) {
     enable = false;
   }
   
-  if (enable && audioMusicId === undefined) {
-    audioMusicId = audioMusic.play();
+  if (audioMusicId === null) {
+    if (enable) {
+      audioMusicId = audioMusic.play();
+    }
   } else if (enable) {
     audioMusic.play(audioMusicId);
   } else {
