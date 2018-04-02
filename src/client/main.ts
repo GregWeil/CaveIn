@@ -1,11 +1,11 @@
 /// main.js
 //Define the different pages and how they interact
 
-var { Howler, Howl } = require('howler');
-var storage = require('local-storage');
+import { Howler, Howl } from 'howler';
+import * as storage from 'local-storage';
 
-var Pages = require('./pages');
-var Game = require('./wrapper');
+import * as Pages from './pages';
+import * as Game from './wrapper';
 
 function showSingle(select, except) {
   document.querySelectorAll(select).forEach(e => {
@@ -103,7 +103,7 @@ window.addEventListener('visibilitychange', () => {
   window.music();
 });
 
-window.music = function(enable) {
+function music(enable) {
   if (enable === undefined) {
     enable = !storage.get('no-music');
   } else if (enable) {
@@ -131,7 +131,7 @@ audioMusic.once('load', function() {
   window.music();
 }).load();
 
-window.fullscreenEnter = function() {
+function fullscreenEnter() {
   var element = document.documentElement;
   var names = [
     'requestFullscreen',
@@ -148,7 +148,7 @@ window.fullscreenEnter = function() {
   screen.orientation.lock('landscape');
 };
 
-window.fullscreenExit = function() {
+function fullscreenExit() {
   var element = document;
   var names = [
     'exitFullscreen',
