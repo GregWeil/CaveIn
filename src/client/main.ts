@@ -7,7 +7,7 @@ import * as storage from 'local-storage';
 import * as Pages from './pages';
 import * as Game from './wrapper';
 
-function showSingle(select, except) {
+function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
     if (e.matches(except)) {
       e.classList.remove('hidden');
@@ -17,7 +17,7 @@ function showSingle(select, except) {
   });
 }
 
-function startGame(evt) {
+function startGame(evt: KeyboardEvent) {
   if (evt.key === ' ') {
     Pages.navigate('game');
   }
@@ -38,7 +38,9 @@ Pages.registerHome(new Pages.Page({
     Game.best.score().then(score => {
       showSingle(this.selector + ' .best', score > 0 ? '.exists' : '.missing');
       if (score > 0) {
-        document.querySelector(this.selector + ' .best.exists .score').textContent = score;
+        document.querySelectorAll(this.selector + ' .score').forEach(e => {
+          e.textContent = score;
+        });
       }
     });
   },
@@ -91,7 +93,7 @@ Pages.initialize();
 // Background music setup
 
 const audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
-let audioMusicId = null;
+let audioMusicId: number | undefined = undefined;
 
 audioMusic.on('end', () => {
   audioMusicId = audioMusic.play();
@@ -115,7 +117,7 @@ function music(enable?: boolean) {
     enable = false;
   }
   
-  if (enable && audioMusicId === null) {
+  if (enable && audioMusicId === undefined) {
     audioMusicId = audioMusic.play();
   } else if (enable) {
     audioMusic.play(audioMusicId);
@@ -138,16 +140,15 @@ audioMusic.once('load', () => {
 // Fullscreen toggling
 
 function fullscreenEnter() {
-  var element = document.documentElement;
-  var names = [
+  const element = document.documentElement;
+  [
     'requestFullscreen',
     'webkitRequestFullscreen',
     'mozRequestFullScreen',
     'msRequestFullscreen'
-  ];
-  for (var i = 0; i < names.length; ++i) {
-    if (element[names[i]]) {
-      element[names[i]]();
+  ].forEach(name => {
+    if (element[name]) {
+      element[name]();
       break;
     }
   }
