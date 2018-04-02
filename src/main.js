@@ -4,8 +4,8 @@
 var { Howler, Howl } = require('howler');
 var storage = require('local-storage');
 
-var Pages = require('pages.js');
-var Game = require('wrapper.js');
+var Pages = require('./pages');
+var Game = require('./wrapper');
 
 function showSingle(select, except) {
   document.querySelectorAll(select).forEach(e => {
