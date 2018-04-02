@@ -94,11 +94,4 @@ export function initialize() {
   document.querySelectorAll('.page').forEach(pg => pg.classList.add('hidden'));
   window.addEventListener('hashchange', evt => setPage(getCurrentHash()));
   setPage(getCurrentHash());
-  document.body.addEventListener('click', evt => {
-    const link = (evt.target as Element).closest('a[href^="#"]') as HTMLAnchorElement;
-    if (link) {
-      navigate(link.href.slice(1));
-      evt.preventDefault();
-    }
-  });
 }
