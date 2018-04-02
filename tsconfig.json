@@ -1,7 +1,7 @@
 {
   "include": ["src/**/*.ts", "src/**/*.js"],
   "compilerOptions": {
-    "outDir": "bin/",
+    "outDir": "/tmp/bin/",
     "baseUrl": "src/",
     "target": "es2017",
     "module": "commonjs",
