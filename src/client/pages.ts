@@ -64,14 +64,12 @@ function getPage(name: string) {
   return home;
 }
 
-function setPage(page?: any) {
-  if (page !== undefined) {
-    page = getPage(page);
-  }
+function setPage(name?: string) {
+  const page = name ? getPage(name) : home;
   if (current) {
     current.teardown();
   }
-  current = page || home;
+  current = page;
   if (current) {
     current.setup();
   }
