@@ -87,6 +87,8 @@ Pages.add(new Pages.Page({
 
 Pages.setup();
 
+// Background music setup
+
 var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
 var audioMusicId = null;
 
@@ -98,12 +100,7 @@ audioMusic.on('end', function() {
   document.body.classList.remove('music-enabled');
 });
 
-window.addEventListener('visibilitychange', () => {
-  Howler.mute(document.hidden);
-  window.music();
-});
-
-function music(enable) {
+function music(enable?: boolean) {
   if (enable === undefined) {
     enable = !storage.get('no-music');
   } else if (enable) {
@@ -126,10 +123,17 @@ function music(enable) {
   }
 };
 
+window.addEventListener('visibilitychange', () => {
+  Howler.mute(document.hidden);
+  music();
+});
+
 audioMusic.once('load', function() {
   document.body.classList.add('music-loaded');
-  window.music();
+  music();
 }).load();
+
+// Fullscreen toggling
 
 function fullscreenEnter() {
   var element = document.documentElement;
@@ -145,7 +149,7 @@ function fullscreenEnter() {
       break;
     }
   }
-  screen.orientation.lock('landscape');
+  window.screen['orientation'].lock('landscape');
 };
 
 function fullscreenExit() {
