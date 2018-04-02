@@ -17,5 +17,5 @@
       "\\.json"
     ]
   },
-  "throttle": 100
+  "throttle": 500
 }

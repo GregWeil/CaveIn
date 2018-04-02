@@ -168,3 +168,18 @@ function fullscreenExit() {
     }
   }
 };
+
+// Attach event listeners
+
+const listeners: { [key: string]: () => void } = {
+  'enable-music': () => music(true),
+  'disable-music': () => music(false),
+};
+document.addEventListener('click', (evt) => {
+  Object.entries(listeners).forEach(([key, func]) => {
+    const target = evt.target as HTMLElement;
+    if (target.closest('a[data-' + key + ']')) {
+      func();
+    }
+  });
+});
