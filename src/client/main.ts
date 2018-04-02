@@ -90,8 +90,8 @@ Pages.initialize();
 
 // Background music setup
 
-var audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
-var audioMusicId = null;
+const audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
+let audioMusicId = null;
 
 audioMusic.on('end', () => {
   audioMusicId = audioMusic.play();
@@ -133,7 +133,7 @@ audioMusic.once('load', () => {
   console.log('music loaded');
   document.body.classList.add('music-loaded');
   music();
-}).load();
+});
 
 // Fullscreen toggling
 
@@ -155,16 +155,15 @@ function fullscreenEnter() {
 };
 
 function fullscreenExit() {
-  var element = document;
-  var names = [
+  const names: string[] = [
     'exitFullscreen',
     'webkitExitFullscreen',
     'mozCancelFullScreen',
     'msExitFullscreen'
   ];
   for (var i = 0; i < names.length; ++i) {
-    if (element[names[i]]) {
-      element[names[i]]();
+    if (document[names[i]]) {
+      document[names[i]]();
       break;
     }
   }
