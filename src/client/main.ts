@@ -2,7 +2,6 @@
 //Define the different pages and how they interact
 
 import { Howler, Howl } from 'howler';
-import * as storage from 'local-storage';
 
 import * as Pages from './pages';
 import * as Game from './wrapper';
@@ -105,11 +104,11 @@ audioMusic.on('end', () => {
 
 function music(enable?: boolean) {
   if (enable === undefined) {
-    enable = !storage.get('no-music');
+    enable = !localStorage.getItem('no-music');
   } else if (enable) {
-    storage.remove('no-music');
+    localStorage.removeItem('no-music');
   } else {
-    storage.set('no-music', true);
+    localStorage.setItem('no-music', 'true');
   }
   
   //Make sure the page is visible
@@ -140,31 +139,33 @@ audioMusic.once('load', () => {
 // Fullscreen toggling
 
 function fullscreenEnter() {
-  const element = document.documentElement;
-  [
+  const element: any = document.documentElement;
+  const names = [
     'requestFullscreen',
     'webkitRequestFullscreen',
     'mozRequestFullScreen',
     'msRequestFullscreen'
-  ].forEach(name => {
-    if (element[name]) {
-      element[name]();
+  ];
+  for (let i = 0; i < names.length; ++i) {
+    if (element[names[i]]) {
+      element[names[i]]();
       break;
     }
   }
-  window.screen['orientation'].lock('landscape');
+  (window.screen as any).lock('landscape');
 };
 
 function fullscreenExit() {
-  const names: string[] = [
+  const element: any = document;
+  const names = [
     'exitFullscreen',
     'webkitExitFullscreen',
     'mozCancelFullScreen',
     'msExitFullscreen'
   ];
   for (var i = 0; i < names.length; ++i) {
-    if (document[names[i]]) {
-      document[names[i]]();
+    if (element[names[i]]) {
+      element[names[i]]();
       break;
     }
   }
