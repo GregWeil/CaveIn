@@ -1,9 +1,9 @@
 /// pathfind.js
 //Construct a grid where each cell has its distance to the player
 
-var Vector2 = require('engine/vector2');
-var Render = require('engine/render');
-var BaseObject = require('engine/object');
+var Vector2 = require('../engine/vector2');
+var Render = require('../engine/render');
+var BaseObject = require('../engine/object');
 
 function getAdjacent(pos) {
   return [

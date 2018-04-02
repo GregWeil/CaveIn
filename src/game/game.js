@@ -3,19 +3,19 @@
 
 var Random = require('random-js');
 
-var Vector2 = require('engine/vector2');
-var Render = require('engine/render');
-var Engine = require('engine/engine');
-var Input = require('engine/input');
+var Vector2 = require('../engine/vector2');
+var Render = require('../engine/render');
+var Engine = require('../engine/engine');
+var Input = require('../engine/input');
 
-var Grid = require('grid');
-var Collide = require('collide');
-var Colors = require('colors').Screen;
-var Pathfind = require('pathfind');
-var Player = require('player');
-var Enemy = require('enemy');
-var Gem = require('gem');
-var Score = require('score');
+var Grid = require('./grid');
+var Collide = require('./collide');
+var Colors = require('./colors').Screen;
+var Pathfind = require('./pathfind');
+var Player = require('./player');
+var Enemy = require('./enemy');
+var Gem = require('./gem');
+var Score = require('./score');
 
 module.exports = class Game extends Engine {
   constructor(config) {

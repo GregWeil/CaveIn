@@ -1,9 +1,9 @@
 /// grid.js
 //Grid utility functions
 
-var Vector2 = require('engine/vector2');
-var Render = require('engine/render');
-var BaseObject = require('engine/object');
+var Vector2 = require('../engine/vector2');
+var Render = require('../engine/render');
+var BaseObject = require('../engine/object');
 
 module.exports = class Grid extends BaseObject {
   constructor(config) {

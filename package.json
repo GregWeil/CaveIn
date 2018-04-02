@@ -6,12 +6,12 @@
   "version": "0.0.1",
   "description": "Ludum Dare 37",
   "scripts": {
-    "start": "node server.js"
+    "build": "browserify src/client/main.js > public/bundle.js",
+    "start": "npm run build --silent && node server.js"
   },
   "dependencies": {
     "express": "^4.16.3",
     "browserify": "^16.1.1",
-    "watchify": "^3.11.0",
     "random-js": "^1.0.8",
     "howler": "^2.0.9",
     "local-storage": "^1.4.2",

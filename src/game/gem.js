@@ -3,10 +3,10 @@
 
 var Howl = require('howler').Howl;
 
-var Vector2 = require('engine/vector2');
-var Render = require('engine/render');
-var BaseObject = require('engine/object');
-var Grid = require('grid');
+var Vector2 = require('../engine/vector2');
+var Render = require('../engine/render');
+var BaseObject = require('../engine/object');
+var Grid = require('./grid');
 
 var dimensions = new Vector2(16);
 var spritesheet = document.getElementById('spritesheet');
