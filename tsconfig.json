@@ -6,8 +6,6 @@
     "target": "es6",
     "module": "commonjs",
     "strict": false,
-    "noEmit": true,
-    "allowJs": true,
-    "checkJs": true
+    "allowJs": true
   }
 }

@@ -7,13 +7,12 @@ var app = express();
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
+app.use('/client.js', express.static('bin/client.js'));
 
 app.use('/assets', require('./assets'));
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/public/index.html');
-});
+app.get('/', express.static('public/index.html'));
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {

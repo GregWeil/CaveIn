@@ -8,8 +8,7 @@
   "restart": {
     "exclude": [
       "^public/",
-      "^bin/",
-      "^src/"
+      "^bin/"
     ],
     "include": [
       "\\.js$",
