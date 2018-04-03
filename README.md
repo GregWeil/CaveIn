@@ -12,17 +12,16 @@ Inaccessible tiles collapse, and caved in enemies haunt their place.
 
 Made for the Ludum Dare 37 (One room)
 
-[Check out the original version at cave-in-jam](https://gomix.com/#!/project/cave-in-jam)
+[Check out the original version at cave-in-jam](https://glitch.com/~cave-in-jam)
 
 
 ## Plans
 
 ### Short Term
 
-- Store previous saves
-- Better title screen (widescreen layout)
+- Migrate code to typescript
+- Watch a replay of your best score
 
 ### Long Term
 
-- Watch a replay of your best score
 - Online leaderboards
