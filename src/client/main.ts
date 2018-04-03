@@ -1,4 +1,4 @@
-/// main.js
+/// main.ts
 //Define the different pages and how they interact
 
 import { Howler, Howl } from 'howler';
@@ -165,7 +165,7 @@ function fullscreenExit() {
     'mozCancelFullScreen',
     'msExitFullscreen'
   ];
-  for (var i = 0; i < names.length; ++i) {
+  for (let i = 0; i < names.length; ++i) {
     if (element[names[i]]) {
       element[names[i]]();
       break;
