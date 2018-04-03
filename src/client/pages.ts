@@ -1,10 +1,14 @@
-/// pages.js
+/// pages.ts
 //A really basic single page app system
 
 interface PageConfig {
+  //What appears in the url
   name: string;
+  //A css selector for the page
   selector?: string;
+  //Call this on page load
   setup?: () => void;
+  //Call this on page exit
   teardown?: () => void;
 }
 

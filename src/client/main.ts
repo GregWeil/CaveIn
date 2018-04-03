@@ -53,21 +53,21 @@ Pages.registerPage(new Pages.Page({
   selector: '#tutorial-page'
 }));
 
-Pages.registerRedirect('newgame', 'game', function() {
+Pages.registerRedirect('newgame', 'game', () => {
   Game.save.clear();
 });
 
 Pages.registerPage(new Pages.Page({
   name: 'game',
   selector: '#game-page',
-  setup: function() {
+  setup: () => {
     Game.playable.create({
-      onRetry: function() {
+      onRetry: () => {
         Pages.navigate('newgame');
       }
     });
   },
-  teardown: function() {
+  teardown: () => {
     Game.playable.destroy();
   }
 }));
@@ -75,14 +75,14 @@ Pages.registerPage(new Pages.Page({
 Pages.registerPage(new Pages.Page({
   name: 'replay',
   selector: '#game-page',
-  setup: function() {
+  setup: () => {
     Game.watchable.create({
-      onComplete: function() {
+      onComplete: () => {
         Pages.navigate('title');
       }
     });
   },
-  teardown: function() {
+  teardown: () => {
     Game.watchable.destroy();
   }
 }));
