@@ -49,17 +49,12 @@ let home: Page | null = null;
 
 let current: Page | null = null;
 
-export function registerPage(page: Page) {
+export function register(page: Page) {
   pages[page.name] = page;
 }
 
-export function registerHome(page: Page) {
-  registerPage(page);
-  home = page;
-}
-
-export function registerRedirect(from: string, to: string, func: () => void) {
-  registerPage(new Page({
+export function redirect(from: string, to: string, func: () => void) {
+  register(new Page({
     name: from,
     setup: () => {
       setTimeout(() => { window.location.replace('#' + to); }, 0);
@@ -98,7 +93,8 @@ export function navigate(name: string) {
   }
 }
 
-export function initialize() {
+export function initialize(homeName: string) {
+  home = getPage(homeName);
   document.querySelectorAll('.page').forEach(pg => pg.classList.add('hidden'));
   window.addEventListener('hashchange', evt => setPage(getCurrentHash()));
   setPage(getCurrentHash());

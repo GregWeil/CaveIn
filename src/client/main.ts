@@ -2,8 +2,8 @@
 //Define the different pages and how they interact
 
 import * as Pages from './pages';
+import * as Settings from './settings';
 import * as Game from './wrapper';
-import { initialize as initSettings } from './settings';
 
 function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
@@ -21,7 +21,7 @@ function startGame(evt: KeyboardEvent) {
   }
 }
 
-Pages.registerHome(new Pages.Page({
+Pages.register(new Pages.Page({
   name: 'title',
   selector: '#title-page',
   setup: function() {
@@ -47,16 +47,16 @@ Pages.registerHome(new Pages.Page({
   }
 }));
 
-Pages.registerPage(new Pages.Page({
+Pages.register(new Pages.Page({
   name: 'tutorial',
   selector: '#tutorial-page'
 }));
 
-Pages.registerRedirect('newgame', 'game', () => {
+Pages.redirect('newgame', 'game', () => {
   Game.save.clear();
 });
 
-Pages.registerPage(new Pages.Page({
+Pages.register(new Pages.Page({
   name: 'game',
   selector: '#game-page',
   setup: () => {
@@ -71,7 +71,7 @@ Pages.registerPage(new Pages.Page({
   }
 }));
 
-Pages.registerPage(new Pages.Page({
+Pages.register(new Pages.Page({
   name: 'replay',
   selector: '#game-page',
   setup: () => {
@@ -86,5 +86,5 @@ Pages.registerPage(new Pages.Page({
   }
 }));
 
-Pages.initialize();
-initSettings();
+Pages.initialize('title');
+Settings.initialize();
