@@ -3,7 +3,6 @@ dependencies:
   browserify: 16.1.1
   express: 4.16.3
   howler: 2.0.9
-  local-storage: 1.4.2
   random-js: 1.0.8
   typescript: 2.8.1
 packages:
@@ -752,10 +751,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-/Ope3HBKSzqHls3KQZw6CvryLfQ=
-  /local-storage/1.4.2:
-    dev: false
-    resolution:
-      integrity: sha1-fsLT+38eqRqFsWDTp4UFj4e/v6U=
   /lodash.memoize/3.0.4:
     dev: false
     resolution:
@@ -1314,6 +1309,5 @@ specifiers:
   browserify: ^16.1.1
   express: ^4.16.3
   howler: ^2.0.9
-  local-storage: ^1.4.2
   random-js: ^1.0.8
   typescript: ^2.8.1

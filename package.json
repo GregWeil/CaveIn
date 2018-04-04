@@ -13,10 +13,9 @@
     "express": "^4.16.3",
     "browserify": "^16.1.1",
     "typescript": "^2.8.1",
-    "random-js": "^1.0.8",
     "howler": "^2.0.9",
     "@types/howler": "^2.0.5",
-    "local-storage": "^1.4.2"
+    "random-js": "^1.0.8"
   },
   "engines": {
     "node": "9"
