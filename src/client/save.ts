@@ -4,9 +4,9 @@
 import * as Replay from '../game/replay';
 
 let best: any | null | undefined = undefined;
+let b: boolean = false;
 export async function getBest() {
-  if (best !== undefined) {
-    return best;
-  }
+  const serializedBest = localStorage.getItem('best');
+  
   
 }
