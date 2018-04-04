@@ -5,7 +5,7 @@ import * as Pages from './pages';
 import * as Settings from './settings';
 import * as Game from './wrapper';
 
-function showSingle(select: string, except: string) {
+function showSingle(select: string, except: string): void {
   document.querySelectorAll(select).forEach(e => {
     if (e.matches(except)) {
       e.classList.remove('hidden');
@@ -15,7 +15,7 @@ function showSingle(select: string, except: string) {
   });
 }
 
-function startGame(evt: KeyboardEvent) {
+function startGame(evt: KeyboardEvent): void {
   if (evt.key === ' ') {
     Pages.navigate('game');
   }
@@ -24,7 +24,7 @@ function startGame(evt: KeyboardEvent) {
 Pages.register(new Pages.Page({
   name: 'title',
   selector: '#title-page',
-  setup: function() {
+  setup: function setup() {
     window.addEventListener('keydown', startGame);
     
     showSingle(this.selector + ' .save', '.loading');
@@ -42,7 +42,7 @@ Pages.register(new Pages.Page({
       }
     });
   },
-  teardown: function() {
+  teardown: () => {
     window.removeEventListener('keydown', startGame);
   }
 }));

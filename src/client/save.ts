@@ -3,8 +3,8 @@
 
 import * as Replay from '../game/replay';
 
-async function getBestFromStorage(): Promise<object|null> {
-  const serialized = localStorage.getItem('best');
+async function getFromStorage(name: string): Promise<object|null> {
+  const serialized = localStorage.getItem(name);
   if (!serialized) {
     return null;
   }
@@ -12,8 +12,15 @@ async function getBestFromStorage(): Promise<object|null> {
   const valid = await Replay.validate(replay);
   return valid ? replay : null;
 }
-const bestFromStorage = getBestFromStorage();
-let bestNewlyWritten = new Promise<object|null>((resolve, reject) => {});
+
+const bestFromStorage = getFromStorage('best');
+let bestFromSession = new Promise<object|null>((resolve, reject) => {});
 
 export async function getBest(): Promise<object|null> {
-  return PRom
+  return Promise.race([bestFromSession, bestFromStorage]);
+}
+
+function setBest(replay: object|null): void {
+  bestFromSession = Promise.resolve(replay);
+  localStorage.setItem('best', JSON.stringify(replay));
+}
