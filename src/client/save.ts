@@ -13,6 +13,20 @@ async function getFromStorage(name: string): Promise<object|null> {
   return valid ? replay : null;
 }
 
+class ReplayStorage {
+  name: string;
+  replayFromStorage: Promise<object|null>;
+  replayFromSession: Promise<object|null>;
+  
+  constructor(name: string) {
+    this.name = name;
+    this.replayFromStorage = getFromStorage(this.name);
+    this.replayFromSession = new Promise(resolve => {
+      
+    });
+  }
+}
+
 const bestFromStorage = getFromStorage('best');
 let bestFromSession = new Promise<object|null>((resolve, reject) => {});
 
