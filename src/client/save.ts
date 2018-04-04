@@ -3,6 +3,14 @@
 
 import * as Replay from '../game/replay';
 
+function writeToStorage(name: string, replay: object|null) {
+  if (replay) {
+    localStorage.setItem(name, JSON.stringify(replay));
+  } else {
+    localStorage.removeItem(name);
+  }
+}
+
 async function readFromStorage(name: string): Promise<object|null> {
   const serialized = localStorage.getItem(name);
   if (!serialized) {
@@ -11,14 +19,6 @@ async function readFromStorage(name: string): Promise<object|null> {
   const replay = JSON.parse(serialized);
   const valid = await Replay.validate(replay);
   return valid ? replay : null;
-}
-
-function writeToStorage(name: string, replay: object|null) {
-  if (replay) {
-    localStorage.setItem(name, JSON.stringify(replay));
-  } else {
-    localStorage.removeItem(name);
-  }
 }
 
 class StoredReplay {
@@ -52,3 +52,35 @@ class StoredReplay {
 
 const save = new StoredReplay('save');
 const best = new StoredReplay('best');
+
+export async function getSave(): Promise<object|null> {
+  const replay = await save.get();
+  return replay && Replay.getAlive(replay) ? replay : null;
+}
+
+export async function getBest(): Promise<object|null> {
+  return await best.get();
+}
+
+export async function getBestScore(): Promise<number|null> {
+  const replay = await getBest();
+  return replay ? Replay.getScore(replay) : null;
+}
+
+export function clearSave(): void {
+  save.set(null);
+}
+
+export async function save(replay: object) {
+  if (Replay.getScore(replay) <= 0) return;
+
+  save.set(Replay.getAlive(replay) ? replay : null);
+
+  const bestReplay = await getBest();
+  const isBetterScore = bestReplay && (Replay.getScore(replay) > Replay.getScore(bestReplay));
+  var isContinuation = Replay.isContinuation(replay, best);
+  if (!best || isBetterScore || isContinuation) {
+    storage.set('best', replay);
+    state.best = storage.get('best');
+  }
+}
