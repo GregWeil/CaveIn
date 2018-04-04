@@ -13,17 +13,26 @@ async function getFromStorage(name: string): Promise<object|null> {
   return valid ? replay : null;
 }
 
-class ReplayStorage {
-  name: string;
-  replayFromStorage: Promise<object|null>;
-  replayFromSession: Promise<object|null>;
+class Storage {
+  private name: string;
+  private fromStorage: Promise<object|null>;
+  private fromSession: Promise<object|null>;
+  private firstSe
   
-  constructor(name: string) {
+  public constructor(name: string) {
     this.name = name;
-    this.replayFromStorage = getFromStorage(this.name);
-    this.replayFromSession = new Promise(resolve => {
+    this.fromStorage = getFromStorage(this.name);
+    this.fromSession = new Promise<object|null>(resolve => {
       
     });
+  }
+  
+  public get(): Promise<object|null> {
+    return Promise.race([this.fromSession, this.fromStorage]);
+  }
+  
+  public set(value: object|null): void {
+    this.fromSession = Promise.resolve(value);
   }
 }
 
