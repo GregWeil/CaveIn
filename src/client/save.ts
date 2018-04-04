@@ -3,10 +3,14 @@
 
 import * as Replay from '../game/replay';
 
-let best: any | null | undefined = undefined;
-let b: boolean = false;
-export async function getBest() {
-  const serializedBest = localStorage.getItem('best');
-  
+let bestModified: boolean = false;
+let bestPromise: Promise<object|null>;
+async function getBest(): Promise<object|null> {
+  const serialized = localStorage.getItem('best');
+  if (!serialized) {
+    return null;
+  }
+  const replay = JSON.parse(serialized);
+  const valid = await Replay.validate(replay);
   
 }
