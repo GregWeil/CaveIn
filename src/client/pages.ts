@@ -7,16 +7,16 @@ interface PageConfig {
   //A css selector for the page
   selector?: string;
   //Call this on page load
-  setup?: () => void;
+  setup?: (page: Page) => void;
   //Call this on page exit
-  teardown?: () => void;
+  teardown?: (page: Page) => void;
 }
 
 export class Page {
   name: string;
   selector: string | null;
-  funcSetup: () => void;
-  funcTeardown: () => void;
+  funcSetup: (page: Page) => void;
+  funcTeardown: (page: Page) => void;
   active: boolean
   
   constructor(config: PageConfig) {
@@ -31,7 +31,7 @@ export class Page {
     if (this.selector) {
       document.querySelector(this.selector)!.classList.remove('hidden');
     }
-    this.funcSetup();
+    this.funcSetup(this);
     this.active = true;
   }
   
@@ -39,7 +39,7 @@ export class Page {
     if (this.selector) {
       document.querySelector(this.selector)!.classList.add('hidden')
     }
-    this.funcTeardown();
+    this.funcTeardown(this);
     this.active = false;
   }
 }

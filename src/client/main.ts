@@ -24,19 +24,19 @@ function startGame(evt: KeyboardEvent): void {
 Pages.register(new Pages.Page({
   name: 'title',
   selector: '#title-page',
-  setup: function setup() {
+  setup: page => {
     window.addEventListener('keydown', startGame);
     
-    showSingle(this.selector + ' .save', '.loading');
+    showSingle(page.selector + ' .save', '.loading');
     Game.save.get().then(save => {
-      showSingle(this.selector + ' .save', save ? '.exists' : '.missing');
+      showSingle(page.selector + ' .save', save ? '.exists' : '.missing');
     });
     
-    showSingle(this.selector + ' .best', '.loading');
+    showSingle(page.selector + ' .best', '.loading');
     Game.best.score().then(score => {
-      showSingle(this.selector + ' .best', score > 0 ? '.exists' : '.missing');
+      showSingle(page.selector + ' .best', score > 0 ? '.exists' : '.missing');
       if (score > 0) {
-        document.querySelectorAll(this.selector + ' .score').forEach(e => {
+        document.querySelectorAll(page.selector + ' .score').forEach(e => {
           e.textContent = score;
         });
       }
