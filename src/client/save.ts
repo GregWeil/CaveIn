@@ -3,7 +3,7 @@
 
 import * as Replay from '../game/replay';
 
-async function getFromStorage(name: string): Promise<object|null> {
+async function readFromStorage(name: string): Promise<object|null> {
   const serialized = localStorage.getItem(name);
   if (!serialized) {
     return null;
@@ -13,37 +13,42 @@ async function getFromStorage(name: string): Promise<object|null> {
   return valid ? replay : null;
 }
 
-class Storage {
+function writeToStorage(name: string, replay: object|null) {
+  if (replay) {
+    localStorage.setItem(name, JSON.stringify(replay));
+  } else {
+    localStorage.removeItem(name);
+  }
+}
+
+class StoredReplay {
   private name: string;
   private fromStorage: Promise<object|null>;
   private fromSession: Promise<object|null>;
-  private firstSe
+  private firstSet: ((value: object|null) => void)|null;
   
   public constructor(name: string) {
     this.name = name;
-    this.fromStorage = getFromStorage(this.name);
+    this.firstSet = null;
+    this.fromStorage = readFromStorage(this.name);
     this.fromSession = new Promise<object|null>(resolve => {
-      
+      this.firstSet = resolve;
     });
+  }
+  
+  public set(value: object|null): void {
+    if (this.firstSet) {
+      this.firstSet(value);
+      this.firstSet = null;
+    }
+    this.fromSession = Promise.resolve(value);
+    writeToStorage(this.name, value);
   }
   
   public get(): Promise<object|null> {
     return Promise.race([this.fromSession, this.fromStorage]);
   }
-  
-  public set(value: object|null): void {
-    this.fromSession = Promise.resolve(value);
-  }
 }
 
-const bestFromStorage = getFromStorage('best');
-let bestFromSession = new Promise<object|null>((resolve, reject) => {});
-
-export async function getBest(): Promise<object|null> {
-  return Promise.race([bestFromSession, bestFromStorage]);
-}
-
-function setBest(replay: object|null): void {
-  bestFromSession = Promise.resolve(replay);
-  localStorage.setItem('best', JSON.stringify(replay));
-}
+const save = new StoredReplay('save');
+const best = new StoredReplay('best');
