@@ -3,6 +3,7 @@
 
 import * as Pages from './pages';
 import * as Settings from './settings';
+import * as Save from './save';
 import * as Game from './wrapper';
 
 function showSingle(select: string, except: string): void {
@@ -28,14 +29,14 @@ Pages.register(new Pages.Page({
     window.addEventListener('keydown', startGame);
     
     showSingle(page.selector + ' .save', '.loading');
-    Game.save.get().then(save => {
+    Save.getSave().then(save => {
       showSingle(page.selector + ' .save', save ? '.exists' : '.missing');
     });
     
     showSingle(page.selector + ' .best', '.loading');
-    Game.best.score().then(score => {
-      showSingle(page.selector + ' .best', score > 0 ? '.exists' : '.missing');
-      if (score > 0) {
+    Save.getBestScore().then(score => {
+      showSingle(page.selector + ' .best', score ? '.exists' : '.missing');
+      if (score) {
         document.querySelectorAll(page.selector + ' .score').forEach(e => {
           e.textContent = score;
         });
@@ -53,7 +54,7 @@ Pages.register(new Pages.Page({
 }));
 
 Pages.redirect('newgame', 'game', () => {
-  Game.save.clear();
+  Save.clearSave();
 });
 
 Pages.register(new Pages.Page({

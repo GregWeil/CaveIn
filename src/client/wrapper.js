@@ -3,6 +3,7 @@
 
 var storage = require('local-storage');
 
+var Save = require('./save');
 var Vector2 = require('../engine/vector2');
 var Game = require('../game/game');
 var Replay = require('../game/replay');
@@ -126,15 +127,14 @@ window.pause = function pause(evt) {
 
 async function createPlayable(config) {
   overlay();
-  var save = await replayGetSave();
-  var best = await replayGetBestScore();
+  var save = await Save.getSave();
+  var best = await Save.getBestScore();
   
-  var game = new Game({
+  game = new Game({
     canvas: document.getElementById('canvas'),
     seed: save ? save.seed : null,
     best: best, locked: true
   });
-  state.game = game;
   resize();
   
   game.on('command-check', function (evt) {
@@ -161,7 +161,9 @@ async function createPlayable(config) {
     await Replay.execute(game, save.commands.slice(-1), 1.5);
   }
   
-  Replay.record(game, replayRecordSave, save);
+  Replay.record(game, replay => {
+    
+  }, save);
   window.addEventListener('keydown', window.pause);
   document.body.addEventListener('touchstart', window.pause);
   game.locked = false;
@@ -170,25 +172,24 @@ async function createPlayable(config) {
 function destroyPlayable() {
   window.removeEventListener('keydown', window.pause);
   document.body.removeEventListener('touchstart', window.pause);
-  state.game && state.game.destructor();
-  state.game = null;
+  game && game.destructor();
+  game = null;
 }
 
 async function createWatchable(config) {
   overlay();
-  var save = await replayGetBest();
+  var save = await Save.getBest();
   if (!save) {
     config.onComplete();
     return;
   }
   var score = Replay.getScore(save);
   
-  var game = new Game({
+  game = new Game({
     canvas: document.getElementById('canvas'),
     seed: save.seed, best: score,
     locked: true
   });
-  state.game = game;
   resize();
   
   await Replay.execute(game, save.commands, 5);
@@ -198,8 +199,8 @@ async function createWatchable(config) {
 }
 
 function destroyWatchable() {
-  state.game && state.game.destructor();
-  state.game = null;
+  game && game.destructor();
+  game = null;
 }
 
 module.exports = {
@@ -211,12 +212,4 @@ module.exports = {
     create: createWatchable,
     destroy: destroyWatchable
   },
-  save: {
-    get: replayGetSave,
-    clear: replayRemoveSave
-  },
-  best: {
-    get: replayGetBest,
-    score: replayGetBestScore
-  }
 };

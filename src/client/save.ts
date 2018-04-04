@@ -71,16 +71,15 @@ export function clearSave(): void {
   save.set(null);
 }
 
-export async function save(replay: object) {
+export async function saveReplay(replay: object) {
   if (Replay.getScore(replay) <= 0) return;
 
   save.set(Replay.getAlive(replay) ? replay : null);
 
   const bestReplay = await getBest();
-  const isBetterScore = bestReplay && (Replay.getScore(replay) > Replay.getScore(bestReplay));
-  var isContinuation = Replay.isContinuation(replay, best);
-  if (!best || isBetterScore || isContinuation) {
-    storage.set('best', replay);
-    state.best = storage.get('best');
+  const isBetterScore = !bestReplay || Replay.getScore(replay) > Replay.getScore(bestReplay);
+  const isContinuation = Replay.isContinuation(replay, bestReplay);
+  if (!bestReplay || isBetterScore || isContinuation) {
+    best.set(replay);
   }
 }
