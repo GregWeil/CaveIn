@@ -38,7 +38,7 @@ Pages.register(new Pages.Page({
       showSingle(page.selector + ' .best', score ? '.exists' : '.missing');
       if (score) {
         document.querySelectorAll(page.selector + ' .score').forEach(e => {
-          e.textContent = score;
+          e.textContent = score.toString();
         });
       }
     });

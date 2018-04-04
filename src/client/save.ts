@@ -21,6 +21,8 @@ async function readFromStorage(name: string): Promise<object|null> {
   return valid ? replay : null;
 }
 
+//Two promises: one validates the saved value and the other waits for a new value
+//On setting a new value, resolve the promise an
 class StoredReplay {
   private name: string;
   private fromStorage: Promise<object|null>;

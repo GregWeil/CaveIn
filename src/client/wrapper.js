@@ -1,8 +1,6 @@
 /// wrapper.js
 //Provide simple functions for game management
 
-var storage = require('local-storage');
-
 var Save = require('./save');
 var Vector2 = require('../engine/vector2');
 var Game = require('../game/game');
@@ -10,72 +8,7 @@ var Replay = require('../game/replay');
 
 //Player game state
 
-var state = {
-  game: null, //The active game
-  save: undefined, //The player's save, undefined is unloaded
-  best: undefined //The players's best replay, undefined is unloaded
-};
-
-//Saves for the current and best game
-
-async function replayGet(name, validate) {
-  if (state[name] !== undefined) {
-    return state[name];
-  }
-  var nameDeferred = name + '_loader';
-  if (!state[nameDeferred]) {
-    //This is the first request, load and validate
-    validate = validate || (replay => true);
-    var replay = storage.get(name);
-    state[nameDeferred] = Replay.validate(replay).then(
-      valid => valid && validate(replay)
-    ).then(valid => {
-      //Make sure nothing touched it while we were working
-      if (state[name] === undefined) {
-        state[name] = valid ? replay : null;
-        state[nameDeferred] = undefined;
-      }
-      return state[name];
-    });
-  }
-  return await state[nameDeferred];
-}
-
-async function replayGetBest() {
-  return await replayGet('best');
-}
-
-async function replayGetBestScore() {
-  var replay = await replayGetBest();
-  return replay ? Replay.getScore(replay) : null;
-}
-
-async function replayGetSave() {
-  return await replayGet('save', replay => Replay.getAlive(replay));
-}
-
-function replayRemoveSave() {
-  state.save = null;
-}
-
-//Record the player's current game
-
-async function replayRecordSave(replay, game) {
-  if (game !== state.game) return;
-  if (!replay) return;
-  if (Replay.getScore(replay) <= 0) return;
-
-  storage.set('save', Replay.getAlive(replay) ? replay : null);
-  state.save = storage.get('save');
-
-  var best = await replayGetBest();
-  var isBetterScore = best && (Replay.getScore(replay) > Replay.getScore(best));
-  var isContinuation = Replay.isContinuation(replay, best);
-  if (!best || isBetterScore || isContinuation) {
-    storage.set('best', replay);
-    state.best = storage.get('best');
-  }
-}
+var game = null;
 
 //Manipulate the player's game
 
@@ -95,7 +28,7 @@ function resize() {
   canvas.style.transform = ('scale(' + (scale / pixel) + ')');
 }
 window.addEventListener('resize', () => {
-  if (state.game) resize();
+  if (game) resize();
 });
 
 var overlayCurrent = null;
@@ -161,8 +94,10 @@ async function createPlayable(config) {
     await Replay.execute(game, save.commands.slice(-1), 1.5);
   }
   
-  Replay.record(game, replay => {
-    
+  Replay.record(game, (replay, replayGame) => {
+    if (replayGame == game) {
+      Save.saveReplay(replay);
+    }
   }, save);
   window.addEventListener('keydown', window.pause);
   document.body.addEventListener('touchstart', window.pause);
