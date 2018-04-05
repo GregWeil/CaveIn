@@ -2,7 +2,7 @@
 //Provide simple functions for game management
 
 var Save = require('./save');
-var Vector2 = require('../engine/vector2');
+var Vector2 = require('../engine/vector2').default;
 var Game = require('../game/game');
 var Replay = require('../game/replay');
 

@@ -1,7 +1,7 @@
 /// input.js
 //Take player input and send it to the game
 
-var Vector2 = require('./vector2');
+var Vector2 = require('./vector2').default;
 
 class Input {
   constructor(config) {

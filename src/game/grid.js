@@ -1,7 +1,7 @@
 /// grid.js
 //Grid utility functions
 
-var Vector2 = require('../engine/vector2');
+var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
 var BaseObject = require('../engine/object');
 

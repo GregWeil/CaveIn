@@ -1,7 +1,7 @@
 /// vector2.js
 //A point class
 
-export class Vector2 {
+export default class Vector2 {
   x: number;
   y: number
   

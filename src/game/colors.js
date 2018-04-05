@@ -2,7 +2,7 @@
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
 
-var Vector2 = require('../engine/vector2');
+var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
 var BaseObject = require('../engine/object');
 

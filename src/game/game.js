@@ -3,7 +3,7 @@
 
 var Random = require('random-js');
 
-var Vector2 = require('../engine/vector2');
+var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
 var Engine = require('../engine/engine');
 var Input = require('../engine/input');

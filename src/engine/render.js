@@ -1,7 +1,7 @@
 /// render.js
 //A bunch of utility functions for drawing things
 
-var Vector2 = require('./vector2');
+var Vector2 = require('./vector2').default;
 
 var ctx = null;
 

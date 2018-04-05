@@ -1,7 +1,7 @@
 /// collide.js
 //General grid-based collision checking
 
-var Vector2 = require('../engine/vector2');
+var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
 var BaseObject = require('../engine/object');
 
