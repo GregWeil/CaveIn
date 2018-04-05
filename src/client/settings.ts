@@ -55,7 +55,7 @@ export function fullscreenEnter() {
       break;
     }
   }
-  (window.screen as any).lock('landscape');
+  (window as any).screen.orientation.lock('landscape');
 };
 
 export function fullscreenExit() {
@@ -95,10 +95,12 @@ export function initialize() {
   };
   document.addEventListener('click', (evt) => {
     const target = (evt.target as HTMLElement).closest('a');
-    Object.entries(listeners).forEach(([key, func]) => {
-      if (target.is('[data-onclick-' + key + ']')) {
-        func();
-      }
-    });
+    if (target) {
+      Object.entries(listeners).forEach(([key, func]) => {
+        if (target.hasAttribute('data-onclick-' + key)) {
+          func();
+        }
+      });
+    }
   });
 }
