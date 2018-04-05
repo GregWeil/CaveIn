@@ -83,7 +83,6 @@ export function initialize() {
   });
   
   audioMusic.once('load', () => {
-    console.log('music loaded');
     document.body.classList.add('music-loaded');
     music();
   }).load();
@@ -95,9 +94,9 @@ export function initialize() {
     'exit-fullscreen': () => fullscreenExit(),
   };
   document.addEventListener('click', (evt) => {
+    const target = (evt.target as HTMLElement).closest('a');
     Object.entries(listeners).forEach(([key, func]) => {
-      const target = evt.target as HTMLElement;
-      if (target.closest('a[data-onclick-' + key + ']')) {
+      if (target.is('[data-onclick-' + key + ']')) {
         func();
       }
     });
