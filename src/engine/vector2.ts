@@ -1,7 +1,7 @@
 /// vector2.js
 //A point class
 
-export default class Vector2 {
+export class Vector2 {
   x: number;
   y: number
   
@@ -10,6 +10,9 @@ export default class Vector2 {
     this.y = y !== undefined ? y : this.x;
   }
   
+  static new(): Vector2;
+  static new(x: number): Vector2;
+  static new(x: number, y: number): Vector2;
   static new(x?: number, y?: number): Vector2 {
     return new Vector2(x, y);
   }
@@ -18,20 +21,26 @@ export default class Vector2 {
     return new Vector2(this.x, this.y);
   }
   
+  plus(a: Vector2): Vector2;
+  plus(a: number, b?: number): Vector2;
   plus(a: Vector2|number, b?: number): Vector2 {
     if (a instanceof Vector2) {
-      return new Vector2((this.x + a.x), (this.y + a.y));
+      return new Vector2(this.x + a.x, this.y + a.y);
     } else {
       return this.plus(new Vector2(a, b));
     }
   }
+  minus(a: Vector2): Vector2;
+  minus(a: number, b?: number): Vector2;
   minus(a: Vector2|number, b?: number): Vector2 {
     if (a instanceof Vector2) {
-      return this.plus(a.multiply(-1));
+      return new Vector2(this.x - a.x, this.y - a.y);
     } else {
       return this.minus(new Vector2(a, b));
     }
   }
+  multiply(a: Vector2): Vector2;
+  multiply(a: number, b?: number): Vector2;
   multiply(a: Vector2|number, b?: number): Vector2 {
     if (a instanceof Vector2) {
       return new Vector2(this.x * a.x, this.y * a.y);
@@ -39,6 +48,8 @@ export default class Vector2 {
       return this.multiply(new Vector2(a, b));
     }
   }
+  divide(a: Vector2): Vector2;
+  divide(a: number, b?: number): Vector2;
   divide(a: Vector2|number, b?: number): Vector2 {
     if (a instanceof Vector2) {
       return new Vector2(this.x / a.x, this.y / a.y);
@@ -47,6 +58,8 @@ export default class Vector2 {
     }
   }
   
+  equals(a: Vector2): boolean;
+  equals(a: number, b?: number): boolean;
   equals(a: Vector2|number, b?: number): boolean {
     if (a instanceof Vector2) {
       return (this.x == a.x && this.y == a.y);
