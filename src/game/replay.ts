@@ -4,9 +4,9 @@
 import * as Game from './game';
 
 class ReplayExecutor {
-  replay: Replay;
-  game: any;
-  step: number;
+  private replay: Replay;
+  private game: any;
+  private step: number;
   
   constructor(replay: Replay, game: any) {
     this.replay = replay;
@@ -25,6 +25,12 @@ class ReplayExecutor {
       goal = this.replay.commands.length;
     } else if (goal < 0) {
       goal += this.replay.commands.length;
+    }
+    
+    let time = performance.now();
+    while (this.step < goal) {
+      if (!this
+      this.step += 1;
     }
     
     // The following bit should really get rewritten
@@ -58,8 +64,6 @@ class ReplayExecutor {
 
       setTimeout(step, 0, this.step);
     });
-    
-    this.step = goal;
   }
 }
 
