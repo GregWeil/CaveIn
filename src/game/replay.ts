@@ -16,40 +16,62 @@ export default class Replay {
     this.score = -1;
   }
   
-  async validate(replay: any) {
-    if (!replay) return false;
-    if (!replay.validate) return false;
+  record(game: any, callback: (replay: Replay, game: any) => void) {
+    callback(this, game);
 
-    var game: any = new Game({
-      seed: replay.seed
+    game.on('update', (evt: any) => {
+      this.commands.push(evt.data.command);
+    }, undefined, -Infinity);
+
+    game.on('score', (evt: any) => {
+      this.score = game.score;
+    }, undefined, Infinity);
+
+    game.on('player-died', (evt: any) => {
+      this.alive = false;
+    }, undefined, Infinity);
+
+    game.on('update', (evt: any) => {
+      callback(this, game);
+    }, undefined, Infinity);
+  }
+  
+  execute(game: any): Promise<void>;
+  execute(game: any, rate: number): Promise<void>;
+  execute(game: any, rate: (i: number) => number): Promise<void>;
+  execute(game: any, rate?: number|((i: number) => number)): Promise<void> {
+    return new Promise(resolve => resolve());
+  }
+  
+  async validate() {
+    const game: any = new Game({
+      seed: this.seed
     });
 
-    var alive = true;
+    let alive = true;
     game.on('player-died', (evt: any) => {
       alive = false;
     });
 
-    var invalid = [];
+    const invalid = [];
 
     try {
-      await execute(game, replay.commands, Infinity, 500);
+      await execute(game, this.commands, Infinity, 500);
     } catch (e) {
       invalid.push('invalid inputs');
     }
-    if (alive && !replay.validate.alive) {
+    if (alive && !this.alive) {
       invalid.push('player should have died');
     }
-    if (!alive && replay.validate.alive) {
+    if (!alive && this.alive) {
       invalid.push('player should have lived');
     }
-    if (game.score !== replay.validate.score) {
+    if (game.score !== this.score) {
       invalid.push('score mismatch');
     }
     game.destructor();
 
-    if (invalid.length) {
-      console.log(invalid.join('\n'));
-    }
+    invalid.forEach(reason => console.log(reason));
 
     return !invalid.length;
   }
