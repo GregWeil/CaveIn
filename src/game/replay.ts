@@ -7,16 +7,22 @@ class Replay {
   commands: string[];
   seed: number;
   
-  protected validate: {
-    score: number;
-    alive: 
-  };
+  private expectAlive: boolean;
+  private expectScore: number;
   
   constructor() {
     this.commands = [];
     this.seed = 0;
     this.expectAlive = false;
     this.expectScore = -1;
+  }
+  
+  getAlive() {
+    return this.expectAlive;
+  }
+  
+  getScore() {
+    return this.expectScore;
   }
   
   static deserialize(json: string): Replay|null {
@@ -29,10 +35,13 @@ class Replay {
       replay.seed = data.seed;
       replay.expectAlive = data.validate.alive;
       replay.expectScore = data.validate.score;
+      return replay;
     }
     return null;
   }
 }
+
+(window as any).replay = Replay;
 
 function execute(game: any, commands: string[], rate: number, limit: number) {
   return new Promise((resolve, reject) => {
