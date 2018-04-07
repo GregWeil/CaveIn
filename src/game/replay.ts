@@ -16,31 +16,11 @@ export default class Replay {
     this.score = -1;
   }
   
-  record(game: any, callback: (replay: Replay, game: any) => void) {
-    callback(this, game);
-
-    game.on('update', (evt: any) => {
-      this.commands.push(evt.data.command);
-    }, undefined, -Infinity);
-
-    game.on('score', (evt: any) => {
-      this.score = game.score;
-    }, undefined, Infinity);
-
-    game.on('player-died', (evt: any) => {
-      this.alive = false;
-    }, undefined, Infinity);
-
-    game.on('update', (evt: any) => {
-      callback(this, game);
-    }, undefined, Infinity);
-  }
-  
-  execute(game: any): Promise<void>;
-  execute(game: any, rate: number): Promise<void>;
-  execute(game: any, rate: (i: number) => number): Promise<void>;
-  execute(game: any, rate?: number|((i: number) => number)): Promise<void> {
-    return new Promise(resolve => resolve());
+  async execute(game: any): Promise<void>;
+  async execute(game: any, rate: number): Promise<void>;
+  async execute(game: any, rate: (i: number) => number): Promise<void>;
+  async execute(game: any, rate?: number|((i: number) => number)): Promise<void> {
+    await new Promise(resolve => resolve());
   }
   
   async validate() {
@@ -85,6 +65,26 @@ export default class Replay {
       }
     }
     return true;
+  }
+  
+  record(game: any, callback: (replay: Replay, game: any) => void) {
+    callback(this, game);
+
+    game.on('update', (evt: any) => {
+      this.commands.push(evt.data.command);
+    }, undefined, -Infinity);
+
+    game.on('score', (evt: any) => {
+      this.score = game.score;
+    }, undefined, Infinity);
+
+    game.on('player-died', (evt: any) => {
+      this.alive = false;
+    }, undefined, Infinity);
+
+    game.on('update', (evt: any) => {
+      callback(this, game);
+    }, undefined, Infinity);
   }
   
   serialize(): string {
