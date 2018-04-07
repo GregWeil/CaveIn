@@ -5,15 +5,19 @@
 //Prioritized handlers, lower numbers first
 //Unbind handlers by setting hander.active = false
 
-class Event {
-  constructor(data) {
-    this.source = data.source;
-    this.type = data.type;
-    this.data = data.data;
+export class Event {
+  source: EventEmitter;
+  type: string;
+  data: object;
+  
+  constructor(source: object, name: string, data: object) {
+    this.source = source;
+    this.type = name;
+    this.data = data;
   }
 }
 
-class Handler {
+export class Handler {
   constructor(data) {
     this.active = true;
     
@@ -30,21 +34,17 @@ class Handler {
   }
 }
 
-module.exports = class EventEmitter {
+export class EventEmitter {
   constructor() {
     this.handlers = {};
   }
   
-  emit(type, data) {
-    var event = new Event({
-      source: this,
-      type: type,
-      data: data || {}
-    });
+  emit(name: string, data?: object): Event {
+    const event = new Event(this, name, data || {});
     
-    var handlers = this.handlers[type] || [];
+    let handlers = this.handlers[name] || [];
     handlers = handlers.filter(handler => handler.active);
-    this.handlers[type] = handlers;
+    this.handlers[name] = handlers;
     
     for (let i = 0; i < handlers.length; ++i) {
       handlers[i].handle(event);
@@ -53,16 +53,16 @@ module.exports = class EventEmitter {
     return event;
   }
   
-  on(type, func, as, priority) {
+  on(name, func, as, priority) {
     var handler = new Handler({
-      type: type,
+      type: name,
       func: func,
       priority: priority,
       as: as
     });
     var handlers = this.handlers[handler.type] || [];
     
-    var index;
+    const index = handlers.findIndex(h => h.pr
     for (index = 0; index < handlers.length; ++index) {
       if (handlers[index].priority > handler.priority) break;
     }
