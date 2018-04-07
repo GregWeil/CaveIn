@@ -3,7 +3,7 @@
 
 import * as Game from './game';
 
-class Replay {
+export default class Replay {
   seed: number;
   commands: string[];
   alive: boolean;
@@ -16,10 +16,52 @@ class Replay {
     this.score = -1;
   }
   
+  async validate(replay: any) {
+    if (!replay) return false;
+    if (!replay.validate) return false;
+
+    var game: any = new Game({
+      seed: replay.seed
+    });
+
+    var alive = true;
+    game.on('player-died', (evt: any) => {
+      alive = false;
+    });
+
+    var invalid = [];
+
+    try {
+      await execute(game, replay.commands, Infinity, 500);
+    } catch (e) {
+      invalid.push('invalid inputs');
+    }
+    if (alive && !replay.validate.alive) {
+      invalid.push('player should have died');
+    }
+    if (!alive && replay.validate.alive) {
+      invalid.push('player should have lived');
+    }
+    if (game.score !== replay.validate.score) {
+      invalid.push('score mismatch');
+    }
+    game.destructor();
+
+    if (invalid.length) {
+      console.log(invalid.join('\n'));
+    }
+
+    return !invalid.length;
+  }
+  
   isContinuationOf(other: Replay) {
     if (this.seed !== other.seed) return false;
-    if (this.score < other.score) return false;
     if (this.commands.length < other.commands.length) return false;
+    for (let i = 0; i < other.commands.length; ++i) {
+      if (this.commands[i] !== other.commands[i]) {
+        return false;
+      }
+    }
     return true;
   }
   
@@ -52,7 +94,7 @@ class Replay {
 
 (window as any).replay = Replay;
 
-function execute(game: any, commands: string[], rate: number, limit: number) {
+export function execute(game: any, commands: string[], rate: number, limit: number) {
   return new Promise((resolve, reject) => {
     var start = performance.now() - 1;
 
@@ -82,7 +124,7 @@ function execute(game: any, commands: string[], rate: number, limit: number) {
   });
 }
 
-async function validate(replay: any) {
+export async function validate(replay: any) {
   if (!replay) return false;
   if (!replay.validate) return false;
   
@@ -120,7 +162,7 @@ async function validate(replay: any) {
   return !invalid.length;
 }
 
-function record(game: any, callback: (replay: any, game: any) => void, replay: any) {
+export function record(game: any, callback: (replay: any, game: any) => void, replay: any) {
   replay = replay || {
     seed: game.randomSeed,
     commands: [],
@@ -150,27 +192,18 @@ function record(game: any, callback: (replay: any, game: any) => void, replay: a
   }, undefined, Infinity);
 }
 
-function getScore(replay: any) {
+export function getScore(replay: any) {
   return replay.validate.score;
 }
 
-function getAlive(replay: any) {
+export function getAlive(replay: any) {
   return replay.validate.alive;
 }
 
-function isContinuation(long: any, short: any): boolean {
+export function isContinuation(long: any, short: any): boolean {
   if (!long || !short) return false;
   if (long.seed !== short.seed) return false;
   if (getScore(long) < getScore(short)) return false;
   if (long.commands.length < short.commands.length) return false;
   return true;
 }
-
-export {
-  execute,
-  validate,
-  record,
-  getScore,
-  getAlive,
-  isContinuation
-};
