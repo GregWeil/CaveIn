@@ -6,7 +6,6 @@ import * as Game from './game';
 class Replay {
   seed: number;
   commands: string[];
-  
   alive: boolean;
   score: number;
   
@@ -19,9 +18,13 @@ class Replay {
   
   serialize(): string {
     return JSON.stringify({
-      seed: this.seeds,
+      seed: this.seed,
       commands: this.commands,
-      validate: 
+      validate: {
+        alive: this.alive,
+        score: this.score,
+        version: 1,
+      },
     });
   }
   
