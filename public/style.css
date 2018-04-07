@@ -44,7 +44,7 @@ body {
   color: red;
 }
 
-.inverse a:active {
+.inverse a:active,  {
   color: orange;
 }
 

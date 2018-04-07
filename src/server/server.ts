@@ -9,7 +9,7 @@ const app = express();
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
-app.use('/client.js', express.static('/tmp/bin/client.js'));
+app.use('/client.js', express.static('bin/client.js'));
 
 app.use('/assets', assets);
 

@@ -96,7 +96,7 @@ export function initialize() {
     'exit-fullscreen': () => fullscreenExit(),
   };
   document.addEventListener('click', (evt) => {
-    const target = (evt.target as HTMLElement).closest('a, button');
+    const target = (evt.target as HTMLElement).closest('a');
     if (target) {
       Object.entries(listeners).forEach(([key, func]) => {
         if (target.hasAttribute('data-onclick-' + key)) {

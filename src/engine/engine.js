@@ -1,7 +1,7 @@
 /// engine.js
 //Main engine loop
 
-var EventEmitter = require('./events');
+var EventEmitter = require('./events').EventEmitter;
 var Render = require('./render');
 
 module.exports = class Engine extends EventEmitter {

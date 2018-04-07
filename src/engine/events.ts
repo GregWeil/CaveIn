@@ -66,7 +66,8 @@ export class EventEmitter {
     const handler = new Handler(name, func, priority, ctx);
     
     let handlers = this.handlers[handler.type] || [];
-    const index = handlers.findIndex(h => h.priority > handler.priority);
+    let index = handlers.findIndex(h => h.priority > handler.priority);
+    if (index < 0) index = handlers.length;
     handlers.splice(index, 0, handler);
     this.handlers[handler.type] = handlers;
     
