@@ -27,11 +27,13 @@ class ReplayExecutor {
       goal += this.replay.commands.length;
     }
     
-    let time = performance.now();
+    let lastStepTime = performance.now();
+    let stepsSinceLastBreak = 0;
     while (this.step < goal) {
-      const nextTime = time + 1000/rate;
-      while (nextTime > performance.now()) {
+      const nextTime = lastStepTime + 1000/rate;
+      while (nextTime > performance.now() || stepsSinceLastBreak >= 50) {
         await new Promise(resolve => setTimeout(resolve));
+        stepsSinceLastBreak = 0;
       }
       
       if (!this.game.active) {
@@ -46,7 +48,8 @@ class ReplayExecutor {
       this.game.update(command);
       
       this.step += 1;
-      time += 1000/rate;
+      lastStepTime = nextTime;
+      stepsSinceLastBreak += 1;
     }
   }
 }
@@ -162,34 +165,4 @@ export default class Replay {
     }
     return null;
   }
-}
-
-export function execute(game: any, commands: string[], rate: number, limit: number) {
-  return new Promise((resolve, reject) => {
-    var start = performance.now() - 1;
-
-    rate = rate || Infinity;
-    limit = limit || Infinity;
-
-    function step(index: number) {
-      var target = Math.round((performance.now() - start) * (rate / 1000));
-      target = Math.min(target, (index + limit), commands.length);
-
-      for (var i = index; i < target; ++i) {
-        if (!game.commandCheck(commands[i])) {
-          reject();
-          return;
-        }
-        game.update(commands[i]);
-      }
-
-      if (target < commands.length) {
-        setTimeout(step, 0, target);
-      } else {
-        resolve();
-      }
-    }
-
-    setTimeout(step, 0, 0);
-  });
 }
