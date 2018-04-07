@@ -88,18 +88,20 @@ async function createPlayable(config) {
   if (save) {
     const executor = save.getExecutor(game);
     game.silent = true;
-    await executor.execute(game, save.commands.slice(0, -100), 2500, 100);
-    await Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
+    await executor.execute(2500, -100);
+    await executor.execute(500, -5);
     game.silent = false;
-    await Replay.execute(game, save.commands.slice(-5, -1), 5);
-    await Replay.execute(game, save.commands.slice(-1), 1.5);
+    await executor.execute(5, -1);
+    await executor.execute(1.5);
+  } else {
+    save = new Replay(game.randomSeed);
   }
   
-  Replay.record(game, (replay, replayGame) => {
+  save.record(game, (replay, replayGame) => {
     if (replayGame == game) {
       Save.saveReplay(replay);
     }
-  }, save);
+  });
   window.addEventListener('keydown', window.pause);
   document.body.addEventListener('touchstart', window.pause);
   game.locked = false;
@@ -119,11 +121,10 @@ async function createWatchable(config) {
     config.onComplete();
     return;
   }
-  var score = Replay.getScore(save);
   
   game = new Game({
     canvas: document.getElementById('canvas'),
-    seed: save.seed, best: score,
+    seed: save.seed, best: save.score,
     locked: true
   });
   resize();

@@ -14,14 +14,19 @@ class ReplayExecutor {
     this.step = 0;
   }
   
-  async execute(rate: number, steps?: number) {
-    if (steps === undefined) {
-      steps = Infinity;
-    } else if (steps < 0) {
+  async execute(rate: number, goal?: number) {
+    if (goal === undefined) {
+      goal = Infinity;
+    } else if (goal < -this.replay.commands.length) {
       return;
     }
-    await execute(this.game, this.replay.commands.slice(this.step, this.step + steps), rate, 100);
-    this.step += steps;
+    if (goal > this.replay.commands.length) {
+      goal = this.replay.commands.length;
+    } else if (goal < 0) {
+      goal += this.replay.commands.length;
+    }
+    await execute(this.game, this.replay.commands.slice(this.step, goal), rate, 100);
+    this.step = goal;
   }
 }
 
@@ -42,6 +47,11 @@ export default class Replay {
     return new ReplayExecutor(this, game);
   }
   
+  async execute(game: any, rate?: number) {
+    const executor = this.getExecutor(game);
+    await executor.execute(rate || Infinity);
+  }
+  
   async validate() {
     const game: any = new Game({
       seed: this.seed
@@ -55,7 +65,7 @@ export default class Replay {
     const invalid = [];
 
     try {
-      await execute(game, this.commands, Infinity, 500);
+      await this.execute(game);
     } catch (e) {
       invalid.push('invalid inputs');
     }
