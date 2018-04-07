@@ -39,6 +39,11 @@ export function music(enable?: boolean) {
   }
 }
 
+audioMusic.once('load', () => {
+  document.body.classList.add('music-loaded');
+  music();
+});
+
 // Fullscreen toggling
 
 export function fullscreenEnter() {
@@ -82,10 +87,7 @@ export function initialize() {
     music();
   });
   
-  audioMusic.once('load', () => {
-    document.body.classList.add('music-loaded');
-    music();
-  }).load();
+  audioMusic.load();
   
   const listeners: { [key: string]: () => void } = {
     'enable-music': () => music(true),
@@ -94,7 +96,7 @@ export function initialize() {
     'exit-fullscreen': () => fullscreenExit(),
   };
   document.addEventListener('click', (evt) => {
-    const target = (evt.target as HTMLElement).closest('a');
+    const target = (evt.target as HTMLElement).closest('a, button');
     if (target) {
       Object.entries(listeners).forEach(([key, func]) => {
         if (target.hasAttribute('data-onclick-' + key)) {
