@@ -4,7 +4,7 @@
 var Save = require('./save');
 var Vector2 = require('../engine/vector2').default;
 var Game = require('../game/game');
-var Replay = require('../game/replay');
+var Replay = require('../game/replay').default;
 
 //Player game state
 

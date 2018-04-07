@@ -20,7 +20,11 @@ export default class Replay {
   async execute(game: any, rate: number): Promise<void>;
   async execute(game: any, rate: (i: number) => number): Promise<void>;
   async execute(game: any, rate?: number|((i: number) => number)): Promise<void> {
-    await new Promise(resolve => resolve());
+    let getRate = (i: number) => Infinity;
+    if (typeof(rate) === 'number') {
+      getRate = (i => rate);
+  }
+    return execute(game, this.commands, getRate(0));
   }
   
   async validate() {
