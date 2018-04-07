@@ -1,13 +1,20 @@
-/// render.js
+/// render.ts
 //A bunch of utility functions for drawing things
 
-var Vector2 = require('./vector2').default;
+import Vector2 from './vector2';
 
-var ctx = null;
+let ctx: CanvasRenderingContext2D|null = null;
 
-var sprites = {};
+interface Sprite {
+  image: HTMLImageElement;
+  size: Vector2;
+  offset: Vector2;
+  center: Vector2;
+}
 
-function line(from, to) {
+const sprites: { [key: string]: Sprite } = {};
+
+function line(from: , to) {
   ctx.moveTo(from.x, from.y);
   ctx.lineTo(to.x, to.y);
 }

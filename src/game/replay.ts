@@ -1,4 +1,4 @@
-/// replays.js
+/// replays.ts
 //Replay validation and recording
 
 import * as Game from './game';
