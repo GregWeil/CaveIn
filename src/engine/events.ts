@@ -10,7 +10,7 @@ export class Event {
   type: string;
   data: object;
   
-  constructor(source: object, name: string, data: object) {
+  constructor(source: EventEmitter, name: string, data: object) {
     this.source = source;
     this.type = name;
     this.data = data;
@@ -18,23 +18,32 @@ export class Event {
 }
 
 export class Handler {
-  constructor(data) {
+  active: boolean;
+  type: string;
+  func: (evt: Event) => void;
+  priority: number;
+  funcName: string;
+  as: object|undefined;
+  
+  constructor(name: string, func: (evt: Event) => void, priority: number, ctx: object) {
     this.active = true;
     
-    this.type = data.type;
-    this.func = data.as ? data.func.bind(data.as) : data.func;
-    this.priority = data.priority || 0;
+    this.type = name;
+    this.func = ctx ? func.bind(ctx) : func;
+    this.priority = priority || 0;
     
-    this.funcName = data.func.name;
-    this.as = data.as;
+    this.funcName = func.name;
+    this.as = ctx;
   }
   
-  handle(event) {
+  handle(event: Event) {
     this.func(event);
   }
 }
 
 export class EventEmitter {
+  handlers: { [key: string]: Handler[] };
+  
   constructor() {
     this.handlers = {};
   }
@@ -53,22 +62,14 @@ export class EventEmitter {
     return event;
   }
   
-  on(name, func, as, priority) {
-    var handler = new Handler({
-      type: name,
-      func: func,
-      priority: priority,
-      as: as
-    });
-    var handlers = this.handlers[handler.type] || [];
+  on(name: string, func: (evt: Event) => void, ctx: object, priority: number) {
+    const handler = new Handler(name, func, priority, ctx);
     
-    const index = handlers.findIndex(h => h.pr
-    for (index = 0; index < handlers.length; ++index) {
-      if (handlers[index].priority > handler.priority) break;
-    }
+    let handlers = this.handlers[handler.type] || [];
+    const index = handlers.findIndex(h => h.priority > handler.priority);
     handlers.splice(index, 0, handler);
-    
     this.handlers[handler.type] = handlers;
+    
     return handler;
   }
 };
