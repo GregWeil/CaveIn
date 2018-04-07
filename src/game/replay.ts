@@ -3,6 +3,28 @@
 
 import * as Game from './game';
 
+class ReplayExecutor {
+  replay: Replay;
+  game: any;
+  step: number;
+  
+  constructor(replay: Replay, game: any) {
+    this.replay = replay;
+    this.game = game;
+    this.step = 0;
+  }
+  
+  async execute(rate: number, steps?: number) {
+    if (steps === undefined) {
+      steps = Infinity;
+    } else if (steps < 0) {
+      return;
+    }
+    await execute(this.game, this.replay.commands.slice(this.step, this.step + steps), rate, 100);
+    this.step += steps;
+  }
+}
+
 export default class Replay {
   seed: number;
   commands: string[];
@@ -16,15 +38,8 @@ export default class Replay {
     this.score = -1;
   }
   
-  async execute(game: any): Promise<void>;
-  async execute(game: any, rate: number): Promise<void>;
-  async execute(game: any, rate: (i: number) => number): Promise<void>;
-  async execute(game: any, rate?: number|((i: number) => number)): Promise<void> {
-    let getRate = (i: number) => Infinity;
-    if (typeof(rate) === 'number') {
-      getRate = (i => rate);
-  }
-    return execute(game, this.commands, getRate(0));
+  getExecutor(game: any) {
+    return new ReplayExecutor(this, game);
   }
   
   async validate() {

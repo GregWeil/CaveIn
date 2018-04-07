@@ -86,8 +86,9 @@ async function createPlayable(config) {
   });
   
   if (save) {
+    const executor = save.getExecutor(game);
     game.silent = true;
-    await Replay.execute(game, save.commands.slice(0, -100), 2500, 100);
+    await executor.execute(game, save.commands.slice(0, -100), 2500, 100);
     await Replay.execute(game, save.commands.slice(-100, -5), 500, 100);
     game.silent = false;
     await Replay.execute(game, save.commands.slice(-5, -1), 5);
