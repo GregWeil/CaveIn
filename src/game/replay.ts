@@ -1,16 +1,16 @@
 /// replays.js
 //Replay validation and recording
 
-var Game = require('./game');
+import * as Game from './game';
 
-function execute(game, commands, rate, limit) {
+function execute(game: any, commands: string[], rate: number, limit: number) {
   return new Promise((resolve, reject) => {
     var start = performance.now() - 1;
 
     rate = rate || Infinity;
     limit = limit || Infinity;
 
-    function step(index) {
+    function step(index: number) {
       var target = Math.round((performance.now() - start) * (rate / 1000));
       target = Math.min(target, (index + limit), commands.length);
 
@@ -33,7 +33,7 @@ function execute(game, commands, rate, limit) {
   });
 }
 
-async function validate(replay) {
+async function validate(replay: object) {
   if (!replay) return false;
   if (!replay.validate) return false;
   
@@ -71,7 +71,7 @@ async function validate(replay) {
   return !invalid.length;
 }
 
-function record(game, callback, replay) {
+function record(game: any, callback: (replay: object, game: object) => void, replay: object) {
   replay = replay || {
     seed: game.randomSeed,
     commands: [],
@@ -84,28 +84,28 @@ function record(game, callback, replay) {
 
   callback(replay, game);
 
-  game.on('update', function(evt) {
+  game.on('update', evt => {
     replay.commands.push(evt.data.command);
   }, undefined, -Infinity);
 
-  game.on('score', function(evt) {
+  game.on('score', evt => {
     replay.validate.score = game.score;
   }, undefined, Infinity);
 
-  game.on('player-died', function(evt) {
+  game.on('player-died', evt => {
     replay.validate.alive = false;
   }, undefined, Infinity);
 
-  game.on('update', function(evt) {
+  game.on('update', evt => {
     callback(replay, game);
   }, undefined, Infinity);
 }
 
-function getScore(replay) {
+function getScore(replay: object) {
   return replay.validate.score;
 }
 
-function getAlive(replay) {
+function getAlive(replay: object) {
   return replay.validate.alive;
 }
 
@@ -117,11 +117,11 @@ function isContinuation(long, short) {
   return true;
 }
 
-module.exports = {
-  execute: execute,
-  validate: validate,
-  record: record,
-  getScore: getScore,
-  getAlive: getAlive,
-  isContinuation: isContinuation
+export {
+  execute,
+  validate,
+  record,
+  getScore,
+  getAlive,
+  isContinuation
 };
