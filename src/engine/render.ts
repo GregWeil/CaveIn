@@ -14,20 +14,20 @@ interface Sprite {
 
 const sprites: { [key: string]: Sprite } = {};
 
-function line(from: , to) {
-  ctx.moveTo(from.x, from.y);
-  ctx.lineTo(to.x, to.y);
+export function line(from: Vector2, to: Vector2) {
+  ctx!.moveTo(from.x, from.y);
+  ctx!.lineTo(to.x, to.y);
 }
 
-function rect(pos, size) {
-  ctx.fillRect(pos.x, pos.y, size.x, size.y);
+export function rect(pos: Vector2, size: Vector2) {
+  ctx!.fillRect(pos.x, pos.y, size.x, size.y);
 }
 
-function text(text, pos) {
-  ctx.fillText(text, pos.x, pos.y);
+export function text(text: string, pos: Vector2) {
+  ctx!.fillText(text, pos.x, pos.y);
 }
 
-function addSprite(name, img, size, offset, center) {
+export function addSprite(name: string, img: HTMLImageElement, size: Vector2, offset: Vector2, center: Vector2) {
   sprites[name] = {
     image: img,
     size: size.copy(),
@@ -37,24 +37,14 @@ function addSprite(name, img, size, offset, center) {
   return name;
 }
 
-function drawSprite(name, pos, angle) {
-  ctx.translate(pos.x, pos.y);
-  ctx.rotate(angle || 0);
+export function sprite(name: string, pos: Vector2, angle: number) {
+  ctx!.translate(pos.x, pos.y);
+  ctx!.rotate(angle || 0);
   
   var spr = sprites[name];
-  ctx.drawImage(spr.image, spr.offset.x, spr.offset.y, spr.size.x, spr.size.y,
+  ctx!.drawImage(spr.image, spr.offset.x, spr.offset.y, spr.size.x, spr.size.y,
     -spr.center.x, -spr.center.y, spr.size.x, spr.size.y);
   
-  ctx.rotate(-angle || 0);
-  ctx.translate(-pos.x, -pos.y);
+  ctx!.rotate(-angle || 0);
+  ctx!.translate(-pos.x, -pos.y);
 }
-
-module.exports = {
-  set context(val) { ctx = val; },
-  get context() { return ctx; },
-  line: line,
-  rect: rect,
-  text: text,
-  addSprite: addSprite,
-  sprite: drawSprite
-};
