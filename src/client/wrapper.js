@@ -129,7 +129,7 @@ async function createWatchable(config) {
   });
   resize();
   
-  await Replay.execute(game, save.commands, 5);
+  await save.execute(game, 5);
   await new Promise((resolve, reject) => setTimeout(resolve, 3000));
   
   config.onComplete();

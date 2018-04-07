@@ -27,14 +27,21 @@ class ReplayExecutor {
       goal += this.replay.commands.length;
     }
     
+    // The following bit should really get rewritten
     await new Promise((resolve, reject) => {
-      var start = performance.now() - 1;
+      const start = performance.now() - 1;
 
       const step = (index: number) => {
-        var target = Math.round((performance.now() - start) * (rate / 1000));
-        target = Math.min(target, (index + 100), goal);
+        if (!this.game.active) {
+          console.warn('game destroyed while replay in progress');
+          resolve();
+          return;
+        }
+        
+        let target = Math.round((performance.now() - start) * (rate / 1000));
+        target = Math.min(target, (index + 100), goal!);
 
-        for (var i = index; i < target; ++i) {
+        for (let i = index; i < target; ++i) {
           if (!this.game.commandCheck(this.replay.commands[i])) {
             reject();
             return;
@@ -42,14 +49,14 @@ class ReplayExecutor {
           this.game.update(this.replay.commands[i]);
         }
 
-        if (target < goal) {
+        if (target < goal!) {
           setTimeout(step, 0, target);
         } else {
           resolve();
         }
       }
 
-      setTimeout(step, this.step, 0);
+      setTimeout(step, 0, this.step);
     });
     
     this.step = goal;
