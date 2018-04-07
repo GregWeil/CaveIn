@@ -29,41 +29,25 @@ class ReplayExecutor {
     
     let time = performance.now();
     while (this.step < goal) {
-      if (!this
-      this.step += 1;
-    }
-    
-    // The following bit should really get rewritten
-    await new Promise((resolve, reject) => {
-      const start = performance.now() - 1;
-
-      const step = (index: number) => {
-        if (!this.game.active) {
-          console.warn('game destroyed while replay in progress');
-          resolve();
-          return;
-        }
-        
-        let target = Math.round((performance.now() - start) * (rate / 1000));
-        target = Math.min(target, (index + 100), goal!);
-
-        for (let i = index; i < target; ++i) {
-          if (!this.game.commandCheck(this.replay.commands[i])) {
-            reject();
-            return;
-          }
-          this.game.update(this.replay.commands[i]);
-        }
-
-        if (target < goal!) {
-          setTimeout(step, 0, target);
-        } else {
-          resolve();
-        }
+      const nextTime = time + 1000/rate;
+      while (nextTime > performance.now()) {
+        await new Promise(resolve => setTimeout(resolve));
       }
-
-      setTimeout(step, 0, this.step);
-    });
+      
+      if (!this.game.active) {
+        console.warn('game destroyed while replay in progress');
+        return;
+      }
+      
+      const command = this.replay.commands[this.step];
+      if (!this.game.commandCheck(command)) {
+        throw 'unable to execute replay, command was invalid';
+      }
+      this.game.update(command);
+      
+      this.step += 1;
+      time += 1000/rate;
+    }
   }
 }
 
