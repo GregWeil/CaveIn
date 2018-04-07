@@ -47,9 +47,9 @@ class StoredReplay {
     writeToStorage(this.name, value);
   }
   
-  public get(): Promise<object|null> 
-    // This will pend until you either save or the save finishes validating
-    // Once you create a new save 
+  public get(): Promise<object|null> {
+    // This will wait until the save validates or a new save gets created
+    // Once you create a new save fromSession resolves and it always wins
     return Promise.race([this.fromSession, this.fromStorage]);
   }
 }
