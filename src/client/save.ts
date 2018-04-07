@@ -37,6 +37,8 @@ class StoredReplay {
   }
   
   public set(value: object|null): void {
+    // The first time we save a replay we will resolve fromSession
+    // That will notify anyone still waiting for the stored replay
     if (this.firstSet) {
       this.firstSet(value);
       this.firstSet = null;
@@ -45,7 +47,9 @@ class StoredReplay {
     writeToStorage(this.name, value);
   }
   
-  public get(): Promise<object|null> {
+  public get(): Promise<object|null> 
+    // This will pend until you either save or the save finishes validating
+    // Once you create a new save 
     return Promise.race([this.fromSession, this.fromStorage]);
   }
 }

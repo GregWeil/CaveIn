@@ -36,7 +36,7 @@ export class Handler {
     this.as = ctx;
   }
   
-  handle(event: Event) {
+  handle(event: Event): void {
     this.func(event);
   }
 }
@@ -62,7 +62,7 @@ export class EventEmitter {
     return event;
   }
   
-  on(name: string, func: (evt: Event) => void, ctx: object, priority: number) {
+  on(name: string, func: (evt: Event) => void, ctx: object, priority: number): Handler {
     const handler = new Handler(name, func, priority, ctx);
     
     let handlers = this.handlers[handler.type] || [];
