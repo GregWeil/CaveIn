@@ -4,37 +4,36 @@
 import * as Game from './game';
 
 class Replay {
-  commands: string[];
   seed: number;
+  commands: string[];
   
-  private expectAlive: boolean;
-  private expectScore: number;
+  alive: boolean;
+  score: number;
   
-  constructor() {
+  constructor(seed: number) {
+    this.seed = seed;
     this.commands = [];
-    this.seed = 0;
-    this.expectAlive = false;
-    this.expectScore = -1;
+    this.alive = true;
+    this.score = -1;
   }
   
-  getAlive() {
-    return this.expectAlive;
-  }
-  
-  getScore() {
-    return this.expectScore;
+  serialize(): string {
+    return JSON.stringify({
+      seed: this.seeds,
+      commands: this.commands,
+      validate: 
+    });
   }
   
   static deserialize(json: string): Replay|null {
     const data = JSON.parse(json);
-    if (!data || !data.validate || !data.validate.version) {
+    if (!data) {
       return null;
-    } else if (data.validate.version == 1) {
-      const replay = new Replay();
+    } else if (data.validate && data.validate.version == 1) {
+      const replay = new Replay(data.seed);
       replay.commands = data.commands;
-      replay.seed = data.seed;
-      replay.expectAlive = data.validate.alive;
-      replay.expectScore = data.validate.score;
+      replay.alive = data.validate.alive;
+      replay.score = data.validate.score;
       return replay;
     }
     return null;
