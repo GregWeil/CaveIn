@@ -44,7 +44,7 @@ class StoredReplay {
       this.firstSet = null;
     }
     this.fromSession = Promise.resolve(value);
-    // Don't actually write deletions, so you can undo by refreshing
+    // Don't actually write deletions, so you can undo by refresh
     if (value) {
       writeToStorage(this.name, value);
     }

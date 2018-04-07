@@ -18,7 +18,7 @@ export default class Vector2 {
   }
   
   copy(): Vector2 {
-    return new Vector2(this.x, this.y);
+    return new Vector2(this.x, this.y)
   }
   
   plus(a: Vector2): Vector2;
