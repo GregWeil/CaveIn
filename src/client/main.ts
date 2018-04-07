@@ -11,7 +11,7 @@ function showSingle(select: string, except: string): void {
     if (e.matches(except)) {
       e.classList.remove('hidden');
     } else {
-      e.classList.addk('hidden');
+      e.classList.add('hidden');
     }
   });
 }
