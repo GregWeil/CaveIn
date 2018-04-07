@@ -20,12 +20,38 @@ class ReplayExecutor {
     } else if (goal < -this.replay.commands.length) {
       return;
     }
+    
     if (goal > this.replay.commands.length) {
       goal = this.replay.commands.length;
     } else if (goal < 0) {
       goal += this.replay.commands.length;
     }
-    await execute(this.game, this.replay.commands.slice(this.step, goal), rate, 100);
+    
+    await new Promise((resolve, reject) => {
+      var start = performance.now() - 1;
+
+      const step = (index: number) => {
+        var target = Math.round((performance.now() - start) * (rate / 1000));
+        target = Math.min(target, (index + 100), goal);
+
+        for (var i = index; i < target; ++i) {
+          if (!this.game.commandCheck(this.replay.commands[i])) {
+            reject();
+            return;
+          }
+          this.game.update(this.replay.commands[i]);
+        }
+
+        if (target < goal) {
+          setTimeout(step, 0, target);
+        } else {
+          resolve();
+        }
+      }
+
+      setTimeout(step, this.step, 0);
+    });
+    
     this.step = goal;
   }
 }
@@ -143,8 +169,6 @@ export default class Replay {
   }
 }
 
-(window as any).replay = Replay;
-
 export function execute(game: any, commands: string[], rate: number, limit: number) {
   return new Promise((resolve, reject) => {
     var start = performance.now() - 1;
@@ -173,88 +197,4 @@ export function execute(game: any, commands: string[], rate: number, limit: numb
 
     setTimeout(step, 0, 0);
   });
-}
-
-export async function validate(replay: any) {
-  if (!replay) return false;
-  if (!replay.validate) return false;
-  
-  var game: any = new Game({
-    seed: replay.seed
-  });
-  
-  var alive = true;
-  game.on('player-died', (evt: any) => {
-    alive = false;
-  });
-  
-  var invalid = [];
-  
-  try {
-    await execute(game, replay.commands, Infinity, 500);
-  } catch (e) {
-    invalid.push('invalid inputs');
-  }
-  if (alive && !replay.validate.alive) {
-    invalid.push('player should have died');
-  }
-  if (!alive && replay.validate.alive) {
-    invalid.push('player should have lived');
-  }
-  if (game.score !== replay.validate.score) {
-    invalid.push('score mismatch');
-  }
-  game.destructor();
-  
-  if (invalid.length) {
-    console.log(invalid.join('\n'));
-  }
-  
-  return !invalid.length;
-}
-
-export function record(game: any, callback: (replay: any, game: any) => void, replay: any) {
-  replay = replay || {
-    seed: game.randomSeed,
-    commands: [],
-    validate: {
-      alive: true,
-      score: 0,
-      version: 1
-    }
-  };
-
-  callback(replay, game);
-
-  game.on('update', (evt: any) => {
-    replay.commands.push(evt.data.command);
-  }, undefined, -Infinity);
-
-  game.on('score', (evt: any) => {
-    replay.validate.score = game.score;
-  }, undefined, Infinity);
-
-  game.on('player-died', (evt: any) => {
-    replay.validate.alive = false;
-  }, undefined, Infinity);
-
-  game.on('update', (evt: any) => {
-    callback(replay, game);
-  }, undefined, Infinity);
-}
-
-export function getScore(replay: any) {
-  return replay.validate.score;
-}
-
-export function getAlive(replay: any) {
-  return replay.validate.alive;
-}
-
-export function isContinuation(long: any, short: any): boolean {
-  if (!long || !short) return false;
-  if (long.seed !== short.seed) return false;
-  if (getScore(long) < getScore(short)) return false;
-  if (long.commands.length < short.commands.length) return false;
-  return true;
 }
