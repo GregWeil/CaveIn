@@ -28,12 +28,12 @@ class ReplayExecutor {
     }
     
     let lastStepTime = performance.now();
-    let stepsSinceLastBreak = 0;
+    let stepsSinceBreak = 0;
     while (this.step < goal) {
       const nextTime = lastStepTime + 1000/rate;
-      while (nextTime > performance.now() || stepsSinceLastBreak >= 50) {
+      while (nextTime > performance.now() || stepsSinceBreak >= 50) {
         await new Promise(resolve => setTimeout(resolve));
-        stepsSinceLastBreak = 0;
+        stepsSinceBreak = 0;
       }
       
       if (!this.game.active) {
@@ -49,7 +49,7 @@ class ReplayExecutor {
       
       this.step += 1;
       lastStepTime = nextTime;
-      stepsSinceLastBreak += 1;
+      stepsSinceBreak += 1;
     }
   }
 }

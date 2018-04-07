@@ -6,7 +6,7 @@ import * as Settings from './settings';
 import * as Save from './save';
 import * as Game from './wrapper';
 
-function showSingle(select: string, except: string): void {
+function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
     if (e.matches(except)) {
       e.classList.remove('hidden');
@@ -16,7 +16,7 @@ function showSingle(select: string, except: string): void {
   });
 }
 
-function startGame(evt: KeyboardEvent): void {
+function startGame(evt: KeyboardEvent) {
   if (evt.key === ' ') {
     Pages.navigate('game');
   }

@@ -11,7 +11,7 @@ function writeToStorage(name: string, replay: Replay|null) {
   }
 }
 
-async function readFromStorage(name: string): Promise<Replay|null> {
+async function readFromStorage(name: string) {
   const serialized = localStorage.getItem(name);
   if (!serialized) {
     return null;
@@ -36,7 +36,7 @@ class StoredReplay {
     });
   }
   
-  public set(value: Replay|null): void {
+  public set(value: Replay|null) {
     // The first time we save a replay we will resolve fromSession
     // That will notify anyone still waiting for the stored replay
     if (this.firstSet) {
@@ -50,7 +50,7 @@ class StoredReplay {
     }
   }
   
-  public get(): Promise<Replay|null> {
+  public get() {
     // This will wait until the save validates or a new save gets created
     // Once you create a new save fromSession resolves and it always wins
     return Promise.race([this.fromSession, this.fromStorage]);
@@ -60,21 +60,21 @@ class StoredReplay {
 const save = new StoredReplay('save');
 const best = new StoredReplay('best');
 
-export async function getSave(): Promise<Replay|null> {
+export async function getSave() {
   const replay = await save.get();
   return replay && replay.alive ? replay : null;
 }
 
-export async function getBest(): Promise<Replay|null> {
+export async function getBest() {
   return await best.get();
 }
 
-export async function getBestScore(): Promise<number|null> {
+export async function getBestScore() {
   const replay = await getBest();
   return replay ? replay.score : null;
 }
 
-export function clearSave(): void {
+export function clearSave() {
   save.set(null);
 }
 
