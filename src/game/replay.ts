@@ -16,6 +16,13 @@ class Replay {
     this.score = -1;
   }
   
+  isContinuationOf(other: Replay) {
+    if (this.seed !== other.seed) return false;
+    if (this.score < other.score) return false;
+    if (this.commands.length < other.commands.length) return false;
+    return true;
+  }
+  
   serialize(): string {
     return JSON.stringify({
       seed: this.seed,
