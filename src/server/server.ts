@@ -1,20 +1,20 @@
 // server.ts
 // where your node app starts
 
-import Express from 'express';
-import Assets from 'assets';
+import * as express from 'express';
+import assets from './assets';
 
 // express init
-const app = Express();
+const app = express();
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(Express.static('public'));
-app.use('/client.js', Express.static('/tmp/bin/client.js'));
+app.use(express.static('public'));
+app.use('/client.js', express.static('/tmp/bin/client.js'));
 
-app.use('/assets', Assets);
+app.use('/assets', assets);
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get('/', Express.static('public/index.html'));
+app.get('/', express.static('public/index.html'));
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {

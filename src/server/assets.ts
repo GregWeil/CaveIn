@@ -1,18 +1,20 @@
 /// assets.js
 // https://glitch.com/edit/#!/assets-lib?path=assets.js
+// lightly modified to be typescript
 
-var express = require('express');
-var fs = require('fs');
+import * as express from 'express';
+import * as fs from 'fs';
 
-var router = express.Router();
-var content = fs.readFileSync('.glitch-assets', 'utf8');
-var rows = content.split("\n");
-var assets = rows.map((row) => {
+const router = express.Router();
+const content = fs.readFileSync('.glitch-assets', 'utf8');
+const rows = content.split("\n");
+const assets = rows.map((row) => {
   try {
     return JSON.parse(row);
   } catch (e) {}
+}).filter((asset) => {
+  return asset;
 });
-assets = assets.filter((asset) => { return asset; });
 
 // Example url
 // https://cdn.gomix.com/us-east-1%3A1a0f89c8-26bf-4073-baed-2b409695e959%2Ffoobar.png
@@ -22,9 +24,9 @@ router.use((request, response) => {
   response.header("Access-Control-Allow-Methods", "GET");
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   
-  var path = request.path.substring(1);
+  const path = request.path.substring(1);
   
-  var [matching] = assets.filter((asset) => {
+  const [matching] = assets.filter((asset) => {
     return asset.name === path;
   });
   
@@ -35,4 +37,4 @@ router.use((request, response) => {
   return response.redirect(matching.url);
 });
 
-module.exports = router;
+export default router;
