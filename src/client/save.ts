@@ -84,9 +84,10 @@ export async function saveReplay(replay: object) {
   save.set(Replay.getAlive(replay) ? replay : null);
 
   const bestReplay = await getBest();
-  const isBetterScore = !bestReplay || Replay.getScore(replay) > Replay.getScore(bestReplay);
-  const isContinuation = Replay.isContinuation(replay, bestReplay);
-  if (!bestReplay || isBetterScore || isContinuation) {
+  if (!bestReplay
+      || Replay.getScore(replay) > Replay.getScore(bestReplay)
+      || Replay.isContinuation(replay, bestReplay))
+  {
     best.set(replay);
   }
 }

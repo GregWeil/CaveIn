@@ -3,6 +3,12 @@
 
 import * as Game from './game';
 
+class Replay {
+  
+  commands: string[];
+  
+}
+
 function execute(game: any, commands: string[], rate: number, limit: number) {
   return new Promise((resolve, reject) => {
     var start = performance.now() - 1;
@@ -33,16 +39,16 @@ function execute(game: any, commands: string[], rate: number, limit: number) {
   });
 }
 
-async function validate(replay: object) {
+async function validate(replay: any) {
   if (!replay) return false;
   if (!replay.validate) return false;
   
-  var game = new Game({
+  var game: any = new Game({
     seed: replay.seed
   });
   
   var alive = true;
-  game.on('player-died', function(evt) {
+  game.on('player-died', (evt: any) => {
     alive = false;
   });
   
@@ -71,7 +77,7 @@ async function validate(replay: object) {
   return !invalid.length;
 }
 
-function record(game: any, callback: (replay: object, game: object) => void, replay: object) {
+function record(game: any, callback: (replay: any, game: any) => void, replay: any) {
   replay = replay || {
     seed: game.randomSeed,
     commands: [],
@@ -84,32 +90,32 @@ function record(game: any, callback: (replay: object, game: object) => void, rep
 
   callback(replay, game);
 
-  game.on('update', evt => {
+  game.on('update', (evt: any) => {
     replay.commands.push(evt.data.command);
   }, undefined, -Infinity);
 
-  game.on('score', evt => {
+  game.on('score', (evt: any) => {
     replay.validate.score = game.score;
   }, undefined, Infinity);
 
-  game.on('player-died', evt => {
+  game.on('player-died', (evt: any) => {
     replay.validate.alive = false;
   }, undefined, Infinity);
 
-  game.on('update', evt => {
+  game.on('update', (evt: any) => {
     callback(replay, game);
   }, undefined, Infinity);
 }
 
-function getScore(replay: object) {
+function getScore(replay: any) {
   return replay.validate.score;
 }
 
-function getAlive(replay: object) {
+function getAlive(replay: any) {
   return replay.validate.alive;
 }
 
-function isContinuation(long, short) {
+function isContinuation(long: any, short: any): boolean {
   if (!long || !short) return false;
   if (long.seed !== short.seed) return false;
   if (getScore(long) < getScore(short)) return false;
