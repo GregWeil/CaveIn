@@ -4,9 +4,34 @@
 import * as Game from './game';
 
 class Replay {
-  
   commands: string[];
+  seed: number;
   
+  protected validate: {
+    score: number;
+    alive: 
+  };
+  
+  constructor() {
+    this.commands = [];
+    this.seed = 0;
+    this.expectAlive = false;
+    this.expectScore = -1;
+  }
+  
+  static deserialize(json: string): Replay|null {
+    const data = JSON.parse(json);
+    if (!data || !data.validate || !data.validate.version) {
+      return null;
+    } else if (data.validate.version == 1) {
+      const replay = new Replay();
+      replay.commands = data.commands;
+      replay.seed = data.seed;
+      replay.expectAlive = data.validate.alive;
+      replay.expectScore = data.validate.score;
+    }
+    return null;
+  }
 }
 
 function execute(game: any, commands: string[], rate: number, limit: number) {
