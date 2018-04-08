@@ -149,16 +149,16 @@ module.exports = class Game extends Engine {
     }, this);
     
     this.on('render', function(evt) {
-      Render.context.fillStyle = 'white';
-      Render.context.textAlign = 'left';
-      Render.context.textBaseline = 'middle';
-      Render.context.font = '32px IdealGarbanzo';
-      Render.context.textAlign = 'left';
-      Render.context.fillText(this.score, 8, 12);
+      evt.data.context.fillStyle = 'white';
+      evt.data.context.textAlign = 'left';
+      evt.data.context.textBaseline = 'middle';
+      evt.data.context.font = '32px IdealGarbanzo';
+      evt.data.context.textAlign = 'left';
+      evt.data.context.fillText(this.score, 8, 12);
       if (this.best || this.score) {
-        Render.context.textAlign = 'right';
-        Render.context.fillText(this.best >= this.score ?
-          'BEST: ' + this.best : 'NEW BEST',
+        evt.data.context.textAlign = 'right';
+        evt.data.context.fillText(
+          this.best >= this.score ? 'BEST: ' + this.best : 'NEW BEST',
           this.canvas.width - 7, 12);
       }
     }, this, 900);

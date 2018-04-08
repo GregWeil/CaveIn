@@ -167,7 +167,6 @@ module.exports = class Enemy extends BaseObject {
   }
   
   render(evt) {
-    Render.context = evt.data.context;
     var displayPos = this.pos;
     if (evt.data.time < 0.05) {
       displayPos = this.pos.plus(this.posLast).multiply(0.5);

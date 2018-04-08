@@ -2,7 +2,7 @@
 //General grid-based collision checking
 
 var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
+var renderText = require('../engine/render').text;
 var BaseObject = require('../engine/object');
 
 module.exports = class Collide extends BaseObject {
@@ -15,15 +15,15 @@ module.exports = class Collide extends BaseObject {
   }
   
   render(evt) {
-    Render.context.fillStyle = 'red';
-    Render.context.textAlign = 'center';
-    Render.context.textBaseline = 'middle';
+    evt.data.context.fillStyle = 'red';
+    evt.data.context.textAlign = 'center';
+    evt.data.context.textBaseline = 'middle';
     var grid = this.game.grid;
     for (let i = 0; i < grid.gridSize.x; ++i) {
       for (let j = 0; j < grid.gridSize.y; ++j) {
         var data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          Render.context.fillText(data[0].priority, grid.getX(i), grid.getY(j));
+          renderText(data[0].priority, grid.getPos(i, j));
         }
       }
     }
