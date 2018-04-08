@@ -144,12 +144,12 @@ module.exports = class Player extends BaseObject {
     if (evt.data.time < 0.05) {
       displayPos = displayPos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite('player-'+this.facing, this.grid.getPos(displayPos));
+    Render.sprite(evt.data.context, 'player-'+this.facing, this.grid.getPos(displayPos));
     if (this.attacking && (evt.data.time < 0.3)) {
       var axePos = this.pos.plus(this.getFacingDirection());
       var dark = this.grid.getBlockVisible(axePos, evt.data.time) ? '-dark' : '';
       var swing = (this.attackHit && evt.data.time < 0.1) ? '-hit' : '-swing';
-      Render.sprite('pickaxe' + dark + swing,
+      Render.sprite(evt.data.context, 'pickaxe' + dark + swing,
         this.grid.getPos(displayPos.plus(this.getFacingDirection())),
         this.getFacingDirection().angle() - (Math.PI / 2));
     }

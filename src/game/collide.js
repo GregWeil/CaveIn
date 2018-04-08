@@ -23,7 +23,7 @@ module.exports = class Collide extends BaseObject {
       for (let j = 0; j < grid.gridSize.y; ++j) {
         var data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          renderText(data[0].priority, grid.getPos(i, j));
+          renderText(evt.data.context, data[0].priority, grid.getPos(i, j));
         }
       }
     }

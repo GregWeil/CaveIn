@@ -36,7 +36,7 @@ class GridColors extends BaseObject {
     for (let i = -this.padding; i < this.grid.gridSize.x + this.padding; ++i) {
       for (let j = -this.padding; j < this.grid.gridSize.y + this.padding; ++j) {
         evt.data.context.fillStyle = this.colors[i+this.padding][j+this.padding];
-        Render.rect(this.grid.getPos(i, j).minus(this.grid.cellSize.multiply(0.5)), this.grid.cellSize);
+        Render.rect(evt.data.context, this.grid.getPos(i, j).minus(this.grid.cellSize.multiply(0.5)), this.grid.cellSize);
       }
     }
     evt.data.context.globalCompositeOperation = 'source-over';
@@ -55,7 +55,8 @@ class ScreenColors extends BaseObject {
   render(evt) {
     evt.data.context.globalCompositeOperation = 'multiply';
     evt.data.context.fillStyle = this.color;
-    Render.rect(new Vector2(), new Vector2(evt.data.context.canvas.width, evt.data.context.canvas.height));
+    Render.rect(evt.data.context, new Vector2(),
+      new Vector2(evt.data.context.canvas.width, evt.data.context.canvas.height));
     evt.data.context.globalCompositeOperation = 'source-over';
   }
 }

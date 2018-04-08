@@ -110,11 +110,11 @@ module.exports = class Grid extends BaseObject {
   
   render(evt) {
     //Fill in background
-    Render.context.fillStyle = 'black';
+    evt.data.context.fillStyle = 'black';
     Render.rect(this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
     
     //Fill in squares
-    Render.context.fillStyle = 'white';
+    evt.data.context.fillStyle = 'white';
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
         if (this.getBlockVisible(new Vector2(i, j), evt.data.time)) {
@@ -125,20 +125,20 @@ module.exports = class Grid extends BaseObject {
     
     if (false) {
       //Draw grid lines
-      Render.context.strokeStyle = '#eee';
-      Render.context.lineCap = 'square';
-      Render.context.lineWidth = 2;
-      Render.context.beginPath();
+      evt.data.context.strokeStyle = '#eee';
+      evt.data.context.lineCap = 'square';
+      evt.data.context.lineWidth = 2;
+      evt.data.context.beginPath();
       
       for (let i = 1; i < this.gridSize.x; ++i) {
-        Render.line(this.getPos(i-0.5, -0.5), this.getPos(i-0.5, this.gridSize.y-0.5));
+        Render.line(evt.data.context, this.getPos(i-0.5, -0.5), this.getPos(i-0.5, this.gridSize.y-0.5));
       }
       
       for (let j = 1; j < this.gridSize.y; ++j) {
-        Render.line(this.getPos(-0.5, j-0.5), this.getPos(this.gridSize.x-0.5, j-0.5));
+        Render.line(evt.data.context, this.getPos(-0.5, j-0.5), this.getPos(this.gridSize.x-0.5, j-0.5));
       }
       
-      Render.context.stroke();
+      evt.data.context.stroke();
     }
   }
 };

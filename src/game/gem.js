@@ -148,6 +148,6 @@ module.exports = class Gem extends BaseObject {
   }
   
   render(evt) {
-    Render.sprite(this.sprites[this.sprite], this.grid.getPos(this.pos));
+    Render.sprite(evt.data.context, this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };

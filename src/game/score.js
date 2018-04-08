@@ -45,15 +45,15 @@ module.exports = class Score extends BaseObject {
   }
   
   render(evt) {
-    Render.context.fillStyle = 'white';
-    Render.context.textAlign = 'center';
-    Render.context.textBaseline = 'middle';
-    Render.context.font = '16px IdealGarbanzo';
+    evt.data.context.fillStyle = 'white';
+    evt.data.context.textAlign = 'center';
+    evt.data.context.textBaseline = 'middle';
+    evt.data.context.font = '16px IdealGarbanzo';
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
       if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
       if (this.game.collide.get(popup.pos)) continue;
-      Render.text('+' + popup.score, this.grid.getPos(popup.pos));
+      Render.text(evt.data.context, '+' + popup.score, this.grid.getPos(popup.pos));
     }
   }
 };

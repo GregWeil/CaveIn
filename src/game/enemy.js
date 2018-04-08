@@ -55,7 +55,7 @@ class EnemyGhost extends BaseObject {
   }
   
   render(evt) {
-    Render.sprite(ghostSprites[this.sprite], this.grid.getPos(this.pos));
+    Render.sprite(evt.data.context, ghostSprites[this.sprite], this.grid.getPos(this.pos));
   }
 }
 
@@ -171,6 +171,6 @@ module.exports = class Enemy extends BaseObject {
     if (evt.data.time < 0.05) {
       displayPos = this.pos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite(sprites[this.sprite], this.grid.getPos(displayPos));
+    Render.sprite(evt.data.context, sprites[this.sprite], this.grid.getPos(displayPos));
   }
 };

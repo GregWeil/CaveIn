@@ -101,13 +101,13 @@ module.exports = class Pathfind extends BaseObject {
     var targets = Object.keys(this.paths);
     for (let index = 0; index < targets.length; ++index) {
       var distance = this.paths[targets[index]];
-      Render.context.fillStyle = 'red';
-      Render.context.textAlign = 'center';
-      Render.context.textBaseline = 'middle';
+      evt.data.context.fillStyle = 'red';
+      evt.data.context.textAlign = 'center';
+      evt.data.context.textBaseline = 'middle';
       for (let i = 0; i < this.grid.gridSize.x; ++i) {
         for (let j = 0; j < this.grid.gridSize.y; ++j) {
           var display = distance[i][j] < Infinity ? distance[i][j] : '∞';
-          Render.context.fillText(display, this.grid.getX(i), this.grid.getY(j));
+          Render.text(evt.data.context, display, this.grid.getX(i), this.grid.getY(j));
         }
       }
     }

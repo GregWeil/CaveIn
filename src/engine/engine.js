@@ -2,6 +2,7 @@
 //Main engine loop
 
 var EventEmitter = require('./events').EventEmitter;
+var Vector2 = require('./vector2').default;
 var Render = require('./render');
 
 module.exports = class Engine extends EventEmitter {
@@ -49,22 +50,20 @@ module.exports = class Engine extends EventEmitter {
   }
   
   render() {
-    Render.context = this.ctx;
+    if (!this.active) return;
     
     //Clear the canvas
-    Render.context.fillStyle = 'black';
-    Render.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillStyle = 'black';
+    Render.rect(new Vector2(), new Vector2(this.canvas.width, this.canvas.height));
     
     //Draw everything
     this.emit('render', {
-      context: Render.context,
+      context: this.ctx,
       time: (performance.now() - this.updateTime) / 1000
     });
     
     //Queue up the next render
-    if (this.active) {
-      window.requestAnimationFrame(this.render.bind(this));
-    }
+    window.requestAnimationFrame(this.render.bind(this));
   }
   
   sound(asset, config) {
