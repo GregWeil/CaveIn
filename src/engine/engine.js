@@ -3,7 +3,6 @@
 
 var EventEmitter = require('./events').EventEmitter;
 var Vector2 = require('./vector2').default;
-var Render = require('./render');
 
 module.exports = class Engine extends EventEmitter {
   constructor(config) {
@@ -54,7 +53,7 @@ module.exports = class Engine extends EventEmitter {
     
     //Clear the canvas
     this.ctx.fillStyle = 'black';
-    Render.rect(new Vector2(), new Vector2(this.canvas.width, this.canvas.height));
+    this.ctx.fillRect(new Vector2(), new Vector2(this.canvas.width, this.canvas.height));
     
     //Draw everything
     this.emit('render', {
