@@ -111,14 +111,14 @@ module.exports = class Grid extends BaseObject {
   render(evt) {
     //Fill in background
     evt.data.context.fillStyle = 'black';
-    Render.rect(this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
+    Render.rect(evt.data.context, this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
     
     //Fill in squares
     evt.data.context.fillStyle = 'white';
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
         if (this.getBlockVisible(new Vector2(i, j), evt.data.time)) {
-          Render.rect(this.getPos(i, j).minus(this.cellSize.multiply(0.5)), this.cellSize);
+          Render.rect(evt.data.context, this.getPos(i, j).minus(this.cellSize.multiply(0.5)), this.cellSize);
         }
       }
     }

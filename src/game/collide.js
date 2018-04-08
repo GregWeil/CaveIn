@@ -2,7 +2,7 @@
 //General grid-based collision checking
 
 var Vector2 = require('../engine/vector2').default;
-var renderText = require('../engine/render').text;
+var Render = require('../engine/render');
 var BaseObject = require('../engine/object');
 
 module.exports = class Collide extends BaseObject {
@@ -23,7 +23,7 @@ module.exports = class Collide extends BaseObject {
       for (let j = 0; j < grid.gridSize.y; ++j) {
         var data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          renderText(evt.data.context, data[0].priority, grid.getPos(i, j));
+          Render.text(evt.data.context, data[0].priority, grid.getPos(i, j));
         }
       }
     }
