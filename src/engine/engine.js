@@ -53,7 +53,7 @@ module.exports = class Engine extends EventEmitter {
     
     //Clear the canvas
     this.ctx.fillStyle = 'black';
-    this.ctx.fillRect(new Vector2(), new Vector2(this.canvas.width, this.canvas.height));
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
     //Draw everything
     this.emit('render', {
