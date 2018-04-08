@@ -4,7 +4,6 @@
 var Random = require('random-js');
 
 var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
 var Engine = require('../engine/engine');
 var Input = require('../engine/input');
 
@@ -154,10 +153,10 @@ module.exports = class Game extends Engine {
       evt.data.context.textBaseline = 'middle';
       evt.data.context.font = '32px IdealGarbanzo';
       evt.data.context.textAlign = 'left';
-      Render.text(this.score, 8, 12);
+      evt.data.context.fillText(this.score, 8, 12);
       if (this.best || this.score) {
         evt.data.context.textAlign = 'right';
-        Render.text(evt.data.context,
+        evt.data.context.fillText(
           this.best >= this.score ? 'BEST: ' + this.best : 'NEW BEST',
           this.canvas.width - 7, 12);
       }
