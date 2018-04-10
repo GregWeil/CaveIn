@@ -167,7 +167,7 @@ module.exports = class Game extends Engine {
   
   destructor() {
     this.input && this.input.destructor();
-    window.clearInterval(this.animInterval);
+    clearInterval(this.animInterval);
     super.destructor();
   }
 };
