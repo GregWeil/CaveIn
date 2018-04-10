@@ -19,7 +19,7 @@ module.exports = class BaseObject {
         this.unhandle(data);
       }
     }
-    window.setTimeout(() => {
+    setTimeout(() => {
       var handlers = Array.from(this.handlers);
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
