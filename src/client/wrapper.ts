@@ -9,7 +9,7 @@ import { navigate } from './pages';
 
 //Player game state
 
-let game: any|null = null;
+let activeGame: any|null = null;
 
 // Resize to fit the screen
 
@@ -29,7 +29,7 @@ function resize() {
   canvas.style.transform = ('scale(' + (scale / pixel) + ')');
 }
 window.addEventListener('resize', () => {
-  if (game) resize();
+  if (activeGame) resize();
 });
 
 // Popups over the game (pause/gameover)
@@ -49,7 +49,7 @@ function overlay(name?: string) {
 // Pause event handling
 
 function pause() {
-  if (!game) return;
+  if (!activeGame) return;
   if (overlayCurrent === 'game-pause') {
     overlay();
   } else if (!overlayCurrent) {
@@ -66,6 +66,12 @@ document.body.addEventListener('touchstart', evt => {
     pause();
   }
 });
+document.addEventListener('click', evt => {
+  const target = (evt.target as HTMLElement).closest('a');
+  if (target && target.hasAttribute('data-onclick-pause')) {
+    pause();
+  }
+});
 
 // Game management
 
@@ -74,7 +80,7 @@ export async function createPlayable() {
   let save = await Save.getSave();
   let best = await Save.getBestScore();
   
-  game = new Game({
+  const game: any = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save ? save.seed : null,
     best: best, locked: true
@@ -120,7 +126,7 @@ export async function createWatchable() {
     return;
   }
   
-  game = new Game({
+  const game: any = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save.seed, best: save.score,
     locked: true
@@ -134,7 +140,7 @@ export async function createWatchable() {
 }
 
 export function destroy() {
-  game && game.destructor();
-  game = null;
+  activeGame && activeGame.destructor();
+  activeGame = null;
   overlay();
 }
