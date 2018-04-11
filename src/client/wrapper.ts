@@ -11,7 +11,7 @@ import { navigate } from './pages';
 
 let game: any|null = null;
 
-//Manipulate the player's game
+// Resize to fit the screen
 
 function resize() {
   const pixel = window.devicePixelRatio;
@@ -32,6 +32,8 @@ window.addEventListener('resize', () => {
   if (game) resize();
 });
 
+// Popups over the game (pause/gameover)
+
 let overlayCurrent: string|null = null;
 function overlay(name?: string) {
   document.querySelectorAll('#game-page .overlay')
@@ -44,25 +46,28 @@ function overlay(name?: string) {
   }
 }
 
+// Pause event handling
+
 function pause() {
+  if (!game) return;
   if (overlayCurrent === 'game-pause') {
     overlay();
   } else if (!overlayCurrent) {
     overlay('game-pause');
   }
 }
-
-function keyPause(evt: KeyboardEvent) {
+window.addEventListener('keydown', evt => {
   if (evt.key === 'Escape') {
     pause();
   }
-}
-
-function touchPause(evt: Event) {
+});
+document.body.addEventListener('touchstart', evt => {
   if (!overlayCurrent && evt.target === document.body) {
     pause();
   }
-}
+});
+
+// Game management
 
 export async function createPlayable() {
   overlay();
@@ -77,7 +82,7 @@ export async function createPlayable() {
   resize();
   
   game.on('command-check', (evt: any) => {
-    if (overlayCurrent) {
+    if (overlayCurrent && !game.locked) {
       evt.data.accept = false;
     }
   }, undefined, Infinity);
@@ -103,8 +108,6 @@ export async function createPlayable() {
       Save.saveReplay(replay);
     }
   });
-  window.addEventListener('keydown', keyPause);
-  document.body.addEventListener('touchstart', touchPause);
   game.locked = false;
 }
 
@@ -131,8 +134,6 @@ export async function createWatchable() {
 }
 
 export function destroy() {
-  window.removeEventListener('keydown', keyPause);
-  document.body.removeEventListener('touchstart', touchPause);
   game && game.destructor();
   game = null;
   overlay();
