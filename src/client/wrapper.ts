@@ -44,17 +44,25 @@ function overlay(name?: string) {
   }
 }
 
-(window as any).pause = function pause(evt: any) {
-  var evtCanPause = !evt ||
-    (evt.type.startsWith('key') && evt.key === 'Escape') ||
-    (evt.type.startsWith('touch') && evt.target === document.body);
-  var evtCanResume = !evt || evt.key === 'Escape';
-  if (evtCanPause && !overlayCurrent) {
-    overlay('game-pause');
-  } else if (evtCanResume && overlayCurrent === 'game-pause') {
+function pause() {
+  if (overlayCurrent === 'game-pause') {
     overlay();
+  } else if (!overlayCurrent) {
+    overlay('game-pause');
   }
-};
+}
+
+function keyPause(evt: KeyboardEvent) {
+  if (evt.key === 'Escape') {
+    pause();
+  }
+}
+
+function touchPause(evt: Event) {
+  if (!overlayCurrent && evt.target === document.body) {
+    pause();
+  }
+}
 
 export async function createPlayable() {
   overlay();
@@ -68,7 +76,7 @@ export async function createPlayable() {
   });
   resize();
   
-  game.on('command-check', (evt) => {
+  game.on('command-check', (evt: any) => {
     if (overlayCurrent) {
       evt.data.accept = false;
     }
@@ -95,8 +103,8 @@ export async function createPlayable() {
       Save.saveReplay(replay);
     }
   });
-  window.addEventListener('keydown', window.pause);
-  document.body.addEventListener('touchstart', window.pause);
+  window.addEventListener('keydown', keyPause);
+  document.body.addEventListener('touchstart', touchPause);
   game.locked = false;
 }
 
@@ -123,8 +131,8 @@ export async function createWatchable() {
 }
 
 export function destroy() {
-  window.removeEventListener('keydown', window.pause);
-  document.body.removeEventListener('touchstart', window.pause);
+  window.removeEventListener('keydown', keyPause);
+  document.body.removeEventListener('touchstart', touchPause);
   game && game.destructor();
   game = null;
   overlay();
