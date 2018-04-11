@@ -5,6 +5,7 @@ import Vector2 from '../engine/vector2';
 import Replay from '../game/replay';
 import * as Game from '../game/game';
 import * as Save from './save';
+import { navigate } from './pages';
 
 //Player game state
 
@@ -32,21 +33,18 @@ window.addEventListener('resize', () => {
 });
 
 let overlayCurrent: string|null = null;
-let overlayAction: any|null = null;
-function overlay(name: string, action) {
+function overlay(name?: string) {
   document.querySelectorAll('#game-page .overlay')
     .forEach(e => e.classList.add('hidden'));
   if (name) {
     overlayCurrent = name;
-    overlayAction = action;
-    document.getElementById(name).classList.remove('hidden');
+    document.getElementById(name)!.classList.remove('hidden');
   } else {
     overlayCurrent = null;
-    overlayAction = null;
   }
 }
 
-window.pause = function pause(evt) {
+(window as any).pause = function pause(evt: any) {
   var evtCanPause = !evt ||
     (evt.type.startsWith('key') && evt.key === 'Escape') ||
     (evt.type.startsWith('touch') && evt.target === document.body);
@@ -58,10 +56,10 @@ window.pause = function pause(evt) {
   }
 };
 
-export async function createPlayable(config) {
+export async function createPlayable() {
   overlay();
-  var save = await Save.getSave();
-  var best = await Save.getBestScore();
+  let save = await Save.getSave();
+  let best = await Save.getBestScore();
   
   game = new Game({
     canvas: document.getElementById('canvas'),
@@ -70,19 +68,14 @@ export async function createPlayable(config) {
   });
   resize();
   
-  game.on('command-check', function (evt) {
+  game.on('command-check', (evt) => {
     if (overlayCurrent) {
       evt.data.accept = false;
-      if (overlayAction && evt.data.command === 'action') {
-        overlayAction();
-      }
     }
   }, undefined, Infinity);
   
-  game.on('player-died', function() {
-    window.setTimeout(function() {
-      overlay('game-over', config.onRetry);
-    }, 1000);
+  game.on('player-died', () => {
+    setTimeout(() => overlay('game-over'), 1000);
   });
   
   if (save) {
@@ -107,18 +100,12 @@ export async function createPlayable(config) {
   game.locked = false;
 }
 
-export function destroyPlayable() {
-  window.removeEventListener('keydown', window.pause);
-  document.body.removeEventListener('touchstart', window.pause);
-  game && game.destructor();
-  game = null;
-}
-
-export async function createWatchable(config) {
+export async function createWatchable() {
   overlay();
-  var save = await Save.getBest();
+  const save = await Save.getBest();
+  
   if (!save) {
-    config.onComplete();
+    navigate('title');
     return;
   }
   
@@ -132,10 +119,13 @@ export async function createWatchable(config) {
   await save.execute(game, 5);
   await new Promise((resolve, reject) => setTimeout(resolve, 3000));
   
-  config.onComplete();
+  navigate('title');
 }
 
-export function destroyWatchable() {
+export function destroy() {
+  window.removeEventListener('keydown', window.pause);
+  document.body.removeEventListener('touchstart', window.pause);
   game && game.destructor();
   game = null;
+  overlay();
 }
