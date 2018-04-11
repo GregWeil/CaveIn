@@ -1,25 +1,25 @@
-/// wrapper.js
+/// wrapper.ts
 //Provide simple functions for game management
 
-var Save = require('./save');
-var Vector2 = require('../engine/vector2').default;
-var Game = require('../game/game');
-var Replay = require('../game/replay').default;
+import Vector2 from '../engine/vector2';
+import Replay from '../game/replay';
+import * as Game from '../game/game';
+import * as Save from './save';
 
 //Player game state
 
-var game = null;
+let game: any|null = null;
 
 //Manipulate the player's game
 
 function resize() {
-  var pixel = window.devicePixelRatio;
-  var canvas = document.querySelector('#game-page .area');
+  const pixel = window.devicePixelRatio;
+  const canvas = document.querySelector('#game-page .area') as HTMLCanvasElement;
   canvas.style.transform = '';
-  var sizeCanvas = new Vector2(canvas.offsetWidth, canvas.offsetHeight);
-  var sizeWindow = new Vector2(window.innerWidth, window.innerHeight);
-  var scaleAxes = sizeWindow.divide(sizeCanvas.divide(pixel));
-  var scale = Math.min(scaleAxes.x, scaleAxes.y);
+  const sizeCanvas = new Vector2(canvas.offsetWidth, canvas.offsetHeight);
+  const sizeWindow = new Vector2(window.innerWidth, window.innerHeight);
+  const scaleAxes = sizeWindow.divide(sizeCanvas.divide(pixel));
+  let scale = Math.min(scaleAxes.x, scaleAxes.y);
   if (scale > 1) {
     scale = Math.floor(scale);
   } else if (scale < 1) {
@@ -31,9 +31,9 @@ window.addEventListener('resize', () => {
   if (game) resize();
 });
 
-var overlayCurrent = null;
-var overlayAction = null;
-function overlay(name, action) {
+let overlayCurrent: string|null = null;
+let overlayAction: any|null = null;
+function overlay(name: string, action) {
   document.querySelectorAll('#game-page .overlay')
     .forEach(e => e.classList.add('hidden'));
   if (name) {
@@ -58,7 +58,7 @@ window.pause = function pause(evt) {
   }
 };
 
-async function createPlayable(config) {
+export async function createPlayable(config) {
   overlay();
   var save = await Save.getSave();
   var best = await Save.getBestScore();
@@ -107,14 +107,14 @@ async function createPlayable(config) {
   game.locked = false;
 }
 
-function destroyPlayable() {
+export function destroyPlayable() {
   window.removeEventListener('keydown', window.pause);
   document.body.removeEventListener('touchstart', window.pause);
   game && game.destructor();
   game = null;
 }
 
-async function createWatchable(config) {
+export async function createWatchable(config) {
   overlay();
   var save = await Save.getBest();
   if (!save) {
@@ -135,18 +135,7 @@ async function createWatchable(config) {
   config.onComplete();
 }
 
-function destroyWatchable() {
+export function destroyWatchable() {
   game && game.destructor();
   game = null;
 }
-
-module.exports = {
-  playable: {
-    create: createPlayable,
-    destroy: destroyPlayable
-  },
-  watchable: {
-    create: createWatchable,
-    destroy: destroyWatchable
-  },
-};

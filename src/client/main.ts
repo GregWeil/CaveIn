@@ -61,14 +61,14 @@ Pages.register(new Pages.Page({
   name: 'game',
   selector: '#game-page',
   setup: () => {
-    Game.playable.create({
+    Game.createPlayable({
       onRetry: () => {
         Pages.navigate('newgame');
       }
     });
   },
   teardown: () => {
-    Game.playable.destroy();
+    Game.destroyPlayable();
   }
 }));
 
@@ -76,14 +76,14 @@ Pages.register(new Pages.Page({
   name: 'replay',
   selector: '#game-page',
   setup: () => {
-    Game.watchable.create({
+    Game.createWatchable({
       onComplete: () => {
         Pages.navigate('title');
       }
     });
   },
   teardown: () => {
-    Game.watchable.destroy();
+    Game.destroyWatchable();
   }
 }));
 
