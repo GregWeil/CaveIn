@@ -98,13 +98,19 @@ export async function createPlayable() {
   });
   
   if (save) {
-    const executor = save.getExecutor(game);
-    game.silent = true;
-    await executor.execute(2500, -100);
-    await executor.execute(500, -5);
-    game.silent = false;
-    await executor.execute(5, -1);
-    await executor.execute(1.5);
+    try {
+      const executor = save.getExecutor(game);
+      game.silent = true;
+      await executor.execute(2500, -100);
+      await executor.execute(500, -5);
+      game.silent = false;
+      await executor.execute(5, -1);
+      await executor.execute(1.5);
+    } catch (e) {
+      // Don't leave the player in a broken game
+      navigate('title');
+      throw e;
+    }
   } else {
     save = new Replay(game.randomSeed);
   }
@@ -133,10 +139,12 @@ export async function createWatchable() {
   });
   resize();
   
-  await save.execute(game, 5);
-  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
-  
-  navigate('title');
+  try {
+    await save.execute(game, 5);
+    await new Promise(resolve => setTimeout(resolve, 3000));
+  } finally {
+    navigate('title');
+  }
 }
 
 export function destroy() {

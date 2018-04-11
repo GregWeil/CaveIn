@@ -37,8 +37,7 @@ class ReplayExecutor {
       }
       
       if (!this.game.active) {
-        console.warn('game destroyed while replay in progress');
-        return;
+        throw 'game destroyed while replay in progress';
       }
       
       const command = this.replay.commands[this.step];
