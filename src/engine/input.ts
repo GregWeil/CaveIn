@@ -18,7 +18,7 @@ class Input extends EventEmitter {
 }
 
 class InputWrapper extends Input {
-  private inputs: Input[];
+  private readonly inputs: Input[];
   
   constructor(config: any, inputs: any[]) {
     super();
@@ -86,7 +86,7 @@ class InputQueued extends InputWrapper {
 }
 
 class InputKeyboard extends Input {
-  private keyCommands: { [key: string]: string };
+  private readonly keyCommands: { [key: string]: string };
   private keyLast: string|null;
   
   constructor(keys: { [key: string]: string }) {
@@ -128,13 +128,13 @@ class InputKeyboard extends Input {
 }
 
 class InputSwipe extends Input {
-  private target: HTMLElement;
-  private swipeCommands: string[];
-  private tapCommand: string;
+  private readonly target: HTMLCanvasElement;
+  private readonly swipeCommands: string[];
+  private readonly tapCommand: string;
   
-  private readonly touches: { [key: string]: Touch };
+  private readonly touches: { [key: string]: any };
   
-  constructor(target: HTMLElement, swipes: string[], tap: string) {
+  constructor(target: HTMLCanvasElement, swipes: string[], tap: string) {
     super();
     
     this.target = target;
@@ -159,22 +159,29 @@ class InputSwipe extends Input {
     super.destructor();
   }
   
-  private touchUpdate(evtTouch, timeStamp: number) {
-    var id = evtTouch.identifier;
+  private normalizePosition(x: number, y: number) {
+    const rect = this.target.getBoundingClientRect();
+    return Vector2.new(x, y)
+      .minus(rect.left, rect.top).divide(rect.width, rect.height)
+      .multiply(this.target.width, this.target.height);
+  }
+  
+  private touchUpdate(evtTouch: Touch, timeStamp: number) {
+    const id = evtTouch.identifier;
     if (this.touches[id] && timeStamp > this.touches[id].lastTime) {
-      var rect = this.game.canvas.getBoundingClientRect();
-      var pos = new Vector2(evtTouch.clientX, evtTouch.clientY);
+      const rect = this.target.getBoundingClientRect();
+      let pos = new Vector2(evtTouch.clientX, evtTouch.clientY);
       pos = pos.minus(rect.left, rect.top).divide(rect.width, rect.height);
-      pos = pos.multiply(this.game.canvas.width, this.game.canvas.height);
-      this.touches[id].lastPos = pos;
+      pos = pos.multiply(this.target.width, this.target.height);
+      this.touches[id].lastPos = this.normalizePosition;
       this.touches[id].lastTime = timeStamp;
     }
   }
   
   private touchCommand(id) {
-    var touch = this.touches[id];
+    const touch = this.touches[id];
     if (touch) {
-      var offset = touch.lastPos.minus(touch.firstPos);
+      const offset = touch.lastPos.minus(touch.firstPos);
       if (offset.length() < 10) {
         return this.tapCommand || '';
       } else {
@@ -218,9 +225,9 @@ class InputSwipe extends Input {
     for (var i = 0; i < evt.changedTouches.length; ++i) {
       this.touchUpdate(evt.changedTouches[i], evt.timeStamp);
       
-      var touch = this.touches[evt.changedTouches[i].identifier];
+      const touch = this.touches[evt.changedTouches[i].identifier];
       if (touch) {
-        var command = this.touchCommand(touch.id);
+        const command = this.touchCommand(touch.id);
         if (command && command != this.tapCommand) {
           this.touchExecute(touch.id);
         }

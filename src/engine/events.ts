@@ -62,7 +62,7 @@ export class EventEmitter {
     return event;
   }
   
-  on(name: string, func: (evt: Event) => void, ctx?: object|undefined, priority?: number): Handler {
+  on(name: string, func: (evt: Event) => void, ctx?: object, priority?: number): Handler {
     const handler = new Handler(name, func, priority, ctx);
     
     let handlers = this.handlers[handler.type] || [];
