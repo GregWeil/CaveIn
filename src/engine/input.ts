@@ -232,7 +232,6 @@ export class InputSwipe extends Input {
         if (evt.timeStamp - original.time < 1000) {
           this.touchExecute(touch);
         }
-        
         delete this.touches[touch.identifier];
       }
     }

@@ -42,7 +42,7 @@ module.exports = class Game extends Engine {
       new Input.InputSwipe(this.canvas, [
         'right', null, 'down', null,
         'left', null, 'up', null
-      ], 'action')
+      ], 'action'),
     ]);
     this.input.on('command', function(evt) {
       if (this.commandCheck(evt.data.command) && !this.locked) {
