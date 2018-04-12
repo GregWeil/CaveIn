@@ -5,7 +5,6 @@ import Vector2 from './vector2';
 import { EventEmitter } from './events';
 
 class Input extends EventEmitter {
-  
   constructor() {}
   destructor() {}
   
@@ -15,6 +14,8 @@ class Input extends EventEmitter {
 }
 
 class InputWrapper extends Input {
+  private inputs: Input[];
+  
   constructor(config, inputs) {
     super();
     
@@ -28,35 +29,30 @@ class InputWrapper extends Input {
     this.inputs.forEach(input => input.destructor());
     super.destructor();
   }
-  
-  handler(cmd) {
-    this.command(cmd);
-  }
 }
 
 class InputThrottled extends InputWrapper {
+  private time: number;
+  
   constructor(config, inputs) {
     super(config, inputs);
-    
     this.time = -Infinity;
   }
   
   command(cmd) {
-    super.command(cmd);
-    this.time = performance.now() + 150;
-  }
-  
-  handler(cmd) {
     if (performance.now() > this.time) {
-      this.command(cmd);
+      super.command(cmd);
+      this.time = performance.now() + 150;
     }
   }
 }
 
 class InputQueued extends InputWrapper {
+  private callback: any|null;
+  private queued: string|null;
+  
   constructor(config, inputs) {
     super(config, inputs);
-    
     this.callback = null;
     this.queued = null;
   }
@@ -64,30 +60,21 @@ class InputQueued extends InputWrapper {
   destructor() {
     if (this.callback !== null) {
       window.clearTimeout(this.callback);
-      this.callback = null;
     }
     super.destructor();
   }
   
   command(cmd) {
-    super.command(cmd);
-    
-    this.queued = null;
-    if (this.callback) {
-      window.clearTimeout(this.callback);
-    }
-    
-    this.callback = window.setTimeout(() => {
-      this.callback = null;
-      if (this.queued) {
-        this.command(this.queued);
-      }
-    }, 150);
-  }
-  
-  handler(cmd) {
     if (this.callback === null) {
-      this.command(cmd);
+      super.command(cmd);
+      this.queued = null;
+
+      this.callback = window.setTimeout(() => {
+        this.callback = null;
+        if (this.queued) {
+          this.command(this.queued);
+        }
+      }, 150);
     } else {
       this.queued = cmd;
     }
