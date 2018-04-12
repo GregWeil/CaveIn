@@ -12,7 +12,7 @@ class Input extends EventEmitter {
   destructor() {
   }
   
-  private command(cmd) {
+  protected command(cmd: string) {
     this.emit('command', { command: cmd });
   }
 }
@@ -20,7 +20,7 @@ class Input extends EventEmitter {
 class InputWrapper extends Input {
   private inputs: Input[];
   
-  constructor(config, inputs) {
+  constructor(config: any, inputs: any[]) {
     super();
     
     this.inputs = inputs.map(InputType => new InputType(config));
@@ -38,12 +38,12 @@ class InputWrapper extends Input {
 class InputThrottled extends InputWrapper {
   private time: number;
   
-  constructor(config, inputs) {
+  constructor(config: any, inputs: any[]) {
     super(config, inputs);
     this.time = -Infinity;
   }
   
-  private command(cmd) {
+  protected command(cmd: string) {
     if (performance.now() > this.time) {
       super.command(cmd);
       this.time = performance.now() + 150;
@@ -55,7 +55,7 @@ class InputQueued extends InputWrapper {
   private callback: any|null;
   private queued: string|null;
   
-  constructor(config, inputs) {
+  constructor(config: any, inputs: any[]) {
     super(config, inputs);
     this.callback = null;
     this.queued = null;
@@ -68,7 +68,7 @@ class InputQueued extends InputWrapper {
     super.destructor();
   }
   
-  private command(cmd) {
+  protected command(cmd: string) {
     if (this.callback === null) {
       super.command(cmd);
       this.queued = null;
@@ -92,7 +92,7 @@ class InputKeyboard extends Input {
   constructor(keys: { [key: string]: string }) {
     super();
     
-    this.keyCommands = config.keys;
+    this.keyCommands = keys;
     this.keyLast = null;
     
     this.keyDown = this.keyDown.bind(this);
@@ -113,9 +113,8 @@ class InputKeyboard extends Input {
       return;
     }
     this.keyLast = evt.code;
-    var result = this.tryCommandForKey(evt.code);
-    if (this.keyCommands[code]) {
-      this.command(this.keyCommands[code]);
+    if (this.keyCommands[evt.code]) {
+      this.command(this.keyCommands[evt.code]);
       evt.preventDefault();
       evt.stopPropagation();
     }
@@ -129,34 +128,38 @@ class InputKeyboard extends Input {
 }
 
 class InputSwipe extends Input {
-  constructor(config) {
-    super(config);
+  private target: HTMLElement;
+  private swipeCommands: string[];
+  private tapCommand: string;
+  
+  private readonly touches: { [key: string]: Touch };
+  
+  constructor(target: HTMLElement, swipes: string[], tap: string) {
+    super();
     
-    this.target = this.game.canvas;
-    this.moveThreshold = 10;
-    
-    this.tapCommand = config.tap;
-    this.swipeCommands = config.swipes;
+    this.target = target;
+    this.swipeCommands = swipes;
+    this.tapCommand = tap;
     
     this.touches = {};
     
-    this.boundTouchStart = this.touchStart.bind(this);
-    this.boundTouchMove = this.touchMove.bind(this);
-    this.boundTouchEnd = this.touchEnd.bind(this);
+    this.touchStart = this.touchStart.bind(this);
+    this.touchMove = this.touchMove.bind(this);
+    this.touchEnd = this.touchEnd.bind(this);
     
-    this.target.addEventListener('touchstart', this.boundTouchStart, true);
-    this.target.addEventListener('touchmove', this.boundTouchMove, true);
-    this.target.addEventListener('touchend', this.boundTouchEnd, true);
+    this.target.addEventListener('touchstart', this.touchStart, true);
+    this.target.addEventListener('touchmove', this.touchMove, true);
+    this.target.addEventListener('touchend', this.touchEnd, true);
   }
   
   destructor() {
-    this.target.removeEventListener('touchstart', this.boundTouchStart, true);
-    this.target.removeEventListener('touchmove', this.boundTouchMove, true);
-    this.target.removeEventListener('touchend', this.boundTouchEnd, true);
+    this.target.removeEventListener('touchstart', this.touchStart, true);
+    this.target.removeEventListener('touchmove', this.touchMove, true);
+    this.target.removeEventListener('touchend', this.touchEnd, true);
     super.destructor();
   }
   
-  touchUpdate(evtTouch, timeStamp) {
+  private touchUpdate(evtTouch, timeStamp: number) {
     var id = evtTouch.identifier;
     if (this.touches[id] && timeStamp > this.touches[id].lastTime) {
       var rect = this.game.canvas.getBoundingClientRect();
@@ -168,11 +171,11 @@ class InputSwipe extends Input {
     }
   }
   
-  touchCommand(id) {
+  private touchCommand(id) {
     var touch = this.touches[id];
     if (touch) {
       var offset = touch.lastPos.minus(touch.firstPos);
-      if (offset.length() < this.moveThreshold) {
+      if (offset.length() < 10) {
         return this.tapCommand || '';
       } else {
         var increments = this.swipeCommands.length;
@@ -184,7 +187,7 @@ class InputSwipe extends Input {
     return '';
   }
   
-  touchExecute(id) {
+  private touchExecute(id) {
     var touch = this.touches[id];
     if (touch) {
       var command = this.touchCommand(touch.id);
@@ -196,7 +199,7 @@ class InputSwipe extends Input {
     }
   }
   
-  touchStart(evt) {
+  private touchStart(evt) {
     evt.preventDefault();
     evt.stopPropagation();
     for (var i = 0; i < evt.changedTouches.length; ++i) {
@@ -209,7 +212,7 @@ class InputSwipe extends Input {
     }
   }
   
-  touchMove(evt) {
+  private touchMove(evt) {
     evt.preventDefault();
     evt.stopPropagation();
     for (var i = 0; i < evt.changedTouches.length; ++i) {
@@ -225,7 +228,7 @@ class InputSwipe extends Input {
     }
   }
   
-  touchEnd(evt) {
+  private touchEnd(evt) {
     evt.preventDefault();
     evt.stopPropagation();
     for (var i = 0; i < evt.changedTouches.length; ++i) {

@@ -8,9 +8,9 @@
 export class Event {
   source: EventEmitter;
   type: string;
-  data: object;
+  data: any;
   
-  constructor(source: EventEmitter, name: string, data: object) {
+  constructor(source: EventEmitter, name: string, data: any) {
     this.source = source;
     this.type = name;
     this.data = data;
@@ -25,7 +25,7 @@ export class Handler {
   funcName: string;
   as: object|undefined;
   
-  constructor(name: string, func: (evt: Event) => void, priority: number, ctx: object) {
+  constructor(name: string, func: (evt: Event) => void, priority: number|undefined, ctx: object|undefined) {
     this.active = true;
     
     this.type = name;
@@ -48,7 +48,7 @@ export class EventEmitter {
     this.handlers = {};
   }
   
-  emit(name: string, data?: object): Event {
+  emit(name: string, data?: any): Event {
     const event = new Event(this, name, data || {});
     
     let handlers = this.handlers[name] || [];
@@ -62,7 +62,7 @@ export class EventEmitter {
     return event;
   }
   
-  on(name: string, func: (evt: Event) => void, ctx: object, priority: number): Handler {
+  on(name: string, func: (evt: Event) => void, ctx?: object|undefined, priority?: number): Handler {
     const handler = new Handler(name, func, priority, ctx);
     
     let handlers = this.handlers[handler.type] || [];
