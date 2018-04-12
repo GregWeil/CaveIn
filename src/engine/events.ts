@@ -42,7 +42,7 @@ export class Handler {
 }
 
 export class EventEmitter {
-  handlers: { [key: string]: Handler[] };
+  private handlers: { [key: string]: Handler[] };
   
   constructor() {
     this.handlers = {};

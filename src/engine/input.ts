@@ -5,8 +5,12 @@ import Vector2 from './vector2';
 import { EventEmitter } from './events';
 
 class Input extends EventEmitter {
-  constructor() {}
-  destructor() {}
+  constructor() {
+    super();
+  }
+  
+  destructor() {
+  }
   
   private command(cmd) {
     this.emit('command', { command: cmd });
@@ -39,7 +43,7 @@ class InputThrottled extends InputWrapper {
     this.time = -Infinity;
   }
   
-  command(cmd) {
+  private command(cmd) {
     if (performance.now() > this.time) {
       super.command(cmd);
       this.time = performance.now() + 150;
@@ -64,7 +68,7 @@ class InputQueued extends InputWrapper {
     super.destructor();
   }
   
-  command(cmd) {
+  private command(cmd) {
     if (this.callback === null) {
       super.command(cmd);
       this.queued = null;
@@ -82,47 +86,42 @@ class InputQueued extends InputWrapper {
 }
 
 class InputKeyboard extends Input {
-  constructor(config) {
-    super(config);
+  private keyCommands: { [key: string]: string };
+  private keyLast: string|null;
+  
+  constructor(keys: { [key: string]: string }) {
+    super();
     
     this.keyCommands = config.keys;
-    
-    this.boundKeyDown = this.keyDown.bind(this);
-    this.boundKeyUp = this.keyUp.bind(this);
-    
-    window.addEventListener('keydown', this.boundKeyDown, true);
-    window.addEventListener('keyup', this.boundKeyUp, true);
-    
     this.keyLast = null;
+    
+    this.keyDown = this.keyDown.bind(this);
+    this.keyUp = this.keyUp.bind(this);
+    
+    window.addEventListener('keydown', this.keyDown, true);
+    window.addEventListener('keyup', this.keyUp, true);
   }
   
   destructor() {
-    window.removeEventListener('keydown', this.boundKeyDown, true);
-    window.removeEventListener('keyup', this.boundKeyUp, true);
+    window.removeEventListener('keydown', this.keyDown, true);
+    window.removeEventListener('keyup', this.keyUp, true);
     super.destructor();
   }
   
-  tryCommandForKey(code) {
-    var cmd = this.keyCommands[code];
-    if (cmd) {
-      return this.command(cmd);
-    }
-    return false;
-  }
-  
-  keyDown(evt) {
+  keyDown(evt: KeyboardEvent) {
     if (this.keyLast === evt.code) {
       return;
     }
     this.keyLast = evt.code;
     var result = this.tryCommandForKey(evt.code);
-    if (result) {
+    if (this.keyCommands[code]) {
+      this.command(this.keyCommands[code]);
       evt.preventDefault();
       evt.stopPropagation();
     }
   }
   
-  keyUp(evt) {
+  keyUp(evt: KeyboardEvent) {
     if (this.keyLast === evt.code) {
       this.keyLast = null;
     }
