@@ -1,32 +1,27 @@
-/// input.js
+/// input.ts
 //Take player input and send it to the game
 
-var Vector2 = require('./vector2').default;
+import Vector2 from './vector2';
+import { EventEmitter } from './events';
 
-class Input {
-  constructor(config) {
-    this.game = config.game;
-    this.emit = config.emit;
-  }
+class Input extends EventEmitter {
   
-  destructor() {
-    //Other inputs can override this
-  }
+  constructor() {}
+  destructor() {}
   
-  command(cmd) {
-    this.emit(cmd);
+  private command(cmd) {
+    this.emit('command', { command: cmd });
   }
 }
 
 class InputWrapper extends Input {
   constructor(config, inputs) {
-    super(config);
+    super();
     
-    this.inputs = inputs.map(InputType =>
-      new InputType(Object.assign({
-        emit: this.handler.bind(this)
-      }, config))
-    );
+    this.inputs = inputs.map(InputType => new InputType(config));
+    this.inputs.forEach(input => {
+      input.on('command', evt => this.command(evt.data.command));
+    });
   }
   
   destructor() {
