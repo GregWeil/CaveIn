@@ -132,7 +132,7 @@ class InputSwipe extends Input {
   private readonly swipeCommands: string[];
   private readonly tapCommand: string;
   
-  private readonly touches: { [key: string]: any };
+  private readonly touches: { [key: string]: { time: number, pos: Vector2 } };
   
   constructor(target: HTMLCanvasElement, swipes: string[], tap: string) {
     super();
@@ -166,52 +166,42 @@ class InputSwipe extends Input {
       .multiply(this.target.width, this.target.height);
   }
   
-  private touchUpdate(evtTouch: Touch, timeStamp: number) {
-    const id = evtTouch.identifier;
-    if (this.touches[id] && timeStamp > this.touches[id].lastTime) {
-      this.touches[id].lastPos = this.normalizePosition(evtTouch.clientX, evtTouch.clientY);
-      this.touches[id].lastTime = timeStamp;
-    }
-  }
-  
   private touchCommand(touch: Touch) {
-    const touch = this.touches[touch.identifier];
     const pos = this.normalizePosition(touch.clientX, touch.clientY);
-    if (touch) {
-      const offset = pos.minus(touch.firstPos);
+    if (this.touches[touch.identifier]) {
+      const offset = pos.minus(this.touches[touch.identifier].pos);
       if (offset.length() < 10) {
         return this.tapCommand;
       } else {
         const increments = this.swipeCommands.length;
         const segment = Math.round(offset.angle() * (increments / 2) / Math.PI);
         const direction = ((segment + increments) % increments);
-        return this.swipeCommands[direction] || null;
+        return this.swipeCommands[direction];
       }
     }
-    return null;
+    return '';
   }
   
-  private touchExecute(id) {
-    var touch = this.touches[id];
-    if (touch) {
-      var command = this.touchCommand(touch.id);
+  private touchExecute(touch: Touch) {
+    if (this.touches[touch.identifier]) {
+      const command = this.touchCommand(touch);
       if (command) {
         this.command(command);
       }
       
-      delete this.touches[touch.id];
+      delete this.touches[touch.identifier];
     }
   }
   
-  private touchStart(evt: any) {
+  private touchStart(evt: Event) {
     evt.preventDefault();
     evt.stopPropagation();
-    for (let i = 0; i < evt.changedTouches.length; ++i) {
-      const touch = evt.changedTouches[i];
-      this.touches[id] = {
-        id: touch.identifier,
-        firstTime: evt.timeStamp,
-        firstPos: this.normalizePosition(touch.clientX, touch.clientY)
+    const changedTouches = (evt as TouchEvent).changedTouches;
+    for (let i = 0; i < changedTouches.length; ++i) {
+      const touch = changedTouches[i];
+      this.touches[touch.identifier] = {
+        time: evt.timeStamp,
+        pos: this.normalizePosition(touch.clientX, touch.clientY)
       };
     }
   }
@@ -219,12 +209,13 @@ class InputSwipe extends Input {
   private touchMove(evt: any) {
     evt.preventDefault();
     evt.stopPropagation();
-    for (let i = 0; i < evt.changedTouches.length; ++i) {
-      const touch = this.touches[evt.changedTouches[i].identifier];
-      if (touch) {
-        const command = this.touchCommand(touch.id);
-        if (command && command != this.tapCommand) {
-          this.touchExecute(touch.id);
+    const changedTouches = (evt as TouchEvent).changedTouches;
+    for (let i = 0; i < changedTouches.length; ++i) {
+      const touch = changedTouches[i];
+      if (this.touches[touch.identifier]) {
+        const command = this.touchCommand(touch);
+        if (command && command !== this.tapCommand) {
+          this.touchExecute(touch);
         }
       }
     }
