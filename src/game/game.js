@@ -25,14 +25,8 @@ module.exports = class Game extends Engine {
     this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     this.random = new Random(this.randomEngine);
     
-    this.input = new Input.Queued({
-      game: this,
-      emit: (function(command) {
-        if (this.commandCheck(command) && !this.locked) {
-          this.update(command);
-        }
-      }).bind(this),
-      keys: {
+    this.input = new Input.InputQueued([
+      new Input.InputKeyboard({
         'KeyW': 'up',
         'KeyA': 'left',
         'KeyS': 'down',
@@ -44,13 +38,17 @@ module.exports = class Game extends Engine {
         'ArrowRight': 'right',
         
         'Space': 'action'
-      },
-      swipes: [
+      }),
+      new Input.InputSwipe(this.canvas, [
         'right', null, 'down', null,
         'left', null, 'up', null
-      ],
-      tap: 'action'
-    }, [Input.Keyboard, Input.Swipe]);
+      ], 'action')
+    ]);
+    this.input.on('command', function(evt) {
+      if (this.commandCheck(evt.data.command) && !this.locked) {
+        this.update(evt.data.command);
+      }
+    }.bind(this));
     
     this.animInterval = window.setInterval(function() {
       this.emit('anim-idle');

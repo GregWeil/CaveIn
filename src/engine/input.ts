@@ -20,10 +20,10 @@ class Input extends EventEmitter {
 class InputWrapper extends Input {
   private readonly inputs: Input[];
   
-  constructor(config: any, inputs: any[]) {
+  constructor(inputs: Input[]) {
     super();
     
-    this.inputs = inputs.map(InputType => new InputType(config));
+    this.inputs = inputs;
     this.inputs.forEach(input => {
       input.on('command', evt => this.command(evt.data.command));
     });
@@ -35,11 +35,11 @@ class InputWrapper extends Input {
   }
 }
 
-class InputThrottled extends InputWrapper {
+export class InputThrottled extends InputWrapper {
   private time: number;
   
-  constructor(config: any, inputs: any[]) {
-    super(config, inputs);
+  constructor(inputs: Input[]) {
+    super( inputs);
     this.time = -Infinity;
   }
   
@@ -51,12 +51,12 @@ class InputThrottled extends InputWrapper {
   }
 }
 
-class InputQueued extends InputWrapper {
+export class InputQueued extends InputWrapper {
   private callback: any|null;
   private queued: string|null;
   
-  constructor(config: any, inputs: any[]) {
-    super(config, inputs);
+  constructor(inputs: Input[]) {
+    super(inputs);
     this.callback = null;
     this.queued = null;
   }
@@ -85,7 +85,7 @@ class InputQueued extends InputWrapper {
   }
 }
 
-class InputKeyboard extends Input {
+export class InputKeyboard extends Input {
   private readonly keyCommands: { [key: string]: string };
   private keyLast: string|null;
   
@@ -127,7 +127,7 @@ class InputKeyboard extends Input {
   }
 }
 
-class InputSwipe extends Input {
+export class InputSwipe extends Input {
   private readonly target: HTMLCanvasElement;
   private readonly swipeCommands: string[];
   private readonly tapCommand: string;
@@ -206,7 +206,7 @@ class InputSwipe extends Input {
     }
   }
   
-  private touchMove(evt: any) {
+  private touchMove(evt: Event) {
     evt.preventDefault();
     evt.stopPropagation();
     const changedTouches = (evt as TouchEvent).changedTouches;
@@ -221,29 +221,20 @@ class InputSwipe extends Input {
     }
   }
   
-  private touchEnd(evt: any) {
+  private touchEnd(evt: Event) {
     evt.preventDefault();
     evt.stopPropagation();
-    for (var i = 0; i < evt.changedTouches.length; ++i) {
-      this.touchUpdate(evt.changedTouches[i], evt.timeStamp);
-      
-      var id = evt.changedTouches[i].identifier;
-      var touch = this.touches[id];
-      if (touch) {
-        if (touch.lastTime - touch.firstTime < 1000) {
-          this.touchExecute(id);
+    const changedTouches = (evt as TouchEvent).changedTouches;
+    for (var i = 0; i < changedTouches.length; ++i) {
+      const touch = changedTouches[i];
+      const original = this.touches[touch.identifier];
+      if (original) {
+        if (evt.timeStamp - original.time < 1000) {
+          this.touchExecute(touch);
         }
         
-        delete this.touches[id];
+        delete this.touches[touch.identifier];
       }
     }
   }
 }
-
-module.exports = {
-  Throttled: InputThrottled,
-  Queued: InputQueued,
-  
-  Keyboard: InputKeyboard,
-  Swipe: InputSwipe
-};
