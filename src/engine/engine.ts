@@ -1,11 +1,19 @@
-/// engine.js
+/// engine.ts
 //Main engine loop
 
-var EventEmitter = require('./events').EventEmitter;
-var Vector2 = require('./vector2').default;
+import { EventEmitter } from './events';
+import Vector2 from './vector2';
 
-module.exports = class Engine extends EventEmitter {
-  constructor(config) {
+export default class Engine extends EventEmitter {
+  active: boolean;
+  headless: booleans;
+  locked: boolean;
+  silent: boolean;
+  
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
+  
+  constructor(config: any) {
     super();
     
     this.active = true;

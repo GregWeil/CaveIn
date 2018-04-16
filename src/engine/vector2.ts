@@ -1,9 +1,9 @@
-/// vector2.js
+/// vector2.ts
 //A point class
 
 export default class Vector2 {
   x: number;
-  y: number
+  y: number;
   
   constructor(x?: number, y?: number) {
     this.x = x || 0;

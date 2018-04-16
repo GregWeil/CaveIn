@@ -4,7 +4,7 @@
 var Random = require('random-js');
 
 var Vector2 = require('../engine/vector2').default;
-var Engine = require('../engine/engine');
+var Engine = require('../engine/engine').default;
 var Input = require('../engine/input');
 
 var Grid = require('./grid');
