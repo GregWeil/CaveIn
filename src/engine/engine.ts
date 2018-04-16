@@ -1,17 +1,22 @@
 /// engine.ts
 //Main engine loop
 
+import { Howl } from 'howler';
+
 import { EventEmitter } from './events';
 import Vector2 from './vector2';
 
 export default class Engine extends EventEmitter {
   active: boolean;
-  headless: booleans;
+  headless: boolean;
   locked: boolean;
   silent: boolean;
   
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
+  
+  updateTime: number;
+  objects: any[];
   
   constructor(config: any) {
     super();
@@ -22,8 +27,9 @@ export default class Engine extends EventEmitter {
     this.silent = config.silent || this.headless;
     
     this.canvas = config.canvas || document.createElement('canvas');
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d')!;
     
+    this.updateTime = performance.now();
     this.objects = [];
     
     if (!this.headless) {
@@ -38,7 +44,7 @@ export default class Engine extends EventEmitter {
     this.active = false;
   }
   
-  update(command) {
+  update(command: string) {
     var dt = (performance.now() - this.updateTime) / 1000;
     
     this.emit('update', {
@@ -49,7 +55,7 @@ export default class Engine extends EventEmitter {
     this.updateTime = performance.now();
   }
   
-  commandCheck(command) {
+  commandCheck(command: string) {
     return this.emit('command-check', {
       command: command,
       accept: false
@@ -73,7 +79,7 @@ export default class Engine extends EventEmitter {
     window.requestAnimationFrame(this.render.bind(this));
   }
   
-  sound(asset, config) {
+  sound(asset: Howl, config: any) {
     if (this.silent) {
       return null;
     }
@@ -86,14 +92,14 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create(Obj, config) {
+  create(Obj: any, config: any) {
     config = Object.assign({ game: this }, (config || {}));
     var inst = new Obj(config);
     this.objects.push(inst);
     return inst;
   }
   
-  destroy(inst, displayTime) {
+  destroy(inst: any, displayTime?: number) {
     var index = this.objects.indexOf(inst);
     if (index >= 0) {
       inst.destroy(displayTime);
