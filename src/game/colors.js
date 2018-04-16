@@ -4,7 +4,7 @@
 
 var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
-var BaseObject = require('../engine/object');
+var BaseObject = require('../engine/object').default;
 
 var colors = [
   '#F00', '#0F0', '#06F', '#FF0', '#F0F', '#0FF',

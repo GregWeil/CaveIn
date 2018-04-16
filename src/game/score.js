@@ -2,7 +2,7 @@
 //Show a popup when the player gets any points
 
 var Render = require('../engine/render');
-var BaseObject = require('../engine/object');
+var BaseObject = require('../engine/object').default;
 
 module.exports = class Score extends BaseObject {
   constructor(config) {

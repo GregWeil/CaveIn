@@ -40,7 +40,7 @@ export default class BaseObject<Game extends Engine> {
   }
   
   private dropHandler(handler: Handler) {
-    var index = this.handlers.indexOf(handler);
+    const index = this.handlers.indexOf(handler);
     this.handlers.splice(index, 1);
   }
   

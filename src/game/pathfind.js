@@ -3,7 +3,7 @@
 
 var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
-var BaseObject = require('../engine/object');
+var BaseObject = require('../engine/object').default;
 
 function getAdjacent(pos) {
   return [
