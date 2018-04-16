@@ -1,18 +1,26 @@
-/// object.js
+/// object.ts
 //Base game object that things inherit from
 
-module.exports = class BaseObject {
-  constructor(config) {
+import Engine from './engine';
+import { EventEmitter, Handler, Event } from './events';
+
+export default class BaseObject<Game extends Engine> {
+  protected game: Game;
+  private handlers: Handler[];
+  
+  active: boolean;
+  
+  constructor(config: any) {
     this.game = config.game;
     this.handlers = [];
     this.active = true;
   }
   
-  destroy(displayTime) {
+  destroy(displayTime?: number) {
     this.active = false;
-    var handlers = Array.from(this.handlers);
+    const handlers = Array.from(this.handlers);
     for (let i = 0; i < handlers.length; ++i) {
-      var data = handlers[i];
+      const data = handlers[i];
       //Things render for a little after they die
       //It looks better when you move into an attack
       if (data.type !== 'render') {
@@ -20,27 +28,27 @@ module.exports = class BaseObject {
       }
     }
     setTimeout(() => {
-      var handlers = Array.from(this.handlers);
+      const handlers = Array.from(this.handlers);
       for (let i = 0; i < handlers.length; ++i) {
         this.unhandle(handlers[i]);
       }
     }, displayTime !== undefined ? displayTime*1000 : 30);
   }
   
-  storeHandler(handler) {
+  private storeHandler(handler: Handler) {
     this.handlers.push(handler);
   }
   
-  dropHandler(handler) {
+  private dropHandler(handler: Handler) {
     var index = this.handlers.indexOf(handler);
     this.handlers.splice(index, 1);
   }
   
-  handle(obj, type, func, priority) {
-    this.storeHandler(obj.on(type, func, this, priority));
+  protected handle(obj: EventEmitter, name: string, func: ((e: Event) => void), priority: number) {
+    this.storeHandler(obj.on(name, func, this, priority));
   }
   
-  unhandle(handler) {
+  protected unhandle(handler: Handler) {
     this.dropHandler(handler);
     handler.active = false;
   }

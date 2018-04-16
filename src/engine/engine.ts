@@ -45,7 +45,7 @@ export default class Engine extends EventEmitter {
   }
   
   update(command: string) {
-    var dt = (performance.now() - this.updateTime) / 1000;
+    const dt = (performance.now() - this.updateTime) / 1000;
     
     this.emit('update', {
       command: command,
@@ -83,7 +83,7 @@ export default class Engine extends EventEmitter {
     if (this.silent) {
       return null;
     }
-    var audio = asset.play();
+    const audio = asset.play();
     if (config) {
       if ('volume' in config) {
         asset.volume(config.volume, audio);
@@ -94,13 +94,13 @@ export default class Engine extends EventEmitter {
   
   create(Obj: any, config: any) {
     config = Object.assign({ game: this }, (config || {}));
-    var inst = new Obj(config);
+    const inst = new Obj(config);
     this.objects.push(inst);
     return inst;
   }
   
   destroy(inst: any, displayTime?: number) {
-    var index = this.objects.indexOf(inst);
+    const index = this.objects.indexOf(inst);
     if (index >= 0) {
       inst.destroy(displayTime);
       this.objects.splice(index, 1);
