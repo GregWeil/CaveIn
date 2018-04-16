@@ -2,6 +2,7 @@
 //Provide simple functions for game management
 
 import Vector2 from '../engine/vector2';
+import Engine from '../engine/engine';
 import Replay from '../game/replay';
 import * as Game from '../game/game';
 import * as Save from './save';
@@ -9,7 +10,7 @@ import { navigate } from './pages';
 
 //Player game state
 
-let activeGame: any|null = null;
+let activeGame: Engine|null = null;
 
 // Resize to fit the screen
 
@@ -132,7 +133,7 @@ export async function createWatchable() {
     return;
   }
   
-  const game: any = activeGame = new Game({
+  const game: Engine = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save.seed, best: save.score,
     locked: true
