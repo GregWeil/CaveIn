@@ -5,6 +5,7 @@
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
+import { Event } from '../engine/events';
 
 const colors = [
   '#F00', '#0F0', '#06F', '#FF0', '#F0F', '#0FF',
@@ -12,12 +13,14 @@ const colors = [
 ];
 
 export class GridColors extends BaseObject<any> {
-  private grid:
+  private grid: any;
+  private padding: number;
+  private colors: string[][];
   
-  constructor(game: any, grid: any) {
-    super(game);
+  constructor(config: any) {
+    super(config.game);
     
-    this.grid = grid;
+    this.grid = config.grid;
     
     this.padding = 2;
     
@@ -33,7 +36,7 @@ export class GridColors extends BaseObject<any> {
     this.handle(this.game, 'render', this.render, 1000);
   }
   
-  render(evt) {
+  render(evt: Event) {
     evt.data.context.globalCompositeOperation = 'multiply';
     for (let i = -this.padding; i < this.grid.gridSize.x + this.padding; ++i) {
       for (let j = -this.padding; j < this.grid.gridSize.y + this.padding; ++j) {
@@ -46,15 +49,17 @@ export class GridColors extends BaseObject<any> {
 }
 
 export class ScreenColors extends BaseObject<any> {
-  constructor(game: any) {
-    super(game);
+  private color: string;
+  
+  constructor(config: any) {
+    super(config.game);
     
     this.color = this.game.random.pick(colors);
     
     this.handle(this.game, 'render', this.render, 1000);
   }
   
-  render(evt) {
+  render(evt: Event) {
     evt.data.context.globalCompositeOperation = 'multiply';
     evt.data.context.fillStyle = this.color;
     Render.rect(evt.data.context, new Vector2(),
