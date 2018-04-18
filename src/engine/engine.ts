@@ -5,6 +5,7 @@ import { Howl } from 'howler';
 
 import { EventEmitter } from './events';
 import Vector2 from './vector2';
+import BaseObject from './object';
 
 export default class Engine extends EventEmitter {
   active: boolean;
@@ -16,7 +17,7 @@ export default class Engine extends EventEmitter {
   ctx: CanvasRenderingContext2D;
   
   updateTime: number;
-  objects: any[];
+  objects: BaseObject<this>[];
   
   constructor(config: any) {
     super();
@@ -92,14 +93,14 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create(Obj: any, config: any) {
+  create(Obj: any, config: any): BaseObject<this> {
     config = Object.assign({ game: this }, (config || {}));
     const inst = new Obj(config);
     this.objects.push(inst);
     return inst;
   }
   
-  destroy(inst: any, displayTime?: number) {
+  destroy(inst: BaseObject<this>, displayTime?: number) {
     const index = this.objects.indexOf(inst);
     if (index >= 0) {
       inst.destroy(displayTime);
