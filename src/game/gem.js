@@ -84,8 +84,6 @@ module.exports = class Gem extends BaseObject {
     this.grid = config.grid;
     this.pos = config.pos;
     
-    //this.game.collide.add(this.pos, this);
-    
     var base = gemTiers[config.tier];
     this.score = base.score;
     this.rangeAxis = base.rangeAxis;
@@ -100,11 +98,6 @@ module.exports = class Gem extends BaseObject {
     
     this.handle(this.game, 'anim-idle', this.anim);
     this.handle(this.game, 'render', this.render);
-  }
-  
-  destroy(displayTime) {
-    //this.game.collide.remove(this.pos, this);
-    super.destroy(displayTime);
   }
   
   check(evt) {
