@@ -9,7 +9,7 @@ var Input = require('../engine/input');
 
 var Grid = require('./grid');
 var Collide = require('./collide');
-var Colors = require('./colors').Screen;
+var Colors = require('./colors').ScreenColors;
 var Pathfind = require('./pathfind');
 var Player = require('./player');
 var Enemy = require('./enemy');

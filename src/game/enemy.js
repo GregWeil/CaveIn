@@ -25,7 +25,7 @@ var audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject {
   constructor(config) {
-    super(config);
+    super(config.game);
     
     this.grid = config.grid,
     this.pos = config.pos;
@@ -85,7 +85,7 @@ module.exports = class Enemy extends BaseObject {
   }
   
   constructor(config) {
-    super(config);
+    super(config.game);
     
     this.grid = config.grid;
     this.pos = config.pos.copy();

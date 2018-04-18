@@ -7,7 +7,7 @@ var BaseObject = require('../engine/object').default;
 
 module.exports = class Collide extends BaseObject {
   constructor(config) {
-    super(config);
+    super(config.game);
     
     this.collisions = {};
     

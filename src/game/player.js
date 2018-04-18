@@ -29,7 +29,7 @@ var audioDie = new Howl({ volume: 0.5, src: ['/assets/die.wav'] });
 
 module.exports = class Player extends BaseObject {
   constructor(config) {
-    super(config);
+    super(config.game);
     
     this.grid = config.grid;
     this.pos = config.pos;

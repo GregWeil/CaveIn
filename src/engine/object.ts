@@ -10,8 +10,8 @@ export default class BaseObject<Game extends Engine> {
   
   active: boolean;
   
-  constructor(config: any) {
-    this.game = config.game;
+  constructor(game: Game) {
+    this.game = game;
     this.handlers = [];
     this.active = true;
   }

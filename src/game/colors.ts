@@ -1,21 +1,23 @@
-/// colors.js
+/// colors.ts
 //Apply a color filter to the screen
 //Either each cell is a color, or the whole screen is a color
 
-var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
+import Vector2 from '../engine/vector2';
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
 
-var colors = [
+const colors = [
   '#F00', '#0F0', '#06F', '#FF0', '#F0F', '#0FF',
   '#FFF', '#FFF', '#FFF', '#FFF', '#FFF', '#FFF'
 ];
 
-class GridColors extends BaseObject {
-  constructor(config) {
-    super(config);
+export class GridColors extends BaseObject<any> {
+  private grid:
+  
+  constructor(game: any, grid: any) {
+    super(game);
     
-    this.grid = config.grid;
+    this.grid = grid;
     
     this.padding = 2;
     
@@ -43,9 +45,9 @@ class GridColors extends BaseObject {
   }
 }
 
-class ScreenColors extends BaseObject {
-  constructor(config) {
-    super(config);
+export class ScreenColors extends BaseObject<any> {
+  constructor(game: any) {
+    super(game);
     
     this.color = this.game.random.pick(colors);
     
@@ -60,8 +62,3 @@ class ScreenColors extends BaseObject {
     evt.data.context.globalCompositeOperation = 'source-over';
   }
 }
-
-module.exports = {
-  Grid: GridColors,
-  Screen: ScreenColors
-};
