@@ -1,6 +1,7 @@
 dependencies:
   '@types/express': 4.11.1
   '@types/howler': 2.0.5
+  '@types/random-js': 1.0.30
   browserify: 16.1.1
   express: 4.16.3
   howler: 2.0.9
@@ -45,6 +46,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-UWkRY9X7RQHp5OhhRIIka58/gVVycL1zHZu0OTsT5LI86ABaMOSbUjAl+b0FeDhQcxclrkyft3kW5QWdMRs8wQ==
+  /@types/random-js/1.0.30:
+    dev: false
+    resolution:
+      integrity: sha512-WjnCxSADI8zNFkwwQYzBbYDOMOsX//gzxS7rLvms4E8dEcHPrKzoi4FZXebYLKlTpaWSSqHT3Fp9TkDAiNW5rw==
   /@types/serve-static/1.13.1:
     dependencies:
       '@types/express-serve-static-core': 4.11.1
@@ -1349,6 +1354,7 @@ shrinkwrapVersion: 3
 specifiers:
   '@types/express': ^4.11.1
   '@types/howler': ^2.0.5
+  '@types/random-js': ^1.0.30
   browserify: ^16.1.1
   express: ^4.16.3
   howler: ^2.0.9

@@ -93,7 +93,7 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create(Obj: any, config: any): BaseObject<this> {
+  create<T extends BaseObject<this>>(Obj: { new (config: any): T }, config: any): T {
     config = Object.assign({ game: this }, (config || {}));
     const inst = new Obj(config);
     this.objects.push(inst);
@@ -107,4 +107,4 @@ export default class Engine extends EventEmitter {
       this.objects.splice(index, 1);
     }
   }
-};
+}

@@ -1,7 +1,7 @@
 /// replays.ts
 //Replay validation and recording
 
-import * as Game from './game';
+import Game from './game';
 
 class ReplayExecutor {
   private replay: Replay;

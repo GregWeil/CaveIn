@@ -1,23 +1,25 @@
-/// game.js
+/// game.ts
 //Wrap the engine and define game specific interactions
 
-var Random = require('random-js');
+import * as Random from 'random-js';
 
-var Vector2 = require('../engine/vector2').default;
-var Engine = require('../engine/engine').default;
-var Input = require('../engine/input');
+import Vector2 from '../engine/vector2';
+import Engine from '../engine/engine';
+import * as Input from '../engine/input';
 
-var Grid = require('./grid');
-var Collide = require('./collide');
-var Colors = require('./colors').ScreenColors;
-var Pathfind = require('./pathfind');
-var Player = require('./player');
-var Enemy = require('./enemy');
-var Gem = require('./gem');
-var Score = require('./score');
+import * as Grid from './grid';
+import * as Collide from './collide';
+import { ScreenColors as Colors } from './colors';
+import * as Pathfind from './pathfind';
+import * as Player from './player';
+import * as Enemy from './enemy';
+import * as Gem from './gem';
+import * as Score from './score';
 
-module.exports = class Game extends Engine {
-  constructor(config) {
+export default class Game extends Engine {
+  randomSeed: 
+  
+  constructor(config: any) {
     super(config);
     
     this.randomSeed = config.seed !== undefined ? config.seed
@@ -168,4 +170,4 @@ module.exports = class Game extends Engine {
     clearInterval(this.animInterval);
     super.destructor();
   }
-};
+}

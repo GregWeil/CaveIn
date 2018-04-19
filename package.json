@@ -18,7 +18,8 @@
     "@types/express": "^4.11.1",
     "howler": "^2.0.9",
     "@types/howler": "^2.0.5",
-    "random-js": "^1.0.8"
+    "random-js": "^1.0.8",
+    "@types/random-js": "^1.0.30"
   },
   "engines": {
     "node": "9"

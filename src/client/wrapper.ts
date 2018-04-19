@@ -4,7 +4,7 @@
 import Vector2 from '../engine/vector2';
 import Engine from '../engine/engine';
 import Replay from '../game/replay';
-import * as Game from '../game/game';
+import Game from '../game/game';
 import * as Save from './save';
 import { navigate } from './pages';
 
