@@ -80,7 +80,7 @@ export default class Engine extends EventEmitter {
     window.requestAnimationFrame(this.render.bind(this));
   }
   
-  sound(asset: Howl, config: any) {
+  sound(asset: Howl, config?: any) {
     if (this.silent) {
       return null;
     }
@@ -93,7 +93,7 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create<T extends BaseObject<this>>(Obj: { new (config: any): T }, config?: any): T {
+  create<T extends BaseObject<this>, C>(Obj: { new (config: C): T }, config?: C): T {
     config = Object.assign({ game: this }, (config || {}));
     const inst = new Obj(config);
     this.objects.push(inst);
