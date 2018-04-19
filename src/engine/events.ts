@@ -73,4 +73,4 @@ export class EventEmitter {
     
     return handler;
   }
-};
+}

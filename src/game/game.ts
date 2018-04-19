@@ -20,6 +20,9 @@ export default class Game extends Engine {
   randomSeed: number;
   random: Random;
   
+  score: number;
+  best: number;
+  
   collide: any;
   grid: any;
   
@@ -32,7 +35,7 @@ export default class Game extends Engine {
     this.randomSeed = config.seed !== undefined ? config.seed
       : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     const randomEngine = Random.engines.mt19937().seed(this.randomSeed);
-    this.random = new Random(randomEngine);
+    const random = this.random = new Random(randomEngine);
     
     this.input = new Input.InputQueued([
       new Input.InputKeyboard({
@@ -95,14 +98,14 @@ export default class Game extends Engine {
     
     //Enemy spawning and AI
     
-    var pathfind = this.create(Pathfind, { grid: this.grid });
+    const pathfind = this.create(Pathfind, { grid: this.grid });
     
     function enemyAI(pos: Vector2) {
       if (player.active) {
         var choices = pathfind.getNextChoices(pos, player.pos);
-        return this.game.random.pick(choices).minus(pos);
+        return random.pick(choices).minus(pos);
       } else {
-        return Random.pick([
+        return random.pick([
           new Vector2(-1, 0), new Vector2(1, 0),
           new Vector2(0, -1), new Vector2(0, 1)
         ]);
@@ -113,16 +116,16 @@ export default class Game extends Engine {
       if (evt.data.from && !evt.data.to && evt.data.cause !== 'gem') {
         Enemy.spawn(this, this.grid, player.pos, enemyAI);
       }
-    }, this);
+    });
     
     //Check if something should collapse
     
     this.on('update', evt => {
       var distances = pathfind.generateDistanceField(player.pos);
-      for (let i = 0; i < grid.gridSize.x; ++i) {
-        for (let j = 0; j < grid.gridSize.y; ++j) {
+      for (let i = 0; i < this.grid.gridSize.x; ++i) {
+        for (let j = 0; j < this.grid.gridSize.y; ++j) {
           var pos = new Vector2(i, j);
-          if (!grid.getBlock(pos) && !Number.isFinite(distances[i][j])) {
+          if (!this.grid.getBlock(pos) && !Number.isFinite(distances[i][j])) {
             var hit = this.collide.get(pos);
             if (hit && hit.hurt) {
               hit.hurt({
@@ -141,7 +144,7 @@ export default class Game extends Engine {
     
     this.on('gem-collect', evt => {
       Gem.spawn(this, this.grid, player.pos);
-    }, this);
+    });
     
     Gem.spawn(this, this.grid, player.pos);
     
@@ -152,7 +155,7 @@ export default class Game extends Engine {
     
     this.on('score', evt => {
       this.score += evt.data.score;
-    }, this);
+    });
     
     this.on('render', evt => {
       evt.data.context.fillStyle = 'white';
@@ -167,7 +170,7 @@ export default class Game extends Engine {
           this.best >= this.score ? 'BEST: ' + this.best : 'NEW BEST',
           this.canvas.width - 7, 12);
       }
-    }, this, 900);
+    }, undefined, 900);
   }
   
   //Cleanup

@@ -81,14 +81,14 @@ export async function createPlayable() {
   let save = await Save.getSave();
   let best = await Save.getBestScore();
   
-  const game: any = activeGame = new Game({
+  const game = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save ? save.seed : null,
     best: best, locked: true
   });
   resize();
   
-  game.on('command-check', (evt: any) => {
+  game.on('command-check', evt => {
     if (overlayCurrent && !game.locked) {
       evt.data.accept = false;
     }
@@ -133,7 +133,7 @@ export async function createWatchable() {
     return;
   }
   
-  const game: Engine = activeGame = new Game({
+  const game = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save.seed, best: save.score,
     locked: true

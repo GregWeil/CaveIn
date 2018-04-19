@@ -5,10 +5,10 @@ import Game from './game';
 
 class ReplayExecutor {
   private replay: Replay;
-  private game: any;
+  private game: Game;
   private step: number;
   
-  constructor(replay: Replay, game: any) {
+  constructor(replay: Replay, game: Game) {
     this.replay = replay;
     this.game = game;
     this.step = 0;
@@ -66,22 +66,22 @@ export default class Replay {
     this.score = -1;
   }
   
-  getExecutor(game: any) {
+  getExecutor(game: Game) {
     return new ReplayExecutor(this, game);
   }
   
-  async execute(game: any, rate?: number) {
+  async execute(game: Game, rate?: number) {
     const executor = this.getExecutor(game);
     await executor.execute(rate || Infinity);
   }
   
   async validate() {
-    const game: any = new Game({
+    const game = new Game({
       seed: this.seed
     });
 
     let alive = true;
-    game.on('player-died', (evt: any) => {
+    game.on('player-died', evt => {
       alive = false;
     });
 
@@ -119,22 +119,22 @@ export default class Replay {
     return true;
   }
   
-  record(game: any, callback: (replay: Replay, game: any) => void) {
+  record(game: Game, callback: (replay: Replay, game: Game) => void) {
     callback(this, game);
 
-    game.on('update', (evt: any) => {
+    game.on('update', evt => {
       this.commands.push(evt.data.command);
     }, undefined, -Infinity);
 
-    game.on('score', (evt: any) => {
+    game.on('score', evt => {
       this.score = game.score;
     }, undefined, Infinity);
 
-    game.on('player-died', (evt: any) => {
+    game.on('player-died', evt => {
       this.alive = false;
     }, undefined, Infinity);
 
-    game.on('update', (evt: any) => {
+    game.on('update', evt => {
       callback(this, game);
     }, undefined, Infinity);
   }
