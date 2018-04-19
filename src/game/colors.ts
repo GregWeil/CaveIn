@@ -6,14 +6,13 @@ import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
 import { Event } from '../engine/events';
-import Game from './game';
 
 const colors = [
   '#F00', '#0F0', '#06F', '#FF0', '#F0F', '#0FF',
   '#FFF', '#FFF', '#FFF', '#FFF', '#FFF', '#FFF'
 ];
 
-export class GridColors extends BaseObject<Game> {
+export class GridColors extends BaseObject<any> {
   private grid: any;
   private padding: number;
   private colors: string[][];
@@ -49,7 +48,7 @@ export class GridColors extends BaseObject<Game> {
   }
 }
 
-export class ScreenColors extends BaseObject<Game> {
+export class ScreenColors extends BaseObject<any> {
   private color: string;
   
   constructor(config: any) {

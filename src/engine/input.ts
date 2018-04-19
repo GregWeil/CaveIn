@@ -2,11 +2,7 @@
 //Take player input and send it to the game
 
 import Vector2 from './vector2';
-import { EventEmitter, Event as EmittedEvent, Handler } from './events';
-
-interface InputData {
-  command: string;
-}
+import { EventEmitter } from './events';
 
 export abstract class Input extends EventEmitter {
   constructor() {

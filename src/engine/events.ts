@@ -5,27 +5,27 @@
 //Prioritized handlers, lower numbers first
 //Unbind handlers by setting hander.active = false
 
-export class Event<T> {
+export class Event {
   source: EventEmitter;
   type: string;
-  data: T;
+  data: any;
   
-  constructor(source: EventEmitter, name: string, data: T) {
+  constructor(source: EventEmitter, name: string, data: any) {
     this.source = source;
     this.type = name;
     this.data = data;
   }
 }
 
-export class Handler<T> {
+export class Handler {
   active: boolean;
   type: string;
-  func: (evt: Event<T>) => void;
+  func: (evt: Event) => void;
   priority: number;
   funcName: string;
   as: object|undefined;
   
-  constructor(name: string, func: (evt: Event<T>) => void, priority: number|undefined, ctx: object|undefined) {
+  constructor(name: string, func: (evt: Event) => void, priority: number|undefined, ctx: object|undefined) {
     this.active = true;
     
     this.type = name;
@@ -36,20 +36,20 @@ export class Handler<T> {
     this.as = ctx;
   }
   
-  handle(event: Event<T>): void {
+  handle(event: Event): void {
     this.func(event);
   }
 }
 
 export class EventEmitter {
-  private handlers: { [key: string]: Handler<any>[] };
+  private handlers: { [key: string]: Handler[] };
   
   constructor() {
     this.handlers = {};
   }
   
-  emit<T = {}>(name: string, data: T): Event<T> {
-    const event = new Event(this, name, data);
+  emit<t>(name: string, data?: T): Event {
+    const event = new Event(this, name, data || {});
     
     let handlers = this.handlers[name] || [];
     handlers = handlers.filter(handler => handler.active);
@@ -62,7 +62,7 @@ export class EventEmitter {
     return event;
   }
   
-  on<T>(name: string, func: (evt: Event<T>) => void, ctx?: object, priority?: number): Handler<T> {
+  on(name: string, func: (evt: Event) => void, ctx?: object, priority?: number): Handler {
     const handler = new Handler(name, func, priority, ctx);
     
     let handlers = this.handlers[handler.type] || [];
