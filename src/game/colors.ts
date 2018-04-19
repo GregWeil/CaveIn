@@ -13,7 +13,7 @@ const colors = [
   '#FFF', '#FFF', '#FFF', '#FFF', '#FFF', '#FFF'
 ];
 
-export class GridColors extends BaseObject<Game> {
+export class GridColors extends BaseObject<any> {
   private grid: any;
   private padding: number;
   private colors: string[][];
@@ -49,7 +49,7 @@ export class GridColors extends BaseObject<Game> {
   }
 }
 
-export class ScreenColors extends BaseObject<Game> {
+export class ScreenColors extends BaseObject<any> {
   private color: string;
   
   constructor(config: any) {
