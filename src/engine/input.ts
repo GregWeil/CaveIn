@@ -4,7 +4,7 @@
 import Vector2 from './vector2';
 import { EventEmitter } from './events';
 
-class Input extends EventEmitter {
+export abstract class Input extends EventEmitter {
   constructor() {
     super();
   }
@@ -129,12 +129,12 @@ export class InputKeyboard extends Input {
 
 export class InputSwipe extends Input {
   private readonly target: HTMLCanvasElement;
-  private readonly swipeCommands: string[];
+  private readonly swipeCommands: (string|null)[];
   private readonly tapCommand: string;
   
   private readonly touches: { [key: string]: { time: number, pos: Vector2 } };
   
-  constructor(target: HTMLCanvasElement, swipes: string[], tap: string) {
+  constructor(target: HTMLCanvasElement, swipes: (string|null)[], tap: string) {
     super();
     
     this.target = target;

@@ -17,15 +17,22 @@ import * as Gem from './gem';
 import * as Score from './score';
 
 export default class Game extends Engine {
-  randomSeed: 
+  randomSeed: number;
+  random: Random;
+  
+  collide: any;
+  grid: any;
+  
+  private input: Input.Input;
+  private animInterval: number;
   
   constructor(config: any) {
     super(config);
     
     this.randomSeed = config.seed !== undefined ? config.seed
       : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
-    this.randomEngine = Random.engines.mt19937().seed(this.randomSeed);
-    this.random = new Random(this.randomEngine);
+    const randomEngine = Random.engines.mt19937().seed(this.randomSeed);
+    this.random = new Random(randomEngine);
     
     this.input = new Input.InputQueued([
       new Input.InputKeyboard({
@@ -46,41 +53,41 @@ export default class Game extends Engine {
         'left', null, 'up', null
       ], 'action'),
     ]);
-    this.input.on('command', function(evt) {
+    this.input.on('command', evt => {
       if (this.commandCheck(evt.data.command) && !this.locked) {
         this.update(evt.data.command);
       }
-    }.bind(this));
+    });
     
-    this.animInterval = window.setInterval(function() {
+    this.animInterval = window.setInterval(() => {
       this.emit('anim-idle');
-    }.bind(this), 1000);
+    }, 1000);
     
     //Objects which exist for the life of the game
     
     this.collide = this.create(Collide);
     
-    var grid = this.grid = this.create(Grid, {
+    this.grid = this.create(Grid, {
       cellSize: new Vector2(16),
       gridSize: new Vector2(29, 18)
     });
     
-    this.create(Colors, { grid: grid });
-    this.create(Score, { grid: grid });
+    this.create(Colors, { grid: this.grid });
+    this.create(Score, { grid: this.grid });
     
     //Create the player and fill in the grid
     
-    var player = this.create(Player, {
-      grid: grid, pos: grid.gridSize.minus(1).multiply(0.5).round()
+    const player = this.create(Player, {
+      grid: this.grid, pos: this.grid.gridSize.minus(1).multiply(0.5).round()
     });
     
-    for (let i = 0; i < grid.gridSize.x; ++i) {
-      for (let j = 0; j < grid.gridSize.y; ++j) {
-        grid.setBlock(new Vector2(i, j), true);
+    for (let i = 0; i < this.grid.gridSize.x; ++i) {
+      for (let j = 0; j < this.grid.gridSize.y; ++j) {
+        this.grid.setBlock(new Vector2(i, j), true);
         
         if (Math.abs(i - player.pos.x) <= 6) {
           if (Math.abs(j - player.pos.y) <= 4) {
-            grid.setBlock(new Vector2(i, j), false);
+            this.grid.setBlock(new Vector2(i, j), false);
           }
         }
       }
@@ -88,9 +95,9 @@ export default class Game extends Engine {
     
     //Enemy spawning and AI
     
-    var pathfind = this.create(Pathfind, { grid: grid });
+    var pathfind = this.create(Pathfind, { grid: this.grid });
     
-    function enemyAI(pos) {
+    function enemyAI(pos: Vector2) {
       if (player.active) {
         var choices = pathfind.getNextChoices(pos, player.pos);
         return this.game.random.pick(choices).minus(pos);
@@ -102,15 +109,15 @@ export default class Game extends Engine {
       }
     }
     
-    this.on('grid-change', function(evt) {
+    this.on('grid-change', evt => {
       if (evt.data.from && !evt.data.to && evt.data.cause !== 'gem') {
-        Enemy.spawn(this, grid, player.pos, enemyAI);
+        Enemy.spawn(this, this.grid, player.pos, enemyAI);
       }
     }, this);
     
     //Check if something should collapse
     
-    this.on('update', function(evt) {
+    this.on('update', evt => {
       var distances = pathfind.generateDistanceField(player.pos);
       for (let i = 0; i < grid.gridSize.x; ++i) {
         for (let j = 0; j < grid.gridSize.y; ++j) {
@@ -124,7 +131,7 @@ export default class Game extends Engine {
                 delay: 0.4
               });
             }
-            grid.setBlock(pos, true, 0.4);
+            this.grid.setBlock(pos, true, 0.4);
           }
         }
       }
@@ -132,22 +139,22 @@ export default class Game extends Engine {
     
     //Gem spawning
     
-    this.on('gem-collect', function(evt) {
-      Gem.spawn(this, grid, player.pos);
+    this.on('gem-collect', evt => {
+      Gem.spawn(this, this.grid, player.pos);
     }, this);
     
-    Gem.spawn(this, grid, player.pos);
+    Gem.spawn(this, this.grid, player.pos);
     
     //Scoring
     
     this.score = 0;
     this.best = config.best || 0;
     
-    this.on('score', function(evt) {
+    this.on('score', evt => {
       this.score += evt.data.score;
     }, this);
     
-    this.on('render', function(evt) {
+    this.on('render', evt => {
       evt.data.context.fillStyle = 'white';
       evt.data.context.textAlign = 'left';
       evt.data.context.textBaseline = 'middle';
