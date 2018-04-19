@@ -48,7 +48,7 @@ export class EventEmitter {
     this.handlers = {};
   }
   
-  emit(name: string, data?: any): Event {
+  emit<t>(name: string, data?: T): Event {
     const event = new Event(this, name, data || {});
     
     let handlers = this.handlers[name] || [];
