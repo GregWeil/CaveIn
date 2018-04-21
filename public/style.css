@@ -131,3 +131,9 @@ body:not(.music-loaded) .hide-if-music-disabled,
 #assets {
   display: none;
 }
+
+.glitchButton {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+}
