@@ -1,4 +1,4 @@
-// server.ts
+// main.ts
 // where your node app starts
 
 import * as express from 'express';
@@ -12,9 +12,7 @@ const app = express();
 app.use(express.static('public'));
 app.use('/assets', assets);
 
-
-
-app.use('/client.js');
+app.use('/client.js', (req, res) => browserify('bin/client/main.js').bundle().pipe(res));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', express.static('public/index.html'));
