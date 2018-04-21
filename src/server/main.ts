@@ -12,6 +12,7 @@ const app = express();
 app.use(express.static('public'));
 app.use('/assets', assets);
 
+const client = new Promise(res => browserify('bin/client/main.js').bundle());
 app.use('/client.js', (req, res) => browserify('bin/client/main.js').bundle().pipe(res));
 
 // http://expressjs.com/en/starter/basic-routing.html
