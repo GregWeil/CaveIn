@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.use('/assets', assets);
 
 const client = new Promise((resolve, reject) =>
-  browserify('bin/client/main.js').bundle((err, data) => {
+  browserify('bin/client/gmain.js').bundle((err, data) => {
     if (err) {
       reject(err);
     } else {
