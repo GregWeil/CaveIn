@@ -8,12 +8,12 @@
   "restart": {
     "exclude": [
       "^public/",
-      "^bin/"
+      "^bin/",
+      "^src/"
     ],
     "include": [
       "\\.js$",
       "\\.ts$",
-      "\\.coffee$",
       "\\.json"
     ]
   },

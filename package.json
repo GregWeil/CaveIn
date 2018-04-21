@@ -5,13 +5,13 @@
   "name": "cave-in",
   "version": "0.0.1",
   "description": "Ludum Dare 37",
+  "main": "bin/server/main.js",
   "scripts": {
-    "build": "tsc",
-    "prestart": "npm run build --silent",
-    "start": "node bin/server/main.js"
+    "start": "tsc --watch & nodemon --watch bin"
   },
   "dependencies": {
     "typescript": "^2.8.3",
+    "nodemon": "^1.17.3",
     "browserify": "^16.2.0",
     "@types/browserify": "^12.0.33",
     "express": "^4.16.3",
