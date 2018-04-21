@@ -7,7 +7,7 @@
   "description": "Ludum Dare 37",
   "main": "bin/server/main.js",
   "scripts": {
-    "start": "tsc --watch & nodemon --delay 3"
+    "start": "tsc --watch & nodemon --delay 1"
   },
   "dependencies": {
     "typescript": "^2.8.3",
