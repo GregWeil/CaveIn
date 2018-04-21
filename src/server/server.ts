@@ -2,6 +2,7 @@
 // where your node app starts
 
 import * as express from 'express';
+import * as browserify from 'browserify-middleware';
 import assets from './assets';
 
 // express init
@@ -9,7 +10,7 @@ const app = express();
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
-app.use('/client.js', express.static('bin/client.js'));
+app.use('/client.js', browserify('bin/client/client.js'));
 
 app.use('/assets', assets);
 

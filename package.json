@@ -7,12 +7,11 @@
   "description": "Ludum Dare 37",
   "scripts": {
     "build": "tsc",
-    "postbuild": "browserify bin/client/main.js > bin/client.js",
     "prestart": "npm run build --silent",
     "start": "node bin/server/server.js"
   },
   "dependencies": {
-    "browserify": "^16.2.0",
+    "browserify-middleware": "^8.1.0",
     "typescript": "^2.8.3",
     "express": "^4.16.3",
     "@types/express": "^4.11.1",
