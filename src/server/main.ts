@@ -12,8 +12,15 @@ const app = express();
 app.use(express.static('public'));
 app.use('/assets', assets);
 
-const client = new Promise(res => browserify('bin/client/main.js').bundle());
-app.use('/client.js', (req, res) => browserify('bin/client/main.js').bundle().pipe(res));
+const client = new Promise((resolve, reject) =>
+  browserify('bin/client/main.js').bundle((err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  }));
+app.use('/client.js', async (req, res) => res.send(await client));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', express.static('public/index.html'));
