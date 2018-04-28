@@ -41,7 +41,7 @@ export default class Game extends Engine {
       gridSize: new Vector2(29, 18)
     });
     
-    this.create(ScreenColors, 1);
+    this.create(ScreenColors);
     this.create(Score, { grid: this.grid });
     
     //Create the player and fill in the grid
