@@ -42,7 +42,7 @@ export default class Game extends Engine {
     });
     
     this.create(ScreenColors);
-    this.create(Score, { grid: this.grid });
+    this.create(Score);
     
     //Create the player and fill in the grid
     
