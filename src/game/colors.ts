@@ -13,7 +13,7 @@ const colors = [
   '#FFF', '#FFF', '#FFF', '#FFF', '#FFF', '#FFF'
 ];
 
-export class GridColors extends BaseObject<any> {
+export class GridColors extends BaseObject<Game> {
   private grid: any;
   private padding: number;
   private colors: string[][];
@@ -49,10 +49,10 @@ export class GridColors extends BaseObject<any> {
   }
 }
 
-export class ScreenColors extends BaseObject<any> {
+export class ScreenColors extends BaseObject<Game> {
   private color: string;
   
-  constructor(game: Game, config: any) {
+  constructor(game: Game) {
     super(game);
     
     this.color = this.game.random.pick(colors);

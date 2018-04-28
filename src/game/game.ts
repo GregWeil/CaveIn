@@ -9,7 +9,7 @@ import * as Input from '../engine/input';
 
 import * as Grid from './grid';
 import * as Collide from './collide';
-import { ScreenColors as Colors } from './colors';
+import { ScreenColors } from './colors';
 import * as Pathfind from './pathfind';
 import * as Player from './player';
 import * as Enemy from './enemy';
@@ -49,7 +49,7 @@ export default class Game extends Engine {
       gridSize: new Vector2(29, 18)
     });
     
-    this.create(Colors, { grid: this.grid });
+    this.create(ScreenColors);
     this.create(Score, { grid: this.grid });
     
     //Create the player and fill in the grid

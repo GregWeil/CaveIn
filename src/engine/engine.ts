@@ -7,13 +7,6 @@ import { EventEmitter } from './events';
 import Vector2 from './vector2';
 import BaseObject from './object';
 
-// What does variadic mean?
-interface Constructor<G extends Engine, T extends BaseObject<G>> {
-  new (game: G, ...params: any[]): T;
-}
-                      
-                      
-
 export default class Engine extends EventEmitter {
   active: boolean;
   headless: boolean;
@@ -98,6 +91,8 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
+  create<T extends BaseObject<this>>(Obj: Constructor0<this, T>): T;
+  create<T extends BaseObject<this>, A>(Obj: Constructor1<this, T, A>, a: A): T;
   create<T extends BaseObject<this>>(Obj: Constructor<this, T>, ...params: any[]): T {
     const inst = new Obj(this, ...params);
     this.objects.push(inst);
@@ -112,4 +107,15 @@ export default class Engine extends EventEmitter {
     inst.destroy(displayTime);
     this.objects.splice(index, 1);
   }
+}
+
+// What does variadic mean?
+interface Constructor<G extends Engine, T extends BaseObject<G>> {
+  new (game: G, ...params: any[]): T;
+}
+interface Constructor0<G extends Engine, T extends BaseObject<G>> {
+  new (game: G): T;
+}
+interface Constructor1<G extends Engine, T extends BaseObject<G>, A> {
+  new (game: G, a: A): T;
 }
