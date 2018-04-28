@@ -18,8 +18,8 @@ export class GridColors extends BaseObject<any> {
   private padding: number;
   private colors: string[][];
   
-  constructor(config: any) {
-    super(config.game);
+  constructor(game: Game, config: any) {
+    super(game);
     
     this.grid = config.grid;
     
@@ -52,8 +52,8 @@ export class GridColors extends BaseObject<any> {
 export class ScreenColors extends BaseObject<any> {
   private color: string;
   
-  constructor(config: any) {
-    super(config.game);
+  constructor(game: Game, config: any) {
+    super(game);
     
     this.color = this.game.random.pick(colors);
     

@@ -24,8 +24,8 @@ var audioStep = new Howl({ src: ['/assets/enemy_move.wav'] });
 var audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject {
-  constructor(config) {
-    super(config.game);
+  constructor(game, config) {
+    super(game);
     
     this.grid = config.grid,
     this.pos = config.pos;
