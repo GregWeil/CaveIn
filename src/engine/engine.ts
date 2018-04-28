@@ -2,6 +2,7 @@
 //Main engine loop
 
 import { Howl } from 'howler';
+import * as Random from 'random-js';
 
 import { EventEmitter } from './events';
 import Vector2 from './vector2';
@@ -11,6 +12,9 @@ export default class Engine extends EventEmitter {
   active: boolean;
   headless: boolean;
   silent: boolean;
+  
+  randomSeed: number;
+  random: Random;
   
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -24,6 +28,11 @@ export default class Engine extends EventEmitter {
     this.active = true;
     this.headless = !config.canvas;
     this.silent = config.silent || this.headless;
+    
+    this.randomSeed = config.seed !== undefined ? config.seed
+      : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
+    const randomEngine = Random.engines.mt19937().seed(this.randomSeed);
+    this.random = new Random(randomEngine);
     
     this.canvas = config.canvas || document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d')!;

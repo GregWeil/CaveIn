@@ -1,8 +1,6 @@
 /// game.ts
 //Wrap the engine and define game specific interactions
 
-import * as Random from 'random-js';
-
 import Vector2 from '../engine/vector2';
 import Engine from '../engine/engine';
 import * as Input from '../engine/input';
@@ -17,9 +15,6 @@ import * as Gem from './gem';
 import * as Score from './score';
 
 export default class Game extends Engine {
-  randomSeed: number;
-  random: Random;
-  
   score: number;
   best: number;
   
@@ -31,10 +26,7 @@ export default class Game extends Engine {
   constructor(config: any) {
     super(config);
     
-    this.randomSeed = config.seed !== undefined ? config.seed
-      : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
-    const randomEngine = Random.engines.mt19937().seed(this.randomSeed);
-    const random = this.random = new Random(randomEngine);
+    const random = this.random;
     
     this.animInterval = window.setInterval(() => {
       this.emit('anim-idle');

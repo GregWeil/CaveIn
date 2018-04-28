@@ -4,8 +4,8 @@
 import Engine from './engine';
 import { EventEmitter, Handler, Event } from './events';
 
-export default class BaseObject<Game extends Engine> {
-  protected game: Game;
+export default class BaseObject {
+  protected game: E;
   private handlers: Handler[];
   
   active: boolean;
