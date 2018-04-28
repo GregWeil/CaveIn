@@ -3,6 +3,7 @@
 
 import Vector2 from '../engine/vector2';
 import Engine from '../engine/engine';
+import * as Input from '../engine/input';
 import Replay from '../game/replay';
 import Game from '../game/game';
 import * as Save from './save';
@@ -11,6 +12,7 @@ import { navigate } from './pages';
 //Player game state
 
 let activeGame: Engine|null = null;
+let activeInput: Input.Input|null = null;
 
 // Resize to fit the screen
 
@@ -122,6 +124,31 @@ export async function createPlayable() {
     }
   });
   game.locked = false;
+  
+  activeInput = new Input.InputQueued([
+    new Input.InputKeyboard({
+      'KeyW': 'up',
+      'KeyA': 'left',
+      'KeyS': 'down',
+      'KeyD': 'right',
+
+      'ArrowUp': 'up',
+      'ArrowDown': 'down',
+      'ArrowLeft': 'left',
+      'ArrowRight': 'right',
+
+      'Space': 'action'
+    }),
+    new Input.InputSwipe(game.canvas, [
+      'right', null, 'down', null,
+      'left', null, 'up', null
+    ], 'action'),
+  ]);
+  activeInput.on('command', evt => {
+    if (game.commandCheck(evt.data.command)) {
+      game.update(evt.data.command);
+    }
+  });
 }
 
 export async function createWatchable() {
@@ -149,6 +176,7 @@ export async function createWatchable() {
 }
 
 export function destroy() {
+  activeInput && activeInput.destructor();
   activeGame && activeGame.destructor();
   activeGame = null;
   overlay();

@@ -26,7 +26,6 @@ export default class Game extends Engine {
   collide: any;
   grid: any;
   
-  private input: Input.Input;
   private animInterval: number;
   
   constructor(config: any) {
@@ -36,31 +35,6 @@ export default class Game extends Engine {
       : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
     const randomEngine = Random.engines.mt19937().seed(this.randomSeed);
     const random = this.random = new Random(randomEngine);
-    
-    this.input = new Input.InputQueued([
-      new Input.InputKeyboard({
-        'KeyW': 'up',
-        'KeyA': 'left',
-        'KeyS': 'down',
-        'KeyD': 'right',
-        
-        'ArrowUp': 'up',
-        'ArrowDown': 'down',
-        'ArrowLeft': 'left',
-        'ArrowRight': 'right',
-        
-        'Space': 'action'
-      }),
-      new Input.InputSwipe(this.canvas, [
-        'right', null, 'down', null,
-        'left', null, 'up', null
-      ], 'action'),
-    ]);
-    this.input.on('command', evt => {
-      if (this.commandCheck(evt.data.command) && !this.locked) {
-        this.update(evt.data.command);
-      }
-    });
     
     this.animInterval = window.setInterval(() => {
       this.emit('anim-idle');
@@ -176,7 +150,6 @@ export default class Game extends Engine {
   //Cleanup
   
   destructor() {
-    this.input && this.input.destructor();
     clearInterval(this.animInterval);
     super.destructor();
   }
