@@ -91,9 +91,9 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create<T extends BaseObject<this>>(Obj: Constructor0<this, T>): T;
-  create<T extends BaseObject<this>, A>(Obj: Constructor1<this, T, A>, a: A): T;
-  create<T extends BaseObject<this>>(Obj: Constructor<this, T>, ...params: any[]): T {
+  create<T extends BaseObject<any>>(Obj: Constructor0<this, T>): T;
+  create<T extends BaseObject<any>, A>(Obj: Constructor1<this, T, A>, a: A): T;
+  create<T extends BaseObject<any>>(Obj: Constructor<this, T>, ...params: any[]): T {
     const inst = new Obj(this, ...params);
     this.objects.push(inst);
     return inst;
