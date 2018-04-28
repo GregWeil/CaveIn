@@ -94,7 +94,7 @@ export default class Engine extends EventEmitter {
   create<G extends Engine, T extends BaseObject<G>>(Obj: Constructor0<G, T>): T;
   create<G extends Engine, T extends BaseObject<G>, A>(Obj: Constructor1<G, T, A>, a: A): T;
   create<G extends Engine, T extends BaseObject<G>>(Obj: Constructor<G, T>, ...params: any[]): T {
-    const inst = new Obj(this, ...params);
+    const inst = new Obj(<G>this, ...params);
     this.objects.push(inst);
     return inst;
   }
