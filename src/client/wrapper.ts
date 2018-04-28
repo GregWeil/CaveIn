@@ -86,12 +86,12 @@ export async function createPlayable() {
   const game = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save ? save.seed : null,
-    best: best, locked: true
+    best: best
   });
   resize();
   
   game.on('command-check', evt => {
-    if (overlayCurrent && !game.locked) {
+    if (overlayCurrent) {
       evt.data.accept = false;
     }
   }, undefined, Infinity);
@@ -123,7 +123,6 @@ export async function createPlayable() {
       Save.saveReplay(replay);
     }
   });
-  game.locked = false;
   
   activeInput = new Input.InputQueued([
     new Input.InputKeyboard({
@@ -163,7 +162,6 @@ export async function createWatchable() {
   const game = activeGame = new Game({
     canvas: document.getElementById('canvas'),
     seed: save.seed, best: save.score,
-    locked: true
   });
   resize();
   

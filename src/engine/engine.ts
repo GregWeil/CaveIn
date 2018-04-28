@@ -10,7 +10,6 @@ import BaseObject from './object';
 export default class Engine extends EventEmitter {
   active: boolean;
   headless: boolean;
-  locked: boolean;
   silent: boolean;
   
   canvas: HTMLCanvasElement;
@@ -24,7 +23,6 @@ export default class Engine extends EventEmitter {
     
     this.active = true;
     this.headless = !config.canvas;
-    this.locked = config.locked || this.headless;
     this.silent = config.silent || this.headless;
     
     this.canvas = config.canvas || document.createElement('canvas');
