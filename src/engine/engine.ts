@@ -109,7 +109,7 @@ export default class Engine extends EventEmitter {
   }
 }
 
-// What does variadic mean?
+// How does one variadic?
 interface Constructor<G extends Engine, T extends BaseObject<G>> {
   new (game: G, ...params: any[]): T;
 }
