@@ -5,12 +5,12 @@ import Engine from './engine';
 import { EventEmitter, Handler, Event } from './events';
 
 export default class BaseObject {
-  protected game: E;
+  protected game: Engine;
   private handlers: Handler[];
   
   active: boolean;
   
-  constructor(game: Game) {
+  constructor(game: Engine) {
     this.game = game;
     this.handlers = [];
     this.active = true;

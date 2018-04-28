@@ -20,7 +20,7 @@ export default class Engine extends EventEmitter {
   ctx: CanvasRenderingContext2D;
   
   updateTime: number;
-  objects: BaseObject<Engine>[];
+  objects: BaseObject[];
   
   constructor(config: any) {
     super();
@@ -100,15 +100,15 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create<T extends BaseObject<any>>(Obj: Constructor0<this, T>): T;
-  create<T extends BaseObject<any>, A>(Obj: Constructor1<this, T, A>, a: A): T;
-  create<T extends BaseObject<any>>(Obj: Constructor<this, T>, ...params: any[]): T {
+  create<T extends BaseObject>(Obj: Constructor0<this, T>): T;
+  create<T extends BaseObject, A>(Obj: Constructor1<this, T, A>, a: A): T;
+  create<T extends BaseObject>(Obj: Constructor<this, T>, ...params: any[]): T {
     const inst = new Obj(this, ...params);
     this.objects.push(inst);
     return inst;
   }
   
-  destroy(inst: BaseObject<Engine>, displayTime?: number) {
+  destroy(inst: BaseObject, displayTime?: number) {
     const index = this.objects.indexOf(inst);
     if (index < 0) {
       throw 'Tried to destroy an object that is not mine';
@@ -119,12 +119,12 @@ export default class Engine extends EventEmitter {
 }
 
 // How does one variadic?
-interface Constructor<G extends Engine, T extends BaseObject<G>> {
+interface Constructor<G extends Engine, T extends BaseObject> {
   new (game: G, ...params: any[]): T;
 }
-interface Constructor0<G extends Engine, T extends BaseObject<G>> {
+interface Constructor0<G extends Engine, T extends BaseObject> {
   new (game: G): T;
 }
-interface Constructor1<G extends Engine, T extends BaseObject<G>, A> {
+interface Constructor1<G extends Engine, T extends BaseObject, A> {
   new (game: G, a: A): T;
 }
