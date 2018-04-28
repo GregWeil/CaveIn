@@ -84,8 +84,8 @@ module.exports = class Enemy extends BaseObject {
     });
   }
   
-  constructor(config) {
-    super(config.game);
+  constructor(game, config) {
+    super(game);
     
     this.grid = config.grid;
     this.pos = config.pos.copy();

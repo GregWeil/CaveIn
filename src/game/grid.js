@@ -6,8 +6,8 @@ var Render = require('../engine/render');
 var BaseObject = require('../engine/object').default;
 
 module.exports = class Grid extends BaseObject {
-  constructor(config) {
-    super(config.game);
+  constructor(game, config) {
+    super(game);
     
     this.cellSize = config.cellSize.copy();
     this.gridSize = config.gridSize.copy();

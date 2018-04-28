@@ -20,8 +20,8 @@ function getDistance(grid, distances, from) {
 }
 
 module.exports = class Pathfind extends BaseObject {
-  constructor(config) {
-    super(config.game);
+  constructor(game, config) {
+    super(game);
     
     this.grid = config.grid;
     this.paths = {};

@@ -5,8 +5,8 @@ var Render = require('../engine/render');
 var BaseObject = require('../engine/object').default;
 
 module.exports = class Score extends BaseObject {
-  constructor(config) {
-    super(config.game);
+  constructor(game, config) {
+    super(game);
     
     this.grid = config.grid;
     

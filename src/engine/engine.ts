@@ -91,9 +91,8 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create<T extends BaseObject<this>, P1>(Obj: { new (config: P1): T }, config?: any): T {
-    config = Object.assign({ game: this }, (config || {}));
-    const inst = new Obj(config);
+  create<T extends BaseObject<this>>(Obj: { new (game: this, ...params: any[]): T }, ...params: any[]): T {
+    const inst = new Obj(this, ...params);
     this.objects.push(inst);
     return inst;
   }
