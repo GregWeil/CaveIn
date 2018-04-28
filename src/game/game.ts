@@ -12,7 +12,7 @@ import * as Pathfind from './pathfind';
 import * as Player from './player';
 import * as Enemy from './enemy';
 import * as Gem from './gem';
-import * as Score from './score';
+import Score from './score';
 
 export default class Game extends Engine {
   score: number;

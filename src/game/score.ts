@@ -1,14 +1,24 @@
-/// score.js
+/// score.ts
 //Show a popup when the player gets any points
 
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
+import { Event } from '../engine/events';
+import * as Grid from './grid';
+import Game from './game';
 
-module.exports = class Score extends BaseObject {
-  constructor(game, config) {
+interface Popup {
+  score: number;
+  pos: Vector2;
+  time: n
+
+export default class Score extends BaseObject {
+  private grid: Grid;
+  
+  constructor(game: Game) {
     super(game);
     
-    this.grid = config.grid;
+    this.grid = game.grid;
     
     this.popups = [];
     
@@ -17,7 +27,7 @@ module.exports = class Score extends BaseObject {
     this.handle(this.game, 'render', this.render, 900);
   }
   
-  update(evt) {
+  update(evt: Event) {
     if (this.popups.length) {
       var kept = [];
       for (var i = 0; i < this.popups.length; ++i) {
@@ -34,7 +44,7 @@ module.exports = class Score extends BaseObject {
     }
   }
   
-  score(evt) {
+  score(evt: Event) {
     if (evt.data.pos) {
       this.popups.push({
         score: evt.data.score,
@@ -44,16 +54,17 @@ module.exports = class Score extends BaseObject {
     }
   }
   
-  render(evt) {
-    evt.data.context.fillStyle = 'white';
-    evt.data.context.textAlign = 'center';
-    evt.data.context.textBaseline = 'middle';
-    evt.data.context.font = '16px IdealGarbanzo';
+  render(evt: Event) {
+    const ctx = evt.data.context as CanvasRenderingContext2D;
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '16px IdealGarbanzo';
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
       if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
       if (this.game.collide.get(popup.pos)) continue;
-      Render.text(evt.data.context, '+' + popup.score, this.grid.getPos(popup.pos));
+      Render.text(ctx, '+' + popup.score, this.grid.getPos(popup.pos));
     }
   }
-};
+}
