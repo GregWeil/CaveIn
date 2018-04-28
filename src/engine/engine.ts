@@ -16,7 +16,7 @@ export default class Engine extends EventEmitter {
   ctx: CanvasRenderingContext2D;
   
   updateTime: number;
-  objects: BaseObject<this>[];
+  objects: BaseObject<Engine>[];
   
   constructor(config: any) {
     super();
@@ -94,12 +94,12 @@ export default class Engine extends EventEmitter {
   create<G extends Engine, T extends BaseObject<G>>(Obj: Constructor0<G, T>): T;
   create<G extends Engine, T extends BaseObject<G>, A>(Obj: Constructor1<G, T, A>, a: A): T;
   create<G extends Engine, T extends BaseObject<G>>(Obj: Constructor<G, T>, ...params: any[]): T {
-    const inst = new Obj(this as G, ...params);
+    const inst = new Obj(this, ...params);
     this.objects.push(inst);
     return inst;
   }
   
-  destroy(inst: BaseObject<this>, displayTime?: number) {
+  destroy(inst: BaseObject<Engine>, displayTime?: number) {
     const index = this.objects.indexOf(inst);
     if (index < 0) {
       throw 'Tried to destroy an object that is not mine';
