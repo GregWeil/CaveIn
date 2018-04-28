@@ -100,9 +100,10 @@ export default class Engine extends EventEmitter {
   
   destroy(inst: BaseObject<this>, displayTime?: number) {
     const index = this.objects.indexOf(inst);
-    if (index >= 0) {
-      inst.destroy(displayTime);
-      this.objects.splice(index, 1);
-    }
+    if (index < 0) {
+                      throw 'Attempted to destroy none';
+                      }
+    inst.destroy(displayTime);
+    this.objects.splice(index, 1);
   }
 }

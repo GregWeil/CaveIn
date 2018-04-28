@@ -27,7 +27,7 @@ export class GridColors extends BaseObject<any> {
     
     this.colors = [];
     for (let i = -2 * this.padding; i < this.grid.gridSize.x; ++i) {
-      var array = [];
+      const array = [];
       for (let j = -2 * this.padding; j < this.grid.gridSize.y; ++j) {
         array.push(this.game.random.pick(colors));
       }
