@@ -44,7 +44,7 @@ export default class BaseObject {
     this.handlers.splice(index, 1);
   }
   
-  protected handle(obj: EventEmitter, name: string, func: ((e: Event) => void), priority: number) {
+  protected handle(obj: EventEmitter, name: string, func: ((e: Event) => void), priority?: number) {
     this.storeHandler(obj.on(name, func, this, priority));
   }
   

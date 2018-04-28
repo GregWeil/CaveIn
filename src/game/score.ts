@@ -3,21 +3,27 @@
 
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
+import Vector2 from '../engine/vector2';
 import { Event } from '../engine/events';
-import * as Grid from './grid';
 import Game from './game';
 
 interface Popup {
   score: number;
   pos: Vector2;
-  time: n
+  time: number;
+  delay: number;
+}
 
 export default class Score extends BaseObject {
-  private grid: Grid;
+  private collide: any;
+  private grid: any;
+  
+  private popups: Popup[];
   
   constructor(game: Game) {
     super(game);
     
+    this.collide = game.collide;
     this.grid = game.grid;
     
     this.popups = [];
@@ -29,18 +35,16 @@ export default class Score extends BaseObject {
   
   update(evt: Event) {
     if (this.popups.length) {
-      var kept = [];
+      const kept = [];
       for (var i = 0; i < this.popups.length; ++i) {
-        var popup = this.popups[i];
+        const popup = this.popups[i];
         popup.time -= evt.data.time;
         popup.delay = 0;
         if (popup.time >= Math.max(popup.delay, 0)) {
           kept.push(popup);
         }
       }
-      if (!this.headless) {
-        this.popups = kept;
-      }
+      this.popups = kept;
     }
   }
   
@@ -63,7 +67,7 @@ export default class Score extends BaseObject {
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
       if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
-      if (this.game.collide.get(popup.pos)) continue;
+      if (this.collide.get(popup.pos)) continue;
       Render.text(ctx, '+' + popup.score, this.grid.getPos(popup.pos));
     }
   }
