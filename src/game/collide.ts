@@ -1,12 +1,19 @@
-/// collide.js
+/// collide.ts
 //General grid-based collision checking
 
-var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
+import Vector2 from '../engine/vector2';
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
+import { Event } from '../engine/events';
+
+import Game from './game';
+
+interface Asdf {
+  instance: BaseObject;
+  priority: 
 
 module.exports = class Collide extends BaseObject {
-  constructor(game, config) {
+  constructor(game: Game) {
     super(game);
     
     this.collisions = {};
@@ -14,7 +21,7 @@ module.exports = class Collide extends BaseObject {
     //this.handle(this.game, 'render', this.render, Infinity);
   }
   
-  render(evt) {
+  render(evt: Event) {
     evt.data.context.fillStyle = 'red';
     evt.data.context.textAlign = 'center';
     evt.data.context.textBaseline = 'middle';
