@@ -85,7 +85,7 @@ export default class Collide extends BaseObject {
     return null;
   }
   
-  get(pos: Vector2, config?: { type: { new(): BaseObject }, ignore: BaseObject[] }) {
+  get(pos: Vector2, config: { type: { new(): BaseObject }, ignore: BaseObject[] } = {}) {
     config = Object.assign({ ignore: [] }, config);
     const item = this.getData(pos.hash()).find(item => {
       if (config.ignore.includes(item.instance)) return false;
