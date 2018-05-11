@@ -68,11 +68,11 @@ export default class Collide extends BaseObject {
   }
   
   remove(pos: Vector2, instance: BaseObject) {
-    var hash = pos.hash();
-    var data = this.getData(hash);
-    var index = data.findIndex(item => item.instance === instance);
+    const hash = pos.hash();
+    const data = this.getData(hash);
+    const index = data.findIndex(item => item.instance === instance);
     if (index < 0) return null;
-    var removed = data[index];
+    const removed = data[index];
     data.splice(index, 1);
     this.setData(hash, data);
     return removed;
@@ -86,7 +86,7 @@ export default class Collide extends BaseObject {
     return null;
   }
   
-  get(pos: Vector2, config: any) {
+  get(pos: Vector2, config?: { type: { new() => BaseObject }, ignore: BaseObject[] }) {
     config = Object.assign({ ignore: [] }, config);
     const item = this.getData(pos.hash()).find(item => {
       if (config.ignore.includes(item.instance)) return false;
