@@ -48,9 +48,8 @@ export default class Collide extends BaseObject {
     this.collisions[hash] = data;
   }
   
-  add(pos: Vector2, instance: BaseObject, priority?: number) {
+  add(pos: Vector2, instance: BaseObject, priority: number = 0) {
     const hash = pos.hash();
-    priority = priority || 0;
     const data = this.getData(hash);
     
     let index: number;
@@ -86,7 +85,7 @@ export default class Collide extends BaseObject {
     return null;
   }
   
-  get(pos: Vector2, config?: { type: { new() => BaseObject }, ignore: BaseObject[] }) {
+  get(pos: Vector2, config?: { type: { new(): BaseObject }, ignore: BaseObject[] }) {
     config = Object.assign({ ignore: [] }, config);
     const item = this.getData(pos.hash()).find(item => {
       if (config.ignore.includes(item.instance)) return false;
