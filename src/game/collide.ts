@@ -8,14 +8,19 @@ import { Event } from '../engine/events';
 
 import Game from './game';
 
-interface Asdf {
+interface Collision {
   instance: BaseObject;
-  priority: 
+  priority: number;
+}
 
 module.exports = class Collide extends BaseObject {
+  private collisions: { [key: string]: Collision[] };
+  private grid: any;
+   
   constructor(game: Game) {
     super(game);
     
+    this.grid = game.grid;
     this.collisions = {};
     
     //this.handle(this.game, 'render', this.render, Infinity);
@@ -25,31 +30,30 @@ module.exports = class Collide extends BaseObject {
     evt.data.context.fillStyle = 'red';
     evt.data.context.textAlign = 'center';
     evt.data.context.textBaseline = 'middle';
-    var grid = this.game.grid;
-    for (let i = 0; i < grid.gridSize.x; ++i) {
-      for (let j = 0; j < grid.gridSize.y; ++j) {
-        var data = this.getData(Vector2.new(i, j).hash());
+    for (let i = 0; i < this.grid.gridSize.x; ++i) {
+      for (let j = 0; j < this.grid.gridSize.y; ++j) {
+        const data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          Render.text(evt.data.context, data[0].priority, grid.getPos(i, j));
+          Render.text(evt.data.context, data[0].priority, this.grid.getPos(i, j));
         }
       }
     }
   }
   
-  getData(hash) {
+  getData(hash: string) {
     return this.collisions[hash] || [];
   }
   
-  setData(hash, data) {
+  setData(hash: string, data: Collision[]) {
     this.collisions[hash] = data;
   }
   
-  add(pos, instance, priority) {
-    var hash = pos.hash();
+  add(pos: Vector2, instance: BaseObject, priority?: number) {
+    const hash = pos.hash();
     priority = priority || 0;
-    var data = this.getData(hash);
+    const data = this.getData(hash);
     
-    var index;
+    let index: number;
     for (index = 0; index < data.length; ++index) {
       if (data[index].priority > priority) break;
     }
