@@ -6,7 +6,7 @@ import Engine from '../engine/engine';
 import * as Input from '../engine/input';
 
 import * as Grid from './grid';
-import * as Collide from './collide';
+import Collide from './collide';
 import { ScreenColors } from './colors';
 import * as Pathfind from './pathfind';
 import * as Player from './player';

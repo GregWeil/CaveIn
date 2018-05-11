@@ -13,7 +13,7 @@ interface Collision {
   priority: number;
 }
 
-module.exports = class Collide extends BaseObject {
+export default class Collide extends BaseObject {
   private collisions: { [key: string]: Collision[] };
   private grid: any;
    
@@ -34,17 +34,17 @@ module.exports = class Collide extends BaseObject {
       for (let j = 0; j < this.grid.gridSize.y; ++j) {
         const data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          Render.text(evt.data.context, data[0].priority, this.grid.getPos(i, j));
+          Render.text(evt.data.context, data[0].priority.toString(), this.grid.getPos(i, j));
         }
       }
     }
   }
   
-  getData(hash: string) {
+  private getData(hash: string) {
     return this.collisions[hash] || [];
   }
   
-  setData(hash: string, data: Collision[]) {
+  private setData(hash: string, data: Collision[]) {
     this.collisions[hash] = data;
   }
   
@@ -67,7 +67,7 @@ module.exports = class Collide extends BaseObject {
     return data[index];
   }
   
-  remove(pos, instance) {
+  remove(pos: Vector2, instance: BaseObject) {
     var hash = pos.hash();
     var data = this.getData(hash);
     var index = data.findIndex(item => item.instance === instance);
@@ -78,18 +78,17 @@ module.exports = class Collide extends BaseObject {
     return removed;
   }
   
-  move(from, to, instance) {
-    var removed = this.remove(from, instance);
+  move(from: Vector2, to: Vector2, instance: BaseObject) {
+    const removed = this.remove(from, instance);
     if (removed) {
       return this.add(to, instance);
     }
     return null;
   }
   
-  get(pos, config) {
+  get(pos: Vector2, config: any) {
     config = Object.assign({ ignore: [] }, config);
-    var data = this.getData(pos.hash());
-    var item = data.find(item => {
+    const item = this.getData(pos.hash()).find(item => {
       if (config.ignore.includes(item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
@@ -100,4 +99,4 @@ module.exports = class Collide extends BaseObject {
   count() {
     return Object.values(this.collisions).filter(data => data.length).length;
   }
-};
+}
