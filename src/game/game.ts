@@ -37,6 +37,7 @@ export default class Game extends Engine {
     this.collide = this.create(Collide);
     
     this.grid = this.create(Grid, {
+      collide: this.collide,
       cellSize: new Vector2(16),
       gridSize: new Vector2(29, 18)
     });
