@@ -2807,7 +2807,7 @@ packages:
     resolution:
       integrity: sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 5
+shrinkwrapMinorVersion: 7
 shrinkwrapVersion: 3
 specifiers:
   '@types/browserify': ^12.0.33
