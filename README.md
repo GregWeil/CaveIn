@@ -12,4 +12,4 @@ About
 
 Made for the Ludum Dare 37 (One room)
 
-[Most recent version at cave-in](https://gomix.com/#!/project/cave-in)
+[Most recent version at cave-in](https://glitch.com/~cave-in)
