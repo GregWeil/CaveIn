@@ -5,13 +5,13 @@ import Vector2 from '../engine/vector2';
 import Engine from '../engine/engine';
 import * as Input from '../engine/input';
 
-import * as Grid from './grid';
+const Grid = require('./grid');
 import Collide from './collide';
 import { ScreenColors } from './colors';
-import * as Pathfind from './pathfind';
-import * as Player from './player';
-import * as Enemy from './enemy';
-import * as Gem from './gem';
+const Pathfind = require('./pathfind');
+const Player = require('./player');
+const Enemy = require('./enemy');
+const Gem = require('./gem');
 import Score from './score';
 
 export default class Game extends Engine {
@@ -49,7 +49,7 @@ export default class Game extends Engine {
     
     const player = this.create(Player, {
       grid: this.grid, pos: this.grid.gridSize.minus(1).multiply(0.5).round()
-    });
+    }) as any;
     
     for (let i = 0; i < this.grid.gridSize.x; ++i) {
       for (let j = 0; j < this.grid.gridSize.y; ++j) {
@@ -65,11 +65,11 @@ export default class Game extends Engine {
     
     //Enemy spawning and AI
     
-    const pathfind = this.create(Pathfind, { grid: this.grid });
+    const pathfind = this.create(Pathfind, { grid: this.grid }) as any;
     
     function enemyAI(pos: Vector2) {
       if (player.active) {
-        var choices = pathfind.getNextChoices(pos, player.pos);
+        const choices = pathfind.getNextChoices(pos, player.pos) as Vector2[];
         return random.pick(choices).minus(pos);
       } else {
         return random.pick([
