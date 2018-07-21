@@ -6,7 +6,7 @@ var Howl = require('howler').Howl;
 var Vector2 = require('../engine/vector2').default;
 var Render = require('../engine/render');
 var BaseObject = require('../engine/object').default;
-var Grid = require('./grid');
+var Grid = require('./grid').default;
 
 var dimensions = new Vector2(16);
 var spritesheet = document.getElementById('spritesheet');

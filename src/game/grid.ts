@@ -76,11 +76,10 @@ export default class Grid extends BaseObject {
   getPos(a: Vector2): Vector2;
   getPos(a: number, b?: number): Vector2;
   getPos(a: Vector2|number, b?: number): Vector2 {
-    console.log(Vector2); 
-    //if (a instanceof Vector2) {
+    if (a instanceof Vector2) {
       return this.cellSize.multiply(a).plus(this.origin);
-    //}
-    //return this.cellSize.multiply(a, b).plus(this.origin);
+    }
+    return this.cellSize.multiply(a, b).plus(this.origin);
   }
   
   getBlock(pos: Vector2) {
