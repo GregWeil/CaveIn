@@ -1,11 +1,11 @@
-/// grid.js
-//Grid utility functions
+/// grid.ts
+//Manage a play area grid, and track blocks
 
-var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
+import Vector2 from '../engine/vector2';
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
 
-module.exports = class Grid extends BaseObject {
+export default class Grid extends BaseObject {
   constructor(game, config) {
     super(game);
     
