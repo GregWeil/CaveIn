@@ -76,7 +76,11 @@ export default class Grid extends BaseObject {
   getPos(a: Vector2): Vector2;
   getPos(a: number, b?: number): Vector2;
   getPos(a: Vector2|number, b?: number): Vector2 {
-    return this.cellSize.multiply(a, b).plus(this.origin);
+    console.log(Vector2); 
+    //if (a instanceof Vector2) {
+      return this.cellSize.multiply(a).plus(this.origin);
+    //}
+    //return this.cellSize.multiply(a, b).plus(this.origin);
   }
   
   getBlock(pos: Vector2) {
@@ -84,8 +88,8 @@ export default class Grid extends BaseObject {
   }
   setBlock(pos: Vector2, val: any, delay: number, cause: string) {
     if (this.inBounds(pos)) {
-      var newVal = (val || false);
-      var oldVal = this.blocks[pos.x][pos.y];
+      const newVal = (val || false);
+      const oldVal = this.blocks[pos.x][pos.y];
       this.blocks[pos.x][pos.y] = newVal;
       
       if (newVal && !oldVal) {
@@ -116,7 +120,7 @@ export default class Grid extends BaseObject {
   }
   
   getBlockVisible(pos: Vector2, time: number) {
-    var drawBlock = !!this.getBlock(pos);
+    let drawBlock = !!this.getBlock(pos);
     if (time < this.delayBlocks[pos.hash()]) {
       drawBlock = !drawBlock;
     }
