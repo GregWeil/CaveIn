@@ -5,15 +5,19 @@ import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
 import { Event } from '../engine/events';
+import Game from './game';
+import Collide from './collide';
 
 export default class Grid extends BaseObject {
   cellSize: Vector2;
   gridSize: Vector2;
   origin: Vector2;
   blocks: boolean[][];
-  delayBlocks: {[key: string]: boolean};
+  delayBlocks: {[key: string]: number};
   
-  constructor(game, config) {
+  private collide: Collide;
+  
+  constructor(game: Game, config: {cellSize: Vector2, gridSize: Vector2}) {
     super(game);
     
     this.cellSize = config.cellSize.copy();
@@ -30,29 +34,31 @@ export default class Grid extends BaseObject {
     
     this.delayBlocks = {};
     
+    this.collide = game.collide;
+    
     this.handle(this.game, 'update', this.update, -Infinity);
     this.handle(this.game, 'render', this.render, -100);
   }
   
-  destroy(displayTime) {
+  destroy(displayTime: number) {
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
         if (this.blocks[i][j]) {
-          this.game.collide.remove(new Vector2(i, j), this);
+          this.collide.remove(new Vector2(i, j), this);
         }
       }
     }
     super.destroy(displayTime);
   }
   
-  inBounds(pos) {
+  inBounds(pos: Vector2) {
     if (pos.x < 0 || pos.x >= this.gridSize.x || pos.y < 0 || pos.y >= this.gridSize.y) {
       return false;
     }
     return true;
   }
   
-  accessible(pos) {
+  accessible(pos: Vector2) {
     if (!this.inBounds(pos)) {
       return false;
     } else if (!!this.getBlock(pos)) {
@@ -61,20 +67,22 @@ export default class Grid extends BaseObject {
     return true;
   }
   
-  getX(x) {
+  getX(x: number) {
     return (x * this.cellSize.x) + this.origin.x;
   }
-  getY(y) {
+  getY(y: number) {
     return (y * this.cellSize.y) + this.origin.y;
   }
-  getPos(a, b) {
+  getPos(a Vector2);
+  getPos(a: number, b?: number);
+  getPos(a: Vector2|number, b?: number) {
     return this.cellSize.multiply(a, b).plus(this.origin);
   }
   
-  getBlock(pos) {
+  getBlock(pos: Vector2) {
     return this.inBounds(pos) ? this.blocks[pos.x][pos.y] : false;
   }
-  setBlock(pos, val, delay, cause) {
+  setBlock(pos: Vector2, val: any, delay: number, cause: string) {
     if (this.inBounds(pos)) {
       var newVal = (val || false);
       var oldVal = this.blocks[pos.x][pos.y];
@@ -97,17 +105,17 @@ export default class Grid extends BaseObject {
     }
   }
   
-  hurt(data) {
+  hurt(data: {pos: Vector2}) {
     if (this.inBounds(data.pos)) {
       this.setBlock(data.pos, false, 0, 'hurt');
     }
   }
   
-  update(evt) {
+  update(evt: Event) {
     this.delayBlocks = {};
   }
   
-  getBlockVisible(pos, time) {
+  getBlockVisible(pos: Vector2, time: number) {
     var drawBlock = !!this.getBlock(pos);
     if (time < this.delayBlocks[pos.hash()]) {
       drawBlock = !drawBlock;
@@ -115,7 +123,7 @@ export default class Grid extends BaseObject {
     return drawBlock;
   }
   
-  render(evt) {
+  render(evt: Event) {
     //Fill in background
     evt.data.context.fillStyle = 'black';
     Render.rect(evt.data.context, this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
