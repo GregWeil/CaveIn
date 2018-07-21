@@ -4,8 +4,15 @@
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
+import { Event } from '../engine/events';
 
 export default class Grid extends BaseObject {
+  cellSize: Vector2;
+  gridSize: Vector2;
+  origin: Vector2;
+  blocks: boolean[][];
+  delayBlocks: {[key: string]: boolean};
+  
   constructor(game, config) {
     super(game);
     

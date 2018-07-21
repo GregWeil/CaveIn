@@ -5,7 +5,7 @@ import Vector2 from '../engine/vector2';
 import Engine from '../engine/engine';
 import * as Input from '../engine/input';
 
-const Grid = require('./grid');
+import Grid from './grid';
 import Collide from './collide';
 import { ScreenColors } from './colors';
 const Pathfind = require('./pathfind');
