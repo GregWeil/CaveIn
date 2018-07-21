@@ -67,15 +67,15 @@ export default class Grid extends BaseObject {
     return true;
   }
   
-  getX(x: number) {
+  getX(x: number): number {
     return (x * this.cellSize.x) + this.origin.x;
   }
-  getY(y: number) {
+  getY(y: number): number {
     return (y * this.cellSize.y) + this.origin.y;
   }
-  getPos(a Vector2);
-  getPos(a: number, b?: number);
-  getPos(a: Vector2|number, b?: number) {
+  getPos(a: Vector2): Vector2;
+  getPos(a: number, b?: number): Vector2;
+  getPos(a: Vector2|number, b?: number): Vector2 {
     return this.cellSize.multiply(a, b).plus(this.origin);
   }
   
@@ -89,9 +89,9 @@ export default class Grid extends BaseObject {
       this.blocks[pos.x][pos.y] = newVal;
       
       if (newVal && !oldVal) {
-        this.game.collide.add(pos, this, 1);
+        this.collide.add(pos, this, 1);
       } else if (oldVal && !newVal) {
-        this.game.collide.remove(pos, this);
+        this.collide.remove(pos, this);
       }
       
       this.delayBlocks[pos.hash()] = delay;
@@ -124,36 +124,38 @@ export default class Grid extends BaseObject {
   }
   
   render(evt: Event) {
+    const ctx = evt.data.context;
+    
     //Fill in background
-    evt.data.context.fillStyle = 'black';
-    Render.rect(evt.data.context, this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
+    ctx.fillStyle = 'black';
+    Render.rect(ctx, this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
     
     //Fill in squares
-    evt.data.context.fillStyle = 'white';
+    ctx.fillStyle = 'white';
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
         if (this.getBlockVisible(new Vector2(i, j), evt.data.time)) {
-          Render.rect(evt.data.context, this.getPos(i, j).minus(this.cellSize.multiply(0.5)), this.cellSize);
+          Render.rect(ctx, this.getPos(i, j).minus(this.cellSize.multiply(0.5)), this.cellSize);
         }
       }
     }
     
     if (false) {
       //Draw grid lines
-      evt.data.context.strokeStyle = '#eee';
-      evt.data.context.lineCap = 'square';
-      evt.data.context.lineWidth = 2;
-      evt.data.context.beginPath();
+      ctx.strokeStyle = '#eee';
+      ctx.lineCap = 'square';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
       
       for (let i = 1; i < this.gridSize.x; ++i) {
-        Render.line(evt.data.context, this.getPos(i-0.5, -0.5), this.getPos(i-0.5, this.gridSize.y-0.5));
+        Render.line(ctx, this.getPos(i-0.5, -0.5), this.getPos(i-0.5, this.gridSize.y-0.5));
       }
       
       for (let j = 1; j < this.gridSize.y; ++j) {
-        Render.line(evt.data.context, this.getPos(-0.5, j-0.5), this.getPos(this.gridSize.x-0.5, j-0.5));
+        Render.line(ctx, this.getPos(-0.5, j-0.5), this.getPos(this.gridSize.x-0.5, j-0.5));
       }
       
-      evt.data.context.stroke();
+      ctx.stroke();
     }
   }
 };
