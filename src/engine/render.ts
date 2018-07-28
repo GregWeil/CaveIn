@@ -24,16 +24,16 @@ export function addSprite(name: string, img: HTMLImageElement, size: Vector2, of
   return name;
 }
 
-export function sprite(ctx: Context, name: string, pos: Vector2, angle: number) {
+export function sprite(ctx: Context, name: string, pos: Vector2, angle = 0) {
   ctx.translate(pos.x, pos.y);
-  ctx.rotate(angle || 0);
+  ctx.rotate(angle);
   
   const spr = sprites[name];
   ctx.drawImage(spr.image,
                 spr.offset.x, spr.offset.y, spr.size.x, spr.size.y,
                 -spr.center.x, -spr.center.y, spr.size.x, spr.size.y);
   
-  ctx.rotate(-angle || 0);
+  ctx.rotate(-angle);
   ctx.translate(-pos.x, -pos.y);
 }
 

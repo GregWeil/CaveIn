@@ -85,7 +85,7 @@ export default class Grid extends BaseObject {
   getBlock(pos: Vector2) {
     return this.inBounds(pos) ? this.blocks[pos.x][pos.y] : false;
   }
-  setBlock(pos: Vector2, val: any, delay: number, cause: string) {
+  setBlock(pos: Vector2, val: any, delay = 0, cause = '') {
     if (this.inBounds(pos)) {
       const newVal = (val || false);
       const oldVal = this.blocks[pos.x][pos.y];

@@ -82,6 +82,7 @@ export default class Gem extends BaseObject {
     }
     
     return game.create(Gem, {
+      collide: game.collide,
       grid: grid,
       pos: position,
       tier: tier
