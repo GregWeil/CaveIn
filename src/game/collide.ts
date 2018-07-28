@@ -8,8 +8,12 @@ import { Event } from '../engine/events';
 
 import Game from './game';
 
+interface Collider extends BaseObject {
+  hurt(data: any): void;
+}
+
 interface Collision {
-  instance: BaseObject;
+  instance: Collider;
   priority: number;
 }
 
@@ -48,7 +52,7 @@ export default class Collide extends BaseObject {
     this.collisions[hash] = data;
   }
   
-  add(pos: Vector2, instance: BaseObject, priority: number = 0) {
+  add(pos: Vector2, instance: Collider, priority: number = 0) {
     const hash = pos.hash();
     const data = this.getData(hash);
     
@@ -66,7 +70,7 @@ export default class Collide extends BaseObject {
     return data[index];
   }
   
-  remove(pos: Vector2, instance: BaseObject) {
+  remove(pos: Vector2, instance: Collider) {
     const hash = pos.hash();
     const data = this.getData(hash);
     const index = data.findIndex(item => item.instance === instance);
@@ -77,7 +81,7 @@ export default class Collide extends BaseObject {
     return removed;
   }
   
-  move(from: Vector2, to: Vector2, instance: BaseObject) {
+  move(from: Vector2, to: Vector2, instance: Collider) {
     const removed = this.remove(from, instance);
     if (removed) {
       return this.add(to, instance);
@@ -85,7 +89,7 @@ export default class Collide extends BaseObject {
     return null;
   }
   
-  get(pos: Vector2, config: { type?: { new(): BaseObject }, ignore?: BaseObject[] } = {}) {
+  get(pos: Vector2, config: { type?: { new(): Collider }, ignore?: Collider[] } = {}) {
     config = Object.assign({ ignore: [] }, config);
     const item = this.getData(pos.hash()).find(item => {
       if (config.ignore!.includes(item.instance)) return false;
