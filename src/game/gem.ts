@@ -3,14 +3,16 @@
 
 import { Howl } from 'howler';
 
+import {Event} from '../engine/events';
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
+import Collide from './collide';
 import Grid from './grid';
 import Game from './game';
 
 const dimensions = new Vector2(16);
-const spritesheet = document.getElementById('spritesheet');
+const spritesheet = document.getElementById('spritesheet') as HTMLImageElement;
 
 Render.addSprite('gem-a-a', spritesheet, dimensions, new Vector2(0, 1));
 Render.addSprite('gem-a-b', spritesheet, dimensions, new Vector2(1, 1));
@@ -25,8 +27,8 @@ const audioGem = new Howl({ src: ['/assets/gem.wav'] });
 
 interface GemTier {
   score: number;
-  rangeAxis: 1;
-  rangeManhattan: 2;
+  rangeAxis: number;
+  rangeManhattan: number;
   sprites: [string, string];
 }
 
@@ -86,16 +88,21 @@ export default class Gem extends BaseObject {
     });
   }
   
+  collide: Collide;
   grid: Grid;
+  
   pos: Vector2;
+  sprite: number;
   
   score: number;
   rangeAxis: number;
   rangeManhattan: number;
+  sprites: [string, string];
   
-  constructor(game, config) {
+  constructor(game: Game, config: {grid: Grid, collide: Collide, pos: Vector2, tier: number}) {
     super(game);
     
+    this.collide = config.collide;
     this.grid = config.grid;
     this.pos = config.pos;
     
@@ -115,23 +122,23 @@ export default class Gem extends BaseObject {
     this.handle(this.game, 'render', this.render);
   }
   
-  check(evt) {
+  check(evt: Event) {
     if (!this.grid.getBlock(this.pos)) {
       this.collect();
     }
   }
   
   collect() {
-    var ra = this.rangeAxis;
-    var rm = this.rangeManhattan;
+    const ra = this.rangeAxis;
+    const rm = this.rangeManhattan;
     for (let i = -ra; i <= ra; ++i) {
       for (let j = -ra; j <= ra; ++j) {
         if (i === 0 && j === 0) continue;
-        var pos = this.pos.plus(i, j);
+        const pos = this.pos.plus(i, j);
         if (Vector2.new(i, j).manhattan() > rm) {
           continue;
         }
-        var col = this.game.collide.get(pos);
+        const col = this.collide.get(pos);
         if (col && col === this.grid) {
           this.grid.setBlock(pos, false, 0.1, 'gem');
         } else if (col && col.hurt) {
@@ -151,11 +158,11 @@ export default class Gem extends BaseObject {
     this.game.destroy(this, 0);
   }
   
-  anim(evt) {
+  anim(evt: Event) {
     this.sprite = (this.sprite + 1) % this.sprites.length;
   }
   
-  render(evt) {
+  render(evt: Event) {
     Render.sprite(evt.data.context, this.sprites[this.sprite], this.grid.getPos(this.pos));
   }
 };

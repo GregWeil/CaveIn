@@ -14,7 +14,7 @@ interface Sprite {
 
 const sprites: { [key: string]: Sprite } = {};
 
-export function addSprite(name: string, img: HTMLImageElement, size: Vector2, offset: Vector2, center: Vector2) {
+export function addSprite(name: string, img: HTMLImageElement, size: Vector2, offset: Vector2, center?: Vector2) {
   sprites[name] = {
     image: img,
     size: size.copy(),
