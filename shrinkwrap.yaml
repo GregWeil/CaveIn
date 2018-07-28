@@ -6,7 +6,7 @@ dependencies:
   browserify: 16.2.2
   express: 4.16.3
   howler: 2.0.14
-  nodemon: 1.18.2
+  nodemon: 1.18.3
   random-js: 1.0.8
   typescript: 2.9.2
 packages:
@@ -1821,7 +1821,7 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
-  /nodemon/1.18.2:
+  /nodemon/1.18.3:
     dependencies:
       chokidar: 2.0.4
       debug: 3.1.0
@@ -1839,7 +1839,7 @@ packages:
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-FKuvzVurERMgX231T9KexWWWopjd93vapFY8rLn2JlPZ58uCW2s7U8utKElpGUEAqU5Y33///KFza5O9ndVRHQ==
+      integrity: sha512-XdVfAjGlDKU2nqoGgycxTndkJ5fdwvWJ/tlMGk2vHxMZBrSPVh86OM6z7viAv8BBJWjMgeuYQBofzr6LUoi+7g==
   /nopt/1.0.10:
     dependencies:
       abbrev: 1.1.1
@@ -2854,6 +2854,6 @@ specifiers:
   browserify: ^16.2.2
   express: ^4.16.3
   howler: ^2.0.14
-  nodemon: ^1.18.2
+  nodemon: ^1.18.3
   random-js: ^1.0.8
   typescript: ^2.9.2
