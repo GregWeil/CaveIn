@@ -11,7 +11,7 @@ import { ScreenColors } from './colors';
 const Pathfind = require('./pathfind');
 const Player = require('./player');
 const Enemy = require('./enemy');
-const Gem = require('./gem');
+import Gem from './gem';
 import Score from './score';
 
 export default class Game extends Engine {
@@ -37,7 +37,6 @@ export default class Game extends Engine {
     this.collide = this.create(Collide);
     
     this.grid = this.create(Grid, {
-      collide: this.collide,
       cellSize: new Vector2(16),
       gridSize: new Vector2(29, 18)
     });

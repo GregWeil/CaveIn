@@ -1,15 +1,16 @@
-/// gem.js
+/// gem.ts
 //A pickup that gives a point
 
-var Howl = require('howler').Howl;
+import { Howl } from 'howler';
 
-var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
-var Grid = require('./grid').default;
+import Vector2 from '../engine/vector2';
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
+import Grid from './grid';
+import Game from './game';
 
-var dimensions = new Vector2(16);
-var spritesheet = document.getElementById('spritesheet');
+const dimensions = new Vector2(16);
+const spritesheet = document.getElementById('spritesheet');
 
 Render.addSprite('gem-a-a', spritesheet, dimensions, new Vector2(0, 1));
 Render.addSprite('gem-a-b', spritesheet, dimensions, new Vector2(1, 1));
@@ -20,9 +21,16 @@ Render.addSprite('gem-b-b', spritesheet, dimensions, new Vector2(1, 5));
 Render.addSprite('gem-c-a', spritesheet, dimensions, new Vector2(0, 6));
 Render.addSprite('gem-c-b', spritesheet, dimensions, new Vector2(1, 6));
 
-var audioGem = new Howl({ src: ['/assets/gem.wav'] });
+const audioGem = new Howl({ src: ['/assets/gem.wav'] });
 
-var gemTiers = [
+interface GemTier {
+  score: number;
+  rangeAxis: 1;
+  rangeManhattan: 2;
+  sprites: [string, string];
+}
+
+const gemTiers: GemTier[] = [
   {
     score: 1,
     rangeAxis: 1,
@@ -43,27 +51,27 @@ var gemTiers = [
   }
 ];
 
-module.exports = class Gem extends BaseObject {
-  static spawn(game, grid, avoid) {
-    var count = game.collide.count();
-    var tier = 0;
+export default class Gem extends BaseObject {
+  static spawn(game: Game, grid: Grid, avoid: Vector2) {
+    const count = game.collide.count();
+    let tier = 0;
     if (count <= 264 ) {
       tier = 2;
     } else if (count <= 393) {
       tier = 1;
     }
     
-    var position = new Vector2();
-    var distance = Infinity;
-    var iterations = 0;
+    let position = new Vector2();
+    let distance = Infinity;
+    let iterations = 0;
     while (iterations < 5) {
-      var pos = new Vector2(
+      const pos = new Vector2(
         game.random.integer(0, grid.gridSize.x-1),
         game.random.integer(0, grid.gridSize.y-1)
       );
       if (!game.collide.get(pos, { type: Grid })) continue;
       if (game.collide.get(pos, { ignore: [grid] })) continue;
-      var dist = Math.abs(pos.minus(avoid).manhattan() - 15);
+      const dist = Math.abs(pos.minus(avoid).manhattan() - 15);
       if (dist < distance) {
         position = pos;
         distance = dist;
@@ -78,13 +86,20 @@ module.exports = class Gem extends BaseObject {
     });
   }
   
+  grid: Grid;
+  pos: Vector2;
+  
+  score: number;
+  rangeAxis: number;
+  rangeManhattan: number;
+  
   constructor(game, config) {
     super(game);
     
     this.grid = config.grid;
     this.pos = config.pos;
     
-    var base = gemTiers[config.tier];
+    const base = gemTiers[config.tier];
     this.score = base.score;
     this.rangeAxis = base.rangeAxis;
     this.rangeManhattan = base.rangeManhattan;
