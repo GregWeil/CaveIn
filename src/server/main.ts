@@ -8,14 +8,15 @@ import assets from './assets';
 // express init
 const app = express();
 
-const client = new Promise((resolve, reject) =>
+const client = new Promise((resolve, reject) => {
   browserify('bin/client/main.js').bundle((err, data) => {
     if (err) {
       reject(err);
     } else {
       resolve(data);
     }
-  }));
+  });
+});
 app.use('/client.js', async (req, res) => res.send(await client));
 
 app.use('/assets', assets);
