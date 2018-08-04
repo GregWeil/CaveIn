@@ -6,14 +6,14 @@ import { Howl } from 'howler';
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import Events from '../engine/events';
+import { Event } from '../engine/events';
 
 import Game from './game';
 import Grid from './grid';
 import Collide from './collide';
 
 const dimensions = new Vector2(16);
-const spritesheet = document.getElementById('spritesheet');
+const spritesheet = document.getElementById('spritesheet') as HTMLImageElement;
 
 const sprites = [
   Render.addSprite('enemy-a', spritesheet, dimensions, new Vector2(0, 2)),
@@ -41,8 +41,8 @@ class EnemyGhost extends BaseObject {
     this.grid = game.grid;
     this.collide = game.collide;
     
-    this.pos = config.pos;
-    this.sprite = config.sprite;
+    this.pos = pos;
+    this.sprite = sprite;
     
     this.grid.setBlock(this.pos, 'ghost');
     this.collide.add(this.pos, this);
@@ -56,7 +56,7 @@ class EnemyGhost extends BaseObject {
     super.destroy(displayTime);
   }
   
-  hurt(data: { hit: boolean }) {
+  hurt(data: { pos: Vector2, delay: number, hit: boolean }) {
     if (this.pos.equals(data.pos)) {
       this.game.destroy(this, data.delay);
       data.hit = true;
@@ -75,7 +75,7 @@ class EnemyGhost extends BaseObject {
 export default class Enemy extends BaseObject {
   static spawn(game: Game, avoid: Vector2, ai: any) {
     //Take the farthest accessible point
-    let locations = [];
+    let locations: Vector2[] = [];
     let distance = -Infinity;
     for (let i = 0; i < game.grid.gridSize.x; ++i) {
       for (let j = 0; j < game.grid.gridSize.y; ++j) {
@@ -94,6 +94,7 @@ export default class Enemy extends BaseObject {
     return game.create(Enemy, pos, ai);
   }
   
+  private storedGame: Game;
   private grid: Grid;
   private collide: Collide;
   
@@ -105,17 +106,18 @@ export default class Enemy extends BaseObject {
   
   sprite: number;
   
-  constructor(game: Game, pos: Vector2, ai: any) {
+  constructor(game: Game, pos: Vector2, pathfind: any) {
     super(game);
     
+    this.storedGame = game;
     this.grid = game.grid;
     this.collide = game.collide;
     
-    this.pos = config.pos.copy();
+    this.pos = pos.copy();
     this.posLast = this.pos.copy();
     this.movement = new Vector2();
     this.moveTimer = 1;
-    this.ai = config.pathfind;
+    this.ai = pathfind;
     
     this.collide.add(this.pos, this);
     
@@ -129,7 +131,7 @@ export default class Enemy extends BaseObject {
     this.handle(this.game, 'render', this.render);
   }
   
-  destroy(displayTime) {
+  destroy(displayTime: number) {
     this.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
@@ -152,21 +154,21 @@ export default class Enemy extends BaseObject {
     this.posLast = this.pos.copy();
     const newPos = this.pos.plus(this.movement);
     if (this.grid.accessible(newPos)) {
-      if (!this.game.collide.get(newPos, { type: Enemy })) {
+      if (!this.collide.get(newPos, { type: Enemy })) {
         this.pos = newPos;
         audioStepRequests += 1;
-        this.game.collide.move(this.posLast, this.pos, this);
+        this.collide.move(this.posLast, this.pos, this);
       }
     }
   }
   
-  hurt(data: { cause: string, delay: number }) {
+  hurt(data: { pos: Vector2, cause: string, delay: number }) {
     if (this.pos.equals(data.pos)) {
       if (data.cause !== 'gem') {
         this.grid.setBlock(this.pos, true, 0.3);
       }
       if (data.cause === 'grid') {
-        this.game.create(EnemyGhost, this.pos, this.sprite);
+        this.storedGame.create(EnemyGhost, this.pos, this.sprite);
       }
       this.game.destroy(this, data.delay);
     }
