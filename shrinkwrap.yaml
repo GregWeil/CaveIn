@@ -8,7 +8,7 @@ dependencies:
   howler: 2.0.14
   nodemon: 1.18.3
   random-js: 1.0.8
-  typescript: 2.9.2
+  typescript: 3.0.1
 packages:
   /@types/body-parser/1.17.0:
     dependencies:
@@ -2652,13 +2652,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript/2.9.2:
+  /typescript/3.0.1:
     dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
+      integrity: sha512-zQIMOmC+372pC/CCVLqnQ0zSBiY7HHodU7mpQdjiZddek4GMj31I3dUJ7gAs9o65X7mnRma6OokOkc6f9jjfBg==
   /umd/3.0.3:
     dev: false
     hasBin: true
@@ -2856,4 +2856,4 @@ specifiers:
   howler: ^2.0.14
   nodemon: ^1.18.3
   random-js: ^1.0.8
-  typescript: ^2.9.2
+  typescript: ^3.0.1

@@ -1,16 +1,20 @@
-/// player.js
+/// player.ts
 //Time to get some interactivity
 
-var Howl = require('howler').Howl;
+import { Howl } from 'howler';
 
-var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
+import Vector2 from '../engine/vector2';
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
+import { Event } from '../engine/events';
 
-var Enemy = require('./enemy');
+import Grid from './grid';
+import Collide from './collide';
+import Game from './game';
+const Enemy = require('./enemy');
 
-var dimensions = new Vector2(16);
-var spritesheet = document.getElementById('spritesheet');
+const dimensions = new Vector2(16);
+const spritesheet = document.getElementById('spritesheet') as HTMLImageElement;
 
 Render.addSprite('player-up', spritesheet, dimensions, new Vector2(1, 4));
 Render.addSprite('player-down', spritesheet, dimensions, new Vector2(0, 3));
@@ -23,20 +27,31 @@ Render.addSprite('pickaxe-swing', spritesheet, dimensions, new Vector2(0, 0));
 Render.addSprite('pickaxe-dark-hit', spritesheet, dimensions, new Vector2(1, 7));
 Render.addSprite('pickaxe-dark-swing', spritesheet, dimensions, new Vector2(0, 7));
 
-var audioStep = new Howl({ src: ['/assets/move.wav'] });
-var audioHit = new Howl({ src: ['/assets/attack.wav'] });
-var audioDie = new Howl({ volume: 0.5, src: ['/assets/die.wav'] });
+const audioStep = new Howl({ src: ['/assets/move.wav'] });
+const audioHit = new Howl({ src: ['/assets/attack.wav'] });
+const audioDie = new Howl({ volume: 0.5, src: ['/assets/die.wav'] });
 
-module.exports = class Player extends BaseObject {
-  constructor(game, config) {
+export default class Player extends BaseObject {
+  private collide: Collide;
+  private grid: Grid;
+  
+  pos: Vector2;
+  posLast: Vector2;
+  facing: 'up'|'down'|'left'|'right';
+  attacking: boolean;
+  attackHit: boolean;
+  
+  constructor(game: Game, pos: Vector2) {
     super(game);
     
-    this.grid = config.grid;
-    this.pos = config.pos;
+    this.collide = game.collide;
+    this.grid = game.grid;
+    
+    this.pos = pos;
     this.posLast = this.pos.copy();
     this.facing = 'down';
     
-    this.game.collide.add(this.pos, this);
+    this.collide.add(this.pos, this);
     
     this.attacking = false;
     this.attackHit = false;
@@ -50,8 +65,8 @@ module.exports = class Player extends BaseObject {
     this.handle(this.game, 'render', this.render);
   }
   
-  destroy(displayTime) {
-    this.game.collide.remove(this.pos, this);
+  destroy(displayTime: number) {
+    this.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
   
@@ -70,8 +85,8 @@ module.exports = class Player extends BaseObject {
   }
   
   attack() {
-    var hitPos = this.pos.plus(this.getFacingDirection());
-    var hit = this.game.collide.get(hitPos);
+    const hitPos = this.pos.plus(this.getFacingDirection());
+    const hit = this.collide.get(hitPos);
     if (hit) {
       hit.hurt({
         pos: hitPos,
@@ -82,7 +97,7 @@ module.exports = class Player extends BaseObject {
     }
   }
   
-  hurt(evt) {
+  hurt(evt: { cause: string }) {
     if (evt.cause !== 'gem') {
       this.game.sound(audioDie);
       this.game.emit('player-died');
@@ -90,21 +105,21 @@ module.exports = class Player extends BaseObject {
     }
   }
   
-  acceptCommand(evt) {
+  acceptCommand(evt: Event) {
     if (['up', 'down', 'left', 'right', 'action'].includes(evt.data.command)) {
       evt.data.accept = true;
     }
   }
   
-  updateEarly(evt) {
+  updateEarly(evt: Event) {
     this.attackHit = false;
     if (evt.data.command === 'action') {
       this.attack();
     }
   }
   
-  update(evt) {
-    this.moving = false;
+  update(evt: Event) {
+    let moving = false;
     this.attacking = false;
     this.posLast = this.pos.copy();
     switch (evt.data.command) {
@@ -114,41 +129,41 @@ module.exports = class Player extends BaseObject {
       case 'right':
         this.facing = evt.data.command;
         this.pos = this.pos.plus(this.getFacingDirection());
-        this.moving = true;
+        moving = true;
         break;
       case 'action':
         this.attacking = true;
         break;
     }
-    if (this.moving) {
+    if (moving) {
       if (!this.grid.accessible(this.pos)) {
         this.pos = this.posLast;
       } else {
         this.game.sound(audioStep, { volume: this.game.random.real(0.3, 0.4, true) });
       }
     }
-    this.game.collide.move(this.posLast, this.pos, this);
+    this.collide.move(this.posLast, this.pos, this);
   }
   
-  updateLate(evt) {
+  updateLate(evt: Event) {
     //If something else is on this space, get hurt
-    if (this.game.collide.get(this.pos, { ignore: [this] })) {
+    if (this.collide.get(this.pos, { ignore: [this] })) {
       this.hurt({ cause: 'collision' });
     } else if (evt.data.command === 'action' && !this.attackHit) {
       this.attack();
     }
   }
   
-  render(evt) {
-    var displayPos = this.pos;
+  render(evt: Event) {
+    let displayPos = this.pos;
     if (evt.data.time < 0.05) {
       displayPos = displayPos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite(evt.data.context, 'player-'+this.facing, this.grid.getPos(displayPos));
+    Render.sprite(evt.data.context, `player-${this.facing}`, this.grid.getPos(displayPos));
     if (this.attacking && (evt.data.time < 0.3)) {
-      var axePos = this.pos.plus(this.getFacingDirection());
-      var dark = this.grid.getBlockVisible(axePos, evt.data.time) ? '-dark' : '';
-      var swing = (this.attackHit && evt.data.time < 0.1) ? '-hit' : '-swing';
+      const axePos = this.pos.plus(this.getFacingDirection());
+      const dark = this.grid.getBlockVisible(axePos, evt.data.time) ? '-dark' : '';
+      const swing = (this.attackHit && evt.data.time < 0.1) ? '-hit' : '-swing';
       Render.sprite(evt.data.context, 'pickaxe' + dark + swing,
         this.grid.getPos(displayPos.plus(this.getFacingDirection())),
         this.getFacingDirection().angle() - (Math.PI / 2));

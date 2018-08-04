@@ -9,7 +9,7 @@ import Grid from './grid';
 import Collide from './collide';
 import { ScreenColors } from './colors';
 const Pathfind = require('./pathfind');
-const Player = require('./player');
+import Player from './player';
 const Enemy = require('./enemy');
 import Gem from './gem';
 import Score from './score';
@@ -46,9 +46,9 @@ export default class Game extends Engine {
     
     //Create the player and fill in the grid
     
-    const player = this.create(Player, {
-      grid: this.grid, pos: this.grid.gridSize.minus(1).multiply(0.5).round()
-    }) as any;
+    const player = this.create(Player,
+      this.grid.gridSize.minus(1).multiply(0.5).round()
+    ) as any;
     
     for (let i = 0; i < this.grid.gridSize.x; ++i) {
       for (let j = 0; j < this.grid.gridSize.y; ++j) {
