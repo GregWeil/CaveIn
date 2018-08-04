@@ -10,7 +10,7 @@ import Collide from './collide';
 import { ScreenColors } from './colors';
 const Pathfind = require('./pathfind');
 import Player from './player';
-const Enemy = require('./enemy');
+import Enemy = require('./enemy');
 import Gem from './gem';
 import Score from './score';
 

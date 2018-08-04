@@ -9,7 +9,7 @@ import { Event } from '../engine/events';
 import Game from './game';
 
 interface Collider extends BaseObject {
-  hurt(data: { pos: Vector2, cause: string, delay: number, hit: boolean }): void;
+  hurt(data: { pos: Vector2, cause: string, delay?: number, hit?: boolean }): void;
 }
 
 interface Collision {

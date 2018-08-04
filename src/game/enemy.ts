@@ -56,9 +56,9 @@ class EnemyGhost extends BaseObject {
     super.destroy(displayTime);
   }
   
-  hurt(data: { pos: Vector2, delay: number, hit: boolean }) {
+  hurt(data: { pos: Vector2, delay?: number, hit?: boolean }) {
     if (this.pos.equals(data.pos)) {
-      this.game.destroy(this, data.delay);
+      this.game.destroy(this, data.delay||0);
       data.hit = true;
     }
   }
@@ -162,7 +162,7 @@ export default class Enemy extends BaseObject {
     }
   }
   
-  hurt(data: { pos: Vector2, cause: string, delay: number }) {
+  hurt(data: { pos: Vector2, cause: string, delay?: number }) {
     if (this.pos.equals(data.pos)) {
       if (data.cause !== 'gem') {
         this.grid.setBlock(this.pos, true, 0.3);
@@ -170,7 +170,7 @@ export default class Enemy extends BaseObject {
       if (data.cause === 'grid') {
         this.storedGame.create(EnemyGhost, this.pos, this.sprite);
       }
-      this.game.destroy(this, data.delay);
+      this.game.destroy(this, data.delay||0);
     }
   }
   
