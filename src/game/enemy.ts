@@ -28,7 +28,7 @@ const ghostSprites = [
 const audioStep = new Howl({ src: ['/assets/enemy_move.wav'] });
 let audioStepRequests = 0;
 
-class EnemyGhost extends BaseObject {
+class EnemyGhost extends BaseObject<Game> {
   private grid: Grid;
   private collide: Collide;
   
@@ -72,7 +72,7 @@ class EnemyGhost extends BaseObject {
   }
 }
 
-export default class Enemy extends BaseObject {
+export default class Enemy extends BaseObject<Game> {
   static spawn(game: Game, avoid: Vector2, ai: any) {
     //Take the farthest accessible point
     let locations: Vector2[] = [];

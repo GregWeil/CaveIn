@@ -53,7 +53,7 @@ const gemTiers: GemTier[] = [
   }
 ];
 
-export default class Gem extends BaseObject {
+export default class Gem extends BaseObject<Game> {
   static spawn(game: Game, grid: Grid, avoid: Vector2) {
     const count = game.collide.count();
     let tier = 0;

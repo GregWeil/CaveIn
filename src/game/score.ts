@@ -14,7 +14,7 @@ interface Popup {
   delay: number;
 }
 
-export default class Score extends BaseObject {
+export default class Score extends BaseObject<Game> {
   private collide: any;
   private grid: any;
   

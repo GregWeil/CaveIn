@@ -8,7 +8,7 @@ import { Event } from '../engine/events';
 
 import Game from './game';
 
-interface Collider extends BaseObject {
+interface Collider extends BaseObject<Game> {
   hurt(data: { pos: Vector2, cause: string, delay?: number, hit?: boolean }): void;
 }
 
@@ -17,7 +17,7 @@ interface Collision {
   priority: number;
 }
 
-export default class Collide extends BaseObject {
+export default class Collide extends BaseObject<Game> {
   private collisions: { [key: string]: Collision[] };
   private grid: any;
    

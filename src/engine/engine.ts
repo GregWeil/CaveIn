@@ -20,7 +20,7 @@ export default class Engine extends EventEmitter {
   ctx: CanvasRenderingContext2D;
   
   updateTime: number;
-  objects: BaseObject[];
+  objects: BaseObject<this>[];
   
   constructor(config: any) {
     super();
@@ -100,13 +100,13 @@ export default class Engine extends EventEmitter {
     return audio;
   }
   
-  create<T extends BaseObject, P extends any[]>(Obj: Constructor<this, T, P>, ...params: P): T {
+  create<T extends BaseObject<any>, P extends any[]>(Obj: Constructor<this, T, P>, ...params: P): T {
     const inst = new Obj(this, ...params);
     this.objects.push(inst);
     return inst;
   }
   
-  destroy(inst: BaseObject, displayTime?: number) {
+  destroy(inst: BaseObject<this>, displayTime?: number) {
     const index = this.objects.indexOf(inst);
     if (index < 0) {
       throw 'Tried to destroy an object that is not mine';
@@ -117,6 +117,6 @@ export default class Engine extends EventEmitter {
 }
 
 // How does one variadic?
-interface Constructor<G extends Engine, T extends BaseObject, P extends any[]> {
+interface Constructor<G extends Engine, T extends BaseObject<G>, P extends any[]> {
   new (game: G, ...params: P): T;
 }

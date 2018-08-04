@@ -8,7 +8,7 @@ import { Event } from '../engine/events';
 import Game from './game';
 import Collide from './collide';
 
-export default class Grid extends BaseObject {
+export default class Grid extends BaseObject<Game> {
   cellSize: Vector2;
   gridSize: Vector2;
   origin: Vector2;
@@ -108,7 +108,7 @@ export default class Grid extends BaseObject {
     }
   }
   
-  hurt(data: {pos: Vector2}) {
+  hurt(data: { pos: Vector2 }) {
     if (this.inBounds(data.pos)) {
       this.setBlock(data.pos, false, 0, 'hurt');
     }
