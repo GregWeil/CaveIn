@@ -14,22 +14,19 @@ const colors = [
 ];
 
 export class GridColors extends BaseObject<Game> {
-  private grid: any;
   private padding: number;
   private colors: string[][];
   
   constructor(game: Game) {
     super(game);
     
-    this.grid = game.grid;
-    
     this.padding = 2;
     
     this.colors = [];
-    for (let i = -2 * this.padding; i < this.grid.gridSize.x; ++i) {
+    for (let i = -2 * this.padding; i < this.game.grid.gridSize.x; ++i) {
       const array = [];
-      for (let j = -2 * this.padding; j < this.grid.gridSize.y; ++j) {
-        array.push(game.random.pick(colors));
+      for (let j = -2 * this.padding; j < this.game.grid.gridSize.y; ++j) {
+        array.push(this.game.random.pick(colors));
       }
       this.colors.push(array);
     }
@@ -39,10 +36,11 @@ export class GridColors extends BaseObject<Game> {
   
   render(evt: Event) {
     evt.data.context.globalCompositeOperation = 'multiply';
-    for (let i = -this.padding; i < this.grid.gridSize.x + this.padding; ++i) {
-      for (let j = -this.padding; j < this.grid.gridSize.y + this.padding; ++j) {
+    for (let i = -this.padding; i < this.game.grid.gridSize.x + this.padding; ++i) {
+      for (let j = -this.padding; j < this.game.grid.gridSize.y + this.padding; ++j) {
         evt.data.context.fillStyle = this.colors[i+this.padding][j+this.padding];
-        Render.rect(evt.data.context, this.grid.getPos(i, j).minus(this.grid.cellSize.multiply(0.5)), this.grid.cellSize);
+        const pos = this.game.grid.getPos(i, j).minus(this.game.grid.cellSize.multiply(0.5));
+        Render.rect(evt.data.context, pos, this.game.grid.cellSize);
       }
     }
     evt.data.context.globalCompositeOperation = 'source-over';
@@ -55,7 +53,7 @@ export class ScreenColors extends BaseObject<Game> {
   constructor(game: Game) {
     super(game);
     
-    this.color = game.random.pick(colors);
+    this.color = this.game.random.pick(colors);
     
     this.handle(this.game, 'render', this.render, 1000);
   }

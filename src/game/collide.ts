@@ -19,12 +19,10 @@ interface Collision {
 
 export default class Collide extends BaseObject<Game> {
   private collisions: { [key: string]: Collision[] };
-  private grid: any;
    
   constructor(game: Game) {
     super(game);
     
-    this.grid = game.grid;
     this.collisions = {};
     
     //this.handle(this.game, 'render', this.render, Infinity);
@@ -34,11 +32,11 @@ export default class Collide extends BaseObject<Game> {
     evt.data.context.fillStyle = 'red';
     evt.data.context.textAlign = 'center';
     evt.data.context.textBaseline = 'middle';
-    for (let i = 0; i < this.grid.gridSize.x; ++i) {
-      for (let j = 0; j < this.grid.gridSize.y; ++j) {
+    for (let i = 0; i < this.game.grid.gridSize.x; ++i) {
+      for (let j = 0; j < this.game.grid.gridSize.y; ++j) {
         const data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          Render.text(evt.data.context, data[0].priority.toString(), this.grid.getPos(i, j));
+          Render.text(evt.data.context, data[0].priority.toString(), this.game.grid.getPos(i, j));
         }
       }
     }

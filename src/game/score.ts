@@ -15,16 +15,10 @@ interface Popup {
 }
 
 export default class Score extends BaseObject<Game> {
-  private collide: any;
-  private grid: any;
-  
   private popups: Popup[];
   
   constructor(game: Game) {
     super(game);
-    
-    this.collide = game.collide;
-    this.grid = game.grid;
     
     this.popups = [];
     
@@ -67,8 +61,8 @@ export default class Score extends BaseObject<Game> {
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
       if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
-      if (this.collide.get(popup.pos)) continue;
-      Render.text(ctx, '+' + popup.score, this.grid.getPos(popup.pos));
+      if (this.game.collide.get(popup.pos)) continue;
+      Render.text(ctx, '+' + popup.score, this.game.grid.getPos(popup.pos));
     }
   }
 }

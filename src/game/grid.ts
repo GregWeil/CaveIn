@@ -6,7 +6,6 @@ import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
 import { Event } from '../engine/events';
 import Game from './game';
-import Collide from './collide';
 
 export default class Grid extends BaseObject<Game> {
   cellSize: Vector2;
@@ -14,8 +13,6 @@ export default class Grid extends BaseObject<Game> {
   origin: Vector2;
   blocks: boolean[][];
   delayBlocks: {[key: string]: number};
-  
-  private collide: Collide;
   
   constructor(game: Game, config: {cellSize: Vector2, gridSize: Vector2}) {
     super(game);
@@ -34,8 +31,6 @@ export default class Grid extends BaseObject<Game> {
     
     this.delayBlocks = {};
     
-    this.collide = game.collide;
-    
     this.handle(this.game, 'update', this.update, -Infinity);
     this.handle(this.game, 'render', this.render, -100);
   }
@@ -44,7 +39,7 @@ export default class Grid extends BaseObject<Game> {
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
         if (this.blocks[i][j]) {
-          this.collide.remove(new Vector2(i, j), this);
+          this.game.collide.remove(new Vector2(i, j), this);
         }
       }
     }
@@ -92,9 +87,9 @@ export default class Grid extends BaseObject<Game> {
       this.blocks[pos.x][pos.y] = newVal;
       
       if (newVal && !oldVal) {
-        this.collide.add(pos, this, 1);
+        this.game.collide.add(pos, this, 1);
       } else if (oldVal && !newVal) {
-        this.collide.remove(pos, this);
+        this.game.collide.remove(pos, this);
       }
       
       this.delayBlocks[pos.hash()] = delay;

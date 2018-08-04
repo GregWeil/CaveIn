@@ -8,8 +8,6 @@ import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
 import { Event } from '../engine/events';
 
-import Grid from './grid';
-import Collide from './collide';
 import Game from './game';
 const Enemy = require('./enemy');
 
@@ -32,9 +30,6 @@ const audioHit = new Howl({ src: ['/assets/attack.wav'] });
 const audioDie = new Howl({ volume: 0.5, src: ['/assets/die.wav'] });
 
 export default class Player extends BaseObject<Game> {
-  private collide: Collide;
-  private grid: Grid;
-  
   pos: Vector2;
   posLast: Vector2;
   facing: 'up'|'down'|'left'|'right';
@@ -44,14 +39,11 @@ export default class Player extends BaseObject<Game> {
   constructor(game: Game, pos: Vector2) {
     super(game);
     
-    this.collide = game.collide;
-    this.grid = game.grid;
-    
     this.pos = pos;
     this.posLast = this.pos.copy();
     this.facing = 'down';
     
-    this.collide.add(this.pos, this);
+    this.game.collide.add(this.pos, this);
     
     this.attacking = false;
     this.attackHit = false;
@@ -66,7 +58,7 @@ export default class Player extends BaseObject<Game> {
   }
   
   destroy(displayTime: number) {
-    this.collide.remove(this.pos, this);
+    this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
   
@@ -86,7 +78,7 @@ export default class Player extends BaseObject<Game> {
   
   attack() {
     const hitPos = this.pos.plus(this.getFacingDirection());
-    const hit = this.collide.get(hitPos);
+    const hit = this.game.collide.get(hitPos);
     if (hit) {
       hit.hurt({
         pos: hitPos,
@@ -136,18 +128,18 @@ export default class Player extends BaseObject<Game> {
         break;
     }
     if (moving) {
-      if (!this.grid.accessible(this.pos)) {
+      if (!this.game.grid.accessible(this.pos)) {
         this.pos = this.posLast;
       } else {
         this.game.sound(audioStep, { volume: this.game.random.real(0.3, 0.4, true) });
       }
     }
-    this.collide.move(this.posLast, this.pos, this);
+    this.game.collide.move(this.posLast, this.pos, this);
   }
   
   updateLate(evt: Event) {
     //If something else is on this space, get hurt
-    if (this.collide.get(this.pos, { ignore: [this] })) {
+    if (this.game.collide.get(this.pos, { ignore: [this] })) {
       this.hurt({ cause: 'collision' });
     } else if (evt.data.command === 'action' && !this.attackHit) {
       this.attack();
@@ -159,13 +151,13 @@ export default class Player extends BaseObject<Game> {
     if (evt.data.time < 0.05) {
       displayPos = displayPos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite(evt.data.context, `player-${this.facing}`, this.grid.getPos(displayPos));
+    Render.sprite(evt.data.context, `player-${this.facing}`, this.game.grid.getPos(displayPos));
     if (this.attacking && (evt.data.time < 0.3)) {
       const axePos = this.pos.plus(this.getFacingDirection());
-      const dark = this.grid.getBlockVisible(axePos, evt.data.time) ? '-dark' : '';
+      const dark = this.game.grid.getBlockVisible(axePos, evt.data.time) ? '-dark' : '';
       const swing = (this.attackHit && evt.data.time < 0.1) ? '-hit' : '-swing';
       Render.sprite(evt.data.context, 'pickaxe' + dark + swing,
-        this.grid.getPos(displayPos.plus(this.getFacingDirection())),
+        this.game.grid.getPos(displayPos.plus(this.getFacingDirection())),
         this.getFacingDirection().angle() - (Math.PI / 2));
     }
   }

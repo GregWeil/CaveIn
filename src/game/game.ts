@@ -109,10 +109,10 @@ export default class Game extends Engine {
     //Gem spawning
     
     this.on('gem-collect', evt => {
-      Gem.spawn(this, this.grid, player.pos);
+      Gem.spawn(this, player.pos);
     });
     
-    Gem.spawn(this, this.grid, player.pos);
+    Gem.spawn(this, player.pos);
     
     //Scoring
     

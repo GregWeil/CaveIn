@@ -7,7 +7,6 @@ import {Event} from '../engine/events';
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import Collide from './collide';
 import Grid from './grid';
 import Game from './game';
 
@@ -54,7 +53,7 @@ const gemTiers: GemTier[] = [
 ];
 
 export default class Gem extends BaseObject<Game> {
-  static spawn(game: Game, grid: Grid, avoid: Vector2) {
+  static spawn(game: Game, avoid: Vector2) {
     const count = game.collide.count();
     let tier = 0;
     if (count <= 264 ) {
@@ -68,11 +67,11 @@ export default class Gem extends BaseObject<Game> {
     let iterations = 0;
     while (iterations < 5) {
       const pos = new Vector2(
-        game.random.integer(0, grid.gridSize.x-1),
-        game.random.integer(0, grid.gridSize.y-1)
+        game.random.integer(0, game.grid.gridSize.x-1),
+        game.random.integer(0, game.grid.gridSize.y-1)
       );
       if (!game.collide.get(pos, { type: Grid })) continue;
-      if (game.collide.get(pos, { ignore: [grid] })) continue;
+      if (game.collide.get(pos, { ignore: [game.grid] })) continue;
       const dist = Math.abs(pos.minus(avoid).manhattan() - 15);
       if (dist < distance) {
         position = pos;
@@ -81,16 +80,8 @@ export default class Gem extends BaseObject<Game> {
       iterations += 1;
     }
     
-    return game.create(Gem, {
-      collide: game.collide,
-      grid: grid,
-      pos: position,
-      tier: tier
-    });
+    return game.create(Gem, position, tier);
   }
-  
-  collide: Collide;
-  grid: Grid;
   
   pos: Vector2;
   sprite: number;
@@ -100,14 +91,12 @@ export default class Gem extends BaseObject<Game> {
   rangeManhattan: number;
   sprites: [string, string];
   
-  constructor(game: Game, config: {grid: Grid, collide: Collide, pos: Vector2, tier: number}) {
+  constructor(game: Game, pos: Vector2, tier: number) {
     super(game);
     
-    this.collide = config.collide;
-    this.grid = config.grid;
-    this.pos = config.pos;
+    this.pos = pos;
     
-    const base = gemTiers[config.tier];
+    const base = gemTiers[tier];
     this.score = base.score;
     this.rangeAxis = base.rangeAxis;
     this.rangeManhattan = base.rangeManhattan;
@@ -115,7 +104,7 @@ export default class Gem extends BaseObject<Game> {
     
     this.sprite = this.game.random.integer(0, this.sprites.length - 1);
     
-    this.grid.setBlock(this.pos, 'gem');
+    this.game.grid.setBlock(this.pos, 'gem');
     
     this.handle(this.game, 'update', this.check, 90);
     
@@ -124,7 +113,7 @@ export default class Gem extends BaseObject<Game> {
   }
   
   check(evt: Event) {
-    if (!this.grid.getBlock(this.pos)) {
+    if (!this.game.grid.getBlock(this.pos)) {
       this.collect();
     }
   }
@@ -139,9 +128,9 @@ export default class Gem extends BaseObject<Game> {
         if (Vector2.new(i, j).manhattan() > rm) {
           continue;
         }
-        const col = this.collide.get(pos);
-        if (col && col === this.grid) {
-          this.grid.setBlock(pos, false, 0.1, 'gem');
+        const col = this.game.collide.get(pos);
+        if (col && col === this.game.grid) {
+          this.game.grid.setBlock(pos, false, 0.1, 'gem');
         } else if (col && col.hurt) {
           col.hurt({ pos: pos, cause: 'gem' });
         }
@@ -164,6 +153,6 @@ export default class Gem extends BaseObject<Game> {
   }
   
   render(evt: Event) {
-    Render.sprite(evt.data.context, this.sprites[this.sprite], this.grid.getPos(this.pos));
+    Render.sprite(evt.data.context, this.sprites[this.sprite], this.game.grid.getPos(this.pos));
   }
 };

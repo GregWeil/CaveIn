@@ -7,10 +7,7 @@ import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
 import { Event } from '../engine/events';
-
 import Game from './game';
-import Grid from './grid';
-import Collide from './collide';
 
 const dimensions = new Vector2(16);
 const spritesheet = document.getElementById('spritesheet') as HTMLImageElement;
@@ -29,30 +26,24 @@ const audioStep = new Howl({ src: ['/assets/enemy_move.wav'] });
 let audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject<Game> {
-  private grid: Grid;
-  private collide: Collide;
-  
   pos: Vector2;
   sprite: number;
   
   constructor(game: Game, pos: Vector2, sprite: number) {
     super(game);
     
-    this.grid = game.grid;
-    this.collide = game.collide;
-    
     this.pos = pos;
     this.sprite = sprite;
     
-    this.grid.setBlock(this.pos, 'ghost');
-    this.collide.add(this.pos, this);
+    this.game.grid.setBlock(this.pos, 'ghost');
+    this.game.collide.add(this.pos, this);
     
     this.handle(this.game, 'anim-idle', this.anim);
     this.handle(this.game, 'render', this.render);
   }
   
   destroy(displayTime: number) {
-    this.collide.remove(this.pos, this);
+    this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
   
@@ -68,7 +59,7 @@ class EnemyGhost extends BaseObject<Game> {
   }
   
   render(evt: Event) {
-    Render.sprite(evt.data.context, ghostSprites[this.sprite], this.grid.getPos(this.pos));
+    Render.sprite(evt.data.context, ghostSprites[this.sprite], this.game.grid.getPos(this.pos));
   }
 }
 
@@ -94,10 +85,6 @@ export default class Enemy extends BaseObject<Game> {
     return game.create(Enemy, pos, ai);
   }
   
-  private storedGame: Game;
-  private grid: Grid;
-  private collide: Collide;
-  
   pos: Vector2;
   posLast: Vector2;
   movement: Vector2;
@@ -109,17 +96,13 @@ export default class Enemy extends BaseObject<Game> {
   constructor(game: Game, pos: Vector2, pathfind: any) {
     super(game);
     
-    this.storedGame = game;
-    this.grid = game.grid;
-    this.collide = game.collide;
-    
     this.pos = pos.copy();
     this.posLast = this.pos.copy();
     this.movement = new Vector2();
     this.moveTimer = 1;
     this.ai = pathfind;
     
-    this.collide.add(this.pos, this);
+    this.game.collide.add(this.pos, this);
     
     this.sprite = this.game.random.integer(0, sprites.length - 1);
     
@@ -132,7 +115,7 @@ export default class Enemy extends BaseObject<Game> {
   }
   
   destroy(displayTime: number) {
-    this.collide.remove(this.pos, this);
+    this.game.collide.remove(this.pos, this);
     super.destroy(displayTime);
   }
   
@@ -142,7 +125,7 @@ export default class Enemy extends BaseObject<Game> {
       this.moveTimer = 2;
       this.movement = this.ai(this.pos);
       const newPos = this.pos.plus(this.movement);
-      if (!this.grid.accessible(newPos)) {
+      if (!this.game.grid.accessible(newPos)) {
         this.movement = new Vector2();
       }
     }
@@ -153,11 +136,11 @@ export default class Enemy extends BaseObject<Game> {
     //Pick a random direction to go
     this.posLast = this.pos.copy();
     const newPos = this.pos.plus(this.movement);
-    if (this.grid.accessible(newPos)) {
-      if (!this.collide.get(newPos, { type: Enemy })) {
+    if (this.game.grid.accessible(newPos)) {
+      if (!this.game.collide.get(newPos, { type: Enemy })) {
         this.pos = newPos;
         audioStepRequests += 1;
-        this.collide.move(this.posLast, this.pos, this);
+        this.game.collide.move(this.posLast, this.pos, this);
       }
     }
   }
@@ -165,10 +148,10 @@ export default class Enemy extends BaseObject<Game> {
   hurt(data: { pos: Vector2, cause: string, delay?: number }) {
     if (this.pos.equals(data.pos)) {
       if (data.cause !== 'gem') {
-        this.grid.setBlock(this.pos, true, 0.3);
+        this.game.grid.setBlock(this.pos, true, 0.3);
       }
       if (data.cause === 'grid') {
-        this.storedGame.create(EnemyGhost, this.pos, this.sprite);
+        this.game.create(EnemyGhost, this.pos, this.sprite);
       }
       this.game.destroy(this, data.delay||0);
     }
@@ -192,6 +175,6 @@ export default class Enemy extends BaseObject<Game> {
     if (evt.data.time < 0.05) {
       displayPos = this.pos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite(evt.data.context, sprites[this.sprite], this.grid.getPos(displayPos));
+    Render.sprite(evt.data.context, sprites[this.sprite], this.game.grid.getPos(displayPos));
   }
 };
