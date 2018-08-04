@@ -10,7 +10,7 @@ import Collide from './collide';
 import { ScreenColors } from './colors';
 const Pathfind = require('./pathfind');
 import Player from './player';
-import Enemy = require('./enemy');
+import Enemy from './enemy';
 import Gem from './gem';
 import Score from './score';
 
@@ -80,7 +80,7 @@ export default class Game extends Engine {
     
     this.on('grid-change', evt => {
       if (evt.data.from && !evt.data.to && evt.data.cause !== 'gem') {
-        Enemy.spawn(this, this.grid, player.pos, enemyAI);
+        Enemy.spawn(this, player.pos, enemyAI);
       }
     });
     
