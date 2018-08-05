@@ -15,14 +15,16 @@ export class Event {
 
 export class Handler {
   active: boolean;
+  source: any;
   type: string;
   func: (evt: Event) => void;
   priority: number;
   funcName: string;
   
-  constructor(name: string, func: (evt: Event) => void, priority?: number, ctx?: object) {
+  constructor(source: any, name: string, func: (evt: Event) => void, priority?: number, ctx?: object) {
     this.active = true;
     
+    this.source = source;
     this.type = name;
     this.func = ctx ? func.bind(ctx) : func;
     this.priority = priority || 0;
@@ -57,7 +59,7 @@ export class EventEmitter {
   }
   
   on(name: string, func: (evt: Event) => void, ctx?: object, priority?: number): Handler {
-    const handler = new Handler(name, func, priority, ctx);
+    const handler = new Handler(this, name, func, priority, ctx);
     
     let handlers = this.handlers[handler.type] || [];
     let index = handlers.findIndex(h => h.priority > handler.priority);
@@ -87,8 +89,8 @@ export class Emitter<T> {
     return event;
   }
   
-  listen(func: (evt: Event) => void, priority: number) {
-    const handler = new Handler('', func, priority);
+  listen(func: (evt: Event) => void, priority?: number) {
+    const handler = new Handler(this, '', func, priority);
     
     let index = this.handlers.findIndex(h => h.priority > handler.priority);
     if (index < 0) index = this.handlers.length;

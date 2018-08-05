@@ -23,7 +23,7 @@ export default class BaseObject<Game extends Engine> {
       const data = handlers[i];
       //Things render for a little after they die
       //It looks better when you move into an attack
-      if (data.type !== 'render') {
+      if (data.source !== this.game.onRender) {
         this.unhandle(data);
       }
     }
@@ -36,11 +36,11 @@ export default class BaseObject<Game extends Engine> {
   }
   
   protected handle(emitter: EventEmitter, name: string, func: (e: Event) => void, priority?: number) {
-    this.handlers.push(emitter.on(name, func, priority));
+    this.handlers.push(emitter.on(name, func, this, priority));
   }
   
-  protected listen<T>(emitter: Emitter<T>, name: string, func: (e: Event) => void, priority?: number) {
-    this.handlers.push(emitter.listen(name, func, priority));
+  protected listen<T>(emitter: Emitter<T>, func: (e: Event) => void, priority?: number) {
+    this.handlers.push(emitter.listen(func, priority));
   }
   
   protected unhandle(handler: Handler) {
