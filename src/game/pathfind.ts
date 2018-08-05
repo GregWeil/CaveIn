@@ -4,7 +4,6 @@
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import { Event } from '../engine/events';
 
 import Game from './game';
 import Grid from './grid';
@@ -31,7 +30,7 @@ export default class Pathfind extends BaseObject<Game> {
     
     this.paths = {};
     
-    this.handle(this.game, 'update', this.invalidate, -Infinity);
+    this.listen(this.game.onUpdate, evt => this.invalidate(), -Infinity);
     //this.listen(this.game.onRender, evt => this.render(evt.data.context), 5000);
   }
   

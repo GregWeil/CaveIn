@@ -22,17 +22,17 @@ export default class Score extends BaseObject<Game> {
     
     this.popups = [];
     
-    this.handle(this.game, 'update', this.update, -Infinity);
+    this.listen(this.game.onUpdate, evt => this.update(evt.data.time), -Infinity);
     this.handle(this.game, 'score', this.score);
     this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), 900);
   }
   
-  update(evt: Event) {
+  update(time: number) {
     if (this.popups.length) {
       const kept = [];
       for (var i = 0; i < this.popups.length; ++i) {
         const popup = this.popups[i];
-        popup.time -= evt.data.time;
+        popup.time -= time;
         popup.delay = 0;
         if (popup.time >= Math.max(popup.delay, 0)) {
           kept.push(popup);

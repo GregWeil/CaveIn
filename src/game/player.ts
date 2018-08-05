@@ -6,7 +6,6 @@ import { Howl } from 'howler';
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import { Event } from '../engine/events';
 
 import Game from './game';
 
@@ -49,9 +48,9 @@ export default class Player extends BaseObject<Game> {
     
     this.listen(this.game.onCommandCheck, evt => this.acceptCommand(evt.data));
     
-    this.handle(this.game, 'update', this.updateEarly, -10);
-    this.handle(this.game, 'update', this.update);
-    this.handle(this.game, 'update', this.updateLate, 10);
+    this.listen(this.game.onUpdate, evt => this.updateEarly(evt.data.command), -10);
+    this.listen(this.game.onUpdate, evt => this.update(evt.data.command));
+    this.listen(this.game.onUpdate, evt => this.updateLate(evt.data.command), 10);
     
     this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
   }
@@ -102,23 +101,23 @@ export default class Player extends BaseObject<Game> {
     }
   }
   
-  updateEarly(evt: Event) {
+  updateEarly(command: string) {
     this.attackHit = false;
-    if (evt.data.command === 'action') {
+    if (command === 'action') {
       this.attack();
     }
   }
   
-  update(evt: Event) {
+  update(command: string) {
     let moving = false;
     this.attacking = false;
     this.posLast = this.pos.copy();
-    switch (evt.data.command) {
+    switch (command) {
       case 'up':
       case 'down':
       case 'left':
       case 'right':
-        this.facing = evt.data.command;
+        this.facing = command;
         this.pos = this.pos.plus(this.getFacingDirection());
         moving = true;
         break;
@@ -136,11 +135,11 @@ export default class Player extends BaseObject<Game> {
     this.game.collide.move(this.posLast, this.pos, this);
   }
   
-  updateLate(evt: Event) {
+  updateLate(command: string) {
     //If something else is on this space, get hurt
     if (this.game.collide.get(this.pos, { ignore: [this] })) {
       this.hurt({ cause: 'collision' });
-    } else if (evt.data.command === 'action' && !this.attackHit) {
+    } else if (command === 'action' && !this.attackHit) {
       this.attack();
     }
   }

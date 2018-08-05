@@ -4,7 +4,6 @@
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import { Event } from '../engine/events';
 import Game from './game';
 
 export default class Grid extends BaseObject<Game> {
@@ -31,7 +30,7 @@ export default class Grid extends BaseObject<Game> {
     
     this.delayBlocks = {};
     
-    this.handle(this.game, 'update', this.update, -Infinity);
+    this.listen(this.game.onUpdate, evt => this.update(), -Infinity);
     this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), -100);
   }
   
@@ -109,7 +108,7 @@ export default class Grid extends BaseObject<Game> {
     }
   }
   
-  update(evt: Event) {
+  update() {
     this.delayBlocks = {};
   }
   

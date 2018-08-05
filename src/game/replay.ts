@@ -122,9 +122,9 @@ export default class Replay {
   record(game: Game, callback: (replay: Replay, game: Game) => void) {
     callback(this, game);
 
-    game.on('update', evt => {
+    game.onUpdate.listen(evt => {
       this.commands.push(evt.data.command);
-    }, undefined, -Infinity);
+    }, -Infinity);
 
     game.on('score', evt => {
       this.score = game.score;
@@ -134,9 +134,9 @@ export default class Replay {
       this.alive = false;
     }, undefined, Infinity);
 
-    game.on('update', evt => {
+    game.onUpdate.listen(evt => {
       callback(this, game);
-    }, undefined, Infinity);
+    }, Infinity);
   }
   
   serialize(): string {
