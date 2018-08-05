@@ -26,8 +26,8 @@ const audioStep = new Howl({ src: ['/assets/enemy_move.wav'] });
 let audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject<Game> {
-  pos: Vector2;
-  sprite: number;
+  private pos: Vector2;
+  private sprite: number;
   
   constructor(game: Game, pos: Vector2, sprite: number) {
     super(game);
@@ -89,13 +89,13 @@ export default class Enemy extends BaseObject<Game> {
     return game.create(Enemy, pos, ai);
   }
   
-  pos: Vector2;
-  posLast: Vector2;
-  movement: Vector2;
-  moveTimer: number;
-  ai: Pathfinder;
+  private pos: Vector2;
+  private posLast: Vector2;
+  private movement: Vector2;
+  private moveTimer: number;
+  private ai: Pathfinder;
   
-  sprite: number;
+  private sprite: number;
   
   constructor(game: Game, pos: Vector2, pathfind: Pathfinder) {
     super(game);

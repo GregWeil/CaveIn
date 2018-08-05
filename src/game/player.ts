@@ -9,7 +9,6 @@ import BaseObject from '../engine/object';
 import { Event } from '../engine/events';
 
 import Game from './game';
-const Enemy = require('./enemy');
 
 const dimensions = new Vector2(16);
 const spritesheet = document.getElementById('spritesheet') as HTMLImageElement;

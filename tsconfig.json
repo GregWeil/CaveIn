@@ -3,9 +3,8 @@
   "compilerOptions": {
     "outDir": "bin/",
     "baseUrl": "src/",
-    "target": "es2017",
+    "target": "esnext",
     "module": "commonjs",
-    "strict": true,
-    "allowJs": true
+    "strict": true
   }
 }
