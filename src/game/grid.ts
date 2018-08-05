@@ -32,7 +32,7 @@ export default class Grid extends BaseObject<Game> {
     this.delayBlocks = {};
     
     this.handle(this.game, 'update', this.update, -Infinity);
-    this.handle(this.game, 'render', this.render, -100);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), -100);
   }
   
   destroy(displayTime: number) {
@@ -121,9 +121,7 @@ export default class Grid extends BaseObject<Game> {
     return drawBlock;
   }
   
-  render(evt: Event) {
-    const ctx = evt.data.context;
-    
+  render(ctx: CanvasRenderingContext2D, time: number) {
     //Fill in background
     ctx.fillStyle = 'black';
     Render.rect(ctx, this.getPos(-0.5), this.gridSize.multiply(this.cellSize));
@@ -132,7 +130,7 @@ export default class Grid extends BaseObject<Game> {
     ctx.fillStyle = 'white';
     for (let i = 0; i < this.gridSize.x; ++i) {
       for (let j = 0; j < this.gridSize.y; ++j) {
-        if (this.getBlockVisible(new Vector2(i, j), evt.data.time)) {
+        if (this.getBlockVisible(new Vector2(i, j), time)) {
           Render.rect(ctx, this.getPos(i, j).minus(this.cellSize.multiply(0.5)), this.cellSize);
         }
       }

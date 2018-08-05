@@ -12,10 +12,8 @@ const client = new Promise((resolve, reject) => {
   browserify('bin/client/main.js').bundle((err, data) => {
     if (err) {
       console.error(err);
-      console.log(data);
-    } else {
-      resolve(data);
     }
+    resolve(data);
   });
 });
 app.use('/client.js', async (req, res) => res.send(await client));
