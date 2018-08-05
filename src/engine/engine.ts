@@ -22,6 +22,7 @@ export default class Engine extends EventEmitter {
   updateTime: number;
   objects: BaseObject<this>[];
   
+  public onCommandCheck: Emitter<{command: string, accept: boolean}>;
   public onRender: Emitter<{context: CanvasRenderingContext2D, time: number}>;
   
   constructor(config: any) {
@@ -42,6 +43,7 @@ export default class Engine extends EventEmitter {
     this.updateTime = performance.now();
     this.objects = [];
     
+    this.onCommandCheck = new Emitter();
     this.onRender = new Emitter();
     
     if (!this.headless) {
@@ -68,7 +70,7 @@ export default class Engine extends EventEmitter {
   }
   
   commandCheck(command: string) {
-    return this.emit('command-check', {
+    return this.onCommandCheck.emit({
       command: command,
       accept: false
     }).data.accept;

@@ -47,7 +47,7 @@ export default class Player extends BaseObject<Game> {
     this.attacking = false;
     this.attackHit = false;
     
-    this.handle(this.game, 'command-check', this.acceptCommand);
+    this.listen(this.game.onCommandCheck, evt => this.acceptCommand(evt.data));
     
     this.handle(this.game, 'update', this.updateEarly, -10);
     this.handle(this.game, 'update', this.update);
@@ -96,7 +96,7 @@ export default class Player extends BaseObject<Game> {
     }
   }
   
-  acceptCommand(evt: Event) {
+  acceptCommand(data: {command:) {
     if (['up', 'down', 'left', 'right', 'action'].includes(evt.data.command)) {
       evt.data.accept = true;
     }
