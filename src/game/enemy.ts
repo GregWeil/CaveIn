@@ -63,8 +63,12 @@ class EnemyGhost extends BaseObject<Game> {
   }
 }
 
+interface Pathfinder {
+  (pos: Vector2) => Vector2;
+}
+
 export default class Enemy extends BaseObject<Game> {
-  static spawn(game: Game, avoid: Vector2, ai: any) {
+  static spawn(game: Game, avoid: Vector2, ai: Pathfinder) {
     //Take the farthest accessible point
     let locations: Vector2[] = [];
     let distance = -Infinity;
@@ -89,11 +93,11 @@ export default class Enemy extends BaseObject<Game> {
   posLast: Vector2;
   movement: Vector2;
   moveTimer: number;
-  ai: any;
+  ai: Pathfinder;
   
   sprite: number;
   
-  constructor(game: Game, pos: Vector2, pathfind: any) {
+  constructor(game: Game, pos: Vector2, pathfind: Pathfinder) {
     super(game);
     
     this.pos = pos.copy();

@@ -43,7 +43,7 @@ export default class Pathfind extends BaseObject<Game> {
     const distances = this.getDistanceField(goal);
     const adjacent = getAdjacent(pos);
     let distance = Infinity;
-    let choices = [];
+    let choices: Vector2[] = [];
     for (let i = 0; i < adjacent.length; ++i) {
       const dist = this.getDistance(adjacent[i], goal);
       if (dist === distance) {
@@ -79,7 +79,7 @@ export default class Pathfind extends BaseObject<Game> {
       const queue = getAdjacent(goal);
       
       while (queue.length) {
-        const pos = queue.shift();
+        const pos = queue.shift()!;
         if (!this.game.grid.accessible(pos)) continue;
         const adjacent = getAdjacent(pos);
         
@@ -111,8 +111,8 @@ export default class Pathfind extends BaseObject<Game> {
       const distance = this.paths[targets[index]];
       for (let i = 0; i < this.game.grid.gridSize.x; ++i) {
         for (let j = 0; j < this.game.grid.gridSize.y; ++j) {
-          const display = distance[i][j] < Infinity ? distance[i][j] : '∞';
-          Render.text(evt.data.context, display, this.game.grid.getX(i), this.game.grid.getY(j));
+          const display = distance[i][j] < Infinity ? distance[i][j].toString() : '∞';
+          Render.text(evt.data.context, display, this.game.grid.getPos(i, j));
         }
       }
     }
