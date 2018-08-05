@@ -11,7 +11,8 @@ const app = express();
 const client = new Promise((resolve, reject) => {
   browserify('bin/client/main.js').bundle((err, data) => {
     if (err) {
-      reject(err);
+      console.error(err);
+      console.log(data);
     } else {
       resolve(data);
     }

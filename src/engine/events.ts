@@ -69,15 +69,15 @@ export class EventEmitter {
   }
 }
 
-export class Emitter {
+export class Emitter<T> {
   private handlers: Handler[];
   
   constructor() {
     this.handlers = [];
   }
   
-  emit(data?: any) {
-    const event = new Event(data || {});
+  emit(data: T) {
+    const event = new Event(data);
     
     this.handlers = this.handlers.filter(h => h.active);
     for (let i = 0; i < this.handlers.length; ++i) {

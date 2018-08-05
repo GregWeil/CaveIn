@@ -4,7 +4,7 @@
 import { Howl } from 'howler';
 import * as Random from 'random-js';
 
-import { EventEmitter } from './events';
+import { Emitter, EventEmitter } from './events';
 import Vector2 from './vector2';
 import BaseObject from './object';
 
@@ -21,6 +21,8 @@ export default class Engine extends EventEmitter {
   
   updateTime: number;
   objects: BaseObject<this>[];
+  
+  public onRender: Emitter<{context: CanvasRenderingContext2D, time: number}>;
   
   constructor(config: any) {
     super();
@@ -39,6 +41,8 @@ export default class Engine extends EventEmitter {
     
     this.updateTime = performance.now();
     this.objects = [];
+    
+    this.onRender = new Emitter();
     
     if (!this.headless) {
       this.render();
@@ -78,7 +82,7 @@ export default class Engine extends EventEmitter {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
     //Draw everything
-    this.emit('render', {
+    this.onRender.emit({
       context: this.ctx,
       time: (performance.now() - this.updateTime) / 1000
     });
