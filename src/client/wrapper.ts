@@ -29,7 +29,7 @@ function resize() {
   } else if (scale < 1) {
     scale = (1 / Math.ceil(1 / scale));
   }
-  canvas.style.transform = ('scale(' + (scale / pixel) + ')');
+  canvas.style.transform = `scale(${scale / pixel})`;
 }
 window.addEventListener('resize', () => {
   if (activeGame) resize();
@@ -90,11 +90,11 @@ export async function createPlayable() {
   });
   resize();
   
-  game.on('command-check', evt => {
+  game.onCommandCheck.listen(evt => {
     if (overlayCurrent) {
       evt.data.accept = false;
     }
-  }, undefined, Infinity);
+  }, Infinity);
   
   game.on('player-died', () => {
     setTimeout(() => overlay('game-over'), 1000);
@@ -143,9 +143,9 @@ export async function createPlayable() {
       'left', null, 'up', null
     ], 'action'),
   ]);
-  activeInput.on('command', evt => {
-    if (game.commandCheck(evt.data.command)) {
-      game.update(evt.data.command);
+  activeInput.listen(evt => {
+    if (game.commandCheck(evt.data)) {
+      game.update(evt.data);
     }
   });
 }

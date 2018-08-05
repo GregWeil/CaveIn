@@ -105,7 +105,7 @@ export default class Gem extends BaseObject<Game> {
     
     this.game.grid.setBlock(this.pos, 'gem');
     
-    this.handle(this.game, 'update', this.check, 90);
+    this.listen(this.game.onUpdate, evt => this.check(, 90);
     
     this.handle(this.game, 'anim-idle', this.anim);
     this.listen(this.game.onRender, evt => this.render(evt.data.context));

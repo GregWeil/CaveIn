@@ -23,6 +23,7 @@ export default class Engine extends EventEmitter {
   objects: BaseObject<this>[];
   
   public onCommandCheck: Emitter<{command: string, accept: boolean}>;
+  public onUpdate: Emitter<{command: string, time: number}>
   public onRender: Emitter<{context: CanvasRenderingContext2D, time: number}>;
   
   constructor(config: any) {
@@ -44,6 +45,7 @@ export default class Engine extends EventEmitter {
     this.objects = [];
     
     this.onCommandCheck = new Emitter();
+    this.onUpdate = new Emitter();
     this.onRender = new Emitter();
     
     if (!this.headless) {
@@ -61,7 +63,7 @@ export default class Engine extends EventEmitter {
   update(command: string) {
     const dt = (performance.now() - this.updateTime) / 1000;
     
-    this.emit('update', {
+    this.onUpdate.emit({
       command: command,
       time: dt
     });

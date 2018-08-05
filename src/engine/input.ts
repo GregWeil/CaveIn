@@ -2,9 +2,9 @@
 //Take player input and send it to the game
 
 import Vector2 from './vector2';
-import { EventEmitter } from './events';
+import { Emitter } from './events';
 
-export abstract class Input extends EventEmitter {
+export abstract class Input extends Emitter<string> {
   constructor() {
     super();
   }
@@ -13,7 +13,7 @@ export abstract class Input extends EventEmitter {
   }
   
   protected command(cmd: string) {
-    this.emit('command', { command: cmd });
+    this.emit(cmd);
   }
 }
 
@@ -25,7 +25,7 @@ class InputWrapper extends Input {
     
     this.inputs = inputs;
     this.inputs.forEach(input => {
-      input.on('command', evt => this.command(evt.data.command));
+      input.listen(evt => this.command(evt.data));
     });
   }
   

@@ -96,9 +96,9 @@ export default class Player extends BaseObject<Game> {
     }
   }
   
-  acceptCommand(data: {command:) {
-    if (['up', 'down', 'left', 'right', 'action'].includes(evt.data.command)) {
-      evt.data.accept = true;
+  acceptCommand(data: { command: string, accept: boolean }) {
+    if (['up', 'down', 'left', 'right', 'action'].includes(data.command)) {
+      data.accept = true;
     }
   }
   

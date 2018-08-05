@@ -110,9 +110,9 @@ export default class Enemy extends BaseObject<Game> {
     
     this.sprite = this.game.random.integer(0, sprites.length - 1);
     
-    this.handle(this.game, 'update', this.pathfind, -100);
-    this.handle(this.game, 'update', this.update);
-    this.handle(this.game, 'update', this.audio, 100);
+    this.listen(this.game.onUpdate, evt => this.pathfind(), -100);
+    this.listen(this.game.onUpdate, evt => this.update());
+    this.listen(this.game.onUpdate, evt => this.audio(), 100);
     
     this.handle(this.game, 'anim-idle', this.anim);
     this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
@@ -123,7 +123,7 @@ export default class Enemy extends BaseObject<Game> {
     super.destroy(displayTime);
   }
   
-  pathfind(evt: Event) {
+  pathfind() {
     this.movement = new Vector2();
     if (this.moveTimer < 1) {
       this.moveTimer = 2;
@@ -136,7 +136,7 @@ export default class Enemy extends BaseObject<Game> {
     this.moveTimer -= 1;
   }
   
-  update(evt: Event) {
+  update() {
     //Pick a random direction to go
     this.posLast = this.pos.copy();
     const newPos = this.pos.plus(this.movement);
@@ -165,7 +165,7 @@ export default class Enemy extends BaseObject<Game> {
     this.sprite = (this.sprite + 1) % sprites.length;
   }
   
-  audio(evt: Event) {
+  audio() {
     if (audioStepRequests > 0) {
       this.game.sound(audioStep, {
         volume: (1 - (1 / (audioStepRequests * 0.5 + 1)))

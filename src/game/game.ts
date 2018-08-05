@@ -86,7 +86,7 @@ export default class Game extends Engine {
     
     //Check if something should collapse
     
-    this.on('update', evt => {
+    this.onUpdate.listen(evt => {
       const distances = pathfind.generateDistanceField(player.pos);
       for (let i = 0; i < this.grid.gridSize.x; ++i) {
         for (let j = 0; j < this.grid.gridSize.y; ++j) {
@@ -104,7 +104,7 @@ export default class Game extends Engine {
           }
         }
       }
-    }, this, 100);
+    }, 100);
     
     //Gem spawning
     
