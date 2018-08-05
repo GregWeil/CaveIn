@@ -6,13 +6,9 @@
 //Unbind handlers by setting hander.active = false
 
 export class Event {
-  source: EventEmitter;
-  type: string;
   data: any;
   
-  constructor(source: EventEmitter, name: string, data: any) {
-    this.source = source;
-    this.type = name;
+  constructor(data: any) {
     this.data = data;
   }
 }
@@ -23,9 +19,8 @@ export class Handler {
   func: (evt: Event) => void;
   priority: number;
   funcName: string;
-  as: object|undefined;
   
-  constructor(name: string, func: (evt: Event) => void, priority: number|undefined, ctx: object|undefined) {
+  constructor(name: string, func: (evt: Event) => void, priority?: number, ctx?: object) {
     this.active = true;
     
     this.type = name;
@@ -33,7 +28,6 @@ export class Handler {
     this.priority = priority || 0;
     
     this.funcName = func.name;
-    this.as = ctx;
   }
   
   handle(event: Event): void {
@@ -49,7 +43,7 @@ export class EventEmitter {
   }
   
   emit(name: string, data?: any): Event {
-    const event = new Event(this, name, data || {});
+    const event = new Event(data || {});
     
     let handlers = this.handlers[name] || [];
     handlers = handlers.filter(handler => handler.active);
@@ -83,4 +77,23 @@ export class Emitter {
   }
   
   emit(data?: any) {
-    const Event = new Event(this, '', data);
+    const event = new Event(data || {});
+    
+    this.handlers = this.handlers.filter(h => h.active);
+    for (let i = 0; i < this.handlers.length; ++i) {
+      this.handlers[i].handle(event);
+    }
+    
+    return event;
+  }
+  
+  listen(func: (evt: Event) => void, priority: number) {
+    const handler = new Handler('', func, priority);
+    
+    let index = this.handlers.findIndex(h => h.priority > handler.priority);
+    if (index < 0) index = this.handlers.length;
+    this.handlers.splice(index, 0, handler);
+    
+    return handler;
+  }
+}
