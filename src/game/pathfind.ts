@@ -1,18 +1,21 @@
-/// pathfind.js
+/// pathfind.ts
 //Construct a grid where each cell has its distance to the player
 
-var Vector2 = require('../engine/vector2').default;
-var Render = require('../engine/render');
-var BaseObject = require('../engine/object').default;
+import Vector2 from '../engine/vector2';
+import * as Render from '../engine/render';
+import BaseObject from '../engine/object';
 
-function getAdjacent(pos) {
+import Game from './game';
+import Grid from './grid';
+
+function getAdjacent(pos: Vector2) {
   return [
     pos.plus(-1, 0), pos.plus(1, 0),
     pos.plus(0, -1), pos.plus(0, 1)
   ];
 }
 
-function getDistance(grid, distances, from) {
+function getDistance(grid: Grid, distances: number[][], from) {
   if (!grid.inBounds(from)) {
     return Infinity;
   }
