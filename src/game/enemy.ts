@@ -64,7 +64,7 @@ class EnemyGhost extends BaseObject<Game> {
 }
 
 interface Pathfinder {
-  (pos: Vector2) => Vector2;
+  (pos: Vector2): Vector2;
 }
 
 export default class Enemy extends BaseObject<Game> {
