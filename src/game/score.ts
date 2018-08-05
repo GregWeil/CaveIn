@@ -24,7 +24,7 @@ export default class Score extends BaseObject<Game> {
     
     this.handle(this.game, 'update', this.update, -Infinity);
     this.handle(this.game, 'score', this.score);
-    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time, 900);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), 900);
   }
   
   update(evt: Event) {
@@ -59,7 +59,7 @@ export default class Score extends BaseObject<Game> {
     ctx.font = '16px IdealGarbanzo';
     for (var i = 0; i < this.popups.length; ++i) {
       var popup = this.popups[i];
-      if (evt.data.time < popup.delay || evt.data.time > popup.time) continue;
+      if (time < popup.delay || time > popup.time) continue;
       if (this.game.collide.get(popup.pos)) continue;
       Render.text(ctx, '+' + popup.score, this.game.grid.getPos(popup.pos));
     }

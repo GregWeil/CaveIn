@@ -53,7 +53,7 @@ export default class Player extends BaseObject<Game> {
     this.handle(this.game, 'update', this.update);
     this.handle(this.game, 'update', this.updateLate, 10);
     
-    this.handle(this.game, 'render', this.render);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
   }
   
   destroy(displayTime: number) {
@@ -145,17 +145,17 @@ export default class Player extends BaseObject<Game> {
     }
   }
   
-  render(evt: Event) {
+  render(context: CanvasRenderingContext2D, time: number) {
     let displayPos = this.pos;
-    if (evt.data.time < 0.05) {
+    if (time < 0.05) {
       displayPos = displayPos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite(evt.data.context, `player-${this.facing}`, this.game.grid.getPos(displayPos));
-    if (this.attacking && (evt.data.time < 0.3)) {
+    Render.sprite(context, `player-${this.facing}`, this.game.grid.getPos(displayPos));
+    if (this.attacking && (time < 0.3)) {
       const axePos = this.pos.plus(this.getFacingDirection());
-      const dark = this.game.grid.getBlockVisible(axePos, evt.data.time) ? '-dark' : '';
-      const swing = (this.attackHit && evt.data.time < 0.1) ? '-hit' : '-swing';
-      Render.sprite(evt.data.context, 'pickaxe' + dark + swing,
+      const dark = this.game.grid.getBlockVisible(axePos, time) ? '-dark' : '';
+      const swing = (this.attackHit && time < 0.1) ? '-hit' : '-swing';
+      Render.sprite(context, 'pickaxe' + dark + swing,
         this.game.grid.getPos(displayPos.plus(this.getFacingDirection())),
         this.getFacingDirection().angle() - (Math.PI / 2));
     }
