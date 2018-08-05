@@ -25,18 +25,18 @@ export default class Collide extends BaseObject<Game> {
     
     this.collisions = {};
     
-    //this.handle(this.game, 'render', this.render, Infinity);
+    //this.listen(this.game.onRender, evt => this.render(evt.data.context), Infinity);
   }
   
-  render(evt: Event) {
-    evt.data.context.fillStyle = 'red';
-    evt.data.context.textAlign = 'center';
-    evt.data.context.textBaseline = 'middle';
+  render(context: CanvasRenderingContext2D) {
+    context.fillStyle = 'red';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
     for (let i = 0; i < this.game.grid.gridSize.x; ++i) {
       for (let j = 0; j < this.game.grid.gridSize.y; ++j) {
         const data = this.getData(Vector2.new(i, j).hash());
         if (data.length) {
-          Render.text(evt.data.context, data[0].priority.toString(), this.game.grid.getPos(i, j));
+          Render.text(context, data[0].priority.toString(), this.game.grid.getPos(i, j));
         }
       }
     }

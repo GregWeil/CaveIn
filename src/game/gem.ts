@@ -3,7 +3,6 @@
 
 import { Howl } from 'howler';
 
-import {Event} from '../engine/events';
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
@@ -109,10 +108,10 @@ export default class Gem extends BaseObject<Game> {
     this.handle(this.game, 'update', this.check, 90);
     
     this.handle(this.game, 'anim-idle', this.anim);
-    this.handle(this.game, 'render', this.render);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context));
   }
   
-  check(evt: Event) {
+  check() {
     if (!this.game.grid.getBlock(this.pos)) {
       this.collect();
     }
@@ -148,11 +147,11 @@ export default class Gem extends BaseObject<Game> {
     this.game.destroy(this, 0);
   }
   
-  anim(evt: Event) {
+  anim() {
     this.sprite = (this.sprite + 1) % this.sprites.length;
   }
   
-  render(evt: Event) {
-    Render.sprite(evt.data.context, this.sprites[this.sprite], this.game.grid.getPos(this.pos));
+  render(context: CanvasRenderingContext2D) {
+    Render.sprite(context, this.sprites[this.sprite], this.game.grid.getPos(this.pos));
   }
 };

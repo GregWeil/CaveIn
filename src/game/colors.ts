@@ -5,7 +5,6 @@
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import { Event } from '../engine/events';
 import Game from './game';
 
 const colors = [
@@ -31,19 +30,19 @@ export class GridColors extends BaseObject<Game> {
       this.colors.push(array);
     }
     
-    this.handle(this.game, 'render', this.render, 1000);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context), 1000);
   }
   
-  render(evt: Event) {
-    evt.data.context.globalCompositeOperation = 'multiply';
+  render(context: CanvasRenderingContext2D) {
+    context.globalCompositeOperation = 'multiply';
     for (let i = -this.padding; i < this.game.grid.gridSize.x + this.padding; ++i) {
       for (let j = -this.padding; j < this.game.grid.gridSize.y + this.padding; ++j) {
-        evt.data.context.fillStyle = this.colors[i+this.padding][j+this.padding];
+        context.fillStyle = this.colors[i+this.padding][j+this.padding];
         const pos = this.game.grid.getPos(i, j).minus(this.game.grid.cellSize.multiply(0.5));
-        Render.rect(evt.data.context, pos, this.game.grid.cellSize);
+        Render.rect(context, pos, this.game.grid.cellSize);
       }
     }
-    evt.data.context.globalCompositeOperation = 'source-over';
+    context.globalCompositeOperation = 'source-over';
   }
 }
 
@@ -55,14 +54,15 @@ export class ScreenColors extends BaseObject<Game> {
     
     this.color = this.game.random.pick(colors);
     
-    this.handle(this.game, 'render', this.render, 1000);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context), 1000);
   }
   
-  render(evt: Event) {
-    evt.data.context.globalCompositeOperation = 'multiply';
-    evt.data.context.fillStyle = this.color;
-    Render.rect(evt.data.context, new Vector2(),
-      new Vector2(evt.data.context.canvas.width, evt.data.context.canvas.height));
-    evt.data.context.globalCompositeOperation = 'source-over';
+  render(context: CanvasRenderingContext2D) {
+    context.globalCompositeOperation = 'multiply';
+    context.fillStyle = this.color;
+    Render.rect(context, new Vector2(),
+      new Vector2(context.canvas.width, context.canvas.height)
+    );
+    context.globalCompositeOperation = 'source-over';
   }
 }

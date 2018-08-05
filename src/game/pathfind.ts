@@ -32,7 +32,7 @@ export default class Pathfind extends BaseObject<Game> {
     this.paths = {};
     
     this.handle(this.game, 'update', this.invalidate, -Infinity);
-    //this.handle(this.game, 'render', this.render, 5000);
+    //this.listen(this.game.onRender, evt => this.render(evt.data.context), 5000);
   }
   
   getNextStep(pos: Vector2, goal: Vector2) {
@@ -102,19 +102,19 @@ export default class Pathfind extends BaseObject<Game> {
     this.paths = {};
   }
   
-  render(evt: Event) {
-    evt.data.context.fillStyle = 'red';
-    evt.data.context.textAlign = 'center';
-    evt.data.context.textBaseline = 'middle';
+  render(context: CanvasRenderingContext2D) {
+    context.fillStyle = 'red';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
     const targets = Object.keys(this.paths);
     for (let index = 0; index < targets.length; ++index) {
       const distance = this.paths[targets[index]];
       for (let i = 0; i < this.game.grid.gridSize.x; ++i) {
         for (let j = 0; j < this.game.grid.gridSize.y; ++j) {
           const display = distance[i][j] < Infinity ? distance[i][j].toString() : '∞';
-          Render.text(evt.data.context, display, this.game.grid.getPos(i, j));
+          Render.text(context, display, this.game.grid.getPos(i, j));
         }
       }
     }
   }
-};
+}

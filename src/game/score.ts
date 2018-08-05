@@ -24,7 +24,7 @@ export default class Score extends BaseObject<Game> {
     
     this.handle(this.game, 'update', this.update, -Infinity);
     this.handle(this.game, 'score', this.score);
-    this.handle(this.game, 'render', this.render, 900);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time, 900);
   }
   
   update(evt: Event) {
@@ -52,8 +52,7 @@ export default class Score extends BaseObject<Game> {
     }
   }
   
-  render(evt: Event) {
-    const ctx = evt.data.context as CanvasRenderingContext2D;
+  render(ctx: CanvasRenderingContext2D, time: number) {
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';

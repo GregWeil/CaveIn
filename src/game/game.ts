@@ -123,7 +123,7 @@ export default class Game extends Engine {
       this.score += evt.data.score;
     });
     
-    this.on('render', evt => {
+    this.onRender.listen(evt => {
       evt.data.context.fillStyle = 'white';
       evt.data.context.textAlign = 'left';
       evt.data.context.textBaseline = 'middle';
@@ -136,7 +136,7 @@ export default class Game extends Engine {
           this.best >= this.score ? 'BEST: ' + this.best : 'NEW BEST',
           this.canvas.width - 7, 12);
       }
-    }, undefined, 900);
+    }, 900);
   }
   
   //Cleanup

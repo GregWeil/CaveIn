@@ -39,7 +39,7 @@ class EnemyGhost extends BaseObject<Game> {
     this.game.collide.add(this.pos, this);
     
     this.handle(this.game, 'anim-idle', this.anim);
-    this.handle(this.game, 'render', this.render);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context));
   }
   
   destroy(displayTime: number) {
@@ -58,8 +58,8 @@ class EnemyGhost extends BaseObject<Game> {
     this.sprite = (this.sprite + 1) % ghostSprites.length;
   }
   
-  render(evt: Event) {
-    Render.sprite(evt.data.context, ghostSprites[this.sprite], this.game.grid.getPos(this.pos));
+  render(context: CanvasRenderingContext2D) {
+    Render.sprite(context, ghostSprites[this.sprite], this.game.grid.getPos(this.pos));
   }
 }
 
@@ -115,7 +115,7 @@ export default class Enemy extends BaseObject<Game> {
     this.handle(this.game, 'update', this.audio, 100);
     
     this.handle(this.game, 'anim-idle', this.anim);
-    this.handle(this.game, 'render', this.render);
+    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
   }
   
   destroy(displayTime: number) {
@@ -174,11 +174,11 @@ export default class Enemy extends BaseObject<Game> {
     }
   }
   
-  render(evt: Event) {
+  render(context: CanvasRenderingContext2D, time: number) {
     var displayPos = this.pos;
-    if (evt.data.time < 0.05) {
+    if (time < 0.05) {
       displayPos = this.pos.plus(this.posLast).multiply(0.5);
     }
-    Render.sprite(evt.data.context, sprites[this.sprite], this.game.grid.getPos(displayPos));
+    Render.sprite(context, sprites[this.sprite], this.game.grid.getPos(displayPos));
   }
 };
