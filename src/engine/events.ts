@@ -74,3 +74,13 @@ export class EventEmitter {
     return handler;
   }
 }
+
+export class Emitter {
+  private handlers: Handler[];
+  
+  constructor() {
+    this.handlers = [];
+  }
+  
+  emit(data?: any) {
+    const Event = new Event(this, '', data);

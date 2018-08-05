@@ -84,7 +84,7 @@ export default class Engine extends EventEmitter {
     });
     
     //Queue up the next render
-    window.requestAnimationFrame(this.render.bind(this));
+    window.requestAnimationFrame(() => this.render());
   }
   
   sound(asset: Howl, config?: any) {
