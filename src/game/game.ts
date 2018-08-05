@@ -8,7 +8,7 @@ import * as Input from '../engine/input';
 import Grid from './grid';
 import Collide from './collide';
 import { ScreenColors } from './colors';
-const Pathfind = require('./pathfind');
+import Pathfind from './pathfind';
 import Player from './player';
 import Enemy from './enemy';
 import Gem from './gem';
@@ -64,11 +64,11 @@ export default class Game extends Engine {
     
     //Enemy spawning and AI
     
-    const pathfind = this.create(Pathfind, { grid: this.grid }) as any;
+    const pathfind = this.create(Pathfind);
     
     function enemyAI(pos: Vector2) {
       if (player.active) {
-        const choices = pathfind.getNextChoices(pos, player.pos) as Vector2[];
+        const choices = pathfind.getNextChoices(pos, player.pos);
         return random.pick(choices).minus(pos);
       } else {
         return random.pick([

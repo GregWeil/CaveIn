@@ -15,35 +15,36 @@ function getAdjacent(pos: Vector2) {
   ];
 }
 
-function getDistance(grid: Grid, distances: number[][], from) {
+function getDistance(grid: Grid, distances: number[][], from: Vector2) {
   if (!grid.inBounds(from)) {
     return Infinity;
   }
   return distances[from.x][from.y];
 }
 
-module.exports = class Pathfind extends BaseObject {
-  constructor(game, config) {
+export default class Pathfind extends BaseObject<Game> {
+  paths: { [key: string]: number };
+  
+  constructor(game: Game) {
     super(game);
     
-    this.grid = config.grid;
     this.paths = {};
     
     this.handle(this.game, 'update', this.invalidate, -Infinity);
     //this.handle(this.game, 'render', this.render, 5000);
   }
   
-  getNextStep(pos, goal) {
+  getNextStep(pos: Vector2, goal: Vector2) {
     return this.getNextChoices(pos, goal)[0];
   }
   
-  getNextChoices(pos, goal) {
-    var distances = this.getDistanceField(goal);
-    var adjacent = getAdjacent(pos);
-    var distance = Infinity;
-    var choices = [];
+  getNextChoices(pos: Vector2, goal: Vector2) {
+    const distances = this.getDistanceField(goal);
+    const adjacent = getAdjacent(pos);
+    let distance = Infinity;
+    let choices = [];
     for (let i = 0; i < adjacent.length; ++i) {
-      var dist = this.getDistance(adjacent[i], goal);
+      const dist = this.getDistance(adjacent[i], goal);
       if (dist === distance) {
         choices.push(adjacent[i]);
       } else if (dist < distance) {
@@ -54,19 +55,19 @@ module.exports = class Pathfind extends BaseObject {
     return choices;
   }
   
-  getDistance(pos, goal) {
+  getDistance(pos: Vector2, goal: Vector2) {
     return getDistance(this.grid, this.getDistanceField(goal), pos);
   }
   
-  getDistanceField(goal) {
-    var hash = goal.hash();
+  getDistanceField(goal: Vector2) {
+    const hash = goal.hash();
     if (!this.paths[hash]) {
       this.paths[hash] = this.generateDistanceField(goal);
     }
     return this.paths[hash];
   }
   
-  generateDistanceField(goal) {
+  generateDistanceField(goal: Vector2) {
     var distance = Array(this.grid.gridSize.x);
     for (let i = 0; i < this.grid.gridSize.x; ++i) {
       distance[i] = Array(this.grid.gridSize.y).fill(Infinity);
