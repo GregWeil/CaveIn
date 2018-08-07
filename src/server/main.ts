@@ -1,4 +1,4 @@
-// main.ts
+/// main.ts
 // where your node app starts
 
 import * as express from 'express';

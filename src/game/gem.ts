@@ -137,7 +137,7 @@ export default class Gem extends BaseObject<Game> {
     }
     
     this.game.emit('gem-collect');
-    this.game.emit('score', {
+    this.game.onScore.emit({
       score: this.score,
       pos: this.pos
     });

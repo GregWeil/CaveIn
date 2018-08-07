@@ -3,6 +3,7 @@
 
 import Vector2 from '../engine/vector2';
 import Engine from '../engine/engine';
+import { Emitter } from '../engine/events';
 import * as Input from '../engine/input';
 
 import Grid from './grid';
@@ -23,10 +24,14 @@ export default class Game extends Engine {
   
   private animInterval: number;
   
+  onScore: Emitter<{score: number, pos: Vector2}>;
+  
   constructor(config: any) {
     super(config);
     
     const random = this.random;
+    
+    this.onScore = new Emitter();
     
     this.animInterval = window.setInterval(() => {
       this.emit('anim-idle');
@@ -119,7 +124,7 @@ export default class Game extends Engine {
     this.score = 0;
     this.best = config.best || 0;
     
-    this.on('score', evt => {
+    this.onScore.listen(evt => {
       this.score += evt.data.score;
     });
     

@@ -23,7 +23,7 @@ export default class Score extends BaseObject<Game> {
     this.popups = [];
     
     this.listen(this.game.onUpdate, evt => this.update(evt.data.time), -Infinity);
-    this.handle(this.game, 'score', this.score);
+    this.listen(this.game.onScore, evt => this.score(evt.data.score, evt.data.pos));
     this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), 900);
   }
   
@@ -42,14 +42,12 @@ export default class Score extends BaseObject<Game> {
     }
   }
   
-  score(evt: Event) {
-    if (evt.data.pos) {
-      this.popups.push({
-        score: evt.data.score,
-        pos: evt.data.pos,
-        time: 1.2, delay: 0.5
-      });
-    }
+  score(score: number, pos: Vector2) {
+    this.popups.push({
+      score, pos,
+      time: 1.2,
+      delay: 0.5,
+    });
   }
   
   render(ctx: CanvasRenderingContext2D, time: number) {

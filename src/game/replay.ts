@@ -126,9 +126,9 @@ export default class Replay {
       this.commands.push(evt.data.command);
     }, -Infinity);
 
-    game.on('score', evt => {
+    game.onScore.listen(evt => {
       this.score = game.score;
-    }, undefined, Infinity);
+    }, Infinity);
 
     game.on('player-died', evt => {
       this.alive = false;
