@@ -96,7 +96,7 @@ export async function createPlayable() {
     }
   }, Infinity);
   
-  game.on('player-died', () => {
+  game.onPlayerDied.listen(() => {
     setTimeout(() => overlay('game-over'), 1000);
   });
   

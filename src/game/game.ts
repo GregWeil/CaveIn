@@ -25,6 +25,7 @@ export default class Game extends Engine {
   private animInterval: number;
   
   onScore: Emitter<{score: number, pos: Vector2}>;
+  onPlayerDied: Emitter<null>;
   
   constructor(config: any) {
     super(config);
@@ -32,6 +33,7 @@ export default class Game extends Engine {
     const random = this.random;
     
     this.onScore = new Emitter();
+    this.onPlayerDied = new Emitter();
     
     this.animInterval = window.setInterval(() => {
       this.emit('anim-idle');

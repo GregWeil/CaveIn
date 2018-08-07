@@ -90,7 +90,7 @@ export default class Player extends BaseObject<Game> {
   hurt(evt: { cause: string }) {
     if (evt.cause !== 'gem') {
       this.game.sound(audioDie);
-      this.game.emit('player-died');
+      this.game.onPlayerDied.emit(null);
       this.game.destroy(this);
     }
   }

@@ -81,7 +81,7 @@ export default class Replay {
     });
 
     let alive = true;
-    game.on('player-died', evt => {
+    game.onPlayerDied.listen(() => {
       alive = false;
     });
 
@@ -130,9 +130,9 @@ export default class Replay {
       this.score = game.score;
     }, Infinity);
 
-    game.on('player-died', evt => {
+    game.onPlayerDied.listen(() => {
       this.alive = false;
-    }, undefined, Infinity);
+    }, Infinity);
 
     game.onUpdate.listen(evt => {
       callback(this, game);
