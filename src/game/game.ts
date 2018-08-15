@@ -25,6 +25,7 @@ export default class Game extends Engine {
   private animInterval: number;
   
   onAnimIdle: Emitter<null>;
+  onGridChange: Emitter<{pos: Vector2, from: any, to: any, cause: string}>;
   onGemCollect: Emitter<null>;
   onScore: Emitter<{score: number, pos: Vector2}>;
   onPlayerDied: Emitter<null>;
@@ -35,6 +36,7 @@ export default class Game extends Engine {
     const random = this.random;
     
     this.onAnimIdle = new Emitter();
+    this.onGridChange = new Emitter();
     this.onGemCollect = new Emitter();
     this.onScore = new Emitter();
     this.onPlayerDied = new Emitter();
@@ -89,7 +91,7 @@ export default class Game extends Engine {
       }
     }
     
-    this.on('grid-change', evt => {
+    this.onGridChange.listen(evt => {
       if (evt.data.from && !evt.data.to && evt.data.cause !== 'gem') {
         Enemy.spawn(this, player.pos, enemyAI);
       }

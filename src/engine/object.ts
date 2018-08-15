@@ -35,10 +35,6 @@ export default class BaseObject<Game extends Engine> {
     }, displayTime !== undefined ? displayTime*1000 : 30);
   }
   
-  protected handle(emitter: EventEmitter, name: string, func: (e: Event) => void, priority?: number) {
-    this.handlers.push(emitter.on(name, func, this, priority));
-  }
-  
   protected listen<T>(emitter: Emitter<T>, func: (e: Event) => void, priority?: number) {
     this.handlers.push(emitter.listen(func, priority));
   }

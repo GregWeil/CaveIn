@@ -92,8 +92,7 @@ export default class Grid extends BaseObject<Game> {
       }
       
       this.delayBlocks[pos.hash()] = delay;
-      this.game.emit('grid-change', {
-        source: this,
+      this.game.onGridChange.emit({
         cause: cause,
         pos: pos.copy(),
         from: oldVal,
