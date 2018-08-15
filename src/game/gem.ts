@@ -107,7 +107,7 @@ export default class Gem extends BaseObject<Game> {
     
     this.listen(this.game.onUpdate, evt => this.check(), 90);
     
-    this.handle(this.game, 'anim-idle', this.anim);
+    this.listen(this.game.onAnimIdle, evt => this.anim());
     this.listen(this.game.onRender, evt => this.render(evt.data.context));
   }
   
@@ -136,7 +136,7 @@ export default class Gem extends BaseObject<Game> {
       }
     }
     
-    this.game.emit('gem-collect');
+    this.game.onGemCollect.emit(null);
     this.game.onScore.emit({
       score: this.score,
       pos: this.pos

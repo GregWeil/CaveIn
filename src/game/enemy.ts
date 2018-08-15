@@ -38,7 +38,7 @@ class EnemyGhost extends BaseObject<Game> {
     this.game.grid.setBlock(this.pos, 'ghost');
     this.game.collide.add(this.pos, this);
     
-    this.handle(this.game, 'anim-idle', this.anim);
+    this.listen(this.game.onAnimIdle, evt => this.anim());
     this.listen(this.game.onRender, evt => this.render(evt.data.context));
   }
   
@@ -54,7 +54,7 @@ class EnemyGhost extends BaseObject<Game> {
     }
   }
   
-  anim(evt: Event) {
+  anim() {
     this.sprite = (this.sprite + 1) % ghostSprites.length;
   }
   
@@ -114,7 +114,7 @@ export default class Enemy extends BaseObject<Game> {
     this.listen(this.game.onUpdate, evt => this.update());
     this.listen(this.game.onUpdate, evt => this.audio(), 100);
     
-    this.handle(this.game, 'anim-idle', this.anim);
+    this.listen(this.game.onAnimIdle, evt => this.anim());
     this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
   }
   
@@ -161,7 +161,7 @@ export default class Enemy extends BaseObject<Game> {
     }
   }
   
-  anim(evt: Event) {
+  anim() {
     this.sprite = (this.sprite + 1) % sprites.length;
   }
   

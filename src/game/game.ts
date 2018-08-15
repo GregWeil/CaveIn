@@ -24,6 +24,8 @@ export default class Game extends Engine {
   
   private animInterval: number;
   
+  onAnimIdle: Emitter<null>;
+  onGemCollect: Emitter<null>;
   onScore: Emitter<{score: number, pos: Vector2}>;
   onPlayerDied: Emitter<null>;
   
@@ -32,11 +34,13 @@ export default class Game extends Engine {
     
     const random = this.random;
     
+    this.onAnimIdle = new Emitter();
+    this.onGemCollect = new Emitter();
     this.onScore = new Emitter();
     this.onPlayerDied = new Emitter();
     
     this.animInterval = window.setInterval(() => {
-      this.emit('anim-idle');
+      this.onAnimIdle.emit(null);
     }, 1000);
     
     //Objects which exist for the life of the game
@@ -115,7 +119,7 @@ export default class Game extends Engine {
     
     //Gem spawning
     
-    this.on('gem-collect', evt => {
+    this.onGemCollect.listen(evt => {
       Gem.spawn(this, player.pos);
     });
     
