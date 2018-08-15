@@ -9,14 +9,19 @@ import assets from './assets';
 const app = express();
 
 const client = new Promise((resolve, reject) => {
-  browserify('bin/client/main.js').bundle((err, data) => {
-    if (err) {
-      console.error(err);
-    }
-    resolve(data);
-  });
+  browserify('bin/client/main.js')
+    .transform('uglifyify', { global: true })
+    .bundle((err, data) => {
+      if (err) {
+        console.error(err);
+      }
+      resolve(data);
+    });
 });
-app.use('/client.js', async (req, res) => res.send(await client));
+app.use('/client.js', async (req, res) => {
+  res.set('Content-Type', 'application/javascript');
+  res.send(await client);
+});
 
 app.use('/assets', assets);
 

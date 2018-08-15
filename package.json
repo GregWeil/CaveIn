@@ -15,6 +15,7 @@
     "@types/howler": "^2.0.5",
     "@types/random-js": "^1.0.30",
     "browserify": "^16.2.2",
+    "uglifyify": "^5.0.1",
     "express": "^4.16.3",
     "howler": "^2.0.14",
     "nodemon": "^1.18.3",
