@@ -4,11 +4,11 @@
 import { Howl } from 'howler';
 import * as Random from 'random-js';
 
-import { Emitter, EventEmitter } from './events';
+import { Emitter } from './events';
 import Vector2 from './vector2';
 import BaseObject from './object';
 
-export default class Engine extends EventEmitter {
+export default class Engine {
   active: boolean;
   headless: boolean;
   silent: boolean;
@@ -27,8 +27,6 @@ export default class Engine extends EventEmitter {
   public onRender: Emitter<{context: CanvasRenderingContext2D, time: number}>;
   
   constructor(config: any) {
-    super();
-    
     this.active = true;
     this.headless = !config.canvas;
     this.silent = config.silent || this.headless;

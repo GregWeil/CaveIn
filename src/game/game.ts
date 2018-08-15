@@ -142,7 +142,7 @@ export default class Game extends Engine {
       evt.data.context.textBaseline = 'middle';
       evt.data.context.font = '32px IdealGarbanzo';
       evt.data.context.textAlign = 'left';
-      evt.data.context.fillText(this.score, 8, 12);
+      evt.data.context.fillText(this.score.toString(), 8, 12);
       if (this.best || this.score) {
         evt.data.context.textAlign = 'right';
         evt.data.context.fillText(

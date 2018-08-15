@@ -18,7 +18,7 @@ export abstract class Input {
     this.emitter.emit(cmd);
   }
   
-  listen(handler: (evt: EmittedEvent) => void) {
+  listen(handler: (evt: EmittedEvent<string>) => void) {
     this.emitter.listen(handler);
   }
 }
@@ -45,7 +45,7 @@ export class InputThrottled extends InputWrapper {
   private time: number;
   
   constructor(inputs: Input[]) {
-    super( inputs);
+    super(inputs);
     this.time = -Infinity;
   }
   

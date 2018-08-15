@@ -2,11 +2,11 @@
 //Base game object that things inherit from
 
 import Engine from './engine';
-import { Emitter, EventEmitter, Handler, Event } from './events';
+import { Emitter, Handler, Event } from './events';
 
 export default class BaseObject<Game extends Engine> {
   protected game: Game;
-  private handlers: Handler[];
+  private handlers: Handler<any>[];
   
   active: boolean;
   
@@ -35,11 +35,11 @@ export default class BaseObject<Game extends Engine> {
     }, displayTime !== undefined ? displayTime*1000 : 30);
   }
   
-  protected listen<T>(emitter: Emitter<T>, func: (e: Event) => void, priority?: number) {
+  protected listen<T>(emitter: Emitter<T>, func: (e: Event<T>) => void, priority?: number) {
     this.handlers.push(emitter.listen(func, priority));
   }
   
-  protected unhandle(handler: Handler) {
+  protected unhandle(handler: Handler<any>) {
     const index = this.handlers.indexOf(handler);
     this.handlers.splice(index, 1);
     handler.active = false;
