@@ -92,7 +92,7 @@ export default class Game extends Engine {
     }
     
     this.onGridChange.listen(evt => {
-      if (evt.data.from && !evt.data.to && evt.data.cause !== 'gem') {
+      if (evt.from && !evt.to && evt.cause !== 'gem') {
         Enemy.spawn(this, player.pos, enemyAI);
       }
     });
@@ -133,19 +133,19 @@ export default class Game extends Engine {
     this.best = config.best || 0;
     
     this.onScore.listen(evt => {
-      this.score += evt.data.score;
+      this.score += evt.score;
     });
     
     this.onRender.listen(evt => {
-      evt.data.context.fillStyle = 'white';
-      evt.data.context.textAlign = 'left';
-      evt.data.context.textBaseline = 'middle';
-      evt.data.context.font = '32px IdealGarbanzo';
-      evt.data.context.textAlign = 'left';
-      evt.data.context.fillText(this.score.toString(), 8, 12);
+      evt.context.fillStyle = 'white';
+      evt.context.textAlign = 'left';
+      evt.context.textBaseline = 'middle';
+      evt.context.font = '32px IdealGarbanzo';
+      evt.context.textAlign = 'left';
+      evt.context.fillText(this.score.toString(), 8, 12);
       if (this.best || this.score) {
-        evt.data.context.textAlign = 'right';
-        evt.data.context.fillText(
+        evt.context.textAlign = 'right';
+        evt.context.fillText(
           this.best >= this.score ? 'BEST: ' + this.best : 'NEW BEST',
           this.canvas.width - 7, 12);
       }

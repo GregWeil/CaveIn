@@ -46,13 +46,13 @@ export default class Player extends BaseObject<Game> {
     this.attacking = false;
     this.attackHit = false;
     
-    this.listen(this.game.onCommandCheck, evt => this.acceptCommand(evt.data));
+    this.listen(this.game.onCommandCheck, evt => this.acceptCommand(evt));
     
-    this.listen(this.game.onUpdate, evt => this.updateEarly(evt.data.command), -10);
-    this.listen(this.game.onUpdate, evt => this.update(evt.data.command));
-    this.listen(this.game.onUpdate, evt => this.updateLate(evt.data.command), 10);
+    this.listen(this.game.onUpdate, evt => this.updateEarly(evt.command), -10);
+    this.listen(this.game.onUpdate, evt => this.update(evt.command));
+    this.listen(this.game.onUpdate, evt => this.updateLate(evt.command), 10);
     
-    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
+    this.listen(this.game.onRender, evt => this.render(evt.context, evt.time));
   }
   
   destroy(displayTime: number) {

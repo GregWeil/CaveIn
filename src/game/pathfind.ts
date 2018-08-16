@@ -31,7 +31,7 @@ export default class Pathfind extends BaseObject<Game> {
     this.paths = {};
     
     this.listen(this.game.onUpdate, evt => this.invalidate(), -Infinity);
-    //this.listen(this.game.onRender, evt => this.render(evt.data.context), 5000);
+    //this.listen(this.game.onRender, evt => this.render(evt.context), 5000);
   }
   
   getNextStep(pos: Vector2, goal: Vector2) {

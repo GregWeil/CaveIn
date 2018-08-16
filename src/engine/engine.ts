@@ -73,7 +73,7 @@ export default class Engine {
     return this.onCommandCheck.emit({
       command: command,
       accept: false
-    }).data.accept;
+    }).accept;
   }
   
   render() {

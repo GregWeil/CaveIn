@@ -31,7 +31,7 @@ export default class Grid extends BaseObject<Game> {
     this.delayBlocks = {};
     
     this.listen(this.game.onUpdate, evt => this.update(), -Infinity);
-    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), -100);
+    this.listen(this.game.onRender, evt => this.render(evt.context, evt.time), -100);
   }
   
   destroy(displayTime: number) {

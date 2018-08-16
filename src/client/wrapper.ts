@@ -92,7 +92,7 @@ export async function createPlayable() {
   
   game.onCommandCheck.listen(evt => {
     if (overlayCurrent) {
-      evt.data.accept = false;
+      evt.accept = false;
     }
   }, Infinity);
   
@@ -143,9 +143,9 @@ export async function createPlayable() {
       'left', null, 'up', null
     ], 'action'),
   ]);
-  activeInput.listen(evt => {
-    if (game.commandCheck(evt.data)) {
-      game.update(evt.data);
+  activeInput.listen(command => {
+    if (game.commandCheck(command)) {
+      game.update(command);
     }
   });
 }

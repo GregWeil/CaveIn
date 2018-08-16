@@ -6,7 +6,6 @@ import { Howl } from 'howler';
 import Vector2 from '../engine/vector2';
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
-import { Event } from '../engine/events';
 import Game from './game';
 
 const dimensions = new Vector2(16);
@@ -39,7 +38,7 @@ class EnemyGhost extends BaseObject<Game> {
     this.game.collide.add(this.pos, this);
     
     this.listen(this.game.onAnimIdle, evt => this.anim());
-    this.listen(this.game.onRender, evt => this.render(evt.data.context));
+    this.listen(this.game.onRender, evt => this.render(evt.context));
   }
   
   destroy(displayTime: number) {
@@ -115,7 +114,7 @@ export default class Enemy extends BaseObject<Game> {
     this.listen(this.game.onUpdate, evt => this.audio(), 100);
     
     this.listen(this.game.onAnimIdle, evt => this.anim());
-    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time));
+    this.listen(this.game.onRender, evt => this.render(evt.context, evt.time));
   }
   
   destroy(displayTime: number) {

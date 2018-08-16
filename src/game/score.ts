@@ -4,7 +4,6 @@
 import * as Render from '../engine/render';
 import BaseObject from '../engine/object';
 import Vector2 from '../engine/vector2';
-import { Event } from '../engine/events';
 import Game from './game';
 
 interface Popup {
@@ -22,9 +21,9 @@ export default class Score extends BaseObject<Game> {
     
     this.popups = [];
     
-    this.listen(this.game.onUpdate, evt => this.update(evt.data.time), -Infinity);
-    this.listen(this.game.onScore, evt => this.score(evt.data.score, evt.data.pos));
-    this.listen(this.game.onRender, evt => this.render(evt.data.context, evt.data.time), 900);
+    this.listen(this.game.onUpdate, evt => this.update(evt.time), -Infinity);
+    this.listen(this.game.onScore, evt => this.score(evt.score, evt.pos));
+    this.listen(this.game.onRender, evt => this.render(evt.context, evt.time), 900);
   }
   
   update(time: number) {

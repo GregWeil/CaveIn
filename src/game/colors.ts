@@ -30,7 +30,7 @@ export class GridColors extends BaseObject<Game> {
       this.colors.push(array);
     }
     
-    this.listen(this.game.onRender, evt => this.render(evt.data.context), 1000);
+    this.listen(this.game.onRender, evt => this.render(evt.context), 1000);
   }
   
   render(context: CanvasRenderingContext2D) {
@@ -54,7 +54,7 @@ export class ScreenColors extends BaseObject<Game> {
     
     this.color = this.game.random.pick(colors);
     
-    this.listen(this.game.onRender, evt => this.render(evt.data.context), 1000);
+    this.listen(this.game.onRender, evt => this.render(evt.context), 1000);
   }
   
   render(context: CanvasRenderingContext2D) {

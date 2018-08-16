@@ -24,7 +24,7 @@ export default class Collide extends BaseObject<Game> {
     
     this.collisions = {};
     
-    //this.listen(this.game.onRender, evt => this.render(evt.data.context), Infinity);
+    //this.listen(this.game.onRender, evt => this.render(evt.context), Infinity);
   }
   
   render(context: CanvasRenderingContext2D) {
