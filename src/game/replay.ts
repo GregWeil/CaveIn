@@ -123,7 +123,7 @@ export default class Replay {
     callback(this, game);
 
     game.onUpdate.listen(evt => {
-      this.commands.push(evt.data.command);
+      this.commands.push(evt.command);
     }, -Infinity);
 
     game.onScore.listen(evt => {
