@@ -49,10 +49,7 @@ export default class Game extends Engine {
     
     this.collide = this.create(Collide);
     
-    this.grid = this.create(Grid, {
-      cellSize: new Vector2(16),
-      gridSize: new Vector2(29, 18)
-    });
+    this.grid = this.create(Grid, new Vector2(16), new Vector2(29, 18), new Vector2(config.canvas.width, config.canvas.height));
     
     this.create(ScreenColors);
     this.create(Score);
@@ -147,7 +144,7 @@ export default class Game extends Engine {
         evt.context.textAlign = 'right';
         evt.context.fillText(
           this.best >= this.score ? 'BEST: ' + this.best : 'NEW BEST',
-          this.canvas.width - 7, 12);
+          evt.context.canvas.width - 7, 12);
       }
     }, 900);
   }

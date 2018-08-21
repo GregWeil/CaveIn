@@ -13,15 +13,16 @@ export default class Grid extends BaseObject<Game> {
   blocks: boolean[][];
   delayBlocks: {[key: string]: number};
   
-  constructor(game: Game, config: {cellSize: Vector2, gridSize: Vector2}) {
+  constructor(game: Game, cellSize: Vector2, gridSize: Vector2, canvasSize: Vector2) {
     super(game);
     
-    this.cellSize = config.cellSize.copy();
-    this.gridSize = config.gridSize.copy();
+    this.cellSize = cellSize.copy();
+    this.gridSize = gridSize.copy();
     
     //This centers it on the screen
-    this.origin = Vector2.new(this.game.canvas.width, this.game.canvas.height)
-      .minus(this.gridSize.minus(1).plus(0, -1).multiply(this.cellSize)).multiply(0.5);
+    this.origin = canvasSize.minus(
+      this.gridSize.minus(1).plus(0, -1).multiply(this.cellSize)
+    ).multiply(0.5);
     
     this.blocks = [];
     for (let i = 0; i < this.gridSize.x; ++i) {
