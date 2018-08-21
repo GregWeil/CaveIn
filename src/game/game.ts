@@ -49,7 +49,7 @@ export default class Game extends Engine {
     
     this.collide = this.create(Collide);
     
-    this.grid = this.create(Grid, new Vector2(16), new Vector2(29, 18), new Vector2(config.canvas.width, config.canvas.height));
+    this.grid = this.create(Grid, new Vector2(16), new Vector2(29, 18), new Vector2(this.canvas.width, this.canvas.height));
     
     this.create(ScreenColors);
     this.create(Score);
