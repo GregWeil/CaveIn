@@ -6,12 +6,26 @@ import Game from './game';
 class ReplayExecutor {
   private replay: Replay;
   private game: Game;
-  private step: number;
+  private index: number;
   
   constructor(replay: Replay, game: Game) {
     this.replay = replay;
     this.game = game;
-    this.step = 0;
+    this.index = 0;
+  }
+  
+  step() {
+    if (!this.game.active) {
+      throw 'game destroyed while replay in progress';
+    }
+    
+    const command = this.replay.commands[this.index];
+    if (!this.game.commandCheck(command)) {
+      throw 'unable to execute replay, command was invalid';
+    }
+    this.game.update(command);
+    
+    this.index += 1;
   }
   
   async execute(rate: number, goal?: number) {
@@ -29,24 +43,15 @@ class ReplayExecutor {
     
     let lastStepTime = performance.now();
     let stepsSinceBreak = 0;
-    while (this.step < goal) {
+    while (this.index < goal) {
       const nextTime = lastStepTime + 1000/rate;
       while (nextTime > performance.now() || stepsSinceBreak >= 50) {
         await new Promise(resolve => setTimeout(resolve));
         stepsSinceBreak = 0;
       }
       
-      if (!this.game.active) {
-        throw 'game destroyed while replay in progress';
-      }
+      this.step();
       
-      const command = this.replay.commands[this.step];
-      if (!this.game.commandCheck(command)) {
-        throw 'unable to execute replay, command was invalid';
-      }
-      this.game.update(command);
-      
-      this.step += 1;
       lastStepTime = nextTime;
       stepsSinceBreak += 1;
     }
