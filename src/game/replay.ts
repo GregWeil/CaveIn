@@ -28,14 +28,10 @@ class ReplayExecutor {
     this.index += 1;
   }
   
-  async execute(rate: number, goal?: number) {
-    if (goal === undefined) {
-      goal = Infinity;
-    } else if (goal < -this.replay.commands.length) {
+  async execute(rate: number, goal: number = Infinity) {
+    if (goal < -this.replay.commands.length) {
       return;
-    }
-    
-    if (goal > this.replay.commands.length) {
+    } else if (goal > this.replay.commands.length) {
       goal = this.replay.commands.length;
     } else if (goal < 0) {
       goal += this.replay.commands.length;
@@ -75,9 +71,9 @@ export default class Replay {
     return new ReplayExecutor(this, game);
   }
   
-  async execute(game: Game, rate?: number) {
+  async execute(game: Game, rate = Infinity) {
     const executor = this.getExecutor(game);
-    await executor.execute(rate || Infinity);
+    await executor.execute(rate);
   }
   
   async validate() {

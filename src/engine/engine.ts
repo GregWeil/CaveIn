@@ -93,7 +93,7 @@ export default class Engine {
     window.requestAnimationFrame(() => this.render());
   }
   
-  sound(asset: Howl, config?: any) {
+  sound(asset: Howl, config?: {volume: number}) {
     if (this.silent) {
       return null;
     }

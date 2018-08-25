@@ -19,8 +19,8 @@ export default class Game extends Engine {
   score: number;
   best: number;
   
-  collide: any;
-  grid: any;
+  collide: Collide;
+  grid: Grid;
   
   private animInterval: number;
   
@@ -58,7 +58,7 @@ export default class Game extends Engine {
     
     const player = this.create(Player,
       this.grid.gridSize.minus(1).multiply(0.5).round()
-    ) as any;
+    );
     
     for (let i = 0; i < this.grid.gridSize.x; ++i) {
       for (let j = 0; j < this.grid.gridSize.y; ++j) {
