@@ -5,7 +5,7 @@ dependencies:
   '@types/random-js': 1.0.30
   browserify: 16.2.2
   express: 4.16.3
-  howler: 2.0.14
+  howler: 2.0.15
   nodemon: 1.18.3
   random-js: 1.0.8
   typescript: 3.0.1
@@ -1257,10 +1257,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
-  /howler/2.0.14:
+  /howler/2.0.15:
     dev: false
     resolution:
-      integrity: sha512-U2ao6mRaPjjzOtwQTDA2OMk9ftQ+k+CrdaBrSIxcO6artSNBtK4kwdx8vUoajMvv6vGZWYiQOmBYnffOFWHt7w==
+      integrity: sha512-Ceui16WCAdBiRlI3cK/zPmp6eWKG4wU5yIYHtH+X4zPhwqbr2ieRQvt/1J60NCqEXFHuBKdzBrS5DRYkMwiQsg==
   /htmlescape/1.1.1:
     dev: false
     engines:
@@ -2900,7 +2900,7 @@ specifiers:
   '@types/random-js': ^1.0.30
   browserify: ^16.2.2
   express: ^4.16.3
-  howler: ^2.0.14
+  howler: ^2.0.15
   nodemon: ^1.18.3
   random-js: ^1.0.8
   typescript: ^3.0.1

@@ -42,7 +42,7 @@ class ReplayExecutor {
     while (this.index < goal) {
       const nextTime = lastStepTime + 1000/rate;
       while (nextTime > performance.now() || stepsSinceBreak >= 50) {
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise(resolve => window.requestAnimationFrame(resolve));
         stepsSinceBreak = 0;
       }
       

@@ -58,7 +58,7 @@ export class InputThrottled extends InputWrapper {
 }
 
 export class InputQueued extends InputWrapper {
-  private callback: any|null;
+  private callback: number|null;
   private queued: string|null;
   
   constructor(inputs: Input[]) {

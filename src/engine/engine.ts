@@ -93,13 +93,13 @@ export default class Engine {
     window.requestAnimationFrame(() => this.render());
   }
   
-  sound(asset: Howl, config?: {volume: number}) {
+  sound(asset: Howl, config?: {volume?: number}) {
     if (this.silent) {
       return null;
     }
     const audio = asset.play();
     if (config) {
-      if ('volume' in config) {
+      if (config.volume !== undefined) {
         asset.volume(config.volume, audio);
       }
     }

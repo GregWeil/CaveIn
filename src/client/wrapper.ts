@@ -140,7 +140,7 @@ export async function createPlayable() {
     }),
     new Input.InputSwipe(game.canvas, [
       'right', null, 'down', null,
-      'left', null, 'up', null
+      'left', null, 'up', null,
     ], 'action'),
   ]);
   activeInput.listen(command => {

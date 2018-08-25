@@ -17,7 +17,7 @@
     "browserify": "^16.2.2",
     "uglifyify": "^5.0.1",
     "express": "^4.16.3",
-    "howler": "^2.0.14",
+    "howler": "^2.0.15",
     "nodemon": "^1.18.3",
     "random-js": "^1.0.8",
     "typescript": "^3.0.1"
