@@ -29,9 +29,13 @@ class ReplayExecutor {
   }
   
   async executeIdle() {
-    let deadline = await new Promise(resolve => window.requestIdleFrame(resolve));
+    let deadline: any;
     while (this.index < this.replay.commands.length) {
-      
+      if (!deadline || !(deadline.timeRemaining() > 0)) {
+        deadline = await new Promise(resolve => (window as any).requestIdleCallback(resolve));
+        console.log(this.index, this.replay.commands.length);
+      }
+      this.step();
     }
   }
   
@@ -96,7 +100,7 @@ export default class Replay {
     const invalid = [];
 
     try {
-      await this.execute(game);
+      await this.getExecutor(game).executeIdle();
     } catch (e) {
       invalid.push('invalid inputs');
     }
