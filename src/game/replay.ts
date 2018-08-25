@@ -28,6 +28,13 @@ class ReplayExecutor {
     this.index += 1;
   }
   
+  async executeIdle() {
+    let deadline = await new Promise(resolve => window.requestIdleFrame(resolve));
+    while (this.index < this.replay.commands.length) {
+      
+    }
+  }
+  
   async execute(rate: number, goal: number = Infinity) {
     if (goal < -this.replay.commands.length) {
       return;
@@ -42,7 +49,7 @@ class ReplayExecutor {
     while (this.index < goal) {
       const nextTime = lastStepTime + 1000/rate;
       while (nextTime > performance.now() || stepsSinceBreak >= 50) {
-        await new Promise(resolve => window.requestAnimationFrame(resolve));
+        await new Promise(resolve => window.setTimeout(resolve));
         stepsSinceBreak = 0;
       }
       
