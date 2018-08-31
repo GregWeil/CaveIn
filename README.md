@@ -19,7 +19,7 @@ Made for the Ludum Dare 37 (One room)
 
 ### Short Term
 
-- Migrate code to typescript
+- Migrate dom manipulation to hyperapp
 - Watch a replay of your best score
 
 ### Long Term

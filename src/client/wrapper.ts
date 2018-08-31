@@ -18,9 +18,8 @@ let activeInput: Input.Input|null = null;
 
 function resize() {
   const pixel = window.devicePixelRatio;
-  const canvas = document.querySelector('#game-page .area') as HTMLCanvasElement;
-  canvas.style.transform = '';
-  const sizeCanvas = new Vector2(canvas.offsetWidth, canvas.offsetHeight);
+  const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
+  const sizeCanvas = new Vector2(canvas.width, canvas.height);
   const sizeWindow = new Vector2(window.innerWidth, window.innerHeight);
   const scaleAxes = sizeWindow.divide(sizeCanvas.divide(pixel));
   let scale = Math.min(scaleAxes.x, scaleAxes.y);
@@ -29,7 +28,8 @@ function resize() {
   } else if (scale < 1) {
     scale = (1 / Math.ceil(1 / scale));
   }
-  canvas.style.transform = `scale(${scale / pixel})`;
+  const area = canvas.closest('.area') as HTMLElement;
+  area.style.transform = `scale(${scale / pixel})`;
 }
 window.addEventListener('resize', () => {
   if (activeGame) resize();
