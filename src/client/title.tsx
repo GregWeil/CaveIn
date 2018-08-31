@@ -4,6 +4,8 @@
 import { h, Component } from 'hyperapp';
 import { State, Actions } from './actions';
 
+import { fullscreenEnter, fullscreenExit } from './settings';
+
 const Title: Component<{}, State, Actions> = () => (state, actions) => (
   <div id="-title-page" class="page centered">
     <div class="glitchButton"></div>
@@ -21,11 +23,10 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
       <span class="show-if-music-loading">loading music</span>
       <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
       <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
-      -
-      {!state.fullscreen ? (
-        <a data-onclick="enter-fullscreen">fullscreen</a>
+      - {!state.fullscreen ? (
+        <a onclick={fullscreenEnter}>fullscreen</a>
       ) : (
-        <a data-onclick="exit-fullscreen">exit fullscreen</a>
+        <a onclick={fullscreenExit}>exit fullscreen</a>
       )}
     </p>
     <p><a href="#tutorial">instructions</a></p>
