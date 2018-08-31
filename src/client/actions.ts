@@ -58,6 +58,19 @@ export const actions: ActionsType<State, Actions> = {
     return {save, best};
   },
   save: (replay) => (state, actions) => {
+    actions.setValid([replay, true]);
     
+    if (replay.score <= 0) {
+      return;
+    }
+    
+    const save = replay.alive ? replay : null;
+    writeReplay('save', save);
+    
+    if (!state.best || replay.score > state.best.score || replay.isContinuationOf(state.best)) {
+      writeReplay('best', replay);
+      return {save, best: replay};
+    }
+    return {save};
   },
 };
