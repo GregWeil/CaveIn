@@ -79,6 +79,7 @@ document.addEventListener('click', evt => {
 // Game management
 
 export async function createPlayable() {
+  console.log('asdf');
   overlay();
   let save = await Save.getSave();
   let best = await Save.getBestScore();

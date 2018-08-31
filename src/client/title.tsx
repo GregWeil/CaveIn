@@ -17,7 +17,7 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
     <p>
       {!!state.save && !!state.validated.get(state.save) && [<a href="#game">continue</a>, <Divider/>]}
       {!!state.save && !state.validated.has(state.save) && ['checking save', <Divider/>]}
-      <a href="#newgame">start a new game</a>
+      <a href="#game" onclick={actions.clearSave}>start a new game</a>
       {!!state.best && !!state.validated.get(state.best) && [<Divider/>, <a href="#replay">best score {state.best.score}</a>]}
       {!!state.best && !state.validated.has(state.best) && [<Divider/>, 'checking best']}
     </p>

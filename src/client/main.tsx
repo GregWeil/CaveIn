@@ -12,6 +12,7 @@ import * as Game from './wrapper';
 import { State, Actions, actions } from './actions';
 import Title from './title';
 import Tutorial from './tutorial';
+import { Game as GamePage, Replay as ReplayPage } from './game';
 
 function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
@@ -86,8 +87,8 @@ Pages.register(new Pages.Page({
   }
 }));
 
-Pages.initialize('title');
-Settings.initialize();
+//Pages.initialize('title');
+//Settings.initialize();
 
 const Main: View<State, Actions> = (state) => {
   switch (state.page) {
@@ -95,6 +96,10 @@ const Main: View<State, Actions> = (state) => {
       return <Title/>;
     case 'tutorial':
       return <Tutorial/>;
+    case 'game':
+      return <GamePage/>;
+    case 'replay':
+      return <ReplayPage/>;
   }
   return <Title/>;
 }
