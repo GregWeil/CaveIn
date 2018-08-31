@@ -15,8 +15,9 @@ export interface Actions {
   setPage: (page: string) => ActionResult<State>;
   setFullscreen: (fullscren: boolean) => ActionResult<State>;
   clearSave: (save: Replay|null) => ActionResult<State>;
-  loadReplays: () => ActionResult<State>;
-  saveReplay: (save: Replay|null) => ActionResult<State>;
+  handleValidation: (replay: Replay|null) => ActionResult<State>;
+  load: () => ActionResult<State>;
+  save: (save: Replay|null) => ActionResult<State>;
 };
 
 function writeToStorage(name: string, replay: Replay|null) {
@@ -41,10 +42,10 @@ export const actions: ActionsType<State, Actions> = {
   setPage: (page) => ({page}),
   setFullscreen: (fullscreen) => ({fullscreen}),
   clearSave: () => ({save: null}),
-  loadReplays: () => {
+  load: () => (state, actions) => {
     
   },
-  saveReplay: (replay) => {
+  save: (replay) => (state, actions) => {
     
   },
 };

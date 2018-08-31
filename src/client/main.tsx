@@ -113,3 +113,5 @@ window.addEventListener('hashchange', () => {
 fscreen.addEventListener('fullscreenchange', () => {
   application.setFullscreen(!!fscreen.fullscreenElement);
 });
+
+application.load();
