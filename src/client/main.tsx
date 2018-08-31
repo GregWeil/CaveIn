@@ -102,8 +102,7 @@ const Main: View<State, Actions> = (state) => {
 const application = app<State, Actions>({
   page: window.location.hash.slice(1),
   fullscreen: !!fscreen.fullscreenElement,
-  save: undefined,
-  best: undefined,
+  save: null, best: null, validated: new WeakMap(),
 }, actions, Main, document.getElementById('test'));
 
 window.addEventListener('hashchange', () => {
@@ -114,4 +113,7 @@ fscreen.addEventListener('fullscreenchange', () => {
   application.setFullscreen(!!fscreen.fullscreenElement);
 });
 
+window.addEventListener('storage', () => {
+  application.load();
+});
 application.load();
