@@ -98,11 +98,10 @@ export function initialize() {
   document.addEventListener('click', (evt) => {
     const target = (evt.target as HTMLElement).closest('a');
     if (target) {
-      Object.entries(listeners).forEach(([key, func]) => {
-        if (target.hasAttribute('data-onclick-' + key)) {
-          func();
-        }
-      });
+      const listener = target.getAttribute('data-onclick');
+      if (listener) {
+        listeners[listener]();
+      }
     }
   });
 }

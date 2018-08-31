@@ -17,6 +17,7 @@
   </head>
   
   <body>
+    <div id="test" class="hidden"></div>
     
     <div id="title-page" class="page centered">
       <div class="glitchButton"></div>
@@ -32,11 +33,11 @@
       </p>
       <p>
         <span class="show-if-music-loading">loading music</span>
-        <a data-onclick-enable-music class="hide-if-music-enabled">enable music</a>
-        <a data-onclick-disable-music class="hide-if-music-disabled">disable music</a>
+        <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
+        <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
         -
-        <a data-onclick-enter-fullscreen class="hide-if-fullscreen-enabled">fullscreen</a>
-        <a data-onclick-exit-fullscreen class="hide-if-fullscreen-disabled">exit fullscreen</a>
+        <a data-onclick="enter-fullscreen" class="hide-if-fullscreen-enabled">fullscreen</a>
+        <a data-onclick="exit-fullscreen" class="hide-if-fullscreen-disabled">exit fullscreen</a>
       </p>
       <p><a href="#tutorial">instructions</a></p>
       <p>made for Ludum Dare 37 "One Room"</p>
@@ -51,14 +52,14 @@
           
           <div id="game-pause" class="centered overlay">
             <p><span class="inverse">PAUSED</span></p>
-            <p><span class="inverse"><a data-onclick-pause>RESUME</a> or <a href="#title">TITLE</a></span></p>
+            <p><span class="inverse"><a data-onclick="pause">RESUME</a> or <a href="#title">TITLE</a></span></p>
             <p class="small"><span class="inverse">
               <span class="show-if-music-loading">loading music</span>
-              <a data-onclick-enable-music class="hide-if-music-enabled">enable music</a>
-              <a data-onclick-disable-music class="hide-if-music-disabled">disable music</a>
+              <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
+              <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
               -
-              <a data-onclick-enter-fullscreen class="hide-if-fullscreen-enabled">fullscreen</a>
-              <a data-onclick-exit-fullscreen class="hide-if-fullscreen-disabled">exit fullscreen</a>
+              <a data-onclick="enter-fullscreen" class="hide-if-fullscreen-enabled">fullscreen</a>
+              <a data-onclick="exit-fullscreen" class="hide-if-fullscreen-disabled">exit fullscreen</a>
             </span></p>
           </div>
           
