@@ -15,7 +15,8 @@ export interface State {
 export interface Actions {
   setPage: (page: string) => ActionResult<State>;
   setFullscreen: (fullscren: boolean) => ActionResult<State>;
-  setValid: (replay: Replay, valid: boolean) => ActionResult<State>;
+  setValid: (replay: Replay) => ActionResult<State>;
+  setNotValid: (replay: Replay) => ActionResult<State>;
   clearSave: (save: Replay|null) => ActionResult<State>;
   load: () => ActionResult<State>;
   save: (save: Replay|null) => ActionResult<State>;
@@ -40,9 +41,14 @@ function readReplay(name: string) {
 export const actions: ActionsType<State, Actions> = {
   setPage: (page) => ({page}),
   setFullscreen: (fullscreen) => ({fullscreen}),
-  setValid: (replay: Replay, valid: boolean) => (state: State) => {
+  setValid: (replay) => (state: State) => {
     const validated = state.validated;
-    validated.set(replay, valid);
+    validated.set(replay, true);
+    return {validated};
+  },
+  setNotValid: (replay) => (state: State) => {
+    const validated = state.validated;
+    validated.set(replay, false);
     return {validated};
   },
   clearSave: () => ({save: null}),

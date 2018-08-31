@@ -6,6 +6,8 @@ import { State, Actions } from './actions';
 
 import { fullscreenEnter, fullscreenExit } from './settings';
 
+const Divider = () => ' - ';
+
 const Title: Component<{}, State, Actions> = () => (state, actions) => (
   <div id="-title-page" class="page centered">
     <div class="glitchButton"></div>
@@ -13,11 +15,11 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
       <img src="/assets/boxart.png" class="smooth"/>
     </a>
     <p>
-      {state.save && !!save.validated.get(save) && [<a href="#game">continue</a>, ' -']}
-      {!!state.save && !save.validated.has(save) && ['checking save -']}
+      {!!state.save && !!state.validated.get(state.save) && [<a href="#game">continue</a>, <Divider/>]}
+      {!!state.save && !state.validated.has(state.save) && ['checking save', <Divider/>]}
       <a href="#newgame">start a new game</a>
-      <span class="best loading">- checking best</span>
-      <span class="best exists">- <a href="#replay">best score <span class="score"></span></a></span>
+      {!!state.best && !!state.validated.get(state.best) && [<Divider/>, <a href="#replay">best score {state.best.score}</a>]}
+      {!!state.best && !state.validated.has(state.best) && [<Divider/>, 'checking best']}
     </p>
     <p>
       <span class="show-if-music-loading">loading music</span>
