@@ -1,10 +1,9 @@
 /// tutorial.tsx
 // The tutorial page
 
-import { h, View } from 'hyperapp';
-import { State, Actions } from './types';
+import { h, Component } from 'hyperapp';
 
-const Tutorial: View<State, Actions> = () => (
+const Tutorial: Component = () => (
   <div id="-tutorial-page" class="page inverse">
     <h1>Instructions</h1>
 

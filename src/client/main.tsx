@@ -8,7 +8,7 @@ import * as Settings from './settings';
 import * as Save from './save';
 import * as Game from './wrapper';
 
-import { State, Actions } from './types';
+import { State, Actions, actions } from './actions';
 import Tutorial from './tutorial';
 
 function showSingle(select: string, except: string) {
@@ -94,12 +94,10 @@ const Main: View<State, Actions> = (state) => {
   return <div>{state.page}</div>;
 }
 
-const actions = app<State, Actions>({
+const application = app<State, Actions>({
   page: window.location.hash.slice(1),
-}, {
-  setPage: (page: string) => ({page}),
-}, Main, document.getElementById('test'));
+}, actions, Main, document.getElementById('test'));
 
 window.addEventListener('hashchange', () => {
-  actions.setPage(window.location.hash.slice(1));
+  application.setPage(window.location.hash.slice(1));
 });
