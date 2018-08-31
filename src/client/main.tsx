@@ -8,6 +8,9 @@ import * as Settings from './settings';
 import * as Save from './save';
 import * as Game from './wrapper';
 
+import { State, Actions } from './types';
+import Tutorial from './tutorial';
+
 function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
     if (e.matches(except)) {
@@ -84,15 +87,18 @@ Pages.register(new Pages.Page({
 Pages.initialize('title');
 Settings.initialize();
 
-const main: View<State, Actions> = (state: State) => (
-  <div>hello {state.page}</div>
-);
+const Main: View<State, Actions> = (state) => {
+  if (state.page === 'tutorial') {
+    return <Tutorial/>;
+  }
+  return <div>{state.page}</div>;
+}
 
 const actions = app<State, Actions>({
   page: window.location.hash.slice(1),
 }, {
   setPage: (page: string) => ({page}),
-}, main, document.getElementById('test'));
+}, Main, document.getElementById('test'));
 
 window.addEventListener('hashchange', () => {
   actions.setPage(window.location.hash.slice(1));
