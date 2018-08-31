@@ -18,9 +18,9 @@
     "uglifyify": "^5.0.1",
     "express": "^4.16.3",
     "howler": "^2.0.15",
-    "nodemon": "^1.18.3",
+    "nodemon": "^1.18.4",
     "random-js": "^1.0.8",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.3"
   },
   "engines": {
     "node": "10"
