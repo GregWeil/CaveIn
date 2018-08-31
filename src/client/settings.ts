@@ -46,7 +46,7 @@ audioMusic.once('load', () => {
 
 // Fullscreen toggling
 
-export function fullscreenEnter() {
+export async function fullscreenEnter() {
   const element: any = document.documentElement;
   const names = [
     'requestFullscreen',
@@ -56,7 +56,7 @@ export function fullscreenEnter() {
   ];
   for (let i = 0; i < names.length; ++i) {
     if (element[names[i]]) {
-      element[names[i]]();
+      await element[names[i]]();
       break;
     }
   }

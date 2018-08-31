@@ -89,8 +89,11 @@ Pages.initialize('title');
 Settings.initialize();
 
 const Main: View<State, Actions> = (state) => {
-  if (state.page === 'tutorial') {
-    return <Tutorial/>;
+  switch (state.page) {
+    case 'title':
+      return <Title/>;
+    case 'tutorial':
+      return <Tutorial/>;
   }
   return <Title/>;
 }
