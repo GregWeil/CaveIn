@@ -4,7 +4,7 @@
 import { h, Component } from 'hyperapp';
 import { State, Actions } from './actions';
 
-import { fullscreenEnter, fullscreenExit } from './settings';
+import { FullscreenToggle } from './settings';
 
 const Divider = () => ' - ';
 
@@ -26,11 +26,7 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
       <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
       <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
       <Divider/>
-      {!state.fullscreen ? (
-        <a onclick={fullscreenEnter}>fullscreen</a>
-      ) : (
-        <a onclick={fullscreenExit}>exit fullscreen</a>
-      )}
+      <FullscreenToggle fullscreen={state.fullscreen}/>
     </p>
     <p><a href="#tutorial">instructions</a></p>
     <p>made for Ludum Dare 37 "One Room"</p>

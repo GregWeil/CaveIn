@@ -1,6 +1,7 @@
-/// settings.ts
+/// settings.tsx
 //Fullscreen toggle, plus music and audio handling
 
+import { h, Component } from 'hyperapp';
 import { Howler, Howl } from 'howler';
 import fscreen from 'fscreen';
 
@@ -47,14 +48,22 @@ audioMusic.once('load', () => {
 
 // Fullscreen toggling
 
-export async function fullscreenEnter() {
+async function fullscreenEnter() {
   await fscreen.requestFullscreen(document.documentElement);
   (window as any).screen.orientation.lock('landscape');
 };
 
-export async function fullscreenExit() {
+async function fullscreenExit() {
   fscreen.exitFullscreen();
 };
+
+export const FullscreenToggle = ({fullscreen}: {fullscreen: boolean}) => (
+  fullscreen ? (
+    <a onclick={fullscreenExit}>exit fullscreen</a>
+  ) : (
+    <a onclick={fullscreenEnter}>fullscreen</a>
+  )
+);
 
 // Attach event listeners
 
