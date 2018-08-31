@@ -14,13 +14,17 @@ export interface State {
 export interface Actions {
   setPage: (page: string) => ActionResult<State>;
   setFullscreen: (fullscren: boolean) => ActionResult<State>;
-  setSave: (save: Replay|null) => ActionResult<State>;
-  setBest: (save: Replay|null) => ActionResult<State>;
+  loadSave: (save: Replay|null) => ActionResult<State>;
+  loadBest: (save: Replay|null) => ActionResult<State>;
+  clearSave: (save: Replay|null) => ActionResult<State>;
+  saveReplay: (save: Replay|null) => ActionResult<State>;
 };
 
 export const actions: ActionsType<State, Actions> = {
   setPage: (page) => ({page}),
   setFullscreen: (fullscreen) => ({fullscreen}),
-  setSave: (save) => ({save}),
-  setBest: (best) => ({best}),
+  loadSave: (save) => (state) => (state.save === undefined ? {save} : null),
+  loadBest: (best) => (state) => (state.best === undefined ? {best} : null),
+  clearSave: () => ({save: null}),
+  saveReplay: (replay) => null,
 };
