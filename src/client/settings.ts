@@ -63,7 +63,7 @@ export async function fullscreenEnter() {
   (window as any).screen.orientation.lock('landscape');
 };
 
-export function fullscreenExit() {
+export async function fullscreenExit() {
   const element: any = document;
   const names = [
     'exitFullscreen',
@@ -73,11 +73,14 @@ export function fullscreenExit() {
   ];
   for (let i = 0; i < names.length; ++i) {
     if (element[names[i]]) {
-      element[names[i]]();
+      await element[names[i]]();
       break;
     }
   }
 };
+
+export function getFullscreenElement() {
+}
 
 // Attach event listeners
 

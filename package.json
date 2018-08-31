@@ -21,7 +21,9 @@
     "hyperapp": "^1.2.8",
     "nodemon": "^1.18.4",
     "random-js": "^1.0.8",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "fscreen": "^1.0.2",
+    "@types/fscreen": "^1.0.0"
   },
   "engines": {
     "node": "10"
