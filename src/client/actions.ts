@@ -90,7 +90,10 @@ export const actions: ActionsType<State, Actions> = {
     state.game && state.game.destructor();
     return {game: null};
   },
-  createGame: (save: Replay) => (state, actions) => {
-    
+  createGame: (save: Replay) => (state) => {
+    if (state.game) return;
+  },
+  createWatch: (replay: Replay) => (state) => {
+    if (state.game) return;
   },
 };
