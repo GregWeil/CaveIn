@@ -102,6 +102,8 @@ const Main: View<State, Actions> = (state) => {
 const application = app<State, Actions>({
   page: window.location.hash.slice(1),
   fullscreen: !!fscreen.fullscreenElement,
+  save: undefined,
+  best: undefined,
 }, actions, Main, document.getElementById('test'));
 
 window.addEventListener('hashchange', () => {

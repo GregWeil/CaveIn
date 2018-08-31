@@ -18,7 +18,7 @@ const client = new Promise((resolve, reject) => {
       resolve(data);
     });
 });
-app.use('/client.js', async (req, res) => {
+app.get('/client.js', async (req, res) => {
   res.set('Content-Type', 'application/javascript');
   res.send(await client);
 });
