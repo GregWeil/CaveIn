@@ -6,6 +6,7 @@ dependencies:
   browserify: 16.2.2
   express: 4.16.3
   howler: 2.0.15
+  hyperapp: 1.2.8
   nodemon: 1.18.4
   random-js: 1.0.8
   typescript: 3.0.3
@@ -1282,6 +1283,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
+  /hyperapp/1.2.8:
+    dev: false
+    resolution:
+      integrity: sha512-BqPu/1cJ9hWdMUYNPfmsnh92pap6IAzlG0KOJrdtdMkciJJVUOSwaQTDEaP086TmVOWwjRzlQrZngLQwAE6ocg==
   /iconv-lite/0.4.19:
     dev: false
     engines:
@@ -2901,6 +2906,7 @@ specifiers:
   browserify: ^16.2.2
   express: ^4.16.3
   howler: ^2.0.15
+  hyperapp: ^1.2.8
   nodemon: ^1.18.4
   random-js: ^1.0.8
   typescript: ^3.0.3

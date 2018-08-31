@@ -1,5 +1,7 @@
-/// main.ts
+/// main.tsx
 //Define the different pages and how they interact
+
+import { h, app } from 'hyperapp';
 
 import * as Pages from './pages';
 import * as Settings from './settings';
@@ -81,3 +83,21 @@ Pages.register(new Pages.Page({
 
 Pages.initialize('title');
 Settings.initialize();
+
+interface State {
+  page: string,
+};
+
+const state: State = {
+  page: window.location.hash.slice(1),
+};
+
+const actions = {
+  setPage: (page: string) => ({page}),
+};
+
+const main = (state: State) => (
+  <div>hello {state.page}</div>
+);
+
+app(state, actions, main, document.getElementById('test'));

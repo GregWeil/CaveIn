@@ -5,6 +5,8 @@
     "baseUrl": "src/",
     "target": "esnext",
     "module": "commonjs",
+    "jsx": "react",
+    "jsxFactory": "h",
     "strict": true
   }
 }
