@@ -7,16 +7,15 @@ import Replay from '../game/replay';
 export interface State {
   page: string;
   fullscreen: boolean;
-  save: Replay|null;
-  saveValidated: boolean;
-  best: Replay|null;
-  bestValidated: boolean;
+  save: Replay|null|undefined;
+  best: Replay|null|undefined;
 };
 
 export interface Actions {
   setPage: (page: string) => ActionResult<State>;
   setFullscreen: (fullscren: boolean) => ActionResult<State>;
   clearSave: (save: Replay|null) => ActionResult<State>;
+  loadReplays: () => ActionResult<State>;
   saveReplay: (save: Replay|null) => ActionResult<State>;
 };
 
