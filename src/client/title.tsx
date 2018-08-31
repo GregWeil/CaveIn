@@ -25,7 +25,8 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
       <span class="show-if-music-loading">loading music</span>
       <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
       <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
-      - {!state.fullscreen ? (
+      <Divider/>
+      {!state.fullscreen ? (
         <a onclick={fullscreenEnter}>fullscreen</a>
       ) : (
         <a onclick={fullscreenExit}>exit fullscreen</a>
