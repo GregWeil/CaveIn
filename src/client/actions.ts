@@ -16,7 +16,7 @@ export interface State {
 };
 
 export interface Actions {
-  getState(): State;
+  getState(): ActionResult<State>;
   setPage(page: string): ActionResult<State>;
   setFullscreen(fullscren: boolean): ActionResult<State>;
   
@@ -47,6 +47,7 @@ function readReplay(name: string) {
 }
 
 export const actions: ActionsType<State, Actions> = {
+  getState: () => (state) => state,
   setPage: (page) => (state, actions) => {
     actions.clearGame();
     return {page};
