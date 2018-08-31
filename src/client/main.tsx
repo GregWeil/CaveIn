@@ -87,8 +87,8 @@ Pages.register(new Pages.Page({
   }
 }));
 
-//Pages.initialize('title');
-//Settings.initialize();
+Pages.initialize('title');
+Settings.initialize();
 
 const Main: View<State, Actions> = (state) => {
   switch (state.page) {
