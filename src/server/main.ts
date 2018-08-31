@@ -13,7 +13,7 @@ const client = new Promise((resolve, reject) => {
     .transform('uglifyify', { global: true })
     .bundle((err, data) => {
       if (err) {
-        console.error(err);
+        //console.error(err);
       }
       resolve(data);
     });

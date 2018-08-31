@@ -7,14 +7,8 @@ import { State, Actions } from './actions';
 import * as Wrapper from './wrapper';
 
 const GameArea = () => (
-  <div id="game-page" class="page">
-    <div c
-  </div>
-);
-
-export const Game: Component<{}, State, Actions> = () => (state) => (
-    <GameArea/>
-  </div>lass="centered">
+  <div id="-game-page" class="page">
+    <div class="centered">
       <div class="area">
 
         <canvas id="canvas" width="480" height="320"></canvas>
@@ -38,13 +32,13 @@ export const Game: Component<{}, State, Actions> = () => (state) => (
         </div>
       </div>
     </div>
+  </div>
+);
+
+export const Game: Component<{}, State, Actions> = () => (state) => (
+  <GameArea/>
 );
 
 export const Replay: Component<{}, State, Actions> = () => (state) => (
-  <div id="game-page" class="page"
-    oncreate={() => Wrapper.createWatchable()}
-    ondestroy={() => Wrapper.destroy()}
-  >
-    <GameArea/>
-  </div>
+  <GameArea/>
 );
