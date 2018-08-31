@@ -2,6 +2,8 @@
 // Exports some interfaces that get used a bunch
 
 import { ActionsType, ActionResult } from 'hyperapp';
+
+import Game from '../game/game';
 import Replay from '../game/replay';
 
 export interface State {
@@ -10,6 +12,7 @@ export interface State {
   validated: WeakMap<Replay, boolean>;
   save: Replay|null;
   best: Replay|null;
+  
 };
 
 export interface Actions {
