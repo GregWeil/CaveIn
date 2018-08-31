@@ -41,7 +41,7 @@ export const actions: ActionsType<State, Actions> = {
   setPage: (page) => ({page}),
   setFullscreen: (fullscreen) => ({fullscreen}),
   setValid: (replay: Replay, valid: boolean) => (state: State) => {
-    const validated = new WeakMap<Replay, boolean>(state.validated);
+    const validated = state.validated;
     validated.set(replay, valid);
     return {validated};
   },

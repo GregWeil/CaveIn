@@ -13,8 +13,8 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
       <img src="/assets/boxart.png" class="smooth"/>
     </a>
     <p>
-      <span class="save loading">checking save -</span>
-      <span class="save exists"><a href="#game">continue</a> -</span>
+      {state.save && !!save.validated.get(save) && [<a href="#game">continue</a>, ' -']}
+      {!!state.save && !save.validated.has(save) && ['checking save -']}
       <a href="#newgame">start a new game</a>
       <span class="best loading">- checking best</span>
       <span class="best exists">- <a href="#replay">best score <span class="score"></span></a></span>
