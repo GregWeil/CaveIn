@@ -57,8 +57,8 @@ async function fullscreenExit() {
   fscreen.exitFullscreen();
 };
 
-export const FullscreenToggle = ({fullscreen}: {fullscreen: boolean}) => (
-  fullscreen ? (
+export const FullscreenToggle = (props: {fullscreen: boolean}) => (
+  props.fullscreen ? (
     <a onclick={fullscreenExit}>exit fullscreen</a>
   ) : (
     <a onclick={fullscreenEnter}>fullscreen</a>
