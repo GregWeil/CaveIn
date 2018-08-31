@@ -2,6 +2,7 @@
 //Fullscreen toggle, plus music and audio handling
 
 import { Howler, Howl } from 'howler';
+import fscreen from 'fscreen';
 
 const audioMusic = new Howl({ preload: false, src: ['/assets/cavein.wav'] });
 let audioMusicId: number | null = null;
@@ -47,40 +48,13 @@ audioMusic.once('load', () => {
 // Fullscreen toggling
 
 export async function fullscreenEnter() {
-  const element: any = document.documentElement;
-  const names = [
-    'requestFullscreen',
-    'webkitRequestFullscreen',
-    'mozRequestFullScreen',
-    'msRequestFullscreen'
-  ];
-  for (let i = 0; i < names.length; ++i) {
-    if (element[names[i]]) {
-      await element[names[i]]();
-      break;
-    }
-  }
+  await fscreen.requestFullscreen(document.documentElement);
   (window as any).screen.orientation.lock('landscape');
 };
 
 export async function fullscreenExit() {
-  const element: any = document;
-  const names = [
-    'exitFullscreen',
-    'webkitExitFullscreen',
-    'mozCancelFullScreen',
-    'msExitFullscreen'
-  ];
-  for (let i = 0; i < names.length; ++i) {
-    if (element[names[i]]) {
-      await element[names[i]]();
-      break;
-    }
-  }
+  fscreen.exitFullscreen();
 };
-
-export function getFullscreenElement() {
-}
 
 // Attach event listeners
 

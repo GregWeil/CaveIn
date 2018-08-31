@@ -22,8 +22,11 @@ const Title: Component<{}, State, Actions> = () => (state, actions) => (
       <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
       <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
       -
-      <a data-onclick="enter-fullscreen" class="hide-if-fullscreen-enabled">fullscreen</a>
-      <a data-onclick="exit-fullscreen" class="hide-if-fullscreen-disabled">exit fullscreen</a>
+      {!state.fullscreen ? (
+        <a data-onclick="enter-fullscreen">fullscreen</a>
+      ) : (
+        <a data-onclick="exit-fullscreen">exit fullscreen</a>
+      )}
     </p>
     <p><a href="#tutorial">instructions</a></p>
     <p>made for Ludum Dare 37 "One Room"</p>

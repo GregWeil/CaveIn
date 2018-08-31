@@ -2,6 +2,7 @@
 //Define the different pages and how they interact
 
 import { h, app, View } from 'hyperapp';
+import fscreen from 'fscreen';
 
 import * as Pages from './pages';
 import * as Settings from './settings';
@@ -100,9 +101,13 @@ const Main: View<State, Actions> = (state) => {
 
 const application = app<State, Actions>({
   page: window.location.hash.slice(1),
-  fullscreen: !!Settings.getFullscreenElement();
+  fullscreen: !!fscreen.fullscreenElement,
 }, actions, Main, document.getElementById('test'));
 
 window.addEventListener('hashchange', () => {
   application.setPage(window.location.hash.slice(1));
+});
+
+fscreen.addEventListener('fullscreenchange', () => {
+  application.setFullscreen(!!fscreen.fullscreenElement);
 });
