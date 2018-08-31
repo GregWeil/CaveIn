@@ -3,7 +3,7 @@
 
 import { ActionsType, ActionResult } from 'hyperapp';
 
-import Game from '../game/game';
+import { WrappedGame } from './game';
 import Replay from '../game/replay';
 
 export interface State {
@@ -12,21 +12,22 @@ export interface State {
   validated: WeakMap<Replay, boolean>;
   save: Replay|null;
   best: Replay|null;
-  game: Game|null;
+  game: WrappedGame|null;
 };
 
 export interface Actions {
-  setPage: (page: string) => ActionResult<State>;
-  setFullscreen: (fullscren: boolean) => ActionResult<State>;
+  getState(): State;
+  setPage(page: string): ActionResult<State>;
+  setFullscreen(fullscren: boolean): ActionResult<State>;
   
-  setValid: (args: [Replay, boolean]) => ActionResult<State>;
-  clearSave: (save: Replay|null) => ActionResult<State>;
-  load: () => ActionResult<State>;
-  save: (save: Replay|null) => ActionResult<State>;
+  setValid(args: [Replay, boolean]): ActionResult<State>;
+  clearSave(save: Replay|null): ActionResult<State>;
+  load(): ActionResult<State>;
+  save(save: Replay|null): ActionResult<State>;
   
-  clearGame: () => ActionResult<State>;
-  createGame: (save: Replay) => ActionResult<State>;
-  createWatch: (replay: Replay) => ActionResult<State>;
+  clearGame(): ActionResult<State>;
+  createGame(save: Replay): ActionResult<State>;
+  createWatch(replay: Replay): ActionResult<State>;
 };
 
 function writeReplay(name: string, replay: Replay|null) {

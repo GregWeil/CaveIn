@@ -12,7 +12,7 @@ import * as Game from './wrapper';
 import { State, Actions, actions } from './actions';
 import Title from './title';
 import Tutorial from './tutorial';
-import { Game as GamePage, Replay as ReplayPage } from './game';
+import { GamePage, ReplayPage } from './game';
 
 function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
