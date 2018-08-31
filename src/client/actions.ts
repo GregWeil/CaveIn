@@ -12,16 +12,21 @@ export interface State {
   validated: WeakMap<Replay, boolean>;
   save: Replay|null;
   best: Replay|null;
-  
+  game: Game|null;
 };
 
 export interface Actions {
   setPage: (page: string) => ActionResult<State>;
   setFullscreen: (fullscren: boolean) => ActionResult<State>;
+  
   setValid: (args: [Replay, boolean]) => ActionResult<State>;
   clearSave: (save: Replay|null) => ActionResult<State>;
   load: () => ActionResult<State>;
   save: (save: Replay|null) => ActionResult<State>;
+  
+  clearGame: () => ActionResult<State>;
+  createGame: (save: Replay) => ActionResult<State>;
+  createWatch: (replay: Replay) => ActionResult<State>;
 };
 
 function writeReplay(name: string, replay: Replay|null) {
@@ -41,8 +46,12 @@ function readReplay(name: string) {
 }
 
 export const actions: ActionsType<State, Actions> = {
-  setPage: (page) => ({page}),
+  setPage: (page) => (state, actions) => {
+    actions.clearGame();
+    return {page};
+  },
   setFullscreen: (fullscreen) => ({fullscreen}),
+  
   setValid: ([replay, valid]) => (state: State) => {
     const validated = state.validated;
     validated.set(replay, valid);
@@ -75,5 +84,13 @@ export const actions: ActionsType<State, Actions> = {
       return {save, best: replay};
     }
     return {save};
+  },
+  
+  clearGame: () => (state) => {
+    state.game && state.game.destructor();
+    return {game: null};
+  },
+  createGame: (save: Replay) => (state, actions) => {
+    
   },
 };
