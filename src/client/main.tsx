@@ -9,6 +9,7 @@ import * as Save from './save';
 import * as Game from './wrapper';
 
 import { State, Actions, actions } from './actions';
+import Title from './title';
 import Tutorial from './tutorial';
 
 function showSingle(select: string, except: string) {
@@ -91,7 +92,7 @@ const Main: View<State, Actions> = (state) => {
   if (state.page === 'tutorial') {
     return <Tutorial/>;
   }
-  return <div>{state.page}</div>;
+  return <Title/>;
 }
 
 const application = app<State, Actions>({
