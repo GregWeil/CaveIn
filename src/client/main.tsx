@@ -88,8 +88,8 @@ Pages.register(new Pages.Page({
 Pages.initialize('title');
 Settings.initialize();
 
-class Router extends Component {
-  state: {page: ''}
+class Router extends Component<{}, {page: string}> {
+  state = {page: ''}
   onHashChange() {
     this.setState({page: window.location.hash.slice(1)});
   }
@@ -100,16 +100,16 @@ class Router extends Component {
   componentWillUnmount() {
     window.removeEventListener('hashchange', this.onHashChange);
   }
-  render({}, {page}) {
-    switch (page) {
+  render() {
+    switch (this.state.page) {
       case 'title':
         return <Title/>;
       case 'tutorial':
         return <Tutorial/>;
       case 'game':
-        return <GamePage save={state.save}/>;
+        //return <GamePage save={state.save}/>;
       case 'replay':
-        return <ReplayPage/>;
+        //return <ReplayPage/>;
     }
     return <Title/>;
   }
@@ -119,4 +119,4 @@ const App = () => (
   <Router/>
 );
 
-render(App, document.getElementById('test'));
+render(<App/>, document.getElementById('test')!);

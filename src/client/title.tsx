@@ -1,7 +1,7 @@
 /// title.tsx
 // The title screen for the game
 
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 
 import { FullscreenToggle } from './fullscreen';
 
@@ -14,7 +14,7 @@ const Title = (state: any) => (
       <img src="/assets/boxart.png" class="smooth"/>
     </a>
     <p>
-      {!!state.save && !!state.validated.get(state.save) && [<a href="#game">continue</a>, <Divider/>]}
+      {!!state.save && !!state.validated.get(state.save) && <Fragment><a href="#game">continue</a><Divider/></Fragment>}
       {!!state.save && !state.validated.has(state.save) && ['checking save', <Divider/>]}
       <a href="#game" onclick={actions.clearSave}>start a new game</a>
       {!!state.best && !!state.validated.get(state.best) && [<Divider/>, <a href="#replay">best score {state.best.score}</a>]}
