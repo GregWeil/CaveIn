@@ -40,10 +40,10 @@ export class ReplayValidatorManager extends Component<Props, State> {
     return null;
   }
   render({children}: Props, {validated}: State) {
-    return <Provider value={this.validate.bind(this)}>children</Provider>;
+    return <Provider value={this.validate.bind(this)}>{children}</Provider>;
   }
 }
 
 export const ReplayValidatorConsumer = ({children}: {children: (func: Context) => VNode}) => (
-  <Consumer render={children}/>
+  <Consumer>{children}</Consumer>
 );
