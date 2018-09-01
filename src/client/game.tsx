@@ -118,13 +118,13 @@ const GameArea: Component<{}, State, Actions> = () => (state, actions) => (
   </div>
 );
 
-const WaitForValidate: Component<{replay: Replay|null}, State, Actions> = ({replay}, children) => (state) => (
-  [children]
+const WaitForValidate: Component<{replay: Replay|null, validated: WeakMap<Replay, boolean>}, State, Actions> = ({replay, validated}, children) => (
+  children
 );
 
 export const GamePage: Component<{save: Replay|null}, State, Actions> = ({save}) => (state) => (
-  <WaitForValidate replay={save}>
-    <WaitForValidate replay={state.best}>
+  <WaitForValidate replay={save} validated={state.validated}>
+    <WaitForValidate replay={state.best} validated={state.validated}>
       <GameArea/>
     </WaitForValidate>
   </WaitForValidate>
