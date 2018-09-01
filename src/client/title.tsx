@@ -1,14 +1,13 @@
 /// title.tsx
 // The title screen for the game
 
-import { h, Component } from 'hyperapp';
-import { State, Actions } from './actions';
+import { h } from 'preact';
 
 import { FullscreenToggle } from './settings';
 
 const Divider = () => ' - ';
 
-const Title: Component<{}, State, Actions> = () => (state, actions) => (
+const Title = (state: any) => (
   <div id="-title-page" class="page centered">
     <div class="glitchButton"></div>
     <a id="boxart" href="#game">

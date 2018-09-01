@@ -8,8 +8,8 @@ dependencies:
   express: 4.16.3
   fscreen: 1.0.2
   howler: 2.0.15
-  hyperapp: 1.2.8
   nodemon: 1.18.4
+  preact: 8.3.1
   random-js: 1.0.8
   typescript: 3.0.3
   uglifyify: 5.0.1
@@ -1293,10 +1293,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
-  /hyperapp/1.2.8:
-    dev: false
-    resolution:
-      integrity: sha512-BqPu/1cJ9hWdMUYNPfmsnh92pap6IAzlG0KOJrdtdMkciJJVUOSwaQTDEaP086TmVOWwjRzlQrZngLQwAE6ocg==
   /iconv-lite/0.4.19:
     dev: false
     engines:
@@ -2052,6 +2048,11 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
+  /preact/8.3.1:
+    dev: false
+    requiresBuild: true
+    resolution:
+      integrity: sha512-s8H1Y8O9e+mOBo3UP1jvWqArPmjCba2lrrGLlq/0kN1XuIINUbYtf97iiXKxCuG3eYwmppPKnyW2DBrNj/TuTg==
   /prepend-http/1.0.4:
     dev: false
     engines:
@@ -2918,8 +2919,8 @@ specifiers:
   express: ^4.16.3
   fscreen: ^1.0.2
   howler: ^2.0.15
-  hyperapp: ^1.2.8
   nodemon: ^1.18.4
+  preact: ^8.3.1
   random-js: ^1.0.8
   typescript: ^3.0.3
   uglifyify: ^5.0.1

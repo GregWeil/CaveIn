@@ -1,7 +1,7 @@
 /// settings.tsx
 //Fullscreen toggle, plus music and audio handling
 
-import { h, Component } from 'hyperapp';
+import { h } from 'preact';
 import { Howler, Howl } from 'howler';
 import fscreen from 'fscreen';
 

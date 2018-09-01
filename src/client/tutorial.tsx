@@ -1,9 +1,9 @@
 /// tutorial.tsx
 // The tutorial page
 
-import { h, Component } from 'hyperapp';
+import { h } from 'preact';
 
-const Tutorial: Component = () => (
+const Tutorial = () => (
   <div id="-tutorial-page" class="page inverse">
     <h1>Instructions</h1>
 
