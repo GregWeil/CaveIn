@@ -25,7 +25,7 @@ const Title = (state: any) => (
       <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
       <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
       <Divider/>
-      <FullscreenToggle fullscreen={state.fullscreen}/>
+      <FullscreenToggle/>
     </p>
     <p><a href="#tutorial">instructions</a></p>
     <p>made for Ludum Dare 37 "One Room"</p>

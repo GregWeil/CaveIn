@@ -6,30 +6,41 @@ import fscreen from 'fscreen';
 
 const { Provider, Consumer } = createContext();
 
-export class FullscreenManager extends Component {
-  state: {fullscreen: false}
-  componentDidMount() {
-  }
-  componentWillUnmount() {
-  }
-  render({children}, {fullscreen}) {
-    
-  }
-}
-
-async function fullscreenEnter() {
+async function enter() {
   await fscreen.requestFullscreen(document.documentElement);
   (window as any).screen.orientation.lock('landscape');
 };
 
-async function fullscreenExit() {
+async function exit() {
   fscreen.exitFullscreen();
 };
 
-export const FullscreenToggle = (props: {fullscreen: boolean}) => (
-  props.fullscreen ? (
-    <a onclick={fullscreenExit}>exit fullscreen</a>
-  ) : (
-    <a onclick={fullscreenEnter}>fullscreen</a>
-  )
+export class FullscreenManager extends Component {
+  state: {fullscreen: false}
+  onFullscreenChange() {
+    this.setState({fullscreen: !!fscreen.fullscreenElement});
+  }
+  componentDidMount() {
+    this.onFullscreenChange = this.onFullscreenChange.bind(this);
+    fscreen.addEventListener('fullscreenchange', this.onFullscreenChange);
+    this.onFullscreenChange();
+  }
+  componentWillUnmount() {
+    fscreen.removeEventListener('fullscreenchange', this.onFullscreenChange);
+  }
+  render({children}, {fullscreen}) {
+    return <Provider value={{fullscreen, enter, exit}}>{children}</Provider>;
+  }
+}
+
+export const FullscreenToggle = () => (
+  <Consumer>
+    {({fullscreen, enter, exit}) => (
+      props.fullscreen ? (
+        <a onclick={exit}>exit fullscreen</a>
+      ) : (
+        <a onclick={enter}>fullscreen</a>
+      )
+    )}
+  </Consumer>
 );

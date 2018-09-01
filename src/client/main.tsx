@@ -1,8 +1,7 @@
 /// main.tsx
 //Define the different pages and how they interact
 
-import { h, app, View } from 'hyperapp';
-import fscreen from 'fscreen';
+import { h, Component } from 'preact';
 
 import * as Pages from './pages';
 import * as Settings from './settings';
@@ -90,18 +89,22 @@ Pages.register(new Pages.Page({
 Pages.initialize('title');
 Settings.initialize();
 
-const Main: View<State, Actions> = (state) => {
-  switch (state.page) {
-    case 'title':
-      return <Title/>;
-    case 'tutorial':
-      return <Tutorial/>;
-    case 'game':
-      return <GamePage save={state.save}/>;
-    case 'replay':
-      return <ReplayPage/>;
+class App extends Component {
+  state: {page: ''}
+  render({}, {page}) {
+    const Page = <Title/>;
+    switch (page) {
+      case 'title':
+        return <Title/>;
+      case 'tutorial':
+        return <Tutorial/>;
+      case 'game':
+        return <GamePage save={state.save}/>;
+      case 'replay':
+        return <ReplayPage/>;
+    }
+    return <Title/>;
   }
-  return <Title/>;
 }
 
 const application = app<State, Actions>({
