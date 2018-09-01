@@ -8,8 +8,8 @@ import * as Settings from './settings';
 import * as Save from './save';
 import * as Game from './wrapper';
 
-import Title from './title';
-import Tutorial from './tutorial';
+import TitlePage from './title';
+import TutorialPage from './tutorial';
 import { GamePage, ReplayPage } from './game';
 
 function showSingle(select: string, except: string) {
@@ -103,15 +103,15 @@ class Router extends Component<{}, {page: string}> {
   render() {
     switch (this.state.page) {
       case 'title':
-        return <Title/>;
+        return <TitlePage/>;
       case 'tutorial':
-        return <Tutorial/>;
+        return <TutorialPage/>;
       case 'game':
         //return <GamePage save={state.save}/>;
       case 'replay':
         //return <ReplayPage/>;
     }
-    return <Title/>;
+    return <TitlePage/>;
   }
 }
 

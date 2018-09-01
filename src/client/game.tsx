@@ -1,12 +1,13 @@
 /// game.tsx
 // Handles pages where the game is visible
 
-import { h, Component } from 'hyperapp';
+import { h, Component } from 'preact';
 
-import { State, Actions } from './actions';
 import Game from '../game/game';
 import Replay from '../game/replay';
 import * as Input from '../engine/input';
+
+import { FullscreenToggle } from './fullscreen';
 
 export interface WrappedGame {
   destructor(): void;
@@ -89,12 +90,12 @@ export function createPlayable(canvas: HTMLCanvasElement, save: Replay|null, bes
   };
 }
 
-const GameArea: Component<{}, State, Actions> = () => (state, actions) => (
+const GameArea = () => (
   <div id="-game-page" class="page">
     <div class="centered">
       <div class="area">
 
-        <canvas id="-canvas" width="480" height="320" oncreate={(canvas: HTMLCanvasElement) => actions.createGame({canvas, save: state.save})}></canvas>
+        <canvas id="-canvas" width="480" height="320"></canvas>
 
         <div id="game-pause" class="centered overlay">
           <p><span class="inverse">PAUSED</span></p>
@@ -103,9 +104,8 @@ const GameArea: Component<{}, State, Actions> = () => (state, actions) => (
             <span class="show-if-music-loading">loading music</span>
             <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
             <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
-            -
-            <a data-onclick="enter-fullscreen" class="hide-if-fullscreen-enabled">fullscreen</a>
-            <a data-onclick="exit-fullscreen" class="hide-if-fullscreen-disabled">exit fullscreen</a>
+            {' - '}
+            <FullscreenToggle/>
           </span></p>
         </div>
 
@@ -118,18 +118,10 @@ const GameArea: Component<{}, State, Actions> = () => (state, actions) => (
   </div>
 );
 
-const WaitForValidate: Component<{replay: Replay|null, validated: WeakMap<Replay, boolean>}, State, Actions> = ({replay, validated}, children) => (
-  children
+export const GamePage = () => (
+  <GameArea/>
 );
 
-export const GamePage: Component<{save: Replay|null}, State, Actions> = ({save}) => (state) => (
-  <WaitForValidate replay={save} validated={state.validated}>
-    <WaitForValidate replay={state.best} validated={state.validated}>
-      <GameArea/>
-    </WaitForValidate>
-  </WaitForValidate>
-);
-
-export const ReplayPage: Component<{}, State, Actions> = () => (state) => (
+export const ReplayPage = () => (
   <GameArea/>
 );

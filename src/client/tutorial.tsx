@@ -3,7 +3,7 @@
 
 import { h } from 'preact';
 
-const Tutorial = () => (
+const TutorialPage = () => (
   <div id="-tutorial-page" class="page inverse">
     <h1>Instructions</h1>
 
@@ -54,4 +54,4 @@ const Tutorial = () => (
   </div>
 );
 
-export default Tutorial;
+export default TutorialPage;
