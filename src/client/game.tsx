@@ -89,12 +89,12 @@ export function createPlayable(canvas: HTMLCanvasElement, save: Replay|null, bes
   };
 }
 
-const GameArea: Component = () => (state, actions) => (
+const GameArea: Component<{}, State, Actions> = () => (state, actions) => (
   <div id="-game-page" class="page">
     <div class="centered">
       <div class="area">
 
-        <canvas id="canvas" width="480" height="320" oncreate={element => console.log(element)}></canvas>
+        <canvas id="-canvas" width="480" height="320" oncreate={canvas => actions.createGame({canvas, save: state.save})}></canvas>
 
         <div id="game-pause" class="centered overlay">
           <p><span class="inverse">PAUSED</span></p>
@@ -118,8 +118,16 @@ const GameArea: Component = () => (state, actions) => (
   </div>
 );
 
-export const GamePage: Component<{}, State, Actions> = () => (state) => (
-  <GameArea/>
+const WaitForValidate: Component<{replay: Replay|null}, State, Actions> = ({}, children) => (state) => (
+  !!(!replay || state.validated.has(replay)) && children
+);
+
+export const GamePage: Component<{save: Replay|null}, State, Actions> = ({save}) => (state) => (
+  <WaitForValidate replay={save}>
+    <WaitForValidate replay={state.best}>
+    </WaitForValidate>
+    <GameArea/>
+  </WaitForValidate>
 );
 
 export const ReplayPage: Component<{}, State, Actions> = () => (state) => (

@@ -26,7 +26,7 @@ export interface Actions {
   save(save: Replay|null): ActionResult<State>;
   
   clearGame(): ActionResult<State>;
-  createGame(save: Replay): ActionResult<State>;
+  createGame(args: {canvas: HTMLCanvasElement, save: Replay}): ActionResult<State>;
   createWatch(replay: Replay): ActionResult<State>;
 };
 
@@ -92,9 +92,8 @@ export const actions: ActionsType<State, Actions> = {
     state.game && state.game.destructor();
     return {game: null};
   },
-  createGame: (save) => (state) => {
+  createGame: ({canvas, save}) => (state) => {
     if (state.game) return;
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
     return {game: createPlayable(canvas, save, state.best ? state.best.score : undefined)};
   },
   createWatch: (replay) => (state) => {
