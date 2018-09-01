@@ -1,7 +1,25 @@
-/// save.ts
+/// save.tsx
 //Saving and loading the current and best game
 
+import { h, Component, VNode } from 'preact';
+
 import Replay from '../game/replay';
+
+interface SaveProps {
+  children: VNode;
+}
+
+interface SaveState {
+  save: Replay|null;
+  best: Replay|null;
+}
+
+export default class Save extends React.Component<SaveProps, SaveState> {
+  state = {save: null, best: null}
+  render({children}: SaveProps, {save, best}: SaveState) {
+    return children;
+  }
+};
 
 function writeToStorage(name: string, replay: Replay|null) {
   if (replay) {

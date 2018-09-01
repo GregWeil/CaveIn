@@ -30,17 +30,16 @@ export class FullscreenManager extends Component<{children: VNode}, {fullscreen:
     fscreen.removeEventListener('fullscreenchange', this.onFullscreenChange);
   }
   render() {
-    return <Provider value={{fullscreen, enter, exit}}>{this.props.children}</Provider>;
+    return <Provider value={{fullscreen: this.state.fullscreen, enter, exit}}>{this.props.children}</Provider>;
   }
 }
 
 export const FullscreenToggle = () => (
   <Consumer render={({fullscreen, enter, exit}) => (
-      props.fullscreen ? (
-        <a onclick={exit}>exit fullscreen</a>
-      ) : (
-        <a onclick={enter}>fullscreen</a>
-      )
-    )}
-  </Consumer>
+    fullscreen ? (
+      <a onClick={exit}>exit fullscreen</a>
+    ) : (
+      <a onClick={enter}>fullscreen</a>
+    )
+  )}/>
 );
