@@ -14,7 +14,8 @@ import { SaveManager } from './save';
 
 import TitlePage from './title';
 import TutorialPage from './tutorial';
-import { GamePage, ReplayPage } from './game';
+import { GamePage } from './game';
+import ReplayPage from './replay';
 
 function showSingle(select: string, except: string) {
   document.querySelectorAll(select).forEach(e => {
@@ -89,8 +90,8 @@ Pages.register(new Pages.Page({
   }
 }));
 
-//Pages.initialize('title');
-//Settings.initialize();
+Pages.initialize('title');
+Settings.initialize();
 
 class Router extends Component<{}, {page: string, key: number}> {
   state = {page: '', key: 0}
@@ -133,4 +134,4 @@ const Main = () => (
   </FullscreenManager>
 );
 
-render(<Main/>, document.getElementById('test')!);
+//render(<Main/>, document.getElementById('test')!);

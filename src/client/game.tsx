@@ -3,20 +3,15 @@
 
 import { h, Component, ComponentChildren, FunctionalComponent, Ref } from 'preact';
 
-import Game from '../game/game';
-import Replay from '../game/replay';
-import * as Input from '../engine/input';
 import Vector2 from '../engine/vector2';
 
 import { FullscreenToggle } from './fullscreen';
-import { ReplayValidatorConsumer } from './validator';
-import { SaveConsumer } from './save';
 
-const GameCanvas = ({canvasRef}: {canvasRef: Ref<HTMLCanvasElement>}) => (
+export const GameCanvas = ({canvasRef}: {canvasRef: Ref<HTMLCanvasElement>}) => (
   <canvas id="-canvas" width="480" height="320" ref={canvasRef}></canvas>
 );
 
-class GameLayout extends Component<{children: ComponentChildren}, {scale: number}> {
+export class GameLayout extends Component<{children: ComponentChildren}, {scale: number}> {
   state = {scale: 1}
   node: HTMLElement|null = null
   resize() {
@@ -82,60 +77,4 @@ export const GamePage: FunctionalComponent = () => (
     <PauseOverlay/>
     <GameOverOverlay/>
   </GameLayout>
-);
-
-class ReplayPageImpl extends Component<{replay: Replay|null, best: Replay|null, validator: (replay: Replay) => boolean|null}, {loading: boolean}> {
-  state = {loading: true}
-  canvas: HTMLCanvasElement|null = null
-  game: Game|null = null
-  async check() {
-    console.log(this.canvas);
-    const {replay, best} = this.props;
-    if (!replay) {
-      window.location.replace('#title');
-      return;
-    } else if (!this.props.validator(replay)) {
-      return;
-    }
-    this.setState({loading: false});
-    this.game = new Game({
-      canvas: this.canvas,
-      seed: replay.seed,
-      best: best ? best.score : null,
-    });
-    try {
-      await replay.execute(this.game, 5);
-      await new Promise(resolve => setTimeout(resolve, 3000));
-    } finally {
-      window.location.assign('#title');
-    }
-  }
-  componentDidMount() {
-    if (this.state.loading) this.check();
-  }
-  componentDidUpdate() {
-    if (this.state.loading) this.check();
-  }
-  componentWillUnmount() {
-    if (this.game) this.game.destructor();
-  }
-  render() {
-    return (
-      <GameLayout>
-        <GameCanvas canvasRef={canvas => this.canvas = canvas}/>
-      </GameLayout>
-    );
-  }
-}
-
-export const ReplayPage: FunctionalComponent = () => (
-  <ReplayValidatorConsumer>
-    {validator => (
-      <SaveConsumer>
-        {({best}) => (
-          <ReplayPageImpl replay={best} best={best} validator={validator}/>
-        )}
-      </SaveConsumer>
-    )}
-  </ReplayValidatorConsumer>
 );
