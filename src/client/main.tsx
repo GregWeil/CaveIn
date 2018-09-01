@@ -111,7 +111,7 @@ class Router extends Component<{}, {page: string}> {
       case 'tutorial':
         return <TutorialPage/>;
       case 'game':
-        return <GamePage save={state.save}/>;
+        return <GamePage/>;
       case 'replay':
         return <ReplayPage/>;
     }
