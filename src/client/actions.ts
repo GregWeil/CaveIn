@@ -3,7 +3,7 @@
 
 import { ActionsType, ActionResult } from 'hyperapp';
 
-import { WrappedGame } from './game';
+import { WrappedGame, createPlayable } from './game';
 import Replay from '../game/replay';
 
 export interface State {
@@ -25,7 +25,6 @@ export interface Actions {
   load(): ActionResult<State>;
   save(save: Replay|null): ActionResult<State>;
   
-  setGame(game: WrappedGame): ActionResult<State>;
   clearGame(): ActionResult<State>;
   createGame(save: Replay): ActionResult<State>;
   createWatch(replay: Replay): ActionResult<State>;
@@ -93,12 +92,12 @@ export const actions: ActionsType<State, Actions> = {
     state.game && state.game.destructor();
     return {game: null};
   },
-  setGame: (game: WrappedGame) => ({game}),
-  createGame: (save: Replay) => (state) => {
+  createGame: (save) => (state) => {
     if (state.game) return;
-    
+    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    return {game: createPlayable(canvas, save, state.best ? state.best.score : undefined)};
   },
-  createWatch: (replay: Replay) => (state) => {
+  createWatch: (replay) => (state) => {
     if (state.game) return;
     
   },
