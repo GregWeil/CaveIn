@@ -111,9 +111,9 @@ class Router extends Component<{}, {page: string}> {
       case 'tutorial':
         return <TutorialPage/>;
       case 'game':
-        //return <GamePage save={state.save}/>;
+        return <GamePage save={state.save}/>;
       case 'replay':
-        //return <ReplayPage/>;
+        return <ReplayPage/>;
     }
     return <TitlePage/>;
   }
@@ -129,4 +129,4 @@ const Main = () => (
   </FullscreenManager>
 );
 
-//render(<Main/>, document.getElementById('test')!);
+render(<Main/>, document.getElementById('test')!);

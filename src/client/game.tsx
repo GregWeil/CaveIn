@@ -6,6 +6,7 @@ import { h, Component, VNode } from 'preact';
 import Game from '../game/game';
 import Replay from '../game/replay';
 import * as Input from '../engine/input';
+import Vector2 from '../engine/vector2';
 
 import { FullscreenToggle } from './fullscreen';
 
@@ -13,28 +14,38 @@ const GameCanvas = () => (
   <canvas id="-canvas" width="480" height="320"></canvas>
 );
 
-class GameLayout extends Component<{children: VNode}, > {
+class GameLayout extends Component<{children: VNode[]}, {scale: number}> {
+  state = {scale: 1}
+  node: HTMLElement|null = null
   resize() {
+    if (!this.node) return;
     const pixel = window.devicePixelRatio;
-    const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
-    const sizeCanvas = new Vector2(canvas.width, canvas.height);
+    const sizeArea = new Vector2(this.node.offsetWidth, this.node.offsetHeight);
     const sizeWindow = new Vector2(window.innerWidth, window.innerHeight);
-    const scaleAxes = sizeWindow.divide(sizeCanvas.divide(pixel));
+    const scaleAxes = sizeWindow.divide(sizeArea.divide(pixel));
     let scale = Math.min(scaleAxes.x, scaleAxes.y);
     if (scale > 1) {
       scale = Math.floor(scale);
     } else if (scale < 1) {
       scale = (1 / Math.ceil(1 / scale));
     }
-    const area = canvas.closest('.area') as HTMLElement;
-    area.style.transform = `scale(${scale / pixel})`;
+    this.setState({scale: scale / pixel});
   }
-  render({children}: {children: VNode}) {
+  componentDidMount() {
+    this.resize = this.resize.bind(this);
+    window.addEventListener('resize', this.resize);
+    this.resize();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
+  }
+  render() {
+    const {scale} = this.state;
     return (
       <div id="-game-page" class="page">
         <div class="centered">
-          <div class="area" ref={node => this.node = node}>
-            {children}
+          <div class="area" style={{transform: `scale(${scale})`}} ref={node => this.node = node}>
+            {this.props.children}
           </div>
         </div>
       </div>
