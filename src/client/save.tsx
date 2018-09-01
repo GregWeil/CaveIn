@@ -1,7 +1,7 @@
 /// save.tsx
 //Saving and loading the current and best game
 
-import { h, Component, VNode } from 'preact';
+import { h, Component, ComponentChildren } from 'preact';
 import { createContext } from 'preact-context';
 
 import Replay from '../game/replay';
@@ -46,7 +46,7 @@ export class SaveManager extends Component<SaveProps, SaveState> {
   }
 };
 
-export const SaveConsumer = ({children}: {children(state: SaveState): VNode}) => (
+export const SaveConsumer = ({children}: {children(state: SaveState): ComponentChildren}) => (
   <Consumer>{children}</Consumer>
 );
 

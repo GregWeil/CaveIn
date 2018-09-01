@@ -9,6 +9,8 @@ import * as Input from '../engine/input';
 import Vector2 from '../engine/vector2';
 
 import { FullscreenToggle } from './fullscreen';
+import { ReplayValidatorConsumer } from './validator';
+import { SaveConsumer } from './save';
 
 const GameCanvas = () => (
   <canvas id="-canvas" width="480" height="320"></canvas>
@@ -82,10 +84,26 @@ export const GamePage = () => (
   </GameLayout>
 );
 
-export const ReplayPage = () => (
+const ReplayPageImpl = ({replay: Replay, validated: boolean, best: number|null) => (
   <GameLayout>
     <GameCanvas/>
     <PauseOverlay/>
     <GameOverOverlay/>
   </GameLayout>
+);
+
+export const ReplayPage = () => (
+  <ReplayValidatorConsumer>
+    {validator => (
+      <SaveConsumer>
+        {({best}) => (
+          best ? (
+            <ReplayPageImpl replay={best} validated={validator(replay)}
+          ) : (
+            null
+          )
+        )}
+      </SaveConsumer>
+    )}
+  </ReplayValidatorConsumer>
 );
