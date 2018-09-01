@@ -26,7 +26,7 @@ export interface Actions {
   save(save: Replay|null): ActionResult<State>;
   
   clearGame(): ActionResult<State>;
-  createGame(args: {canvas: HTMLCanvasElement, save: Replay}): ActionResult<State>;
+  createGame(args: {canvas: HTMLCanvasElement, save: Replay|null}): ActionResult<State>;
   createWatch(replay: Replay): ActionResult<State>;
 };
 

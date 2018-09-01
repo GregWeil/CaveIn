@@ -97,7 +97,7 @@ const Main: View<State, Actions> = (state) => {
     case 'tutorial':
       return <Tutorial/>;
     case 'game':
-      return <GamePage/>;
+      return <GamePage save={state.save}/>;
     case 'replay':
       return <ReplayPage/>;
   }
