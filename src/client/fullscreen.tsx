@@ -1,10 +1,11 @@
 /// fullscreen.tsx
 // Fullscreen manager and toggle
 
-import { h, Component, createContext } from 'preact';
+import { h, Component, VNode } from 'preact';
+import { createContext } from 'preact-context';
 import fscreen from 'fscreen';
 
-const { Provider, Consumer } = createContext();
+const { Provider, Consumer } = createContext({fullscreen: false, enter, exit});
 
 async function enter() {
   await fscreen.requestFullscreen(document.documentElement);
@@ -15,7 +16,7 @@ async function exit() {
   fscreen.exitFullscreen();
 };
 
-export class FullscreenManager extends Component<{}, {fullscreen: boolean}> {
+export class FullscreenManager extends Component<{children: VNode}, {fullscreen: boolean}> {
   state = {fullscreen: false}
   onFullscreenChange() {
     this.setState({fullscreen: !!fscreen.fullscreenElement});
@@ -28,14 +29,13 @@ export class FullscreenManager extends Component<{}, {fullscreen: boolean}> {
   componentWillUnmount() {
     fscreen.removeEventListener('fullscreenchange', this.onFullscreenChange);
   }
-  render({children}, {fullscreen}) {
-    return <Provider value={{fullscreen, enter, exit}}>{children}</Provider>;
+  render() {
+    return <Provider value={{fullscreen, enter, exit}}>{this.props.children}</Provider>;
   }
 }
 
 export const FullscreenToggle = () => (
-  <Consumer>
-    {({fullscreen, enter, exit}) => (
+  <Consumer render={({fullscreen, enter, exit}) => (
       props.fullscreen ? (
         <a onclick={exit}>exit fullscreen</a>
       ) : (
