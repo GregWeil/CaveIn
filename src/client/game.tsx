@@ -84,24 +84,28 @@ export const GamePage = () => (
   </GameLayout>
 );
 
-const ReplayPageImpl = ({replay: Replay, validated: boolean, best: number|null) => (
-  <GameLayout>
-    <GameCanvas/>
-    <PauseOverlay/>
-    <GameOverOverlay/>
-  </GameLayout>
-);
+class ReplayPageImpl extends Component<{replay: Replay|null, best: Replay|null, validator: (replay: Replay) => boolean|null}, {loading: boolean}> {
+  state = {loading: true}
+  render() {
+    if (this.state.loading) {
+      return null;
+    }
+    return (
+      <GameLayout>
+        <GameCanvas/>
+        <PauseOverlay/>
+        <GameOverOverlay/>
+      </GameLayout>
+    );
+  }
+}
 
 export const ReplayPage = () => (
   <ReplayValidatorConsumer>
     {validator => (
       <SaveConsumer>
         {({best}) => (
-          best ? (
-            <ReplayPageImpl replay={best} validated={validator(replay)}
-          ) : (
-            null
-          )
+          <ReplayPageImpl replay={best} best={best} validator={validator}/>
         )}
       </SaveConsumer>
     )}
