@@ -89,8 +89,8 @@ Pages.register(new Pages.Page({
   }
 }));
 
-Pages.initialize('title');
-Settings.initialize();
+//Pages.initialize('title');
+//Settings.initialize();
 
 class Router extends Component<{}, {page: string, key: number}> {
   state = {page: '', key: 0}

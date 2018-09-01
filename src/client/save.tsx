@@ -7,7 +7,7 @@ import { createContext } from 'preact-context';
 import Replay from '../game/replay';
 
 interface SaveProps {
-  children: VNode;
+  children: ComponentChildren;
 }
 
 interface SaveState {

@@ -1,7 +1,7 @@
 /// game.tsx
 // Handles pages where the game is visible
 
-import { h, Component, ComponentChildren } from 'preact';
+import { h, Component, ComponentChildren, FunctionalComponent, Ref } from 'preact';
 
 import Game from '../game/game';
 import Replay from '../game/replay';
@@ -12,8 +12,8 @@ import { FullscreenToggle } from './fullscreen';
 import { ReplayValidatorConsumer } from './validator';
 import { SaveConsumer } from './save';
 
-const GameCanvas = () => (
-  <canvas id="-canvas" width="480" height="320"></canvas>
+const GameCanvas = ({canvasRef}: {canvasRef: Ref<HTMLCanvasElement>}) => (
+  <canvas id="-canvas" width="480" height="320" ref={canvasRef}></canvas>
 );
 
 class GameLayout extends Component<{children: ComponentChildren}, {scale: number}> {
@@ -76,9 +76,9 @@ const GameOverOverlay = () => (
   </div>
 );
 
-export const GamePage = () => (
+export const GamePage: FunctionalComponent = () => (
   <GameLayout>
-    <GameCanvas/>
+    <GameCanvas canvasRef={canvas => null}/>
     <PauseOverlay/>
     <GameOverOverlay/>
   </GameLayout>
@@ -86,8 +86,11 @@ export const GamePage = () => (
 
 class ReplayPageImpl extends Component<{replay: Replay|null, best: Replay|null, validator: (replay: Replay) => boolean|null}, {loading: boolean}> {
   state = {loading: true}
+  canvas: HTMLCanvasElement|null = null
+  game: Game|null = null
   async check() {
-    const {replay} = this.props;
+    console.log(this.canvas);
+    const {replay, best} = this.props;
     if (!replay) {
       window.location.replace('#title');
       return;
@@ -96,8 +99,9 @@ class ReplayPageImpl extends Component<{replay: Replay|null, best: Replay|null, 
     }
     this.setState({loading: false});
     this.game = new Game({
-      canvas: document.getElementById('canvas'),
-      seed: replay.seed, best: best ? best.score : null,
+      canvas: this.canvas,
+      seed: replay.seed,
+      best: best ? best.score : null,
     });
     try {
       await replay.execute(this.game, 5);
@@ -118,13 +122,13 @@ class ReplayPageImpl extends Component<{replay: Replay|null, best: Replay|null, 
   render() {
     return (
       <GameLayout>
-        <GameCanvas/>
+        <GameCanvas canvasRef={canvas => this.canvas = canvas}/>
       </GameLayout>
     );
   }
 }
 
-export const ReplayPage = () => (
+export const ReplayPage: FunctionalComponent = () => (
   <ReplayValidatorConsumer>
     {validator => (
       <SaveConsumer>
