@@ -1,7 +1,7 @@
 /// title.tsx
 // The title screen for the game
 
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 
 import Replay from '../game/replay';
 
@@ -42,7 +42,7 @@ const TitlePageImpl = ({save, best, validate}: Props) => (
   </div>
 );
 
-const TitlePage = () => (
+const TitlePage: FunctionalComponent = () => (
   <SaveConsumer>
     {({save, best}) => (
       <ReplayValidatorConsumer>

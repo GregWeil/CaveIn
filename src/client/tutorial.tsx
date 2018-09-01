@@ -1,9 +1,9 @@
 /// tutorial.tsx
 // The tutorial page
 
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 
-const TutorialPage = () => (
+const TutorialPage: FunctionalComponent = () => (
   <div id="-tutorial-page" class="page inverse">
     <h1>Instructions</h1>
 

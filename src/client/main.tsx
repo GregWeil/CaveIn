@@ -92,10 +92,13 @@ Pages.register(new Pages.Page({
 Pages.initialize('title');
 Settings.initialize();
 
-class Router extends Component<{}, {page: string}> {
-  state = {page: ''}
+class Router extends Component<{}, {page: string, key: number}> {
+  state = {page: '', key: 0}
   onHashChange() {
-    this.setState({page: window.location.hash.slice(1)});
+    this.setState({
+      page: window.location.hash.slice(1),
+      key: Math.random(),
+    });
   }
   componentDidMount() {
     this.onHashChange = this.onHashChange.bind(this);
@@ -105,17 +108,18 @@ class Router extends Component<{}, {page: string}> {
     window.removeEventListener('hashchange', this.onHashChange);
   }
   render() {
-    switch (this.state.page) {
+    const {page, key} = this.state;
+    switch (page) {
       case 'title':
-        return <TitlePage/>;
+        return <TitlePage key={key}/>;
       case 'tutorial':
-        return <TutorialPage/>;
+        return <TutorialPage key={key}/>;
       case 'game':
-        return <GamePage/>;
+        return <GamePage key={key}/>;
       case 'replay':
-        return <ReplayPage/>;
+        return <ReplayPage key={key}/>;
     }
-    return <TitlePage/>;
+    return <TitlePage key={key}/>;
   }
 }
 

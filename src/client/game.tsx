@@ -1,7 +1,7 @@
 /// game.tsx
 // Handles pages where the game is visible
 
-import { h, Component, VNode } from 'preact';
+import { h, Component, ComponentChildren } from 'preact';
 
 import Game from '../game/game';
 import Replay from '../game/replay';
@@ -14,7 +14,7 @@ const GameCanvas = () => (
   <canvas id="-canvas" width="480" height="320"></canvas>
 );
 
-class GameLayout extends Component<{children: VNode[]}, {scale: number}> {
+class GameLayout extends Component<{children: ComponentChildren}, {scale: number}> {
   state = {scale: 1}
   node: HTMLElement|null = null
   resize() {
