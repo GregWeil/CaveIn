@@ -9,6 +9,8 @@ import * as Save from './save';
 import * as Game from './wrapper';
 
 import { FullscreenManager } from './fullscreen';
+import { ReplayValidatorManager } from './validator';
+import { SaveManager } from './save';
 
 import TitlePage from './title';
 import TutorialPage from './tutorial';
@@ -119,7 +121,11 @@ class Router extends Component<{}, {page: string}> {
 
 const App = () => (
   <FullscreenManager>
-    <Router/>
+    <ReplayValidatorManager>
+      <SaveManager>
+        <Router/>
+      </SaveManager>
+    </ReplayValidatorManager>
   </FullscreenManager>
 );
 

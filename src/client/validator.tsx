@@ -11,7 +11,7 @@ interface Props {
 }
 
 interface State {
-  validated: WeakMap<Replay, boolean|null>;
+  validated: WeakMap<Replay, boolean>;
 }
 
 interface Context {
@@ -20,24 +20,23 @@ interface Context {
 
 const { Provider, Consumer } = createContext<Context>(() => null);
 
-export class ReplayValidator extends Component<Props, State> {
+export class ReplayValidatorManager extends Component<Props, State> {
   state = {validated: new WeakMap()}
+  pending = new Set<Replay>()
   validate(replay: Replay) {
     if (this.state.validated.has(replay)) {
       return this.state.validated.get(replay);
-    }
-    this.setState((state: State) => {
-      const validated = state.validated;
-      validated.set(replay, null);
-      return {validated};
-    })
-    replay.validate().then(valid => {
-      this.setState((state: State) => {
-        const validated = state.validated;
-        validated.set(replay, valid);
-        return {validated};
+    } else if (!this.pending.has(replay)) {
+      this.pending.add(replay);
+      replay.validate().then(valid => {
+        this.setState((state: State) => {
+          this.pending.delete(replay);
+          const validated = state.validated;
+          validated.set(replay, valid);
+          return {validated};
+        });
       });
-    });
+    }
     return null;
   }
   render({children}: Props, {validated}: State) {
@@ -45,4 +44,6 @@ export class ReplayValidator extends Component<Props, State> {
   }
 }
 
-export class
+export const ReplayValidatorConsumer = ({children}: {children: (func: Context) => VNode}) => (
+  <Consumer render={children}/>
+);

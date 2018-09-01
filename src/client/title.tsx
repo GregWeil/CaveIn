@@ -3,9 +3,12 @@
 
 import { h } from 'preact';
 
+import { SaveConsumer } from './save';
+import { ReplayValidatorConsumer } from 
+
 import { FullscreenToggle } from './fullscreen';
 
-const TitlePage = (state: any) => (
+const TitlePageImpl = (state: any) => (
   <div id="-title-page" class="page centered">
     <div class="glitchButton"></div>
     <a id="boxart" href="#game">
@@ -29,6 +32,9 @@ const TitlePage = (state: any) => (
     <p>made for Ludum Dare 37 "One Room"</p>
     <p>coding by Greg Weil | art and sound by Devin Hilpert</p>
   </div>
+);
+
+const TitlePage = () => (
 );
 
 export default TitlePage;
