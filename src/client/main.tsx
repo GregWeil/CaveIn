@@ -119,7 +119,7 @@ class Router extends Component<{}, {page: string}> {
   }
 }
 
-const App = () => (
+const Main = () => (
   <FullscreenManager>
     <ReplayValidatorManager>
       <SaveManager>
@@ -129,4 +129,4 @@ const App = () => (
   </FullscreenManager>
 );
 
-//render(<App/>, document.getElementById('test')!);
+//render(<Main/>, document.getElementById('test')!);

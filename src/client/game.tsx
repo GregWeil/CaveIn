@@ -1,7 +1,7 @@
 /// game.tsx
 // Handles pages where the game is visible
 
-import { h, Component } from 'preact';
+import { h, Component, VNode } from 'preact';
 
 import Game from '../game/game';
 import Replay from '../game/replay';
@@ -9,93 +9,15 @@ import * as Input from '../engine/input';
 
 import { FullscreenToggle } from './fullscreen';
 
-export interface WrappedGame {
-  destructor(): void;
-};
+const GameCanvas = () => (
+  <canvas id="-canvas" width="480" height="320"></canvas>
+);
 
-export function createPlayable(canvas: HTMLCanvasElement, save: Replay|null, best?: number): WrappedGame {
-  const game = new Game({
-    canvas,
-    seed: save ? save.seed : null,
-    best,
-  });
-  
-  /*
-  game.onCommandCheck.listen(evt => {
-    if (overlayCurrent) {
-      evt.accept = false;
-    }
-  }, Infinity);
-  */
-  game.onPlayerDied.listen(() => {
-    //setTimeout(() => overlay('game-over'), 1000);
-  });
-  
-  const input = new Input.InputQueued([
-    new Input.InputKeyboard({
-      'KeyW': 'up',
-      'KeyA': 'left',
-      'KeyS': 'down',
-      'KeyD': 'right',
-
-      'ArrowUp': 'up',
-      'ArrowDown': 'down',
-      'ArrowLeft': 'left',
-      'ArrowRight': 'right',
-
-      'Space': 'action'
-    }),
-    new Input.InputSwipe(game.canvas, [
-      'right', null, 'down', null,
-      'left', null, 'up', null,
-    ], 'action'),
-  ]);
-  
-  setTimeout(async () => {
-    if (save) {
-      try {
-        const executor = save.getExecutor(game);
-        game.silent = true;
-        await executor.execute(2500, -100);
-        await executor.execute(500, -5);
-        game.silent = false;
-        await executor.execute(5, -1);
-        await executor.execute(1.5);
-      } catch (e) {
-        // Don't leave the player in a broken game
-        //navigate('title');
-        throw e;
-      }
-    } else {
-      save = new Replay(game.randomSeed);
-    }
-
-    save.record(game, (replay, replayGame) => {
-      if (replayGame == game) {
-        //Save.saveReplay(replay);
-      }
-    });
-    input.listen(command => {
-      if (game.commandCheck(command)) {
-        game.update(command);
-      }
-    });
-  });
-  
-  return {
-    destructor: () => {
-      input.destructor();
-      game.destructor();
-    },
-  };
-}
-
-const GameArea = () => (
+const GameLayout = ({children}: {children: VNode}) => (
   <div id="-game-page" class="page">
     <div class="centered">
       <div class="area">
 
-        <canvas id="-canvas" width="480" height="320"></canvas>
 
         <div id="game-pause" class="centered overlay">
           <p><span class="inverse">PAUSED</span></p>
