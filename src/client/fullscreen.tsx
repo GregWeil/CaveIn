@@ -5,9 +5,13 @@ import { h, Component, VNode } from 'preact';
 import { createContext } from 'preact-context';
 import fscreen from 'fscreen';
 
-interface Context 
+interface Context {
+  fullscreen: boolean;
+  enter(): void;
+  exit(): void;
+}
 
-const { Provider, Consumer } = createContext({fullscreen: false, enter, exit});
+const { Provider, Consumer } = createContext<Context>({fullscreen: false, enter, exit});
 
 async function enter() {
   await fscreen.requestFullscreen(document.documentElement);
@@ -37,11 +41,13 @@ export class FullscreenManager extends Component<{children: VNode}, {fullscreen:
 }
 
 export const FullscreenToggle = () => (
-  <Consumer>{({fullscreen, enter, exit}) => (
-    fullscreen ? (
-      <a onClick={exit}>exit fullscreen</a>
-    ) : (
-      <a onClick={enter}>fullscreen</a>
-    )
-    )}</Consumer>
+  <Consumer>
+    {({fullscreen, enter, exit}: Context) => (
+      fullscreen ? (
+        <a onClick={exit}>exit fullscreen</a>
+      ) : (
+        <a onClick={enter}>fullscreen</a>
+      )
+    )}
+  </Consumer>
 );

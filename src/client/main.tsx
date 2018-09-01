@@ -129,4 +129,4 @@ const App = () => (
   </FullscreenManager>
 );
 
-render(<App/>, document.getElementById('test')!);
+//render(<App/>, document.getElementById('test')!);

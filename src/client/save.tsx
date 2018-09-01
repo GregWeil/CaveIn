@@ -17,15 +17,37 @@ interface SaveState {
 
 const { Provider, Consumer } = createContext<SaveState>({save: null, best: null});
 
+const readReplay = (name: string) => {
+  const serialized = localStorage.getItem(name);
+  if (!serialized) {
+    return null;
+  }
+  return Replay.deserialize(serialized);
+};
+
 export class SaveManager extends Component<SaveProps, SaveState> {
   state = {save: null, best: null}
+  load() {
+    this.setState({
+      save: readReplay('save'),
+      best: readReplay('best'),
+    });
+  }
+  componentDidMount() {
+    this.load = this.load.bind(this);
+    window.addEventListener('storage', this.load);
+    this.load();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.load);
+  }
   render({children}: SaveProps, {save, best}: SaveState) {
     return <Provider value={{save, best}}>{children}</Provider>;
   }
 };
 
 export const SaveConsumer = ({children}: {children(state: SaveState): VNode}) => (
-  <Consumer render={children}/>
+  <Consumer>{children}</Consumer>
 );
 
 function writeToStorage(name: string, replay: Replay|null) {
