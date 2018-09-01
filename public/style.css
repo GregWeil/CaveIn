@@ -18,7 +18,7 @@ body {
   user-select: none;
 }
 
-#canvas, img:not(.smooth) {
+canvas:not(.smooth), img:not(.smooth) {
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
