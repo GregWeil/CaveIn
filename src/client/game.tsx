@@ -86,15 +86,39 @@ export const GamePage = () => (
 
 class ReplayPageImpl extends Component<{replay: Replay|null, best: Replay|null, validator: (replay: Replay) => boolean|null}, {loading: boolean}> {
   state = {loading: true}
-  render() {
-    if (this.state.loading) {
-      return null;
+  async check() {
+    const {replay} = this.props;
+    if (!replay) {
+      window.location.replace('#title');
+      return;
+    } else if (!this.props.validator(replay)) {
+      return;
     }
+    this.setState({loading: false});
+    this.game = new Game({
+      canvas: document.getElementById('canvas'),
+      seed: replay.seed, best: best ? best.score : null,
+    });
+    try {
+      await replay.execute(this.game, 5);
+      await new Promise(resolve => setTimeout(resolve, 3000));
+    } finally {
+      window.location.assign('#title');
+    }
+  }
+  componentDidMount() {
+    if (this.state.loading) this.check();
+  }
+  componentDidUpdate() {
+    if (this.state.loading) this.check();
+  }
+  componentWillUnmount() {
+    if (this.game) this.game.destructor();
+  }
+  render() {
     return (
       <GameLayout>
         <GameCanvas/>
-        <PauseOverlay/>
-        <GameOverOverlay/>
       </GameLayout>
     );
   }
