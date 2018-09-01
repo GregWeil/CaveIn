@@ -8,6 +8,8 @@ import * as Settings from './settings';
 import * as Save from './save';
 import * as Game from './wrapper';
 
+import { FullscreenManager } from './fullscreen';
+
 import TitlePage from './title';
 import TutorialPage from './tutorial';
 import { GamePage, ReplayPage } from './game';
@@ -116,7 +118,9 @@ class Router extends Component<{}, {page: string}> {
 }
 
 const App = () => (
-  <Router/>
+  <FullscreenManager>
+    <Router/>
+  </FullscreenManager>
 );
 
 render(<App/>, document.getElementById('test')!);
