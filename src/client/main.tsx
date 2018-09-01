@@ -1,14 +1,13 @@
 /// main.tsx
 //Define the different pages and how they interact
 
-import { h, Component } from 'preact';
+import { render, h, Component } from 'preact';
 
 import * as Pages from './pages';
 import * as Settings from './settings';
 import * as Save from './save';
 import * as Game from './wrapper';
 
-import { State, Actions, actions } from './actions';
 import Title from './title';
 import Tutorial from './tutorial';
 import { GamePage, ReplayPage } from './game';
@@ -89,10 +88,19 @@ Pages.register(new Pages.Page({
 Pages.initialize('title');
 Settings.initialize();
 
-class App extends Component {
+class Router extends Component {
   state: {page: ''}
+  onHashChange() {
+    this.setState({page: window.location.hash.slice(1)});
+  }
+  componentDidMount() {
+    this.onHashChange = this.onHashChange.bind(this);
+    window.addEventListener('hashchange', this.onHashChange);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.onHashChange);
+  }
   render({}, {page}) {
-    const Page = <Title/>;
     switch (page) {
       case 'title':
         return <Title/>;
@@ -107,22 +115,8 @@ class App extends Component {
   }
 }
 
-const application = app<State, Actions>({
-  page: window.location.hash.slice(1),
-  fullscreen: !!fscreen.fullscreenElement,
-  save: null, best: null, validated: new WeakMap(),
-  game: null,
-}, actions, Main, document.getElementById('test'));
+const App = () => (
+  <Router/>
+);
 
-window.addEventListener('hashchange', () => {
-  application.setPage(window.location.hash.slice(1));
-});
-
-fscreen.addEventListener('fullscreenchange', () => {
-  application.setFullscreen(!!fscreen.fullscreenElement);
-});
-
-window.addEventListener('storage', () => {
-  application.load();
-});
-application.load();
+render(App, document.getElementById('test'));

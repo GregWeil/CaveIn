@@ -1,7 +1,6 @@
 /// settings.tsx
 //Fullscreen toggle, plus music and audio handling
 
-import { h } from 'preact';
 import { Howler, Howl } from 'howler';
 import fscreen from 'fscreen';
 
@@ -56,14 +55,6 @@ async function fullscreenEnter() {
 async function fullscreenExit() {
   fscreen.exitFullscreen();
 };
-
-export const FullscreenToggle = (props: {fullscreen: boolean}) => (
-  props.fullscreen ? (
-    <a onclick={fullscreenExit}>exit fullscreen</a>
-  ) : (
-    <a onclick={fullscreenEnter}>fullscreen</a>
-  )
-);
 
 // Attach event listeners
 

@@ -15,8 +15,8 @@ async function exit() {
   fscreen.exitFullscreen();
 };
 
-export class FullscreenManager extends Component {
-  state: {fullscreen: false}
+export class FullscreenManager extends Component<{}, {fullscreen: boolean}> {
+  state = {fullscreen: false}
   onFullscreenChange() {
     this.setState({fullscreen: !!fscreen.fullscreenElement});
   }

@@ -3,7 +3,7 @@
 
 import { h } from 'preact';
 
-import { FullscreenToggle } from './settings';
+import { FullscreenToggle } from './fullscreen';
 
 const Divider = () => ' - ';
 
