@@ -9,15 +9,14 @@ import Replay from '../game/replay';
 import * as Input from '../engine/input';
 
 export interface WrappedGame {
-  render(): void;
   destructor(): void;
 };
 
-export async function createPlayable(save: Replay|null, best: number) {
+export async function createPlayable(canvas: HTMLCanvasElement, save: Replay|null, best: number): Promise<WrappedGame> {
   const game = new Game({
-    canvas: document.getElementById('canvas'),
+    canvas,
     seed: save ? save.seed : null,
-    best: best
+    best,
   });
   
   /*
@@ -79,6 +78,13 @@ export async function createPlayable(save: Replay|null, best: number) {
       game.update(command);
     }
   });
+  
+  return {
+    destructor: () => {
+      input.destructor();
+      game.destructor();
+    },
+  };
 }
 
 const GameArea = () => (

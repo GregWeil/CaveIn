@@ -25,6 +25,7 @@ export interface Actions {
   load(): ActionResult<State>;
   save(save: Replay|null): ActionResult<State>;
   
+  setGame(game: WrappedGame): ActionResult<State>;
   clearGame(): ActionResult<State>;
   createGame(save: Replay): ActionResult<State>;
   createWatch(replay: Replay): ActionResult<State>;
@@ -92,10 +93,13 @@ export const actions: ActionsType<State, Actions> = {
     state.game && state.game.destructor();
     return {game: null};
   },
+  setGame: (game: WrappedGame) => ({game}),
   createGame: (save: Replay) => (state) => {
     if (state.game) return;
+    
   },
   createWatch: (replay: Replay) => (state) => {
     if (state.game) return;
+    
   },
 };
