@@ -1,7 +1,7 @@
 /// router.tsx
 // Track page url
 
-import { h, Component, FunctionalComponent, ComponentChild } from 'preact';
+import { h, Component, FunctionalComponent, ComponentChildren } from 'preact';
 import { createContext } from 'preact-context';
 
 interface Context {
@@ -12,7 +12,7 @@ interface Context {
 const { Provider, Consumer } = createContext<Context>({navigate: () => {}, redirect: () => {}});
 
 interface Props {
-  children(page: string, key: number): ComponentChild;
+  children(page: string, key: number): ComponentChildren;
 }
 
 interface State {
@@ -37,10 +37,30 @@ export class Router extends Component<Props, State> {
   }
   render() {
     const {page, key} = this.state;
-    return this.props.children(page, key);
+    const navigate = (page: string) => window.location.assign(page);
+    const redirect = (page: string) => window.location.replace(page);
+    return (
+      <Provider value={{navigate, redirect}}>
+        {this.props.children(page, key)}
+      </Provider>
+    );
   }
 }
 
-export const Link: FunctionalComponent = ({children, href, ...props}) => (
-  <a href={href} {...props}>{children}</a>
+export const RouterConsumer = ({children}: {children: (ctx: Context) => ComponentChildren}) => (
+  <Consumer>
+    {children}
+  </Consumer>
+);
+
+export const Link: FunctionalComponent = ({children, ...props}) => (
+  <RouterConsumer>
+    {({navigate}) => {
+      const onClick = (event: Event) => {
+        event.preventDefault();
+        navigate((event.target as HTMLAnchorElement).href);
+      };
+      return <a onClick={onClick} {...props}>{children}</a>;
+    }}
+  </RouterConsumer>
 );

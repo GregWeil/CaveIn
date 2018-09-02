@@ -10,6 +10,7 @@ import * as Game from './wrapper';
 
 import { FullscreenManager } from './fullscreen';
 import { ReplayValidatorManager } from './validator';
+import { Router } from './router';
 import { SaveManager } from './save';
 
 import TitlePage from './title';
@@ -93,45 +94,28 @@ Pages.register(new Pages.Page({
 Pages.initialize('title');
 Settings.initialize();
 
-class Router extends Component<{}, {page: string, key: number}> {
-  state = {page: '', key: 0}
-  onHashChange() {
-    this.setState({
-      page: window.location.hash.slice(1),
-      key: Math.random(),
-    });
-  }
-  componentDidMount() {
-    this.onHashChange = this.onHashChange.bind(this);
-    window.addEventListener('hashchange', this.onHashChange);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('hashchange', this.onHashChange);
-  }
-  render() {
-    const {page, key} = this.state;
-    switch (page) {
-      case 'title':
-        return <TitlePage key={key}/>;
-      case 'tutorial':
-        return <TutorialPage key={key}/>;
-      case 'game':
-        return <GamePage key={key}/>;
-      case 'replay':
-        return <ReplayPage key={key}/>;
-    }
-    return <TitlePage key={key}/>;
-  }
-}
-
 const Main = () => (
   <FullscreenManager>
     <ReplayValidatorManager>
       <SaveManager>
-        <Router/>
+        <Router>
+          {(page, key) => {
+            switch (page) {
+              case '#title':
+                return <TitlePage key={key}/>;
+              case '#tutorial':
+                return <TutorialPage key={key}/>;
+              case '#game':
+                return <GamePage key={key}/>;
+              case '#replay':
+                return <ReplayPage key={key}/>;
+            }
+            return <TitlePage key={key}/>;
+          }}
+        </Router>
       </SaveManager>
     </ReplayValidatorManager>
   </FullscreenManager>
 );
 
-//render(<Main/>, document.getElementById('test')!);
+render(<Main/>, document.getElementById('test')!);
