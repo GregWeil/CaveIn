@@ -70,3 +70,9 @@ export const GameOverOverlay = () => (
     <p><span class="inverse"><a href="#game">RETRY</a> or <a href="#title">TITLE</a></span></p>
   </div>
 );
+
+export const GameLoadingOverlay = () => (
+  <div class="centered overlay">
+    <p><span class="inverse">LOADING</span></p>
+  </div>
+);

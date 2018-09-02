@@ -26,15 +26,15 @@ const readReplay = (name: string) => {
 };
 
 export class SaveManager extends Component<SaveProps, SaveState> {
-  state = {save: null, best: null}
-  load() {
-    this.setState({
+  state = this.getSave()
+  getSave() {
+    return {
       save: readReplay('save'),
       best: readReplay('best'),
-    });
+    };
   }
+  load = () => this.setState(this.getSave())
   componentDidMount() {
-    this.load = this.load.bind(this);
     window.addEventListener('storage', this.load);
     this.load();
   }

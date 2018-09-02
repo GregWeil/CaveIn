@@ -22,14 +22,11 @@ interface State {
 
 export class Router extends Component<Props, State> {
   state = {page: window.location.hash, key: 0}
-  onHashChange() {
-    this.setState({
-      page: window.location.hash,
-      key: Math.random(),
-    });
-  }
+  onHashChange = () => this.setState({
+    page: window.location.hash,
+    key: Math.random(),
+  })
   componentDidMount() {
-    this.onHashChange = this.onHashChange.bind(this);
     window.addEventListener('hashchange', this.onHashChange);
   }
   componentWillUnmount() {

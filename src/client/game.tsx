@@ -11,7 +11,7 @@ import { ReplayValidatorConsumer } from './validator';
 import { RouterConsumer } from './router';
 import { SaveConsumer } from './save';
 
-import { GameLayout, GameCanvas, GameOverOverlay } from './layout';
+import { GameLayout, GameCanvas, GameLoadingOverlay, GameOverOverlay } from './layout';
 
 interface Props {
   save: Replay|null;
@@ -110,6 +110,7 @@ class GamePageImpl extends Component<Props, State> {
     return (
       <GameLayout>
         <GameCanvas canvasRef={canvas => this.canvas = canvas}/>
+        {this.state.loading && <GameLoadingOverlay/>}
         {this.state.gameover && <GameOverOverlay/>}
       </GameLayout>
     );
