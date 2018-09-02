@@ -15,7 +15,7 @@ import { SaveManager } from './save';
 
 import TitlePage from './title';
 import TutorialPage from './tutorial';
-import { GamePage } from './game';
+import GamePage from './game';
 import ReplayPage from './replay';
 
 function showSingle(select: string, except: string) {

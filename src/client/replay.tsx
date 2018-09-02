@@ -10,7 +10,7 @@ import { ReplayValidatorConsumer } from './validator';
 import { RouterConsumer } from './router';
 import { SaveConsumer } from './save';
 
-import { GameLayout, GameCanvas } from './game';
+import { GameLayout, GameCanvas } from './layout';
 
 interface Props {
   replay: Replay|null;
@@ -40,10 +40,10 @@ class ReplayPageImpl extends Component<Props, {loading: boolean}> {
     });
     try {
       await replay.execute(this.game, 5);
-      await new Promise(resolve => setTimeout(resolve, 3000));
     } finally {
-      this.props.navigate('#title');
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
+    this.props.navigate('#title');
   }
   componentDidMount() {
     if (this.state.loading) this.check();

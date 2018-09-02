@@ -1,80 +1,67 @@
 /// game.tsx
-// Handles pages where the game is visible
+// The page where you play the game
 
-import { h, Component, ComponentChildren, FunctionalComponent, Ref } from 'preact';
+import { h, Component, FunctionalComponent } from 'preact';
 
-import Vector2 from '../engine/vector2';
+import * as Input from '../engine/input';
+import Game from '../game/game';
+import Replay from '../game/replay';
 
-import { FullscreenToggle } from './fullscreen';
+import { ReplayValidatorConsumer } from './validator';
+import { RouterConsumer } from './router';
+import { SaveConsumer } from './save';
 
-export const GameCanvas = ({canvasRef}: {canvasRef: Ref<HTMLCanvasElement>}) => (
-  <canvas id="-canvas" width="480" height="320" ref={canvasRef}></canvas>
-);
+import { GameLayout, GameCanvas, GameOverOverlay } from './layout';
 
-export class GameLayout extends Component<{children: ComponentChildren}, {scale: number}> {
-  state = {scale: 1}
-  node: HTMLElement|null = null
-  resize() {
-    if (!this.node) return;
-    const pixel = window.devicePixelRatio;
-    const sizeArea = new Vector2(this.node.offsetWidth, this.node.offsetHeight);
-    const sizeWindow = new Vector2(window.innerWidth, window.innerHeight);
-    const scaleAxes = sizeWindow.divide(sizeArea.divide(pixel));
-    let scale = Math.min(scaleAxes.x, scaleAxes.y);
-    if (scale > 1) {
-      scale = Math.floor(scale);
-    } else if (scale < 1) {
-      scale = (1 / Math.ceil(1 / scale));
-    }
-    this.setState({scale: scale / pixel});
+interface Props {
+  save: Replay|null;
+  best: Replay|null;
+  validator: (replay: Replay) => boolean|null;
+}
+
+interface State {
+  loading: boolean;
+  gameover: boolean;
+}
+
+class GamePageImpl extends Component<Props, State> {
+  state = {loading: true, gameover: false}
+  canvas: HTMLCanvasElement|null = null
+  game: Game|null = null
+  input: Input.Input|null = null
+  async check() {
+    
   }
   componentDidMount() {
-    this.resize = this.resize.bind(this);
-    window.addEventListener('resize', this.resize);
-    this.resize();
+    if (this.state.loading) this.check();
+  }
+  componentDidUpdate() {
+    if (this.state.loading) this.check();
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+    if (this.input) this.input.destructor();
+    if (this.game) this.game.destructor();
   }
   render() {
-    const {scale} = this.state;
     return (
-      <div id="-game-page" class="page">
-        <div class="centered">
-          <div class="area" style={{transform: `scale(${scale})`}} ref={node => this.node = node}>
-            {this.props.children}
-          </div>
-        </div>
-      </div>
+      <GameLayout>
+        <GameCanvas canvasRef={canvas => this.canvas = canvas}/>
+        {this.state.gameover && <GameOverOverlay/>}
+      </GameLayout>
     );
   }
 }
 
-const PauseOverlay = () => (
-  <div id="game-pause" class="centered overlay">
-    <p><span class="inverse">PAUSED</span></p>
-    <p><span class="inverse"><a data-onclick="pause">RESUME</a> or <a href="#title">TITLE</a></span></p>
-    <p class="small"><span class="inverse">
-      <span class="show-if-music-loading">loading music</span>
-      <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
-      <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
-      {' - '}
-      <FullscreenToggle/>
-    </span></p>
-  </div>
+const GamePage: FunctionalComponent = () => (
+  <ReplayValidatorConsumer>
+    {validator => (
+      <SaveConsumer>
+        {({save, best}) => (
+          <GamePageImpl save={save} best={best} validator={validator}/>
+        )}
+      </SaveConsumer>
+    )}
+  </ReplayValidatorConsumer>
 );
 
-const GameOverOverlay = () => (
-  <div id="game-over" class="centered overlay">
-    <p><span class="inverse">GAME OVER</span></p>
-    <p><span class="inverse"><a href="#game">RETRY</a> or <a href="#title">TITLE</a></span></p>
-  </div>
-);
-
-export const GamePage: FunctionalComponent = () => (
-  <GameLayout>
-    <GameCanvas canvasRef={canvas => null}/>
-    <PauseOverlay/>
-    <GameOverOverlay/>
-  </GameLayout>
-);
+export default GamePage;
