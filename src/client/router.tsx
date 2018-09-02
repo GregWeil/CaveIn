@@ -12,7 +12,7 @@ interface Context {
 const { Provider, Consumer } = createContext<Context>({navigate: () => {}, redirect: () => {}});
 
 interface Props {
-  children(page: string, key: number): ComponentChildren;
+  children: [(page: string, key: number) => ComponentChildren];
 }
 
 interface State {
@@ -41,7 +41,7 @@ export class Router extends Component<Props, State> {
     const redirect = (page: string) => window.location.replace(page);
     return (
       <Provider value={{navigate, redirect}}>
-        {this.props.children(page, key)}
+        {this.props.children[0](page, key)}
       </Provider>
     );
   }

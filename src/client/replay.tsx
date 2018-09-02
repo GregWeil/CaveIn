@@ -7,6 +7,7 @@ import Game from '../game/game';
 import Replay from '../game/replay';
 
 import { ReplayValidatorConsumer } from './validator';
+import { RouterConsumer } from './router';
 import { SaveConsumer } from './save';
 
 import { GameLayout, GameCanvas } from './game';
@@ -15,6 +16,8 @@ interface Props {
   replay: Replay|null;
   best: Replay|null;
   validator: (replay: Replay) => boolean|null;
+  navigate: (page: string) => void;
+  redirect: (page: string) => void;
 }
 
 class ReplayPageImpl extends Component<Props, {loading: boolean}> {
@@ -24,7 +27,7 @@ class ReplayPageImpl extends Component<Props, {loading: boolean}> {
   async check() {
     const {replay, best} = this.props;
     if (!replay) {
-      window.location.replace('#title');
+      this.props.redirect('#title');
       return;
     } else if (!this.props.validator(replay)) {
       return;
@@ -39,7 +42,7 @@ class ReplayPageImpl extends Component<Props, {loading: boolean}> {
       await replay.execute(this.game, 5);
       await new Promise(resolve => setTimeout(resolve, 3000));
     } finally {
-      window.location.assign('#title');
+      this.props.navigate('#title');
     }
   }
   componentDidMount() {
@@ -61,15 +64,19 @@ class ReplayPageImpl extends Component<Props, {loading: boolean}> {
 }
 
 const ReplayPage: FunctionalComponent = () => (
-  <ReplayValidatorConsumer>
-    {validator => (
-      <SaveConsumer>
-        {({best}) => (
-          <ReplayPageImpl replay={best} best={best} validator={validator}/>
+  <RouterConsumer>
+    {routing => (
+      <ReplayValidatorConsumer>
+        {validator => (
+          <SaveConsumer>
+            {({best}) => (
+              <ReplayPageImpl replay={best} best={best} validator={validator} {...routing}/>
+            )}
+          </SaveConsumer>
         )}
-      </SaveConsumer>
+      </ReplayValidatorConsumer>
     )}
-  </ReplayValidatorConsumer>
+  </RouterConsumer>
 );
 
 export default ReplayPage;

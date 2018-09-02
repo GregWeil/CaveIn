@@ -99,7 +99,7 @@ const Main = () => (
     <ReplayValidatorManager>
       <SaveManager>
         <Router>
-          {(page, key) => {
+          {[(page, key) => {
             switch (page) {
               case '#title':
                 return <TitlePage key={key}/>;
@@ -111,7 +111,7 @@ const Main = () => (
                 return <ReplayPage key={key}/>;
             }
             return <TitlePage key={key}/>;
-          }}
+          }]}
         </Router>
       </SaveManager>
     </ReplayValidatorManager>
