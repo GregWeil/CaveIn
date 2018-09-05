@@ -1,7 +1,7 @@
 /// fullscreen.tsx
 // Fullscreen manager and toggle
 
-import { h, Component, VNode } from 'preact';
+import { h, Component, ComponentChild } from 'preact';
 import { createContext } from 'preact-context';
 import fscreen from 'fscreen';
 
@@ -22,7 +22,7 @@ async function exit() {
   fscreen.exitFullscreen();
 };
 
-export class FullscreenManager extends Component<{children: VNode}, {fullscreen: boolean}> {
+export class FullscreenManager extends Component<{children: ComponentChild}, {fullscreen: boolean}> {
   state = {fullscreen: false}
   onFullscreenChange() {
     this.setState({fullscreen: !!fscreen.fullscreenElement});

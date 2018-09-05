@@ -58,16 +58,6 @@ a:active {
   color: red;
 }
 
-html:fullscreen .hide-if-fullscreen-enabled { display: none; }
-html:-webkit-full-screen .hide-if-fullscreen-enabled { display: none; }
-html:-moz-full-screen .hide-if-fullscreen-enabled { display: none; }
-html:-ms-fullscreen .hide-if-fullscreen-enabled { display: none; }
-
-html:not(:fullscreen) .hide-if-fullscreen-disabled { display: none; }
-html:not(:-webkit-full-screen) .hide-if-fullscreen-disabled { display: none; }
-html:not(:-moz-full-screen) .hide-if-fullscreen-disabled { display: none; }
-html:not(:-ms-fullscreen) .hide-if-fullscreen-disabled { display: none; }
-
 body.music-loaded .show-if-music-loading { display: none; }
 body:not(.music-loaded) .hide-if-music-enabled,
   body.music-enabled .hide-if-music-enabled { display: none; }
