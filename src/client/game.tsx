@@ -17,6 +17,7 @@ interface Props {
   save: Replay|null;
   best: Replay|null;
   validator(replay: Replay): boolean|null;
+  store(replay: Replay): void;
   redirect(page: string): void;
 }
 
@@ -31,7 +32,7 @@ class GamePageImpl extends Component<Props, State> {
   game: Game|null = null
   input: Input.Input|null = null
   async check() {
-    let {save, best} = this.props;
+    let {save, best, store} = this.props;
     if (save && this.props.validator(save) === null) {
       return;
     }
@@ -67,7 +68,7 @@ class GamePageImpl extends Component<Props, State> {
 
     save.record(game, (replay, replayGame) => {
       if (replayGame == game) {
-        //Save.saveReplay(replay);
+        store(replay);
       }
     });
 
@@ -123,8 +124,8 @@ const GamePage: FunctionalComponent = () => (
       <ReplayValidatorConsumer>
         {validator => (
           <SaveConsumer>
-            {({save, best}) => (
-              <GamePageImpl save={save} best={best} validator={validator} {...routing}/>
+            {({save, best, store}) => (
+              <GamePageImpl save={save} best={best} validator={validator} store={store} {...routing}/>
             )}
           </SaveConsumer>
         )}

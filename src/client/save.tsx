@@ -15,7 +15,11 @@ interface SaveState {
   best: Replay|null;
 }
 
-const { Provider, Consumer } = createContext<SaveState>({save: null, best: null});
+interface SaveContext extends SaveState {
+  store(replay: Replay): void;
+}
+
+const { Provider, Consumer } = createContext<SaveContext>({save: null, best: null, store: () => {}});
 
 const readReplay = (name: string) => {
   const serialized = localStorage.getItem(name);
@@ -25,7 +29,12 @@ const readReplay = (name: string) => {
   return Replay.deserialize(serialized);
 };
 
-const writeReplay = (name: string, replay: Replay) => {
+const writeReplay = (name: string, replay: Replay|null) => {
+  if (replay) {
+    localStorage.setItem(name, replay.serialize());
+  } else {
+    localStorage.removeItem(name);
+  }
 };
 
 export class SaveManager extends Component<SaveProps, SaveState> {
@@ -44,24 +53,27 @@ export class SaveManager extends Component<SaveProps, SaveState> {
   componentWillUnmount() {
     window.removeEventListener('storage', this.load);
   }
-  save(replay: Replay) {
+  save = (replay: Replay) => {
     if (replay.score <= 0) return;
 
-    save.set(replay.alive ? replay : null);
-
+    const save = replay.alive ? replay : null;
+    writeReplay('save', save);
+    this.setState({save});
+    
     if (!this.state.best
         || replay.score > this.state.best.score
         || replay.isContinuationOf(this.state.best))
     {
-      best.set(replay);
+      writeReplay('best', replay);
+      this.setState({best: replay});
     }
   }
   render({children}: SaveProps, {save, best}: SaveState) {
-    return <Provider value={{save, best}}>{children}</Provider>;
+    return <Provider value={{save, best, store: this.save}}>{children}</Provider>;
   }
 };
 
-export const SaveConsumer = ({children}: {children(state: SaveState): ComponentChildren}) => (
+export const SaveConsumer = ({children}: {children(state: SaveContext): ComponentChildren}) => (
   <Consumer>{children}</Consumer>
 );
 
