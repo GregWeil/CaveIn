@@ -92,7 +92,7 @@ class GamePageImpl extends Component<Props, State> {
       ], 'action'),
     ]);
     this.input.listen(command => {
-      if (false && game.commandCheck(command)) {
+      if (game.commandCheck(command)) {
         game.update(command);
       }
     });

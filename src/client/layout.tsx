@@ -1,7 +1,7 @@
 /// layout.tsx
 // Utility components for the game pages
 
-import { h, Component, ComponentChildren, FunctionalComponent, Ref } from 'preact';
+import { h, Component, ComponentChild, ComponentChildren, FunctionalComponent, Ref } from 'preact';
 
 import Vector2 from '../engine/vector2';
 
@@ -47,6 +47,31 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
         </div>
       </div>
     );
+  }
+}
+
+interface GamePauserProps {
+  children(args: {paused: boolean, pause: () => void, resume: () => void}): ComponentChild;
+}
+
+export class GamePauser extends Component<GamePauserProps, {paused: boolean}> {
+  state = {paused: false}
+  pause = () => this.setState({paused: true})
+  resume = () => this.setState({paused: false})
+  onKey = (evt: Event) => {
+    if (evt.key === 'Escape') this.pause();
+  }
+  onTouch = (evt: Event) => {
+    if (evt.target === document.body) this.pause();
+  }
+  componentDidMount() {
+    window.addEventListener('keypress', this.on
+  render() {
+    return this.props.children({
+      paused: this.state.paused,
+      pause: this.pause,
+      resume: this.resume,
+    });
   }
 }
 

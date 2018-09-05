@@ -91,8 +91,8 @@ Pages.register(new Pages.Page({
   }
 }));
 
-Pages.initialize('title');
-Settings.initialize();
+//Pages.initialize('title');
+//Settings.initialize();
 
 const Main = () => (
   <FullscreenManager>
@@ -118,4 +118,4 @@ const Main = () => (
   </FullscreenManager>
 );
 
-//render(<Main/>, document.getElementById('test')!);
+render(<Main/>, document.getElementById('test')!);
