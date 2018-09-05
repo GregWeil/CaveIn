@@ -6,6 +6,7 @@ import { h, Component, ComponentChild, ComponentChildren, FunctionalComponent, R
 import Vector2 from '../engine/vector2';
 
 import { FullscreenToggle } from './fullscreen';
+import { MusicToggle } from './music';
 
 export const GameCanvas = ({canvasRef}: {canvasRef: Ref<HTMLCanvasElement>}) => (
   <canvas id="canvas" width="480" height="320" ref={canvasRef}></canvas>
@@ -91,9 +92,7 @@ export const GamePausedOverlay = ({resume}: {resume: () => void}) => (
     <p><span class="inverse">PAUSED</span></p>
     <p><span class="inverse"><a onClick={resume}>RESUME</a> or <a href="#title">TITLE</a></span></p>
     <p class="small"><span class="inverse">
-      <span class="show-if-music-loading">loading music</span>
-      <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
-      <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
+      <MusicToggle/>
       {' - '}
       <FullscreenToggle/>
     </span></p>

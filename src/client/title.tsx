@@ -9,6 +9,7 @@ import { SaveConsumer } from './save';
 import { ReplayValidatorConsumer } from './validator';
 
 import { FullscreenToggle } from './fullscreen';
+import { MusicToggle } from './music';
 
 interface Props {
   save: Replay|null;
@@ -30,9 +31,7 @@ const TitlePageImpl = ({save, best, validate}: Props) => (
       {!!best && (validate(best) === null) && [' - ', 'checking best']}
     </p>
     <p>
-      <span class="show-if-music-loading">loading music</span>
-      <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>
-      <a data-onclick="disable-music" class="hide-if-music-disabled">disable music</a>
+      <MusicToggle/>
       {' - '}
       <FullscreenToggle/>
     </p>

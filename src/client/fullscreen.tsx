@@ -41,13 +41,11 @@ export class FullscreenManager extends Component<{children: ComponentChild}, {fu
 }
 
 export const FullscreenToggle = () => (
-  <Consumer>
-    {({fullscreen, enter, exit}: Context) => (
-      fullscreen ? (
-        <a onClick={exit}>exit fullscreen</a>
-      ) : (
-        <a onClick={enter}>fullscreen</a>
-      )
-    )}
-  </Consumer>
+  <Consumer render={({fullscreen, enter, exit}) => (
+    fullscreen ? (
+      <a onClick={exit}>exit fullscreen</a>
+    ) : (
+      <a onClick={enter}>fullscreen</a>
+    )
+  )}/>
 );
