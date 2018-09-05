@@ -8,13 +8,13 @@ import Vector2 from '../engine/vector2';
 import { FullscreenToggle } from './fullscreen';
 
 export const GameCanvas = ({canvasRef}: {canvasRef: Ref<HTMLCanvasElement>}) => (
-  <canvas id="-canvas" width="480" height="320" ref={canvasRef}></canvas>
+  <canvas id="canvas" width="480" height="320" ref={canvasRef}></canvas>
 );
 
 export class GameLayout extends Component<{children: ComponentChildren}, {scale: number}> {
   state = {scale: 1}
   node: HTMLElement|null = null
-  resize() {
+  resize = () => {
     if (!this.node) return;
     const pixel = window.devicePixelRatio;
     const sizeArea = new Vector2(this.node.offsetWidth, this.node.offsetHeight);
@@ -26,11 +26,16 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
     } else if (scale < 1) {
       scale = (1 / Math.ceil(1 / scale));
     }
-    this.setState({scale: scale / pixel});
+    scale /= pixel;
+    if (scale !== this.state.scale) {
+      this.setState({scale});
+    }
   }
   componentDidMount() {
-    this.resize = this.resize.bind(this);
     window.addEventListener('resize', this.resize);
+    this.resize();
+  }
+  componentDidUpdate() {
     this.resize();
   }
   componentWillUnmount() {
@@ -39,7 +44,7 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
   render() {
     const {scale} = this.state;
     return (
-      <div id="-game-page" class="page">
+      <div id="game-page" class="page">
         <div class="centered">
           <div class="area" style={{transform: `scale(${scale})`}} ref={node => this.node = node}>
             {this.props.children}

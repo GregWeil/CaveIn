@@ -65,20 +65,4 @@ export function initialize() {
   });
   
   audioMusic.load();
-  
-  const listeners: { [key: string]: () => void } = {
-    'enable-music': () => music(true),
-    'disable-music': () => music(false),
-    'enter-fullscreen': () => fullscreenEnter(),
-    'exit-fullscreen': () => fullscreenExit(),
-  };
-  document.addEventListener('click', (evt) => {
-    const target = (evt.target as HTMLElement).closest('a');
-    if (target) {
-      const listener = target.getAttribute('data-onclick');
-      if (listener) {
-        listeners[listener]();
-      }
-    }
-  });
 }

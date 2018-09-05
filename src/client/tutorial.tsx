@@ -4,7 +4,7 @@
 import { h, FunctionalComponent } from 'preact';
 
 const TutorialPage: FunctionalComponent = () => (
-  <div id="-tutorial-page" class="page inverse">
+  <div id="tutorial-page" class="page inverse">
     <h1>Instructions</h1>
 
     <h2>Player</h2>
