@@ -34,7 +34,9 @@ export class MusicManager extends Component<MusicProps, MusicState> {
     if (!this.audio) {
       this.init();
     }
-    this.audio.play();
+    if (this.audio) {
+      this.audio.play();
+    }
   }
   pause = () => {
     if (this.audio) {
