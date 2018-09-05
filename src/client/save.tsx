@@ -25,6 +25,9 @@ const readReplay = (name: string) => {
   return Replay.deserialize(serialized);
 };
 
+const writeReplay = (name: string, replay: Replay) => {
+};
+
 export class SaveManager extends Component<SaveProps, SaveState> {
   state = this.getSave()
   getSave() {
@@ -40,6 +43,18 @@ export class SaveManager extends Component<SaveProps, SaveState> {
   }
   componentWillUnmount() {
     window.removeEventListener('storage', this.load);
+  }
+  save(replay: Replay) {
+    if (replay.score <= 0) return;
+
+    save.set(replay.alive ? replay : null);
+
+    if (!this.state.best
+        || replay.score > this.state.best.score
+        || replay.isContinuationOf(this.state.best))
+    {
+      best.set(replay);
+    }
   }
   render({children}: SaveProps, {save, best}: SaveState) {
     return <Provider value={{save, best}}>{children}</Provider>;
