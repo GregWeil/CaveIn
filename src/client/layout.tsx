@@ -51,23 +51,29 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
 }
 
 interface GamePauserProps {
-  children(args: {paused: boolean, pause: () => void, resume: () => void}): ComponentChild;
+  children: [(args: {paused: boolean, pause: () => void, resume: () => void}) => ComponentChild];
 }
 
 export class GamePauser extends Component<GamePauserProps, {paused: boolean}> {
   state = {paused: false}
   pause = () => this.setState({paused: true})
   resume = () => this.setState({paused: false})
-  onKey = (evt: Event) => {
-    if (evt.key === 'Escape') this.pause();
+  onKey = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') this.pause();
   }
-  onTouch = (evt: Event) => {
-    if (evt.target === document.body) this.pause();
+  onTouch = (event: TouchEvent) => {
+    if (event.target === document.body) this.pause();
   }
   componentDidMount() {
-    window.addEventListener('keypress', this.on
+    window.addEventListener('keydown', this.onKey);
+    document.body.addEventListener('touchstart', this.onTouch);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+    document.body.removeEventListener('touchstart', this.onTouch);
+  }
   render() {
-    return this.props.children({
+    return this.props.children[0]({
       paused: this.state.paused,
       pause: this.pause,
       resume: this.resume,
@@ -75,10 +81,10 @@ export class GamePauser extends Component<GamePauserProps, {paused: boolean}> {
   }
 }
 
-export const PauseOverlay = () => (
+export const GamePausedOverlay = ({resume}: {resume: () => void}) => (
   <div id="game-pause" class="centered overlay">
     <p><span class="inverse">PAUSED</span></p>
-    <p><span class="inverse"><a data-onclick="pause">RESUME</a> or <a href="#title">TITLE</a></span></p>
+    <p><span class="inverse"><a onClick={resume}>RESUME</a> or <a href="#title">TITLE</a></span></p>
     <p class="small"><span class="inverse">
       <span class="show-if-music-loading">loading music</span>
       <a data-onclick="enable-music" class="hide-if-music-enabled">enable music</a>

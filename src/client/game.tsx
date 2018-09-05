@@ -11,9 +11,11 @@ import { ReplayValidatorConsumer } from './validator';
 import { RouterConsumer } from './router';
 import { SaveConsumer } from './save';
 
-import { GameLayout, GameCanvas, GameLoadingOverlay, GameOverOverlay } from './layout';
+import { GameLayout, GameCanvas, GamePauser, GameLoadingOverlay, GamePausedOverlay, GameOverOverlay } from './layout';
 
 interface Props {
+  paused: boolean;
+  resume(): void;
   save: Replay|null;
   best: Replay|null;
   validator(replay: Replay): boolean|null;
@@ -92,7 +94,7 @@ class GamePageImpl extends Component<Props, State> {
       ], 'action'),
     ]);
     this.input.listen(command => {
-      if (game.commandCheck(command)) {
+      if (!this.props.paused && game.commandCheck(command)) {
         game.update(command);
       }
     });
@@ -108,11 +110,14 @@ class GamePageImpl extends Component<Props, State> {
     if (this.game) this.game.destructor();
   }
   render() {
+    const {paused, resume} = this.props;
+    const {loading, gameover} = this.state;
     return (
       <GameLayout>
         <GameCanvas canvasRef={canvas => this.canvas = canvas}/>
-        {this.state.loading && <GameLoadingOverlay/>}
-        {this.state.gameover && <GameOverOverlay/>}
+        {paused && !loading && !gameover && <GamePausedOverlay resume={resume}/>}
+        {loading && <GameLoadingOverlay/>}
+        {gameover && <GameOverOverlay/>}
       </GameLayout>
     );
   }
@@ -124,8 +129,10 @@ const GamePage: FunctionalComponent = () => (
       <ReplayValidatorConsumer>
         {validator => (
           <SaveConsumer>
-            {({save, best, store}) => (
-              <GamePageImpl save={save} best={best} validator={validator} store={store} {...routing}/>
+            {(save) => (
+              <GamePauser>
+                {[(paused) => <GamePageImpl {...paused} {...save} validator={validator} {...routing}/>]}
+              </GamePauser>
             )}
           </SaveConsumer>
         )}
