@@ -34,12 +34,14 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
   }
   componentDidMount() {
     window.addEventListener('resize', this.resize);
+    window.addEventListener('load', this.resize);
     this.resize();
   }
   componentDidUpdate() {
     this.resize();
   }
   componentWillUnmount() {
+    window.removeEventListener('load', this.resize);
     window.removeEventListener('resize', this.resize);
   }
   render() {
