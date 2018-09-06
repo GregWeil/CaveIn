@@ -5,14 +5,11 @@ export default class Vector2 {
   x: number;
   y: number;
   
-  constructor(x?: number, y?: number) {
-    this.x = x || 0;
-    this.y = y !== undefined ? y : this.x;
+  constructor(x = 0, y = x) {
+    this.x = x;
+    this.y = y;
   }
   
-  static new(): Vector2;
-  static new(x: number): Vector2;
-  static new(x: number, y: number): Vector2;
   static new(x?: number, y?: number): Vector2 {
     return new Vector2(x, y);
   }
