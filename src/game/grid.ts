@@ -11,7 +11,7 @@ export default class Grid extends BaseObject<Game> {
   gridSize: Vector2;
   origin: Vector2;
   blocks: boolean[][];
-  delayBlocks: number[][];
+  delayBlocks: { [key: number]: { [key: number]: number } };
   
   constructor(game: Game, cellSize: Vector2, gridSize: Vector2, canvasSize: Vector2) {
     super(game);
@@ -25,12 +25,11 @@ export default class Grid extends BaseObject<Game> {
     ).multiply(0.5);
     
     this.blocks = [];
-    this.delayBlocks = [];
     for (let i = 0; i < this.gridSize.x; ++i) {
       this.blocks[i] = Array(this.gridSize.y).fill(false);
-      this.delayBlocks[i] = Array(this.gridSize.y).fill(0);
     }
     
+    this.delayBlocks = {};
     
     this.listen(this.game.onUpdate, evt => this.clearDelayBlocks(), -Infinity);
     this.listen(this.game.onRender, evt => this.render(evt.context, evt.time), -100);
@@ -93,7 +92,13 @@ export default class Grid extends BaseObject<Game> {
         this.game.collide.remove(pos, this);
       }
       
-      this.delayBlocks[pos.x][pos.y] = delay;
+      if (delay > 0) {
+        if (!this.delayBlocks[pos.x]) {
+          this.delayBlocks[pos.x] = {};
+        }
+        this.delayBlocks[pos.x][pos.y] = delay;
+      }
+      
       this.game.onGridChange.emit({
         cause: cause,
         pos: pos.copy(),
@@ -110,15 +115,13 @@ export default class Grid extends BaseObject<Game> {
   }
   
   clearDelayBlocks() {
-    this.delayBlocks = Array(this.gridSize.x);
-    for (let i = 0; i < this.gridSize.x; ++i) {
-      this.delayBlocks[i] = Array(this.gridSize.y).fill(0);
-    }
+    this.delayBlocks = {}
   }
   
   getBlockVisible(pos: Vector2, time: number) {
     let drawBlock = !!this.getBlock(pos);
-    if (time < this.delayBlocks[pos.x][pos.y]) {
+    const delay = this.delayBlocks[pos.x] && this.delayBlocks[pos.x][pos.y];
+    if (delay !== undefined && time < delay) {
       drawBlock = !drawBlock;
     }
     return drawBlock;
