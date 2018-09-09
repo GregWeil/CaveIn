@@ -17,12 +17,12 @@ interface Collision {
 }
 
 export default class Collide extends BaseObject<Game> {
-  private collisions: { [key: number]: { [key: number]: Collision[] } };
+  private collisions: Map<number, Map<number, Collision[]>>;
    
   constructor(game: Game) {
     super(game);
     
-    this.collisions = {};
+    this.collisions = new Map();
     
     //this.listen(this.game.onRender, evt => this.render(evt.context), Infinity);
   }
@@ -42,13 +42,16 @@ export default class Collide extends BaseObject<Game> {
   }
   
   private getData(pos: Vector2) {
-    return (this.collisions[pos.x] || {})[pos.y] || [];
+    const axis = this.collisions.get(pos.x);
+    if (!axis) return [];
+    return axis.get(pos.y) || [];
   }
   
   private setData(pos: Vector2, data: Collision[]) {
-    if (!this.collisions[pos.x]) {
-      t
-    this.collisions[pos.hash()] = data;
+    const axis = this.collisions.get(pos.x);
+    if (!axis) {
+      ax
+    axis.set(pos.y, data);
   }
   
   add(pos: Vector2, instance: Collider, priority: number = 0) {
@@ -97,7 +100,7 @@ export default class Collide extends BaseObject<Game> {
   }
   
   count() {
-    const flat = Object.values(this.collisions).reduce((all, axis) => Object.values(axis).concat(all), []);
+    const flat = Object.values(this.collisions).reduce((all, axis) => Object.values(axis.j).concat(all), []);
     return flat.filter(data => data.length).length;
   }
 }
