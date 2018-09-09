@@ -41,7 +41,7 @@ class ReplayExecutor {
     let stepsSinceBreak = 0;
     while (this.index < goal) {
       const nextTime = lastStepTime + 1000/rate;
-      while (nextTime > performance.now() || stepsSinceBreak >= 50) {
+      while (nextTime > performance.now() || stepsSinceBreak >= 100) {
         await new Promise(resolve => window.setTimeout(resolve));
         stepsSinceBreak = 0;
       }
