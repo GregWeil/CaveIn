@@ -17,7 +17,7 @@ interface Collision {
 }
 
 export default class Collide extends BaseObject<Game> {
-  private collisions: { [key: string]: Collision[] };
+  private collisions: { [key: number]: { [key: number]: Collision[] } };
    
   constructor(game: Game) {
     super(game);
@@ -33,7 +33,7 @@ export default class Collide extends BaseObject<Game> {
     context.textBaseline = 'middle';
     for (let i = 0; i < this.game.grid.gridSize.x; ++i) {
       for (let j = 0; j < this.game.grid.gridSize.y; ++j) {
-        const data = this.getData(Vector2.new(i, j).hash());
+        const data = this.getData(new Vector2(i, j));
         if (data.length) {
           Render.text(context, data[0].priority.toString(), this.game.grid.getPos(i, j));
         }
@@ -41,17 +41,16 @@ export default class Collide extends BaseObject<Game> {
     }
   }
   
-  private getData(hash: string) {
-    return this.collisions[hash] || [];
+  private getData(pos: Vector2) {
+    return (this.collisions[pos.x] || {})[pos.y] || [];
   }
   
-  private setData(hash: string, data: Collision[]) {
-    this.collisions[hash] = data;
+  private setData(pos: Vector2, data: Collision[]) {
+    this.collisions[pos.hash()] = data;
   }
   
   add(pos: Vector2, instance: Collider, priority: number = 0) {
-    const hash = pos.hash();
-    const data = this.getData(hash);
+    const data = this.getData(pos);
     
     let index: number;
     for (index = 0; index < data.length; ++index) {
@@ -63,18 +62,17 @@ export default class Collide extends BaseObject<Game> {
       priority: priority
     });
     
-    this.setData(hash, data);
+    this.setData(pos, data);
     return data[index];
   }
   
   remove(pos: Vector2, instance: Collider) {
-    const hash = pos.hash();
-    const data = this.getData(hash);
+    const data = this.getData(pos);
     const index = data.findIndex(item => item.instance === instance);
     if (index < 0) return null;
     const removed = data[index];
     data.splice(index, 1);
-    this.setData(hash, data);
+    this.setData(pos, data);
     return removed;
   }
   
@@ -88,7 +86,7 @@ export default class Collide extends BaseObject<Game> {
   
   get(pos: Vector2, config: { type?: { new (...args: any[]): Collider }, ignore?: Collider[] } = {}) {
     config = Object.assign({ ignore: [] }, config);
-    const item = this.getData(pos.hash()).find(item => {
+    const item = this.getData(pos).find(item => {
       if (config.ignore!.includes(item.instance)) return false;
       if (config.type && !(item.instance instanceof config.type)) return false;
       return true;
@@ -97,6 +95,7 @@ export default class Collide extends BaseObject<Game> {
   }
   
   count() {
+    const flat = Object.values(this.collisions).map(collisions => Object.values(collisions)
     return Object.values(this.collisions).filter(data => data.length).length;
   }
 }
