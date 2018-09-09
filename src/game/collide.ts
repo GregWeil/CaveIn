@@ -48,9 +48,8 @@ export default class Collide extends BaseObject<Game> {
   }
   
   private setData(pos: Vector2, data: Collision[]) {
-    const axis = this.collisions.get(pos.x);
-    if (!axis) {
-      ax
+    const axis = this.collisions.get(pos.x) || new Map();
+    this.collisions.set(pos.x, axis);
     axis.set(pos.y, data);
   }
   
@@ -100,7 +99,8 @@ export default class Collide extends BaseObject<Game> {
   }
   
   count() {
-    const flat = Object.values(this.collisions).reduce((all, axis) => Object.values(axis.j).concat(all), []);
+    const axes = Array.from(this.collisions.values());
+    const flat = axes.reduce<Collision[][]>((all, axis) => [...all, ...axis.values()], []);
     return flat.filter(data => data.length).length;
   }
 }
