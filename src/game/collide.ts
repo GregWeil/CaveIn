@@ -46,6 +46,8 @@ export default class Collide extends BaseObject<Game> {
   }
   
   private setData(pos: Vector2, data: Collision[]) {
+    if (!this.collisions[pos.x]) {
+      t
     this.collisions[pos.hash()] = data;
   }
   
@@ -95,7 +97,7 @@ export default class Collide extends BaseObject<Game> {
   }
   
   count() {
-    const flat = Object.values(this.collisions).map(collisions => Object.values(collisions)
-    return Object.values(this.collisions).filter(data => data.length).length;
+    const flat = Object.values(this.collisions).reduce((all, axis) => Object.values(axis).concat(all), []);
+    return flat.filter(data => data.length).length;
   }
 }
