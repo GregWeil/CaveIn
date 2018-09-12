@@ -38,7 +38,7 @@ class ReplayExecutor {
     }
     
     let lastStepTime = performance.now();
-    let stepsSinceBreak = 0;
+    let stepsSinceBreak = Infinity;
     while (this.index < goal) {
       const nextTime = lastStepTime + 1000/rate;
       while (nextTime > performance.now() || stepsSinceBreak >= 100) {
