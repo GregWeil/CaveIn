@@ -936,7 +936,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-SrTJoPWlTbkzi0w02Gv86PSzVXE=
-      tarball: 'http://registry.npmjs.org/event-stream/-/event-stream-3.3.4.tgz'
   /events/2.1.0:
     dev: false
     engines:
