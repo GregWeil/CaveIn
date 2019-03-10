@@ -87,6 +87,7 @@ class GamePageImpl extends Component<Props, State> {
         'ArrowRight': 'right',
 
         'Space': 'action',
+        'KeyZ': 'action',
       }),
       new Input.InputSwipe(game.canvas, [
         'right', null, 'down', null,
