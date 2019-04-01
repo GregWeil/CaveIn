@@ -37,7 +37,7 @@ const TitlePageImpl = ({save, best, validate}: Props) => (
     </p>
     <p><a href="#tutorial">instructions</a></p>
     <p>made for Ludum Dare 37 "One Room"</p>
-    <p>coding by Greg Weil | art and sound by Devin Hilpert</p>
+    <p>code by Greg Weil | art and sound by Devin Hilpert</p>
   </div>
 );
 
