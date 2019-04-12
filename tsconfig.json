@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "bin/",
     "baseUrl": "src/",
-    "target": "esnext",
+    "target": "es2017",
     "module": "commonjs",
     "jsx": "react",
     "jsxFactory": "h",

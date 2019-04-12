@@ -2,7 +2,7 @@
 //Main engine loop
 
 import { Howl } from 'howler';
-import * as Random from 'random-js';
+import { MersenneTwister19937, Random } from 'random-js';
 
 import { Emitter } from './events';
 import Vector2 from './vector2';
@@ -32,8 +32,8 @@ export default class Engine {
     this.silent = config.silent || this.headless;
     
     this.randomSeed = config.seed !== undefined ? config.seed
-      : Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
-    const randomEngine = Random.engines.mt19937().seed(this.randomSeed);
+      : new Random().integer(-Math.pow(2, 53), Math.pow(2, 53));
+    const randomEngine = MersenneTwister19937.seed(this.randomSeed);
     this.random = new Random(randomEngine);
     
     this.canvas = config.canvas || document.createElement('canvas');
