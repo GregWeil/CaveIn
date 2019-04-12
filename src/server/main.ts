@@ -29,6 +29,7 @@ app.use(express.static('public'));
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
-  const addr = listener.address();
-  console.log('Your app is listening!');
+  const addr = listener.address()!;
+  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
+  console.log(`Your app is listening on ${bind}!`);
 });
