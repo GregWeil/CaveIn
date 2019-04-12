@@ -29,5 +29,6 @@ app.use(express.static('public'));
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
-  console.log('Your app is listening on port ' + listener.address().port);
+  const addr = listener.address();
+  console.log('Your app is listening!');
 });
