@@ -59,7 +59,7 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
 }
 
 interface GamePauserProps {
-  children: [(args: {paused: boolean, pause: () => void, resume: () => void}) => VNode];
+  children: [(args: {paused: boolean, pause: () => void, resume: () => void}) => ComponentChild];
 }
 
 export class GamePauser extends Component<GamePauserProps, {paused: boolean}> {
