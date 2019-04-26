@@ -7,12 +7,12 @@ dependencies:
   browserify: 16.2.3
   express: 4.16.4
   fscreen: 1.0.2
-  howler: 2.1.1
+  howler: 2.1.2
   nodemon: 1.18.11
   preact: 8.4.2
   preact-context: 1.1.3
   random-js: 2.0.0
-  typescript: 3.0.3
+  typescript: 3.4.5
   uglifyify: 5.0.1
 packages:
   /@types/body-parser/1.17.0:
@@ -1249,10 +1249,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
-  /howler/2.1.1:
+  /howler/2.1.2:
     dev: false
     resolution:
-      integrity: sha512-9nwyDCGxhAGMmNXDfMLv0M/uS/WUg2//jG6t96D8DqbbsVZgXQzsP/ZMItbWO/Fqg7Gg69kOv3xVSDzJdd7aqA==
+      integrity: sha512-oKrTFaVXsDRoB/jik7cEpWKTj7VieoiuzMYJ7E/EU5ayvmpRhumCv3YQ3823zi9VTJkSWAhbryHnlZAionGAJg==
   /htmlescape/1.1.1:
     dev: false
     engines:
@@ -2666,13 +2666,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript/3.0.3:
+  /typescript/3.4.5:
     dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-kk80vLW9iGtjMnIv11qyxLqZm20UklzuR2tL0QAnDIygIUIemcZMxlMWudl9OOt76H3ntVzcTiddQ1/pAAJMYg==
+      integrity: sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
   /uglifyify/5.0.1:
     dependencies:
       convert-source-map: 1.1.3
@@ -2880,10 +2880,10 @@ specifiers:
   browserify: ^16.2.3
   express: ^4.16.4
   fscreen: ^1.0.2
-  howler: ^2.1.1
+  howler: ^2.1.2
   nodemon: ^1.18.11
   preact: ^8.4.2
   preact-context: ^1.1.3
   random-js: ^2.0.0
-  typescript: ^3.0.3
+  typescript: ^3.4.4
   uglifyify: ^5.0.1
