@@ -10,7 +10,7 @@ const app = express();
 
 const client = new Promise((resolve, reject) => {
   browserify('bin/client/main.js')
-    //.transform('uglifyify', { global: true })
+    .transform('uglifyify', { global: true })
     .bundle((err, data) => {
       if (err) {
         //console.error(err);
