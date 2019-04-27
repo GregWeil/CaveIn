@@ -59,7 +59,7 @@ export class GameLayout extends Component<{children: ComponentChildren}, {scale:
 }
 
 interface GamePauserProps {
-  children: [(args: {paused: boolean, pause: () => void, resume: () => void}) => ComponentChildren];
+  render(args: {paused: boolean, pause: () => void, resume: () => void}): ComponentChildren;
 }
 
 export class GamePauser extends Component<GamePauserProps, {paused: boolean}> {
@@ -81,7 +81,7 @@ export class GamePauser extends Component<GamePauserProps, {paused: boolean}> {
     document.body.removeEventListener('touchstart', this.onTouch);
   }
   render() {
-    return this.props.children[0]({
+    return this.props.render({
       paused: this.state.paused,
       pause: this.pause,
       resume: this.resume,

@@ -19,21 +19,19 @@ const Main = () => (
     <ReplayValidatorManager>
       <SaveManager>
         <MusicManager>
-          <Router>
-            {(page, key) => {
-              switch (page) {
-                case '#title':
-                  return <TitlePage key={key}/>;
-                case '#tutorial':
-                  return <TutorialPage key={key}/>;
-                case '#game':
-                  return <GamePage key={key}/>;
-                case '#replay':
-                  return <ReplayPage key={key}/>;
-              }
-              return <TitlePage key={key}/>;
-            }}
-          </Router>
+          <Router render={(page, key) => {
+            switch (page) {
+              case '#title':
+                return <TitlePage key={key}/>;
+              case '#tutorial':
+                return <TutorialPage key={key}/>;
+              case '#game':
+                return <GamePage key={key}/>;
+              case '#replay':
+                return <ReplayPage key={key}/>;
+            }
+            return <TitlePage key={key}/>;
+          }} />
         </MusicManager>
       </SaveManager>
     </ReplayValidatorManager>
