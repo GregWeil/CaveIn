@@ -12,7 +12,7 @@ interface Context {
 const { Provider, Consumer } = createContext<Context>({navigate: () => {}, redirect: () => {}});
 
 interface Props {
-  children: [(page: string, key: number) => ComponentChildren];
+  children: (page: string, key: number) => ComponentChildren;
 }
 
 interface State {

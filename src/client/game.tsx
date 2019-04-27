@@ -132,7 +132,7 @@ const GamePage: FunctionalComponent = () => (
           <SaveConsumer>
             {(save) => (
               <GamePauser>
-                {[(paused) => <GamePageImpl {...paused} {...save} validator={validator} {...routing}/>]}
+                {(paused) => <GamePageImpl {...paused} {...save} validator={validator} {...routing}/>}
               </GamePauser>
             )}
           </SaveConsumer>
