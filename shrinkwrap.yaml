@@ -12,6 +12,7 @@ dependencies:
   preact: 8.4.2
   preact-context: 1.1.3
   random-js: 2.0.0
+  tsc-watch: 2.2.1
   typescript: 3.4.5
   uglifyify: 5.0.1
 packages:
@@ -875,6 +876,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
+  /duplexer/0.1.1:
+    dev: false
+    resolution:
+      integrity: sha1-rOb/gIwc5mtX0ev5eXessCM0z8E=
   /duplexer2/0.1.4:
     dependencies:
       readable-stream: 2.3.6
@@ -923,6 +928,18 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
+  /event-stream/3.3.4:
+    dependencies:
+      duplexer: 0.1.1
+      from: 0.1.7
+      map-stream: 0.1.0
+      pause-stream: 0.0.11
+      split: 0.3.3
+      stream-combiner: 0.0.4
+      through: 2.3.8
+    dev: false
+    resolution:
+      integrity: sha1-SrTJoPWlTbkzi0w02Gv86PSzVXE=
   /events/2.1.0:
     dev: false
     engines:
@@ -1088,6 +1105,10 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
+  /from/0.1.7:
+    dev: false
+    resolution:
+      integrity: sha1-g8YK/Fi5xWmXAH7Rp2izqzA6RP4=
   /fs.realpath/1.0.0:
     dev: false
     resolution:
@@ -1648,6 +1669,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-wyq9C9ZSXZsFFkW7TyasXcmKDb8=
+  /map-stream/0.1.0:
+    dev: false
+    resolution:
+      integrity: sha1-5WqpTEyAVaFkBKBnS3jyFffI4ZQ=
   /map-visit/1.0.0:
     dependencies:
       object-visit: 1.0.1
@@ -1825,6 +1850,10 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
+  /node-cleanup/2.1.2:
+    dev: false
+    resolution:
+      integrity: sha1-esGavSl+Caf3KnFUXZUbUX5N3iw=
   /nodemon/1.18.11:
     dependencies:
       chokidar: 2.1.5
@@ -2005,6 +2034,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+  /pause-stream/0.0.11:
+    dependencies:
+      through: 2.3.8
+    dev: false
+    resolution:
+      integrity: sha1-/lo0sMvOErWqaitAPuLnO2AvFEU=
   /pbkdf2/3.0.17:
     dependencies:
       create-hash: 1.2.0
@@ -2065,6 +2100,15 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-5erio2h9jp5CHGwcybmxmVqHmnCBZeewlfJ0pex+UW7Qny7OOZXTtH56TGNyBizkgiOwhJtMKrVzDTeKcySZwA==
+  /ps-tree/1.2.0:
+    dependencies:
+      event-stream: 3.3.4
+    dev: false
+    engines:
+      node: '>= 0.10'
+    hasBin: true
+    resolution:
+      integrity: sha512-0VnamPPYHl4uaU/nSFeZZpR21QAWRz+sRv4iW9+v/GS/J5U5iZB5BNN6J0RMoOvdx2gWM2+ZFMIm58q24e4UYA==
   /pseudomap/1.0.2:
     dev: false
     resolution:
@@ -2453,6 +2497,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==
+  /split/0.3.3:
+    dependencies:
+      through: 2.3.8
+    dev: false
+    resolution:
+      integrity: sha1-zQ7qXmOiEd//frDwkcQTPi0N0o8=
   /static-extend/0.1.2:
     dependencies:
       define-property: 0.2.5
@@ -2481,6 +2531,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-nX6hmklHs/gr2FuxYDltq8fJA1GDlxKQCz8O/IM4atRqBH8OORmBNgfvW5gG10GT/qQ9u0CzIvr2X5Pkt6ntqg==
+  /stream-combiner/0.0.4:
+    dependencies:
+      duplexer: 0.1.1
+    dev: false
+    resolution:
+      integrity: sha1-TV5DPBhSYd3mI8o/RMWGvPXErRQ=
   /stream-combiner2/1.1.1:
     dependencies:
       duplexer2: 0.1.4
@@ -2505,6 +2561,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-G2O+Q4oTPktnHMGTUZdgAXWRDYM=
+  /string-argv/0.1.2:
+    dev: false
+    engines:
+      node: '>=0.6.19'
+    resolution:
+      integrity: sha512-mBqPGEOMNJKXRo7z0keX0wlAhbBAjilUdPW13nN0PecVryZxdHIeM7TqbsSUA7VYuS00HGC6mojP7DlQzfa9ZA==
   /string-width/2.1.1:
     dependencies:
       is-fullwidth-code-point: 2.0.0
@@ -2649,6 +2711,21 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-WBx8Uy5TLtOSRtIq+M03/sKDrXCLHxwDcquSP2c43Le03/9serjQBIztjRz6FkJez9D/hleyAXTBGLwwZUw9lA==
+  /tsc-watch/2.2.1:
+    dependencies:
+      cross-spawn: 5.1.0
+      node-cleanup: 2.1.2
+      ps-tree: 1.2.0
+      string-argv: 0.1.2
+      strip-ansi: 4.0.0
+    dev: false
+    engines:
+      node: '>=6.4.0'
+    hasBin: true
+    peerDependencies:
+      typescript: '*'
+    resolution:
+      integrity: sha512-E61+ozEutLDgmXN+1+rkoCaUmd2g/cpa4mpEPMA3gPi89PBJiAcIUtH0xdCxeChXlR9TcuwOuTqu5jZDRhgfRw==
   /tty-browserify/0.0.1:
     dev: false
     resolution:
@@ -2885,5 +2962,6 @@ specifiers:
   preact: ^8.4.2
   preact-context: ^1.1.3
   random-js: ^2.0.0
+  tsc-watch: ^2.2.1
   typescript: ^3.4.4
   uglifyify: ^5.0.1
