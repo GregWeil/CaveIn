@@ -21,7 +21,7 @@ Render.addSprite('gem-b-b', spritesheet, dimensions, new Vector2(1, 5));
 Render.addSprite('gem-c-a', spritesheet, dimensions, new Vector2(0, 6));
 Render.addSprite('gem-c-b', spritesheet, dimensions, new Vector2(1, 6));
 
-const audioGem = new Howl({ src: ['/assets/gem.wav'] });
+const audioGem = new Howl({ src: ['assets/gem.wav'] });
 
 interface GemTier {
   score: number;

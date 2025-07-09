@@ -21,7 +21,7 @@ const TitlePageImpl = ({save, best, validate}: Props) => (
   <div id="title-page" class="page centered">
     <div class="glitchButton"></div>
     <a id="boxart" href="#game">
-      <img src="/assets/boxart.png" class="smooth"/>
+      <img src="assets/boxart.png" class="smooth"/>
     </a>
     <p>
       {!!save && validate(save) && [<a href="#game">continue</a>, ' - ']}

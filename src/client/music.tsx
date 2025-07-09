@@ -24,7 +24,7 @@ export class MusicManager extends Component<MusicProps, MusicState> {
   state = {playing: false, loading: false}
   audio: HTMLAudioElement|null = null;
   init() {
-    this.audio = new Audio('/assets/cavein.wav');
+    this.audio = new Audio('assets/cavein.wav');
     this.audio.loop = true;
     this.audio.addEventListener('waiting', () => this.setState({playing: false, loading: true}));
     this.audio.addEventListener('playing', () => this.setState({playing: true, loading: false}));

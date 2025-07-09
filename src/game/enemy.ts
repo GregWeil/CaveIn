@@ -21,7 +21,7 @@ const ghostSprites = [
   Render.addSprite('enemy-ghost-b', spritesheet, dimensions, new Vector2(1, 8))
 ];
 
-const audioStep = new Howl({ src: ['/assets/enemy_move.wav'] });
+const audioStep = new Howl({ src: ['assets/enemy_move.wav'] });
 let audioStepRequests = 0;
 
 class EnemyGhost extends BaseObject<Game> {

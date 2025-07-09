@@ -23,9 +23,9 @@ Render.addSprite('pickaxe-swing', spritesheet, dimensions, new Vector2(0, 0));
 Render.addSprite('pickaxe-dark-hit', spritesheet, dimensions, new Vector2(1, 7));
 Render.addSprite('pickaxe-dark-swing', spritesheet, dimensions, new Vector2(0, 7));
 
-const audioStep = new Howl({ src: ['/assets/move.wav'] });
-const audioHit = new Howl({ src: ['/assets/attack.wav'] });
-const audioDie = new Howl({ volume: 0.5, src: ['/assets/die.wav'] });
+const audioStep = new Howl({ src: ['assets/move.wav'] });
+const audioHit = new Howl({ src: ['assets/attack.wav'] });
+const audioDie = new Howl({ volume: 0.5, src: ['assets/die.wav'] });
 
 export default class Player extends BaseObject<Game> {
   pos: Vector2;

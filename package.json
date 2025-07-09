@@ -1,11 +1,9 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
   "name": "cave-in",
   "version": "0.0.1",
   "description": "Ludum Dare 37",
   "scripts": {
+    "build": "rm -rf bin && tsc && cp -r public bin && browserify -g uglifyify bin/client/main.js -o bin/public/client.js",
     "start": "tsc-watch --onSuccess 'node bin/server/main.js'"
   },
   "dependencies": {

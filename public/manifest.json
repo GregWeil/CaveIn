@@ -1,14 +1,13 @@
 {
   "name": "Cave In",
-  
   "start_url": ".",
-  
   "display": "standalone",
   "orientation": "landscape",
-  
-  "icons": [{
-    "src": "/assets/app_icon.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }]
+  "icons": [
+    {
+      "src": "assets/app_icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
