@@ -27,7 +27,7 @@ Render.addSprite('gem-c-a', spritesheet, dimensions.multiply(0, 1),
 Render.addSprite('gem-c-b', spritesheet, dimensions.multiply(1, 1),
   dimensions, dimensions.multiply(0.5));
 
-var audioGem = 'https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fgem.wav';
+var audioGem = 'assets/gem.wav';
 
 var gemTiers = [
   {

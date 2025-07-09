@@ -27,9 +27,9 @@ Render.addSprite('pickaxe-hit', spritesheet, dimensions.multiply(1, 0),
 Render.addSprite('pickaxe-swing', spritesheet, dimensions.multiply(0, 0),
   dimensions, dimensions.multiply(0.5));
 
-var audioStep = 'https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fmove.wav';
-var audioHit = 'https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fattack.wav';
-var audioDie = 'https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fdie.wav';
+var audioStep = 'assets/move.wav';
+var audioHit = 'assets/attack.wav';
+var audioDie = 'assets/die.wav';
 
 module.exports = class Player extends BaseObject {
   constructor(grid, pos) {

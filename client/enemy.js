@@ -17,7 +17,7 @@ Render.addSprite('enemy-b', spritesheet, dimensions.multiply(1, 2),
   dimensions, dimensions.multiply(0.5));
 var sprites = ['enemy-a', 'enemy-b'];
 
-var audioStep = 'https://cdn.gomix.com/e6f17913-09e8-449d-8798-e394b24f6eff%2Fenemy_move.wav';
+var audioStep = 'assets/enemy_move.wav';
 var audioStepPool = [];
 for (let i = 0; i < 4; ++i) {
   var audio = new Audio(audioStep);
