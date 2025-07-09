@@ -3,7 +3,6 @@
 
 import * as express from 'express';
 import * as browserify from 'browserify';
-import assets from './assets';
 
 // express init
 const app = express();
@@ -22,8 +21,6 @@ app.get('/client.js', async (req, res) => {
   res.set('Content-Type', 'application/javascript');
   res.send(await client);
 });
-
-app.use('/assets', assets);
 
 app.use(express.static('public'));
 
