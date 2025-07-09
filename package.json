@@ -1,29 +1,26 @@
 {
-	"//1": "describes your app and its dependencies",
-	"//2": "https://docs.npmjs.com/files/package.json",
-	"//3": "updating this file will download and update your packages",
-	"name": "cave-in",
-	"version": "0.0.1",
-	"description": "Ludum Dare 37",
-	"main": "server.js",
-	"scripts": {
-		"start": "node server.js"
-	},
-	"dependencies": {
-		"express": "^4.14.0",
-		"browserify": "^13.1.1",
-		"watchify": "^3.7.0",
-		"random-js": "^1.0.8"
-	},
-	"engines": {
-		"node": "6.9.1"
-	},
-	"repository": {
-		"url": "https://gomix.com/#!/project/welcome-project"
-	},
-	"keywords": [
-		"node",
-		"gomix",
-		"express"
-	]
+    "name": "cave-in",
+    "version": "0.0.1",
+    "description": "Ludum Dare 37",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.14.0",
+        "browserify": "^13.1.1",
+        "watchify": "^3.7.0",
+        "random-js": "^1.0.8"
+    },
+    "engines": {
+        "node": "6.9.1"
+    },
+    "repository": {
+        "url": "https://gomix.com/#!/project/cave-in-jam"
+    },
+    "keywords": [
+        "node",
+        "gomix",
+        "express"
+    ]
 }
